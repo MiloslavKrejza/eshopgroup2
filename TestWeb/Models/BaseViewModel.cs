@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestWeb.Models
 {
-    public class LegoViewModel
+    public class BaseViewModel
     {
         public Guid ErrorNo { get; set; }
         public List<string> Errors { get; set; } = new List<string>();
