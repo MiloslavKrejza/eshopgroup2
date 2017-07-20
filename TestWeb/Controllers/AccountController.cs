@@ -622,7 +622,7 @@ namespace TestWeb.Controllers
 
 
 
-        public void ErrorToModel(AlzaAdminDTO dto, LegoViewModel model)
+        public void ErrorToModel(AlzaAdminDTO dto, BaseViewModel model)
         {
             model.ErrorNo = dto.errorNo;
             foreach (var item in dto.errors)
@@ -696,7 +696,7 @@ namespace TestWeb.Controllers
             _logger.LogError(errNo + " - " + res.ToString());
 
 
-            LegoViewModel model = new LegoViewModel();
+            BaseViewModel model = new BaseViewModel();
             model.ErrorNo = errNo;
             model.Errors.Add(res.ToString());
 
@@ -727,7 +727,7 @@ namespace TestWeb.Controllers
             Guid errNo = Guid.NewGuid();
             _logger.LogError(errNo + " - " + text);
 
-            LegoViewModel model = new LegoViewModel();
+            BaseViewModel model = new BaseViewModel();
             model.ErrorNo = errNo;
             model.Errors.Add(text);
 
@@ -768,7 +768,7 @@ namespace TestWeb.Controllers
         {
             _logger.LogError(err.errorNo + " - " + err.errorText);
 
-            LegoViewModel model = new LegoViewModel();
+            BaseViewModel model = new BaseViewModel();
             model.ErrorNo = err.errorNo;
             model.Errors.Add(err.errorText);
 
@@ -800,7 +800,7 @@ namespace TestWeb.Controllers
             _logger.LogError(errNo + " - " + e.Message + Environment.NewLine + e.StackTrace);
 
 
-            LegoViewModel model = new LegoViewModel();
+            BaseViewModel model = new BaseViewModel();
             model.ErrorNo = errNo;
             model.Errors.Add(e.Message + Environment.NewLine + e.StackTrace);
 

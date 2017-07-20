@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestWeb.Models.AccountViewModels
 {
-    public class LoginViewModel : LegoViewModel
+    public class LoginViewModel : BaseViewModel
     {
         [Required]
         [EmailAddress]

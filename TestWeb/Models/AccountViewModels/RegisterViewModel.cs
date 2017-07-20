@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestWeb.Models.AccountViewModels
 {
-	public class RegisterViewModel : LegoViewModel
+	public class RegisterViewModel : BaseViewModel
     {
         [Required]
         [EmailAddress]
