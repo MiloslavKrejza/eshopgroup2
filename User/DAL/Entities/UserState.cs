@@ -6,5 +6,6 @@ namespace User.DAL.Entities
 {
     class UserState
     {
+        public string StateName { get; set; }
     }
 }

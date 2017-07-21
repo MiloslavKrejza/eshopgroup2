@@ -86,14 +86,7 @@ namespace Alza.Core.Module.Http
         }
 
 
-        //public static AlzaAdminDTO False()
-        //{
-        //    return new AlzaAdminDTO(false);
-        //}
-        //public static AlzaAdminDTO True()
-        //{
-        //    return new AlzaAdminDTO(true);
-        //}
+        
         public static AlzaAdminDTO Error(Guid errorNo, string errorText)
         {
             return new AlzaAdminDTO(false, errorNo, errorText);
