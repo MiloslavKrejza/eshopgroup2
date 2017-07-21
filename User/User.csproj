@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\core\Alza.Core.Identity\Alza.Core.Identity.csproj" />
+    <ProjectReference Include="..\core\Alza.Core.Module\Alza.Core.Module.csproj" />
+  </ItemGroup>
+
+</Project>
