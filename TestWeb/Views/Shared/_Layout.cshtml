@@ -13,9 +13,8 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </environment>
@@ -46,22 +45,22 @@
     <div class="container body-content container-fluid">
         <!-- HLAVIČKA -->
         <div class="row" id="hlavicka">
-            <div class="col-md-2">
+            <div class="col-lg-2">
                 <a href=""><img class="logo" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
             </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-6">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-6">
                 <input id="hledat" class="center-block" placeholder="Hledat" />
             </div>
             <div id="basket-user">
-                <div class="col-md-1"></div>
-                <div class="col-md-1">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-1">
                     <a href="">
                         <img src="~/images/cart-34-48.ico" alt="cart" /><br />
                         <p>Košík</p>
                     </a>
                 </div>
-                <div class="col-md-1">
+                <div class="col-lg-1">
                     <a href="">
                         <img src="~/images/user-2-48.png" alt="cart" /><br />
                         <p>Přihlásit</p>
@@ -73,7 +72,7 @@
 
         <!-- MENU-->
         <div class="row" id="main-section">
-            <div class="col-md-2">
+            <div class="col-lg-2">
 
                 @{string[] cathegory = new string[] { "Fantasy", "Sci-Fi", "Horor", "Herní", "České" };
                     for (int i = 0; i < cathegory.Length; i++)
@@ -88,7 +87,7 @@
             </div>
 
             <!-- OBSAH -->
-            <div class="col-md-10">
+            <div class="col-lg-10">
                 @RenderBody()
             </div>
         </div>   <!--main section closing-->
@@ -98,12 +97,12 @@
         <!-- PATIČKA -->
         <footer>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <a href=""><p>Doprava a platba</p></a>
                     <a href=""><p>Obchodní podmínky</p></a>
                     <a href=""><p>Bezpečné nakupování</p></a>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-lg-6 text-right">
                     <p>
                         <strong>Fantastic Books</strong><br />
                         Guttenbergova 5, Liberec<br />
