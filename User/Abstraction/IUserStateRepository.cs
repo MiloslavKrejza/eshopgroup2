@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using User.DAL.Entities;
+using Trainee.User.DAL.Entities;
 
-namespace User.Abstraction
+namespace Traineee.User.Abstraction
 {
     interface IUserStateRepository
     {

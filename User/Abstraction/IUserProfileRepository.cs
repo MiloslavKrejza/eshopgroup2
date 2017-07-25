@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using User.DAL.Entities;
+using Trainee.User.DAL.Entities;
 
-namespace User.Abstraction
+namespace Trainee.User.Abstraction
 {
-    interface IUserProfileRepository
+    public interface IUserProfileRepository
     {
         /// <summary>
         /// Gets user with specified ID
