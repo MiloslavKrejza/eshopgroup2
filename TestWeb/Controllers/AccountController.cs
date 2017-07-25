@@ -204,7 +204,6 @@ namespace TestWeb.Controllers
                     //Create AspNet Identity User
                     IdentityResult res = await _userManager.CreateAsync(user, model.Password);
                     IdentityResult res2 = null;
-                    AlzaAdminDTO res3 = null;
                     if (res.Succeeded)
                     {
                         //zjisteni ulozeneho Id uzivatele
