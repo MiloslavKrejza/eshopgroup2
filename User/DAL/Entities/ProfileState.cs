@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace User.DAL.Entities
+namespace Trainee.User.DAL.Entities
 {
     public class ProfileState
     {

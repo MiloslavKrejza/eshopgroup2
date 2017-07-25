@@ -1,4 +1,4 @@
-﻿using Trainee.Core.DAL.Abstraction;
+﻿using Trainee.Core.Abstraction;
 using Alza.Core.Module.Http;
 using Trainee.Core.DAL.Entities;
 using System;

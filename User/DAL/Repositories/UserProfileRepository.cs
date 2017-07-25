@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Trainee.User.DAL.Context;
-using User.Abstraction;
-using User.DAL.Entities;
+using Trainee.User.Abstraction;
+using Trainee.User.DAL.Entities;
 
 namespace Trainee.User.DAL.Repositories
 {

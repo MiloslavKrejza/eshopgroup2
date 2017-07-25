@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Trainee.Core.DAL.Entities;
 
-namespace User.DAL.Entities
+namespace Trainee.User.DAL.Entities
 {
     public class UserProfile
     {

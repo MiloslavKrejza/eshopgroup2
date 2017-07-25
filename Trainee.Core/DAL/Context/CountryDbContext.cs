@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using User.DAL.Entities;
+using Trainee.Core.DAL.Entities;
 
 namespace Trainee.Core.DAL.Context
 {

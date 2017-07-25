@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Trainee.Core.Business;
-using Trainee.Core.DAL.Abstraction;
+using Trainee.Core.Abstraction;
 using Trainee.Core.DAL.Repositories;
 using Trainee.User.Abstraction;
 using Trainee.User.Business;

@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Trainee.Core.DAL.Context;
-using User.DAL.Entities;
+using Trainee.User.DAL.Entities;
 
 namespace Trainee.User.DAL.Context
 {

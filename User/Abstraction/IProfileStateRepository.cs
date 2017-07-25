@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Trainee.User.DAL.Entities;
 
-namespace Traineee.User.Abstraction
+namespace Trainee.User.Abstraction
 {
     interface IProfileStateRepository
     {
