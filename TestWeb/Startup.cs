@@ -42,11 +42,8 @@ namespace TestWeb
 
 
             //ALZA CORE - IDENTITY
-            services.AddAlzaCoreIdentity(o => o.connectionString = Configuration.GetSection("ConnectionStrings:AlzaLego.Core.IdentityConnection").Value, Configuration);
-            services.a
-           
-
-          
+            services.AddAlzaCoreIdentity(o => o.connectionString = Configuration.GetSection("ConnectionStrings:AlzaLego.Core.IdentityConnection").Value, Configuration);     
+                    
 
             // Add framework services.
             services.AddMvc()
