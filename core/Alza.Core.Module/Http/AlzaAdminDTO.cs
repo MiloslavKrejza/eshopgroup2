@@ -96,5 +96,11 @@ namespace Alza.Core.Module.Http
         {
             return new AlzaAdminDTO(data);
         }
+
+        public static AlzaAdminDTO Error(string message)
+        {
+            Guid guid = new Guid();
+            return AlzaAdminDTO.Error(guid, message);
+        }
     }
 }

@@ -204,7 +204,6 @@ namespace TestWeb.Controllers
                     //Create AspNet Identity User
                     IdentityResult res = await _userManager.CreateAsync(user, model.Password);
                     IdentityResult res2 = null;
-                    AlzaAdminDTO res3 = null;
                     if (res.Succeeded)
                     {
                         //zjisteni ulozeneho Id uzivatele
@@ -340,7 +339,7 @@ namespace TestWeb.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LogOff()
+        public async Task<IActionResult> Logout()
         {
             try
             {

@@ -23,7 +23,33 @@ namespace Trainee.Core.Business
             }
             catch(Exception e)
             {
-                return AlzaAdminDTO.Error(new Guid(), e.Message);
+                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public AlzaAdminDTO GetCountry(int id)
+        {
+            try
+            {
+                var result = _countryRepos.GetCountry(id);
+                return AlzaAdminDTO.Data(result);
+            }
+            catch(Exception e)
+            {
+                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public AlzaAdminDTO GetAllCountries()
+        {
+            try
+            {
+                var result = _countryRepos.GetCountries();
+                return AlzaAdminDTO.Data(result);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
 
