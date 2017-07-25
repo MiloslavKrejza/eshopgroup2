@@ -4,17 +4,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TestWeb</title>
+    <title>@ViewData["Title"] - Bookstore</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -28,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">TestWeb</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Bookstore</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -36,15 +39,80 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
-                @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
+
+    <div class="container body-content container-fluid">
+        <!-- HLAVIČKA -->
+        <div class="row" id="hlavicka">
+            <div class="col-md-2">
+                <a href=""><img class="logo" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <input id="hledat" class="center-block" placeholder="Hledat" />
+            </div>
+            <div id="basket-user">
+                <div class="col-md-1"></div>
+                <div class="col-md-1">
+                    <a href="">
+                        <img src="~/images/cart-34-48.ico" alt="cart" /><br />
+                        <p>Košík</p>
+                    </a>
+                </div>
+                <div class="col-md-1">
+                    <a href="">
+                        <img src="~/images/user-2-48.png" alt="cart" /><br />
+                        <p>Přihlásit</p>
+                    </a>
+                </div>
+            </div>
+        </div>
         <hr />
+
+        <!-- MENU-->
+        <div class="row" id="main-section">
+            <div class="col-md-2">
+
+                @{string[] cathegory = new string[] { "Fantasy", "Sci-Fi", "Horor", "Herní", "České" };
+                    for (int i = 0; i < cathegory.Length; i++)
+
+                    {<div id="menu-item" class="text-left text-capitalize">
+                        <a href=""><p><img src="~/images/@(cathegory[i]).png" />@cathegory[i]</p></a>
+                    </div>
+                            <i class="fa @cathegory[i]"></i>
+                    }
+                }
+
+            </div>
+
+            <!-- OBSAH -->
+            <div class="col-md-10">
+                @RenderBody()
+            </div>
+        </div>   <!--main section closing-->
+
+        <hr />
+
+        <!-- PATIČKA -->
         <footer>
-            <p>&copy; 2017 - TestWeb</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href=""><p>Doprava a platba</p></a>
+                    <a href=""><p>Obchodní podmínky</p></a>
+                    <a href=""><p>Bezpečné nakupování</p></a>
+                </div>
+                <div class="col-md-6 text-right">
+                    <p>
+                        <strong>Fantastic Books</strong><br />
+                        Guttenbergova 5, Liberec<br />
+                        IČ: 285 64 952<br />
+                        +420 531 648 523<br />
+                        ahoj@fantasticbooks.cz
+                    </p>
+                </div>
+            </div>
         </footer>
     </div>
 

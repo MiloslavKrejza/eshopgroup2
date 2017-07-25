@@ -2,10 +2,11 @@
 using Alza.Core.Module.Http;
 using Trainee.Core.DAL.Entities;
 using System;
+using System.Linq;
 
 namespace Trainee.Core.Business
 {
-    class CountryService
+    public class CountryService
     {
         private readonly ICountryRepository _countryRepos;
 
@@ -14,19 +15,16 @@ namespace Trainee.Core.Business
             _countryRepos = countryRepos;
         }
 
-        public AlzaAdminDTO AddCountry(Country country)
-        {
-            try
-            {
-                var result = _countryRepos.AddCountry(country);
-                return AlzaAdminDTO.Data(result);
-            }
-            catch(Exception e)
-            {
-                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
-            }
-        }
 
+        /****************************************/
+        /*         GET COUNTRY BY ID            */
+        /****************************************/
+        
+        /// <summary>
+        /// Provides a country with a specified id
+        /// </summary>
+        /// <param name="id">Country id</param>
+        /// <returns>DTO containing the country with matching id</returns>
         public AlzaAdminDTO GetCountry(int id)
         {
             try
@@ -34,17 +32,26 @@ namespace Trainee.Core.Business
                 var result = _countryRepos.GetCountry(id);
                 return AlzaAdminDTO.Data(result);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
 
+        /****************************************/
+        /*         GET ALL COUNTRIES            */
+        /****************************************/
+
+        /// <summary>
+        /// Provides a list of all countries
+        /// </summary>
+        /// <returns>DTO containing a list of all available countries</returns>
         public AlzaAdminDTO GetAllCountries()
         {
             try
             {
-                var result = _countryRepos.GetCountries();
+                var result = _countryRepos.GetCountries().ToList();
+                
                 return AlzaAdminDTO.Data(result);
             }
             catch (Exception e)

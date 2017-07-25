@@ -1,8 +1,5 @@
 ﻿using Alza.Core.Identity.Dal.Entities;
-//using Alza.Core.Module.Http;
-using TestWeb.Models;
-using TestWeb.Models.AccountViewModels;
-
+using Alza.Core.Module.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestWeb.Controllers;
-using Alza.Core.Module.Http;
 using TestWeb.Abstraction;
+using TestWeb.Models;
+using TestWeb.Models.AccountViewModels;
+using Trainee.Core.Business;
 
 namespace TestWeb.Controllers
 {
@@ -26,20 +23,23 @@ namespace TestWeb.Controllers
         private ILogger<AccountController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        //private LegoUserService _legoUserService;
-        //private LegoGamingService _legoGamingService;
+        CountryService _service1;
+
 
         public AccountController(
             IHostingEnvironment env,
             ILogger<AccountController> logger,
             IStringLocalizer<AccountController> localizerizer,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            CountryService service1)
         {
             _env = env;
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
+
+            _service1 = service1;
         }
 
         //
@@ -257,28 +257,7 @@ namespace TestWeb.Controllers
         {
             try
             {
-                //OSTATNI
-                //var user = _userManager.GetUserAsync(User).Result;
-                //if (user == null)
-                //    return ErrorActionResult("user == null");
-
-
-                //_logger.LogError("Forbidden - userId = " + user.Id);
-                //_logger.LogError(user.EmailConfirmed.ToString());
-                //_logger.LogError(user.NormalizedUserName.ToString());
-                //_logger.LogError(user.LockoutEnd.ToString());
-
-
-                //var userRole = _userManager.GetRolesAsync(user);
-
-                //foreach (var item in userRole.Result)
-                //{
-                //    _logger.LogError(item);
-
-                //}
-
-
-                return View();
+                return Forbid();
             }
             catch (Exception e)
             {
@@ -287,55 +266,7 @@ namespace TestWeb.Controllers
         }
 
 
-
-        //
-        // GET: /Account/ResendConfirmationEmail
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<AlzaAdminDTO> ResendConfirmationEmail()
-        //{
-        //    try
-        //    {
-        //        var user = _userManager.GetUserAsync(User).Result;
-        //        if (user != null)
-        //        {
-        //            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        //            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-
-        //            //precteni tela mailu ze souboru
-        //            var pathToEmail = _env.WebRootPath
-        //                                + Path.DirectorySeparatorChar.ToString()
-        //                                + "emailTemplates"
-        //                                + Path.DirectorySeparatorChar.ToString()
-        //                                + "registration.html";
-
-        //            string emailBody = "";
-
-        //            using (StreamReader SourceReader = new StreamReader(pathToEmail))
-        //            {
-        //                emailBody = await SourceReader.ReadToEndAsync();
-        //            }
-
-        //            emailBody = emailBody.Replace("{confirmRegistrationURL}", callbackUrl);
-        //            var serverName = "http://" + Request.Host;
-        //            emailBody = emailBody.Replace("{ServerName}", serverName);
-
-
-        //            await _emailSender.SendEmailAsync(user.Email, _localizerizer["ConfirmEmailTitle"], emailBody);
-
-        //            return AlzaAdminDTO.True;
-        //        }
-
-        //        return AlzaAdminDTO.False;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ExceptionDTO(e);
-        //    }
-        //}
-
-        //
-        // POST: /Account/LogOff
+        // POST: /Account/Logout
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -351,268 +282,6 @@ namespace TestWeb.Controllers
                 return ExceptionActionResult(e);
             }
         }
-
-
-
-
-
-
-
-
-
-
-        //[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        //public AlzaAdminDTO ChangePassword([FromBody] ChangePasswordViewModel model)
-        //{
-        //    try
-        //    {
-        //        //VALIDACE MODELU
-        //        if (!ModelState.IsValid)
-        //            return InvalidModel();
-
-
-        //        //OSTATNI
-        //        var user = _userManager.GetUserAsync(User).Result;
-        //        if (user == null)
-        //            return ErrorDTO("user == null");
-
-
-        //        //CHANGE PASSWORD
-        //        var result = _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword).Result;
-        //        if (!result.Succeeded)
-        //            return InvalidIdentityResultDTO(result);
-
-
-        //        _signInManager.SignInAsync(user, isPersistent: false);
-
-        //        return AlzaAdminDTO.True;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ExceptionDTO(e);
-        //    }
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //// GET: /Account/ConfirmEmail
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> ConfirmEmail(string userId, string code)
-        //{
-        //    try
-        //    {
-        //        if (userId == null)
-        //            return ErrorActionResult("userId == null");
-
-        //        if (code == null)
-        //            return ErrorActionResult("code == null");
-
-
-        //        var user = await _userManager.FindByIdAsync(userId);
-
-        //        if (user == null)
-        //            return ErrorActionResult("user == null");
-
-
-        //        var result = await _userManager.ConfirmEmailAsync(user, code);
-
-        //        if (!result.Succeeded)
-        //        {
-
-        //            if (result.Errors.First().Code == "InvalidToken")
-        //            {
-        //                return RedirectToAction("InvalidCode", "Error");
-        //            }
-
-        //            return InvalidIdentityResultActionResult(result);
-        //        }
-
-
-
-        //        return View("ConfirmEmail");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ExceptionActionResult(e);
-        //    }
-        //}
-
-        ////
-        //// GET: /Account/ForgotPassword
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public IActionResult ForgotPassword()
-        //{
-        //    try
-        //    {
-        //        /* if it is ajax call we want partial */
-        //        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-        //        {
-        //            return PartialView("_ForgotPasswordPartial");
-        //        }
-
-        //        return View("ForgotPassword");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ExceptionActionResult(e);
-        //    }
-        //}
-
-
-        ////
-        //// POST: /Account/ForgotPassword
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        //{
-        //    try
-        //    {
-
-        //        if (ModelState.IsValid)
-        //        {
-        //            var user = await _userManager.FindByNameAsync(model.Nickname);
-        //            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-        //            {
-        //                // Don't reveal that the user does not exist or is not confirmed
-        //                return View("ForgotPasswordConfirmation");
-        //            }
-
-        //            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-        //            // Send an email with this link
-        //            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-        //            var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-        //            await _emailSender.SendEmailAsync(user.Email, "Reset Password",
-        //               $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-        //            return View("ForgotPasswordConfirmation");
-        //        }
-
-        //        // If we got this far, something failed, redisplay form
-        //        return View(model);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ExceptionActionResult(e);
-        //    }
-        //}
-
-        ////
-        //// GET: /Account/ForgotPasswordConfirmation
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public IActionResult ForgotPasswordConfirmation()
-        //{
-        //    try
-        //    {
-        //        return View();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ExceptionActionResult(e);
-        //    }
-        //}
-
-        ////
-        //// GET: /Account/ResetPassword
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public IActionResult ResetPassword(string code = null)
-        //{
-        //    try
-        //    {
-        //        if (code == null)
-        //            return ErrorActionResult("code == null");
-
-        //        return View();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ExceptionActionResult(e);
-        //    }
-        //}
-
-        ////
-        //// POST: /Account/ResetPassword
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return View(model);
-        //        }
-        //        var user = await _userManager.FindByNameAsync(model.Nickname);
-        //        if (user == null)
-        //        {
-        //            // Don't reveal that the user does not exist
-        //            return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
-        //        }
-        //        var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
-        //        if (!result.Succeeded)
-        //            return InvalidIdentityResultActionResult(result);
-
-        //        return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ExceptionActionResult(e);
-        //    }
-        //}
-
-        ////
-        //// GET: /Account/ResetPasswordConfirmation
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public IActionResult ResetPasswordConfirmation()
-        //{
-        //    try
-        //    {
-        //        return View();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ExceptionActionResult(e);
-        //    }
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -836,13 +505,7 @@ namespace TestWeb.Controllers
 
 
 
-
-
-
-
-
-
-        //Odstranit
+        //Odstranit??
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
