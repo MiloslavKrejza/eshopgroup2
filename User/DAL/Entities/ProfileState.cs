@@ -4,7 +4,9 @@ using System.Text;
 
 namespace User.DAL.Entities
 {
-    class UserState
+    public class ProfileState
     {
+        public int Id { get; set; }
+        public string StateName { get; set; }
     }
 }

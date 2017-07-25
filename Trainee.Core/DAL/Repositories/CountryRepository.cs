@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Trainee.Core.DAL.Abstraction;
+using Trainee.Core.Abstraction;
 using Trainee.Core.DAL.Context;
 using User.DAL.Entities;
 
 namespace Trainee.Core.DAL.Repositories
 {
-    class CountryRepository : ICountryRepository
+    public class CountryRepository : ICountryRepository
     {
         private readonly CountryDbContext _context;
         public CountryRepository(CountryDbContext context)
@@ -25,17 +25,21 @@ namespace Trainee.Core.DAL.Repositories
 
         public void DeleteCountry(int id)
         {
-            throw new NotImplementedException();
+            var country = _context.Countries.FirstOrDefault(c => c.Id == id);
+            _context.Countries.Remove(country);
+            _context.SaveChanges();
+
         }
 
         public IQueryable<Country> GetCountries()
         {
-            throw new NotImplementedException();
+            return _context.Countries.AsQueryable();
         }
 
         public Country GetCountry(int id)
         {
-            throw new NotImplementedException();
+            var country = _context.Countries.Where(c => c.Id == id).FirstOrDefault();
+            return country;
         }
     }
 }

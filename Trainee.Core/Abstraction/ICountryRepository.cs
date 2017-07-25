@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using User.DAL.Entities;
 
-namespace Trainee.Core.DAL.Abstraction
+namespace Trainee.Core.Abstraction
 {
     interface ICountryRepository
     {
