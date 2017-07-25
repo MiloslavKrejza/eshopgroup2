@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\core\Alza.Core.Module\Alza.Core.Module.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using User.DAL.Entities;
+using Trainee.Core.DAL.Entities;
 
 namespace Trainee.Core.DAL.Abstraction
 {

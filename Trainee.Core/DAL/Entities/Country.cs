@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace User.DAL.Entities
+namespace Trainee.Core.DAL.Entities
 {
     class Country
     {
