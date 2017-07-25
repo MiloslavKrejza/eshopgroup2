@@ -35,7 +35,7 @@ namespace User
             }
             catch (Exception e)
             {
-                return Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
 
         }
@@ -58,7 +58,7 @@ namespace User
             }
             catch (Exception e)
             {
-                return Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
 
@@ -80,17 +80,13 @@ namespace User
             }
             catch (Exception e)
             {
-                return Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
 
 
 
 
-        public AlzaAdminDTO Error(string message)
-        {
-            Guid guid = new Guid();
-            return AlzaAdminDTO.Error(guid, message);
-        }
+        
     }
 }
