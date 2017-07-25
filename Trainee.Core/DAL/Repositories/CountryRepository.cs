@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using Trainee.Core.DAL.Abstraction;
 using Trainee.Core.DAL.Context;
-using User.DAL.Entities;
+using Trainee.Core.DAL.Entities;
 
 namespace Trainee.Core.DAL.Repositories
 {
-    class CountryRepository : ICountryRepository
+    public class CountryRepository : ICountryRepository
     {
         private readonly CountryDbContext _context;
         public CountryRepository(CountryDbContext context)

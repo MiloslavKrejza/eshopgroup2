@@ -6,7 +6,7 @@ using Trainee.Core.DAL.Entities;
 
 namespace Trainee.Core.DAL.Abstraction
 {
-    interface ICountryRepository
+    public interface ICountryRepository
     {
         /// <summary>
         /// Gets an IQueryable object of all countries

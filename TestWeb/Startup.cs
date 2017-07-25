@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TestWeb.Models;
+using Trainee.Core.Business;
+using Trainee.Core.DAL.Abstraction;
+using Trainee.Core.DAL.Repositories;
 
 namespace TestWeb
 {
@@ -43,9 +46,16 @@ namespace TestWeb
 
             //ALZA CORE - IDENTITY
             services.AddAlzaCoreIdentity(o => o.connectionString = Configuration.GetSection("ConnectionStrings:AlzaLego.Core.IdentityConnection").Value, Configuration);
-           
 
-          
+
+
+            services.AddTransient<CountryService, CountryService>();
+            services.AddTransient<ICountryRepository, CountryRepository>();
+
+            //services.AddSingleton
+
+            //services.AddScoped
+
 
             // Add framework services.
             services.AddMvc()

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Trainee.Core.Business
 {
-    class CountryService
+    public class CountryService
     {
         private readonly ICountryRepository _countryRepos;
 

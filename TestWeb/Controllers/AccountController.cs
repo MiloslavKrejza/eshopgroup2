@@ -1,8 +1,5 @@
 ﻿using Alza.Core.Identity.Dal.Entities;
-//using Alza.Core.Module.Http;
-using TestWeb.Models;
-using TestWeb.Models.AccountViewModels;
-
+using Alza.Core.Module.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestWeb.Controllers;
-using Alza.Core.Module.Http;
 using TestWeb.Abstraction;
+using TestWeb.Models;
+using TestWeb.Models.AccountViewModels;
+using Trainee.Core.Business;
 
 namespace TestWeb.Controllers
 {
@@ -26,20 +23,23 @@ namespace TestWeb.Controllers
         private ILogger<AccountController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        //private LegoUserService _legoUserService;
-        //private LegoGamingService _legoGamingService;
+        CountryService _service1;
+
 
         public AccountController(
             IHostingEnvironment env,
             ILogger<AccountController> logger,
             IStringLocalizer<AccountController> localizerizer,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            CountryService service1)
         {
             _env = env;
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
+
+            _service1 = service1;
         }
 
         //
