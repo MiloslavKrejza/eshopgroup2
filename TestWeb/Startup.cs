@@ -43,7 +43,7 @@ namespace TestWeb
 
             //ALZA CORE - IDENTITY
             services.AddAlzaCoreIdentity(o => o.connectionString = Configuration.GetSection("ConnectionStrings:AlzaLego.Core.IdentityConnection").Value, Configuration);
-
+           
 
           
 
