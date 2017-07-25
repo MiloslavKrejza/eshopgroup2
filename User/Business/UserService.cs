@@ -1,14 +1,16 @@
 ﻿using System;
-using User.Abstraction;
+using Trainee.User.Abstraction;
 using Alza.Core.Module.Http;
-using User.DAL.Entities;
+using Trainee.User.DAL.Entities;
 
-namespace User
+namespace Trainee.User.Business
 {
-    class UserService
+    public class UserService
     {
         private readonly IUserProfileRepository _userRepos;
 
+
+        //ToDo check if user exists
 
         public UserService(IUserProfileRepository userRepos)
         {

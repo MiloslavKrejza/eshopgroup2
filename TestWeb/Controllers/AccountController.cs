@@ -14,6 +14,7 @@ using TestWeb.Abstraction;
 using TestWeb.Models;
 using TestWeb.Models.AccountViewModels;
 using Trainee.Core.Business;
+using Trainee.User.Business;
 
 namespace TestWeb.Controllers
 {
@@ -23,8 +24,8 @@ namespace TestWeb.Controllers
         private ILogger<AccountController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        CountryService _service1;
-
+        private readonly CountryService _countryService;
+        private readonly UserService _profileService;
 
         public AccountController(
             IHostingEnvironment env,
@@ -32,14 +33,16 @@ namespace TestWeb.Controllers
             IStringLocalizer<AccountController> localizerizer,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            CountryService service1)
+            CountryService countryService,
+            UserService userService)
         {
             _env = env;
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
 
-            _service1 = service1;
+            _countryService = countryService;
+            _profileService = userService;
         }
 
         //

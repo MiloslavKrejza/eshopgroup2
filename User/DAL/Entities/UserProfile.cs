@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace User.DAL.Entities
+namespace Trainee.User.DAL.Entities
 {
-    class UserProfile
+    public class UserProfile
     {
         [StringLength(50)]
         public string Name { get; set; }
