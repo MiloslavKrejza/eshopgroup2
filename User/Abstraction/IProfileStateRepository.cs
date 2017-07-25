@@ -6,31 +6,31 @@ using Trainee.User.DAL.Entities;
 
 namespace Traineee.User.Abstraction
 {
-    interface IUserStateRepository
+    interface IProfileStateRepository
     {
         /// <summary>
         /// Gets all possible user states
         /// </summary>
         /// <returns>A Queryable object of UserStates</returns>
-        IQueryable<UserState> GetAllStates();
+        IQueryable<ProfileState> GetAllStates();
         /// <summary>
         /// Gets UserState with specified ID
         /// </summary>
         /// <param name="id">ID of wanted UserState</param>
         /// <returns>UserState with specified ID if it exists</returns>
-        UserState GetState(int id);
+        ProfileState GetState(int id);
         /// <summary>
         /// Adds new UserState
         /// </summary>
         /// <param name="state">UserState to be added</param>
         /// <returns>Added UserState</returns>
-        UserState AddState(UserState state);
+        ProfileState AddState(ProfileState state);
         /// <summary>
         /// Updates specified UserState
         /// </summary>
         /// <param name="state">UserState to be updated</param>
         /// <returns>Updated UserState</returns>
-        UserState UpdateState(UserState state);
+        ProfileState UpdateState(ProfileState state);
         /// <summary>
         /// Deletes UserState with specified ID
         /// </summary>

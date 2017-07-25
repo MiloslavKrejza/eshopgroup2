@@ -4,7 +4,8 @@ GO
 
 CREATE TABLE [dbo].[Countries](
 	[Id][int] Identity(1,1) NOT NULL,
-	[CountryName][nvarchar](max) NOT NULL
+	[CountryName][nvarchar](max) NOT NULL,
+	[CountryCode][nvarchar](2) NOT NULL
 )
 GO
 ALTER TABLE [dbo].[Countries]
