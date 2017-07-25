@@ -8,6 +8,7 @@ using Trainee.Core.Abstraction;
 using Trainee.Core.DAL.Repositories;
 using Trainee.User.Abstraction;
 using Trainee.User.Business;
+using Trainee.User.DAL.Repositories;
 
 
 
@@ -50,6 +51,7 @@ namespace TestWeb
             services.AddTransient<ICountryRepository, CountryRepository>();
 
             services.AddTransient<UserService, UserService>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
 
 
             /*************** POSSIBILITIES ***************/
