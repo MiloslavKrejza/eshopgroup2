@@ -4,10 +4,11 @@ using System.Text;
 
 namespace Trainee.Core.DAL.Entities
 {
-    class Country
+    public class Country
     {
         public string Name { get; set; }
         public int Id { get; set; }
-       
+        public string CountryCode { get; set; }
+
     }
 }

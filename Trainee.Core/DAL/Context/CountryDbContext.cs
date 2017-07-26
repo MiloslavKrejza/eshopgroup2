@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using User.DAL.Entities;
+using Trainee.Core.DAL.Entities;
 
 namespace Trainee.Core.DAL.Context
 {
-    class CountryDbContext : DbContext
+    public class CountryDbContext : DbContext
     {
         public DbSet<Country> Countries { get; set; }
         public CountryDbContext(DbContextOptions<CountryDbContext> options) : base(options)
@@ -19,6 +19,7 @@ namespace Trainee.Core.DAL.Context
             builder.Entity<Country>().HasKey(c => c.Id);
             builder.Entity<Country>().Property(c => c.Id).ValueGeneratedOnAdd();
             builder.Entity<Country>().Property(c => c.Name).IsRequired();
+            builder.Entity<Country>().ToTable("Countries");
         }
     }
 }
