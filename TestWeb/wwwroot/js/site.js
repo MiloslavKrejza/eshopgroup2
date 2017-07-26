@@ -1,1 +1,8 @@
-﻿//document.getElementById("prihlasit").onclick = document.getElementById("login").style.display = "block";
+﻿function toggleLogin() {
+    var x = document.getElementById('login');
+    if (x.style.display == 'none') {
+        x.style.display = 'block';
+    } else {
+        x.style.display = 'none';
+    }
+}
