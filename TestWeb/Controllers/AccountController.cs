@@ -315,19 +315,7 @@ namespace TestWeb.Controllers
             }
             return invalidresult;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
         /// <summary>
         /// HELPER return and log error
