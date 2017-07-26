@@ -255,7 +255,7 @@ namespace TestWeb.Controllers
 
 
                     var userProfile = new UserProfile { Address = model.Street, City = model.City,  Id = user.Id, Name = model.Name, Surname = model.Surname,
-                                          /*PhoneNumber = model.PhoneNumber*/  PostalCode = model.ZIP};
+                                          /*PhoneNumber = model.PhoneNumber*/  PostalCode = model.PostalCode};
                     
                     //??
                     return RedirectToAction("Forbidden");
