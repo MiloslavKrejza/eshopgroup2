@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using TestWeb.Models;
+using Trainee.Core.Business;
+using Trainee.Core.Abstraction;
+using Trainee.Core.DAL.Repositories;
+using Trainee.User.Abstraction;
+using Trainee.User.Business;
+using Trainee.User.DAL.Repositories;
+using Trainee.Core.DAL.Context;
+using Trainee.User.DAL.Context;
 
 namespace TestWeb
 {
@@ -44,8 +45,22 @@ namespace TestWeb
             //ALZA CORE - IDENTITY
             services.AddAlzaCoreIdentity(o => o.connectionString = Configuration.GetSection("ConnectionStrings:AlzaLego.Core.IdentityConnection").Value, Configuration);
 
+            services.AddDbContext<CountryDbContext>();
 
-          
+            services.AddDbContext<UserDbContext>();
+
+            services.AddTransient<CountryService, CountryService>();
+            services.AddTransient<ICountryRepository, CountryRepository>();
+
+            services.AddTransient<UserService, UserService>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+
+
+            /*************** POSSIBILITIES ***************/
+            //services.AddTransient ... created every time (pretty much)
+            //services.AddSingleton ... created only once in the runtime
+            //services.AddScoped    ... created only once in a request
+
 
             // Add framework services.
             services.AddMvc()
