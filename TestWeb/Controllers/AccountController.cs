@@ -186,7 +186,7 @@ namespace TestWeb.Controllers
             try
             {
                 var result = _countryService.GetAllCountries();
-                if (result.isOK)            //on dummy data invert condition
+                if (result.isOK)            
                     model.Countries = (List<Country>)result.data;
 
 
@@ -312,6 +312,7 @@ namespace TestWeb.Controllers
 
             try
             {
+                
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", returnUrl);
 
@@ -334,6 +335,10 @@ namespace TestWeb.Controllers
                     Street = userProfile.Address
                 };
 
+                var resultCountry = _countryService.GetAllCountries();
+                if (resultCountry.isOK)
+                    editModel.Countries = (List<Country>)resultCountry.data;
+
                 return View(editModel);
 
             }
@@ -355,6 +360,11 @@ namespace TestWeb.Controllers
 
             try
             {
+                var result = _countryService.GetAllCountries();
+                if (result.isOK)
+                    model.Countries = (List<Country>)result.data;
+
+
                 //TODO make an abstraction methode "Get Countries from DTO" and do it here and there
 
 
