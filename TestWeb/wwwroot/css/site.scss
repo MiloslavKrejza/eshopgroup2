@@ -1,5 +1,4 @@
 ﻿// Obecná definice
-﻿@charset "UTF-8";
 
 body {
     padding-top: 50px;
@@ -232,7 +231,12 @@ input:-ms-input-placeholder {
     }
 
     .change-top {
-        margin-top: 150px;
+        margin-top: 25px;
+        text-align: center;
+    }
+
+    .text-small {
+        padding: 15px;
         text-align: center;
     }
 
