@@ -382,7 +382,7 @@ namespace Alza.Core.Identity.Business
 
                 _context.UserRoles.Add(asdf);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 //------------------------------------------
                 //ADO -----------------------------------

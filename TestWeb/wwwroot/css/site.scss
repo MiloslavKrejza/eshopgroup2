@@ -1,7 +1,4 @@
-﻿// Obecná definice
-﻿@charset "UTF-8";
-
-body {
+﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
     background-color: #f2f9ff;
@@ -70,7 +67,7 @@ textarea {
     text-align: center;
 }
 
-//  Hlavička
+/*  Hlavička */
 
 #hlavicka {
     padding-top: 15px;
@@ -124,6 +121,15 @@ input:-ms-input-placeholder {
 
 #basket-user a {
     color: #555555;
+}
+
+/*Login container*/
+
+#login {
+    width: 400px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    float: right !important;
 }
 
 /*Menu*/

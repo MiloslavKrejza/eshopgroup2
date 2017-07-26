@@ -53,7 +53,7 @@ textarea {
 .row-centered {
   text-align: center; }
 
-/* Hlavička*/
+/*  Hlavička */
 #hlavicka {
   padding-top: 15px;
   padding-right: 20px;
@@ -98,6 +98,13 @@ input:-ms-input-placeholder {
 
 #basket-user a {
   color: #555555; }
+
+/*Login container*/
+#login {
+  width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  float: right !important; }
 
 /*Menu*/
 #menu-item {
@@ -194,11 +201,6 @@ input:-ms-input-placeholder {
 #layout {
   margin-bottom: 40px; }
 
-#render-body{
-    padding: 20px;
-}
-
-
 /*Patička */
 footer {
   padding: 20px 50px;
@@ -223,3 +225,4 @@ footer a:hover {
 .title-register {
   padding-left: 50px;
   padding-bottom: 20px; }
+
