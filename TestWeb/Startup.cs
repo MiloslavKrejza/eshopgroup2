@@ -11,6 +11,7 @@ using Trainee.User.Business;
 using Trainee.User.DAL.Repositories;
 using Trainee.Core.DAL.Context;
 using Microsoft.EntityFrameworkCore;
+using Trainee.User.DAL.Context;
 
 namespace TestWeb
 {
@@ -44,16 +45,12 @@ namespace TestWeb
 
             //ALZA CORE - IDENTITY
             services.AddAlzaCoreIdentity(o => o.connectionString = Configuration.GetSection("ConnectionStrings:Alza.Core.IdentityConnection").Value, Configuration);
-
-
-
-
             services.AddTransient<CountryService, CountryService>();
             services.AddTransient<ICountryRepository, CountryRepository>();
-
             services.AddTransient<UserService, UserService>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
-            services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries"));
+            services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
+            services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.User.Users")));
 
 
             /*************** POSSIBILITIES ***************/
