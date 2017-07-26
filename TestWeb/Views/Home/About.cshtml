@@ -46,8 +46,9 @@
             <h2>Změna údajů:</h2>
             <div class="row form-row">
                 <div class="col-lg-6">
-                    <label class="text-indent" for="name">Zadejte adresu</label>
-                    <input class="form-control" type="text" id="name" />
+                    <label class="text-indent" asp-for="Street">Ulice</label>
+                    <input class="form-control" asp-for="Street" />
+                    <span asp-validation-for="Street" class="text-danger"></span>
                 </div>
                 <div class="col-lg-6">
                     <label class="text-indent" for="sur">Zadejte PSČ</label>
