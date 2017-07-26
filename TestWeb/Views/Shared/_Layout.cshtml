@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Bookstore</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -16,9 +17,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -27,34 +26,44 @@
     <div class="container body-content container-fluid">
         <!-- HLAVIČKA -->
         <div class="row" id="hlavicka">
-            <div class="col-lg-2">
-                <a href=""><img class="logo" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
+            <div class="col-md-2">
+                <a asp-area="" asp-controller="Home" asp-action="Index"><img class="logo" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
             </div>
-            <div class="col-lg-1"></div>
-            <div class="col-lg-6">
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
                 <input id="hledat" class="center-block" placeholder="Hledat" />
             </div>
             <div id="basket-user">
-                <div class="col-lg-1"></div>
-                <div class="col-lg-1 text-center">
+                <div class="col-md-1"></div>
+                <div class="col-md-1">
                     <a href="">
                         <img src="~/images/cart-34-48.ico" alt="cart" /><br />
                         <p>Košík</p>
                     </a>
                 </div>
-                <div class="col-lg-1 text-center">
-                    <a href="">
+                <div class="col-md-1">
+                    <a asp-area="" asp-controller="Account" asp-action="Register">
                         <img src="~/images/user-2-48.png" alt="cart" /><br />
-                        <p>Přihlásit se</p>
+                        <p>Přihlásit</p>
                     </a>
                 </div>
             </div>
         </div>
+
         <hr />
+
+        <!--PARTIAL VIEW - LOGIN-->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="container"  id="login">
+                    @Html.Partial("~/Views/Account/Login.cshtml")
+                </div>
+            </div>
+        </div>
 
         <!-- MENU-->
         <div class="row" id="main-section">
-            <div class="col-lg-2">
+            <div class="col-md-2">
 
                 @{string[] cathegory = new string[] { "Fantasy", "Sci-Fi", "Horor", "Herní", "České" };
                     for (int i = 0; i < cathegory.Length; i++)
@@ -77,14 +86,14 @@
         <hr />
 
         <!-- PATIČKA -->
-        <div class="footer">
+        <footer>
             <div class="row">
-                <div class="col-lg-6 footer-left">
+                <div class="col-md-6">
                     <a href=""><p>Doprava a platba</p></a>
                     <a href=""><p>Obchodní podmínky</p></a>
                     <a href=""><p>Bezpečné nakupování</p></a>
                 </div>
-                <div class="col-lg-6 text-right footer-right">
+                <div class="col-md-6 text-right">
                     <p>
                         <strong>Fantastic Books</strong><br />
                         Guttenbergova 5, Liberec<br />
@@ -94,7 +103,7 @@
                     </p>
                 </div>
             </div>
-        </div>
+        </footer>
     </div>
 
     <environment names="Development">

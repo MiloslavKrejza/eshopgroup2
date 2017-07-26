@@ -69,7 +69,7 @@ textarea {
     text-align: center;
 }
 
-//  Hlavička
+/*  Hlavička */
 
 #hlavicka {
     padding-top: 15px;
@@ -123,6 +123,15 @@ input:-ms-input-placeholder {
 
 #basket-user a {
     color: #555555;
+}
+
+/*Login container*/
+
+#login {
+    width: 400px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    float: right !important;
 }
 
 /*Menu*/
