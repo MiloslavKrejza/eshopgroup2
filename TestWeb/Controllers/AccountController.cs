@@ -156,8 +156,13 @@ namespace TestWeb.Controllers
                 var result = _countryService.GetAllCountries();
                 RegisterViewModel model;
                 if (result.isOK)            //on dummy data invert condition
-                    model = new RegisterViewModel { /*Countries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } }*/
-                               Countries = (List<Country>)result.data };
+                {
+                    model = new RegisterViewModel
+                    { /*Countries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } }*/
+                        Countries = (List<Country>)result.data
+                    };
+
+                }
                 else
                     throw new Exception("Invalid model, database type error");
 
@@ -184,6 +189,13 @@ namespace TestWeb.Controllers
         {
             try
             {
+                var result = _countryService.GetAllCountries();
+                if (result.isOK)            //on dummy data invert condition
+                    model.Countries = (List<Country>)result.data;
+
+                
+
+
                 //Nesmi byt prihlasen
                 if (_signInManager.IsSignedIn(User))
                 {
@@ -238,6 +250,28 @@ namespace TestWeb.Controllers
                         if (res2.Succeeded)
                         {
 
+                            var userProfile = new UserProfile
+                            {
+                                Address = model.Street,
+                                City = model.City,
+                                Id = user.Id,
+                                Name = model.Name,
+                                Surname = model.Surname,
+                                /*PhoneNumber = model.PhoneNumber*/
+                                PostalCode = model.PostalCode
+                            };
+
+                            var countryByCode = _countryService.GetCountry(model.CountryCode);
+                            if (countryByCode.isOK)
+                            {
+                               // userProfile.Country = (Country)countryByCode.data;
+                                userProfile.CountryId = ((Country)countryByCode.data).Id;
+                            }
+
+                            userProfile.ProfileStateId = 1;
+
+                            _profileService.AddUserProfile(userProfile);
+
                             return View(model);
 
                         }
@@ -253,9 +287,8 @@ namespace TestWeb.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: true);
 
 
-                    var userProfile = new UserProfile { Address = model.Street, City = model.City,  Id = user.Id, Name = model.Name, Surname = model.Surname,
-                                          /*PhoneNumber = model.PhoneNumber*/  PostalCode = model.PostalCode};
                     
+
                     //??
                     return RedirectToAction("Forbidden");
                 }
