@@ -1,5 +1,4 @@
 ﻿// Obecná definice
-﻿@charset "UTF-8";
 
 body {
     padding-top: 50px;
@@ -232,7 +231,7 @@ input:-ms-input-placeholder {
     }
 
     .change-top {
-        margin-top: 150px;
+        margin-top: 30px;
         text-align: center;
     }
 
@@ -300,4 +299,11 @@ footer a:hover {
 .title-register {
     padding-left: 50px;
     padding-bottom:20px;
+}
+
+// Small text 
+
+.text-small {
+    margin-top: 15px;
+    text-align: center;
 }
