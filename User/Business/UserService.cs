@@ -9,9 +9,6 @@ namespace Trainee.User.Business
     {
         private readonly IUserProfileRepository _userRepos;
 
-
-        //ToDo check if user exists
-
         public UserService(IUserProfileRepository userRepos)
         {
             _userRepos = userRepos;
@@ -55,12 +52,17 @@ namespace Trainee.User.Business
         {
             try
             {
+                if (!GetUserProfile(userProfile.Id).isEmpty)
+                {
+                    throw new Exception("User with the same id already exists.");
+                }
+
                 var result = _userRepos.AddUserProfile(userProfile);
                 return AlzaAdminDTO.Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO.Error(e.Message);
             }
         }
 
@@ -77,12 +79,18 @@ namespace Trainee.User.Business
         {
             try
             {
+                if (GetUserProfile(profile.Id).isEmpty)
+                {
+                    throw new Exception("Invalid user id.");
+                }
+
+
                 var result = _userRepos.UpdateProfile(profile);
                 return AlzaAdminDTO.Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO.Error(e.Message);
             }
         }
 
