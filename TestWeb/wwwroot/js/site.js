@@ -5,6 +5,3 @@
     } else {
         x.style.display = 'none';
     }
-}
-
-

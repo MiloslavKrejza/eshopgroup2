@@ -13,15 +13,10 @@ namespace TestWeb.Models.AccountViewModels
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
         public string Street { get; set; }
 
         [MaxLength(50, ErrorMessage = "Prosím vyplňte validní PSČ bez mezer.")]
-        public string PostalCode { get; set; }
-
+        public string ZIP { get; set; }
 
         public string City { get; set; }
 

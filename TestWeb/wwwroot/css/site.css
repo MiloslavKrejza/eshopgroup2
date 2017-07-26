@@ -123,6 +123,14 @@ input:-ms-input-placeholder {
   #login form {
     padding: 0 20px; }
 
+#prihlasit {
+  border: none;
+  background-color: #f2f9ff;
+  padding: 0;
+  margin: 0; }
+  #prihlasit :hover {
+    cursor: pointer; }
+
 /*Menu přihlášeného uživatele*/
 #signedUserMenu a {
   background-color: #ffffff; }
