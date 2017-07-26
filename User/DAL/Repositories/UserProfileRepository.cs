@@ -20,9 +20,18 @@ namespace Trainee.User.DAL.Repositories
 
         public UserProfile AddUserProfile(UserProfile profile)
         {
-            _context.UserProfiles.Add(profile);
-            _context.SaveChanges();
-            return profile;
+            try
+            {
+                _context.UserProfiles.Add(profile);
+                _context.SaveChanges();
+                return profile;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public void DeleteUserProfile(int id)
