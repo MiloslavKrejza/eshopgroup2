@@ -42,8 +42,8 @@
                     </a>
                 </div>
                 <div class="col-md-1">
-                    <button id="prihlasit">
-                        <img src="~/images/user-2-48.png" alt="cart" /><br />
+                    <button id="prihlasit" onclick="toggleLogin();">
+                       <img src="~/images/user-2-48.png" alt="cart" /><br />
                         <p>Přihlásit</p>
                     </button>
                 </div>
@@ -55,7 +55,7 @@
         <!--PARTIAL VIEW - LOGIN-->
         <div class="row">
             <div class="col-md-4 col-md-offset-8">
-                <div class="container"  id="login">
+                <div class="container"  id="login" style="display:none;">
                     @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel())
                 </div>
             </div>
@@ -109,7 +109,7 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/site.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
