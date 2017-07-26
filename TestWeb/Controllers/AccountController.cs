@@ -17,6 +17,7 @@ using Trainee.Core.Business;
 using Trainee.User.Business;
 using Trainee.User.DAL.Entities;
 using Trainee.Core.DAL.Entities;
+using System.Collections.Generic;
 
 namespace TestWeb.Controllers
 {
@@ -150,7 +151,16 @@ namespace TestWeb.Controllers
 
                 ViewData["ReturnUrl"] = returnUrl;
 
-                return View("Register");
+
+                var result = _countryService.GetAllCountries();
+                RegisterViewModel model;
+                if (!result.isOK)//pozoooooooooooooooooor
+                    model = new RegisterViewModel { Coutries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } } /*Coutries = (List<Country>)result.data*/ };
+                else
+                    throw new Exception("Invalid model, database type error");
+
+
+                return View(model);
             }
             catch (Exception e)
             {
