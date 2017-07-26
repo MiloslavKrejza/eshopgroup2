@@ -40,7 +40,7 @@
                     <button type="submit" class="btn btn-default">Přihlásit se</button>
                 </div>
                 <p class="text-center">
-                    Nemáte u nás ještě účet? <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Zaregistrujte se.</a>
+                    Nemáte u nás ještě účet? <a asp-action="Register" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Zaregistrujte se.</a>
                 </p>
             </form>
         </section>

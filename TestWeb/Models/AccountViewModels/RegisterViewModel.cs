@@ -14,15 +14,15 @@ namespace TestWeb.Models.AccountViewModels
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
+        [Display(Name = "Heslo")]
         [Required(ErrorMessage = "Prosím vyplňte heslo.")]
         [StringLength(100, ErrorMessage = "Heslo musí mít alespoň {2} a nejvýše {1} znaků.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Heslo")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
         [Display(Name = "Potvrďte heslo")]
-        [Compare("Heslo", ErrorMessage = "Hesla musí být shodná.")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Hesla musí být shodná.")]
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Jméno")]
