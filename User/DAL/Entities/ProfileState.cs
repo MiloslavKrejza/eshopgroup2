@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace User.DAL.Entities
+namespace Trainee.User.DAL.Entities
 {
-    class UserState
+    public class ProfileState
     {
+        public int Id { get; set; }
         public string StateName { get; set; }
     }
 }

@@ -11,10 +11,12 @@ namespace TestWeb.Abstraction
 {
     public class AlzaActionResult : ActionResult, IKeepTempDataResult
     {
+        //uncomment if problems occur
+
         /// <summary>
         /// Gets or sets the route data to use for generating the URL.
         /// </summary>
-        public RouteValueDictionary RouteValues { get; set; }
+       // public RouteValueDictionary RouteValues { get; set; }
 
         IRouter Router = null;
 
@@ -22,7 +24,7 @@ namespace TestWeb.Abstraction
 
         public AlzaActionResult(string url, object routeValues)
         {
-            RouteValues = GetValuesDictionary(routeValues);
+            /*RouteValues */ _routeValueDictionary = GetValuesDictionary(routeValues);
             destUrl = url;
         }
 
@@ -30,7 +32,7 @@ namespace TestWeb.Abstraction
         {
             Router = context.RouteData.Routers[0];
 
-            var virtualPathData = GetVirtualPathData(context.HttpContext, values: RouteValues);
+            var virtualPathData = GetVirtualPathData(context.HttpContext, values: _routeValueDictionary /*RouteValues*/ );
 
             
 

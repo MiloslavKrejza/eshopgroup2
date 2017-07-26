@@ -4,10 +4,16 @@ GO
 
 CREATE TABLE [dbo].[Countries](
 	[Id][int] Identity(1,1) NOT NULL,
-	[CountryName][nvarchar](max) NOT NULL
+	[CountryName][nvarchar](max) NOT NULL,
+	[CountryCode][nvarchar](2) NOT NULL
 )
 GO
 ALTER TABLE [dbo].[Countries]
 ADD CONSTRAINT [PK_Country]
 	PRIMARY KEY CLUSTERED([Id])
+GO
+
+CREATE INDEX CountryCode_index on [dbo].[Countries] (CountryCode);
+GO
+CREATE INDEX CountryId_index on [dbo].[Countries] (Id);
 GO
