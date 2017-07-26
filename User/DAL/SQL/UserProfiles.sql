@@ -14,17 +14,14 @@ CREATE TABLE [dbo].[UserProfiles](
 	[Address][nvarchar](max) NULL,
 	[ProfilePicAddress][nvarchar](max) NULL,
 )
-ALTER TABLE [dbo].[UserProfiles]
-ADD CONSTRAINT [PK_ProfileID]
-	PRIMARY KEY Clustered([Id])
-GO
+
 ALTER TABLE [dbo].[UserProfiles] ADD CONSTRAINT [FK_UserProfiles_Coutries]
 	FOREIGN KEY ([CountryId]) REFERENCES [dbo].[Countries] ([Id]) 
 GO
-ALTER TABLE [dbo].[UserProfiles] ADD CONSTRAINT [FK_UserProfiles_Identities]
-	FOREIGN KEY ([Id]) REFERENCES [dbo].[AspNetUsers] ([Id]) 
-GO
+
 ALTER TABLE [dbo].[UserProfiles] ADD CONSTRAINT [FK_UserProfiles_States]
 	FOREIGN KEY ([ProfileStateId]) REFERENCES [dbo].[ProfileStates] ([Id]) 
 GO
 
+CREATE INDEX UserProfileID_Index ON [dbo].[UserProfiles] (Id)
+GO

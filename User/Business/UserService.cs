@@ -1,14 +1,13 @@
 ﻿using System;
-using User.Abstraction;
+using Trainee.User.Abstraction;
 using Alza.Core.Module.Http;
-using User.DAL.Entities;
+using Trainee.User.DAL.Entities;
 
-namespace User
+namespace Trainee.User.Business
 {
-    class UserService
+    public class UserService
     {
         private readonly IUserProfileRepository _userRepos;
-
 
         public UserService(IUserProfileRepository userRepos)
         {
@@ -35,7 +34,7 @@ namespace User
             }
             catch (Exception e)
             {
-                return Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
 
         }
@@ -53,12 +52,17 @@ namespace User
         {
             try
             {
+                if (!GetUserProfile(userProfile.Id).isEmpty)
+                {
+                    throw new Exception("User with the same id already exists.");
+                }
+
                 var result = _userRepos.AddUserProfile(userProfile);
                 return AlzaAdminDTO.Data(result);
             }
             catch (Exception e)
             {
-                return Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO.Error(e.Message);
             }
         }
 
@@ -75,22 +79,24 @@ namespace User
         {
             try
             {
+                if (GetUserProfile(profile.Id).isEmpty)
+                {
+                    throw new Exception("Invalid user id.");
+                }
+
+
                 var result = _userRepos.UpdateProfile(profile);
                 return AlzaAdminDTO.Data(result);
             }
             catch (Exception e)
             {
-                return Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO.Error(e.Message);
             }
         }
 
 
 
 
-        public AlzaAdminDTO Error(string message)
-        {
-            Guid guid = new Guid();
-            return AlzaAdminDTO.Error(guid, message);
-        }
+
     }
 }
