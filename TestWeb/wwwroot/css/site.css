@@ -171,7 +171,7 @@ input:-ms-input-placeholder {
     margin-top: 30px;
     text-align: center; }
   .profile .form-control-file {
-    width: 65%;
+    width: 40%;
     text-align: center;
     margin-left: auto;
     margin-right: auto; }
@@ -182,7 +182,6 @@ input:-ms-input-placeholder {
       display: none; } }
 
 .btn-profile {
-  margin-right: 15px;
   margin-top: 15px;
   width: 150px; }
   @media screen and (max-width: 768px) {

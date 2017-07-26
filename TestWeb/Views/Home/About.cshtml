@@ -73,12 +73,12 @@
                         <label class="text-indent" for="sur">Zadejte město</label>
                         <input class="form-control" type="text" id="sur" />
                     </div>
-                    <div class="text-small"><small>Pole, která necháte prázdná zůstanou nezměněna.</small></div>
+                    <div class="text-small"><small id="fileHelp" class="form-text text-muted">Pole, do kterých nevložíte žádná data se nezmění.</small></div>
                 </div>
 
                 <div class="col-lg-10 change-top">
                     <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                    <small id="fileHelp" class="form-text text-muted">Velikost souboru může bát maximálně 28 TB</small><br />
+                    <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 28 TB</small><br />
                     <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-success btn-profile">Uložit</button>
                     <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
                 </div>
