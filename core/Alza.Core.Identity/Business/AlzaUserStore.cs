@@ -177,7 +177,8 @@ namespace Alza.Core.Identity.Business
 
         public override Task<ApplicationUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var AppUser = _context.Users.FirstOrDefault(u => u.NormalizedEmail == normalizedEmail);
+            return Task.FromResult<ApplicationUser>(AppUser);
         }
 
         public override Task<ApplicationUser> FindByIdAsync(string userId, CancellationToken cancellationToken)

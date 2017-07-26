@@ -110,13 +110,13 @@ namespace TestWeb.Controllers
                         var isExist = await _userManager.FindByEmailAsync(model.Email);
                         if (isExist == null)
                         {
-                            _logger.LogWarning(2, "someString");
-                            ModelState.AddModelError("UserName", "someString");
+                            _logger.LogWarning(2, "Neznámý e-mail.");
+                            ModelState.AddModelError("UserName", "Neznámý e-mail.");
                         }
                         else
                         {
-                            _logger.LogWarning(2, "someString");
-                            ModelState.AddModelError("Password", "someString");
+                            _logger.LogWarning(2, "Nesprávné heslo.");
+                            ModelState.AddModelError("Password", "Nesprávné heslo.");
                         }
 
 
@@ -138,8 +138,7 @@ namespace TestWeb.Controllers
         // GET: /Account/Register
         [HttpGet]
         [Route("/Account/Register")]
-        [AllowAnonymous]
-        
+        [AllowAnonymous] 
         public IActionResult Register(string returnUrl = null)
         {
             try
@@ -168,16 +167,13 @@ namespace TestWeb.Controllers
 
                 /********************************/
 
-                return View("Register",model);
+                return View("Register", model);
             }
             catch (Exception e)
             {
                 return ExceptionActionResult(e);
             }
         }
-
-
-
 
         //
         // POST: /Account/Register
@@ -305,6 +301,30 @@ namespace TestWeb.Controllers
             }
         }
 
+
+        //
+        // GET: /Account/Edit
+        [HttpGet]
+        [Route("/Account/Edit")]
+        public IActionResult Edit(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+
+            try
+            {
+                if (!_signInManager.IsSignedIn(User))
+                    return RedirectToAction("Login", returnUrl);
+
+
+            }
+            catch(Exception e)
+            {
+                return ExceptionActionResult(e);
+            }
+
+
+            return Forbidden();
+        }
 
         //
         // GET: /Account/Forbidden
