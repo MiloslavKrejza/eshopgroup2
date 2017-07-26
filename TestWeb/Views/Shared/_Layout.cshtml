@@ -42,10 +42,10 @@
                     </a>
                 </div>
                 <div class="col-md-1">
-                    <a asp-area="" asp-controller="Account" asp-action="Register">
-                        <img src="~/images/user-2-48.png" alt="cart" /><br />
+                    <button id="prihlasit" onclick="toggleLogin();">
+                       <img src="~/images/user-2-48.png" alt="cart" /><br />
                         <p>Přihlásit</p>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -54,9 +54,9 @@
 
         <!--PARTIAL VIEW - LOGIN-->
         <div class="row">
-            <div class="col-md-4">
-                <div class="container"  id="login">
-                    @Html.Partial("~/Views/Account/Login.cshtml")
+            <div class="col-md-4 col-md-offset-8">
+                <div class="container"  id="login" style="display:none;">
+                    @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel())
                 </div>
             </div>
         </div>
