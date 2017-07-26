@@ -113,6 +113,7 @@ input:-ms-input-placeholder {
   background-color: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 10px;
+  display: none !important;
   position: absolute;
   z-index: 1; }
   #login form {
