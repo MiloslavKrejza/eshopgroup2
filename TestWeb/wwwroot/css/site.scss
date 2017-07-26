@@ -150,6 +150,31 @@ input:-ms-input-placeholder {
     }
 }
 
+#prihlasit {
+    border: none;
+    background-color: #f2f9ff ;
+    padding: 0;
+    margin: 0;
+    :hover {
+       cursor: pointer;
+    }
+}
+
+/*Login container*/
+
+#login {
+    width: 100%;
+    background-color: #ffffff ;
+    border: 1px solid #dddddd ;
+    border-radius: 10px;
+    display: none;
+    position: absolute;
+    z-index: 1;
+    form {
+        padding: 0 20px;
+    }
+}
+
 /*Menu*/
 #menu-item {
     height: 50px;

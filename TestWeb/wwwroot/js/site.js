@@ -6,5 +6,3 @@
         x.style.display = 'none';
     }
 }
-
-
