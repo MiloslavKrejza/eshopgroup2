@@ -156,9 +156,9 @@ namespace TestWeb.Controllers
 
                 var result = _countryService.GetAllCountries();
                 RegisterViewModel model;
-                if (!result.isOK)            //on dummy data invert condition
-                    model = new RegisterViewModel { Countries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } }
-                               /* Countries = (List<Country>)result.data */};
+                if (result.isOK)            //on dummy data invert condition
+                    model = new RegisterViewModel { /*Countries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } }*/
+                               Countries = (List<Country>)result.data };
                 else
                     throw new Exception("Invalid model, database type error");
 
