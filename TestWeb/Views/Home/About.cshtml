@@ -44,26 +44,21 @@
 
         <div id="change" style="display: none;">
             <div class="col-lg-10 profile-left">
-                <h2>Změna údajů:</h2>
-                <div class="row form-row">
-                    <div class="col-lg-6">
+                <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                    <h2>Změna údajů:</h2>
+                    <div class="col-lg-8 col-centered">
                         <label class="text-indent" asp-for="Street">Ulice</label>
                         <input class="form-control" asp-for="Street" />
                         <span asp-validation-for="Street" class="text-danger"></span>
-                    </div>
-                    <div class="col-lg-6">
+                        <label class="text-indent" asp-for="City">Město</label>
+                        <input class="form-control" asp-for="City" />
+                        <span asp-validation-for="City" class="text-danger"></span>
                         <label class="text-indent" asp-for="ZIP">PSČ</label>
                         <input class="form-control" asp-for="ZIP" />
                         <span asp-validation-for="ZIP" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row form-row">
-                    <div class="col-lg-4">
                         <label class="text-indent control-label" asp-for="Email">E-mail</label>
                         <input class="form-control" asp-for="Email" />
                         <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="col-lg-4">
                         <label class="text-indent" asp-for="Country">Stát</label>
                         <select class="form-control" asp-for="Country">
                             @{ string[] city = new string[] { "Česká republika", "Deutschland", "England", "France", "Slovenská republika" };
@@ -72,24 +67,21 @@
                                     <option>@city[i]</option>
                                 }
                             }
-
                         </select>
                         <span asp-validation-for="Country" class="text-danger"></span>
-                    </div>
-                    <div class="col-lg-4">
-                        <label class="text-indent" asp-for="City">Město</label>
-                        <input class="form-control" asp-for="City" />
-                        <span asp-validation-for="City" class="text-danger"></span>
-                    </div>
-                    <div class="text-small"><small id="fileHelp" class="form-text text-muted">Pole, do kterých nevložíte žádná data se nezmění.</small></div>
-                </div>
+                        <div class="text-small"><small id="fileHelp" class="form-text text-muted">Pole, do kterých nevložíte žádná data se nezmění.</small></div>
 
-                <div class="col-lg-10 change-top">
-                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                    <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 28 TB</small><br />
-                    <button type="submit" class="btn btn-success btn-profile">Uložit</button>
-                    <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
-                </div></div></div></div>
+                    </div><div class="col-lg-10 col-centered change-top">
+                        <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                        <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 28 MB</small><br />
+                        <button type="submit" class="btn btn-success btn-profile">Uložit</button>
+                        <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
 
     <!--
 
