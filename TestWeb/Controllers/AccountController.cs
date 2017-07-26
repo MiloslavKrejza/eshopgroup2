@@ -15,6 +15,8 @@ using TestWeb.Models;
 using TestWeb.Models.AccountViewModels;
 using Trainee.Core.Business;
 using Trainee.User.Business;
+using Trainee.User.DAL.Entities;
+using Trainee.Core.DAL.Entities;
 
 namespace TestWeb.Controllers
 {
@@ -182,17 +184,21 @@ namespace TestWeb.Controllers
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
 
-
-
-
-
                     //Kontrola jestli uzivatel uz neexistuje
                     if (String.IsNullOrEmpty(user.NormalizedUserName))
                         user.NormalizedUserName = user.UserName;
                     var exist = await _userManager.GetUserIdAsync(user);
 
                     if (exist != "")
-                        return RedirectToAction("Uzivatel existuje");
+                    {
+                        ViewData["UserExists"] = true;
+                        return View(model);
+                    }
+                    else
+                    {
+                        ViewData["UserExists"] = false;
+                    }
+                       // return RedirectToAction("Uzivatel existuje");
 
 
 
@@ -229,12 +235,14 @@ namespace TestWeb.Controllers
                         return RedirectToAction("CHYBA");
                     }
 
-
-
-                    await _signInManager.SignInAsync(user, isPersistent: true);
                     
 
+                    await _signInManager.SignInAsync(user, isPersistent: true);
 
+
+                    var userProfile = new UserProfile { Address = model.Street, City = model.City,  Id = user.Id, Name = model.Name, Surname = model.Surname,
+                                          /*PhoneNumber = model.PhoneNumber*/  PostalCode = model.ZIP};
+                    
                     //??
                     return RedirectToAction("Forbidden");
                 }
@@ -315,19 +323,7 @@ namespace TestWeb.Controllers
             }
             return invalidresult;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
         /// <summary>
         /// HELPER return and log error
