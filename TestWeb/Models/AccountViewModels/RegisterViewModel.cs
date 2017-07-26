@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Trainee.Core.DAL.Entities;
 
 namespace TestWeb.Models.AccountViewModels
 {
@@ -41,7 +42,9 @@ namespace TestWeb.Models.AccountViewModels
         public string City { get; set; }
 
 
-        public string Country { get; set; }
+        public string CountryCode { get; set; }
+
+        public List<Country> Coutries { get; set; }
 
     }
 }

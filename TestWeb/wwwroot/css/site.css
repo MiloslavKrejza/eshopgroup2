@@ -1,4 +1,5 @@
-﻿body {
+﻿@charset "UTF-8";
+body {
   padding-top: 50px;
   padding-bottom: 20px;
   background-color: #f2f9ff;
@@ -52,6 +53,7 @@ textarea {
 .row-centered {
   text-align: center; }
 
+/*  Hlavička */
 #hlavicka {
   padding-top: 15px;
   padding-right: 20px;
@@ -96,6 +98,13 @@ input:-ms-input-placeholder {
 
 #basket-user a {
   color: #555555; }
+
+/*Login container*/
+#login {
+  width: 400px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  float: right !important; }
 
 /*Menu*/
 #menu-item {
@@ -167,16 +176,20 @@ input:-ms-input-placeholder {
   .profile .form-profile {
     margin: 15px; }
   .profile .change-top {
+    margin-top: 30px;
     margin-top: 25px;
     text-align: center; }
   .profile .text-small {
     padding: 15px;
     text-align: center; }
   .profile .form-control-file {
-    width: 65%;
+    width: 40%;
     text-align: center;
     margin-left: auto;
     margin-right: auto; }
+    @media screen and (max-width: 768px) {
+      .profile .form-control-file {
+        width: 100%; } }
   .profile .profile-country {
     margin-left: 5px; }
   @media screen and (max-width: 768px) {
@@ -184,7 +197,6 @@ input:-ms-input-placeholder {
       display: none; } }
 
 .btn-profile {
-  margin-right: 15px;
   margin-top: 15px;
   width: 150px; }
   @media screen and (max-width: 768px) {
@@ -212,11 +224,15 @@ footer a:hover {
 .form-row {
   margin-bottom: 20px; }
 
-#register-button {
+.register-button {
   width: +30%;
   margin: 20px 0; }
 
 .title-register {
   padding-left: 50px;
   padding-bottom: 20px; }
+
+.text-small {
+  margin-top: 15px;
+  text-align: center; }
 
