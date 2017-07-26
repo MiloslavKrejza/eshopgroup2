@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Profil uživatele";
+}
+
+<script type="text/javascript">
+    function showStuff(id, text, btn) {
+        document.getElementById(id).style.display = 'block';
+        // hide the lorem ipsum text
+        document.getElementById(text).style.display = 'none';
+        // hide the link
+        btn.style.display = 'none';
+    }
+</script>
+
+<div class="container">
+    <div class="row row-centered profile">
+
+        <div id="slip">
+            <div class="col-lg-5 profile-left">
+                <h2>Adam Bílý</h2>
+                <div class="col-lg-6 profile-info">
+                    <p class="profile-item">E-mail:</p>
+                    <p class="profile-item">Adresa:</p>
+                    <p class="profile-item">Město:</p>
+                    <p class="profile-item">PSČ:</p>
+                    <p class="profile-item">Země:</p>
+                </div>
+                <div class="col-lg-6">
+                    <p class="second">email@email.cz</p>
+                    <p class="second">Alzákova 582</p>
+                    <p class="second">Praha</p>
+                    <p class="second">110 00</p>
+                    <p class="second">Česko</p>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 profile-right">
+                <img src="https://www.itnetwork.cz/images/avatars/29878.png?v=1494148410" alt="profile-photo" class="img-fluid img-profile" /><br />
+                <button type="button" onclick="showStuff('change', 'slip');" class="btn btn-success btn-profile">Změnit údaje</button>
+            </div>
+        </div>
+
+        <div id="change" style="display: none;">
+            <div class="col-lg-10 profile-left">
+                <h2>Změna údajů:</h2>
+                <div class="row form-row">
+                    <div class="col-lg-6">
+                        <label class="text-indent" for="name">Zadejte adresu</label>
+                        <input class="form-control" type="text" id="name" />
+                    </div>
+                    <div class="col-lg-6">
+                        <label class="text-indent" for="sur">Zadejte PSČ</label>
+                        <input class="form-control" type="text" id="sur" />
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-lg-4">
+                        <label class="text-indent" for="name">Zadejte email</label>
+                        <input class="form-control" type="text" id="name" />
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="text-indent" for="name">Zadejte zemi</label>
+                        <select class="form-control" id="exampleSelect1">
+                            <option>Česko</option>
+                            <option>Slovensko</option>
+                            <option>KLDR</option>
+                            <option>JAR</option>
+                            <option>Rakousko</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="text-indent" for="sur">Zadejte město</label>
+                        <input class="form-control" type="text" id="sur" />
+                    </div>
+                    <small class="text-small">Pole, která necháte prázdná zůstanou nezměněna.</small>
+                </div>
+
+                <div class="col-lg-10 change-top">
+                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                    <small id="fileHelp" class="form-text text-muted">Velikost souboru může bát maximálně 28 TB</small><br />
+                    <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-success btn-profile">Uložit</button>
+                    <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--
+
+    <div class="col-lg-10"><hr class="body-line" /></div>
+
+    <div class="col-lg-10 cart-items">
+        <h2>Můj košík:</h2>
+    </div>
+
+    <div class="col-lg-10"><hr class="body-line" /></div>
+
+    <div class="col-lg-10 cart">
+        <h2>Mé objednávky:</h2>
+    </div>-->
+
+</div>
