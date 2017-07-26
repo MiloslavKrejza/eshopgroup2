@@ -15,6 +15,8 @@ namespace Trainee.Core.DAL.Repositories
         {
             _context = context;
         }
+        
+
         public Country AddCountry(Country country)
         {
             _context.Countries.Add(country);

@@ -256,7 +256,7 @@ input:-ms-input-placeholder {
     }
 
     .change-top {
-        margin-top: 25px;
+        margin-top: 30px;
         text-align: center;
     }
 
@@ -266,16 +266,19 @@ input:-ms-input-placeholder {
     }
 
     .form-control-file {
-        width: 65%;
+        width: 40%;
         text-align: center;
         margin-left: auto;
         margin-right: auto;
-    } 
+        @media screen and (max-width: 768px) {
+            width: 100%;
+        }
+    }
 
     .profile-country {
         margin-left: 5px;
     }
-    
+
     @media screen and (max-width: 768px) {
         .profile-info {
             display: none;
@@ -286,7 +289,6 @@ input:-ms-input-placeholder {
 // Buttons
 
 .btn-profile {
-    margin-right: 15px;
     margin-top: 15px;
     width: 150px;
 
@@ -321,7 +323,7 @@ footer a:hover {
     margin-bottom: 20px;
 }
 
-#register-button {
+.register-button {
     width: +30%;
     margin: 20px 0;
 }
@@ -329,4 +331,11 @@ footer a:hover {
 .title-register {
     padding-left: 50px;
     padding-bottom:20px;
+}
+
+// Small text 
+
+.text-small {
+    margin-top: 15px;
+    text-align: center;
 }

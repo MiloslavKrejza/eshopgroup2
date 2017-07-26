@@ -43,7 +43,6 @@ namespace TestWeb.Controllers
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
-
             _countryService = countryService;
             _profileService = userService;
         }
@@ -111,13 +110,13 @@ namespace TestWeb.Controllers
                         var isExist = await _userManager.FindByEmailAsync(model.Email);
                         if (isExist == null)
                         {
-                            _logger.LogWarning(2, "someString");
-                            ModelState.AddModelError("UserName", "someString");
+                            _logger.LogWarning(2, "Neznámý e-mail.");
+                            ModelState.AddModelError("UserName", "Neznámý e-mail.");
                         }
                         else
                         {
-                            _logger.LogWarning(2, "someString");
-                            ModelState.AddModelError("Password", "someString");
+                            _logger.LogWarning(2, "Nesprávné heslo.");
+                            ModelState.AddModelError("Password", "Nesprávné heslo.");
                         }
 
 
@@ -139,8 +138,7 @@ namespace TestWeb.Controllers
         // GET: /Account/Register
         [HttpGet]
         [Route("/Account/Register")]
-        [AllowAnonymous]
-        
+        [AllowAnonymous] 
         public IActionResult Register(string returnUrl = null)
         {
             try
@@ -156,24 +154,26 @@ namespace TestWeb.Controllers
 
                 var result = _countryService.GetAllCountries();
                 RegisterViewModel model;
-                if (!result.isOK)            //on dummy data invert condition
-                    model = new RegisterViewModel { Countries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } }
-                               /* Countries = (List<Country>)result.data */};
+                if (result.isOK)            //on dummy data invert condition
+                {
+                    model = new RegisterViewModel
+                    { /*Countries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } }*/
+                        Countries = (List<Country>)result.data
+                    };
+
+                }
                 else
                     throw new Exception("Invalid model, database type error");
 
                 /********************************/
 
-                return View("Register",model);
+                return View("Register", model);
             }
             catch (Exception e)
             {
                 return ExceptionActionResult(e);
             }
         }
-
-
-
 
         //
         // POST: /Account/Register
@@ -185,6 +185,13 @@ namespace TestWeb.Controllers
         {
             try
             {
+                var result = _countryService.GetAllCountries();
+                if (result.isOK)            //on dummy data invert condition
+                    model.Countries = (List<Country>)result.data;
+
+                
+
+
                 //Nesmi byt prihlasen
                 if (_signInManager.IsSignedIn(User))
                 {
@@ -239,6 +246,28 @@ namespace TestWeb.Controllers
                         if (res2.Succeeded)
                         {
 
+                            var userProfile = new UserProfile
+                            {
+                                Address = model.Street,
+                                City = model.City,
+                                Id = user.Id,
+                                Name = model.Name,
+                                Surname = model.Surname,
+                                /*PhoneNumber = model.PhoneNumber*/
+                                PostalCode = model.PostalCode
+                            };
+
+                            var countryByCode = _countryService.GetCountry(model.CountryCode);
+                            if (countryByCode.isOK)
+                            {
+                               // userProfile.Country = (Country)countryByCode.data;
+                                userProfile.CountryId = ((Country)countryByCode.data).Id;
+                            }
+
+                            userProfile.ProfileStateId = 1;
+
+                            _profileService.AddUserProfile(userProfile);
+
                             return View(model);
 
                         }
@@ -254,9 +283,8 @@ namespace TestWeb.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: true);
 
 
-                    var userProfile = new UserProfile { Address = model.Street, City = model.City,  Id = user.Id, Name = model.Name, Surname = model.Surname,
-                                          /*PhoneNumber = model.PhoneNumber*/  PostalCode = model.ZIP};
                     
+
                     //??
                     return RedirectToAction("Forbidden");
                 }
@@ -273,6 +301,30 @@ namespace TestWeb.Controllers
             }
         }
 
+
+        //
+        // GET: /Account/Edit
+        [HttpGet]
+        [Route("/Account/Edit")]
+        public IActionResult Edit(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+
+            try
+            {
+                if (!_signInManager.IsSignedIn(User))
+                    return RedirectToAction("Login", returnUrl);
+
+
+            }
+            catch(Exception e)
+            {
+                return ExceptionActionResult(e);
+            }
+
+
+            return Forbidden();
+        }
 
         //
         // GET: /Account/Forbidden
