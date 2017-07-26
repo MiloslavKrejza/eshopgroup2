@@ -1,45 +1,71 @@
 ﻿@{
     ViewData["Title"] = "Registrace";
 }
-<h2>@ViewData["Title"]</h2>
+<h2 class="title-register">@ViewData["Title"]</h2>
 
-<div class="form-group">
-    <form>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="name">Jméno</label>
-                <input type="text" id="name" />
+<div class="row">
+
+    <div class="col-lg-8 form-group col-centered">
+        <form>
+            <div class="row form-row">
+                <div class="col-lg-6">
+                    <label class="text-indent" for="name">Jméno</label>
+                    <input class="form-control" type="text" id="name" />
+                </div>
+                <div class="col-lg-6">
+                    <label class="text-indent" for="sur">Příjmení</label>
+                    <input class="form-control" type="text" id="sur" />
+                </div>
             </div>
-            <div class="col-md-3">
-                <label for="sur">Příjmení</label>
-                <input type="text" id="sur" />
+            <div class="row form-row">
+                <div class="col-lg-12 col-centered">
+                    <label class="text-indent" for="mail">E-mail</label>
+                    <input class="form-control" type="email" id="mail" />
+                </div>
             </div>
-        </div>
-        <label for="mail">E-mail</label>
-        <input type="email" id="mail" />
-        <div class="row">
-            <div class="col-md-3">
-                <label for="pass">Heslo</label>
-                <input type="password" id="pass" />
+            <div class="row form-row">
+                <div class="col-lg-6">
+                    <label class="text-indent" for="pass">Heslo</label>
+                    <input class="form-control" type="password" id="pass" />
+                </div>
+                <div class="col-lg-6">
+                    <label class="text-indent" for="passAgain">Heslo znovu</label>
+                    <input class="form-control" type="password" id="passAgain" />
+                </div>
             </div>
-            <div class="col-md-3">
-                <label for="passAgain">Heslo znovu</label>
-                <input type="password" id="passAgain" />
+            <div class="row form-row">
+                <div class="col-lg-6">
+                    <label class="text-indent" for="street">Ulice</label>
+                    <input class="form-control" type="text" id="street" />
+                </div>
+                <div class="col-lg-6">
+                    <label class="text-indent" for="zip">PSČ</label>
+                    <input class="form-control" type="number" id="zip" />
+                </div>
             </div>
-        </div>
-        <br />
-        <label for="street">Ulice</label>
-        <input type="text" id="street" />
-        <div class="row">
-            <div class="col-md-3">
-                <label for="zip">PSČ</label>
-                <input type="number" id="zip" />
+            <div class="row form-row">
+                <div class="col-lg-6">
+                    <label class="text-indent" for="city">Město</label>
+                    <input class="form-control" type="text" id="city" />
+                </div>
+                <div class="col-lg-6">
+                    <label class="text-indent" for="state">Stát</label>
+                    <select class="form-control" id="state">
+                        @{ string[] city = new string[] { "Česká republika", "Deutschland", "England", "France", "Slovenská republika" };
+                            for (int i = 0; i < city.Length; i++)
+                            {
+                                <option>@city[i]</option>
+                            }
+                        }
+
+                    </select>
+                </div>
             </div>
-            <div class="col-md-3">
-                <label for="city">Město</label>
-                <input type="text" id="city" />
+            <div class="row text-center">
+                <button id="register-button" class="btn btn-primary" type="submit">Registrovat se</button>
             </div>
-        </div>
-        <button type="submit">Registrovat se</button>
-    </form>
+        </form>
+    </div>
+
 </div>
+
