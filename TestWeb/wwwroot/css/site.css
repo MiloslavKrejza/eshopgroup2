@@ -175,6 +175,9 @@ input:-ms-input-placeholder {
     text-align: center;
     margin-left: auto;
     margin-right: auto; }
+    @media screen and (max-width: 768px) {
+      .profile .form-control-file {
+        width: 100%; } }
   .profile .profile-country {
     margin-left: 5px; }
   @media screen and (max-width: 768px) {
@@ -209,7 +212,7 @@ footer a:hover {
 .form-row {
   margin-bottom: 20px; }
 
-#register-button {
+.register-button {
   width: +30%;
   margin: 20px 0; }
 
