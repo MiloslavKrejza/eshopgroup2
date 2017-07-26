@@ -2,16 +2,9 @@
 using Alza.Core.Identity.Configuration;
 using Alza.Core.Identity.Dal.Context;
 using Alza.Core.Identity.Dal.Entities;
-using Alza.Core.Identity.Dal.Repository;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

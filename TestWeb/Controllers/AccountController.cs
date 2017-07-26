@@ -40,7 +40,6 @@ namespace TestWeb.Controllers
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
-
             _countryService = countryService;
             _profileService = userService;
         }
