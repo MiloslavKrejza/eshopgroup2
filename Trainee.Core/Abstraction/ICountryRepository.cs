@@ -30,6 +30,12 @@ namespace Trainee.Core.Abstraction
         /// </summary>
         /// <param name="id">ID of a country to delete</param>
         void DeleteCountry(int id);
+        /// <summary>
+        /// Gets the specified Country
+        /// </summary>
+        /// <param name="code">Code of a country to be returned</param>
+        /// <returns>Specified Country if it exists</returns>
+        Country GetCountryByCode(string code);
 
     }
 }
