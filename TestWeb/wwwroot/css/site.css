@@ -167,9 +167,7 @@ input:-ms-input-placeholder {
   .profile .form-profile {
     margin: 15px; }
   .profile .change-top {
-
     margin-top: 30px;
-
     margin-top: 25px;
     text-align: center; }
   .profile .text-small {
@@ -228,3 +226,4 @@ footer a:hover {
 .text-small {
   margin-top: 15px;
   text-align: center; }
+
