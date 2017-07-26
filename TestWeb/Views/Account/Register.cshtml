@@ -64,14 +64,13 @@
                     <label class="text-indent control-label" asp-for="CountryCode"></label>
                     <select class="form-control" asp-for="CountryCode">
                         @{
-                            foreach (Country c in Model.Coutries)
+                            foreach (Country c in Model.Countries)
                             {
                                 <option value="@c.CountryCode">@c.Name</option>
                             }
                         }
 
                     </select>
-                    <span asp-validation-for="Country" class="text-danger"></span>
                 </div>
             </div>
             <div class="row text-center">

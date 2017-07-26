@@ -15,6 +15,9 @@ using TestWeb.Models;
 using TestWeb.Models.AccountViewModels;
 using Trainee.Core.Business;
 using Trainee.User.Business;
+using Trainee.User.DAL.Entities;
+using Trainee.Core.DAL.Entities;
+using System.Collections.Generic;
 
 namespace TestWeb.Controllers
 {
@@ -137,6 +140,7 @@ namespace TestWeb.Controllers
         [HttpGet]
         [Route("/Account/Register")]
         [AllowAnonymous]
+        
         public IActionResult Register(string returnUrl = null)
         {
             try
@@ -148,7 +152,19 @@ namespace TestWeb.Controllers
 
                 ViewData["ReturnUrl"] = returnUrl;
 
-                return View("Register");
+                /*************Added**************/
+
+                var result = _countryService.GetAllCountries();
+                RegisterViewModel model;
+                if (!result.isOK)            //on dummy data invert condition
+                    model = new RegisterViewModel { /* Coutries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } }*/
+                                Countries = (List<Country>)result.data };
+                else
+                    throw new Exception("Invalid model, database type error");
+
+                /********************************/
+
+                return View("Register",model);
             }
             catch (Exception e)
             {
@@ -182,17 +198,21 @@ namespace TestWeb.Controllers
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
 
-
-
-
-
                     //Kontrola jestli uzivatel uz neexistuje
                     if (String.IsNullOrEmpty(user.NormalizedUserName))
                         user.NormalizedUserName = user.UserName;
                     var exist = await _userManager.GetUserIdAsync(user);
 
                     if (exist != "")
-                        return RedirectToAction("Uzivatel existuje");
+                    {
+                        ViewData["UserExists"] = true;
+                        return View(model);
+                    }
+                    else
+                    {
+                        ViewData["UserExists"] = false;
+                    }
+                       // return RedirectToAction("Uzivatel existuje");
 
 
 
@@ -229,12 +249,14 @@ namespace TestWeb.Controllers
                         return RedirectToAction("CHYBA");
                     }
 
-
-
-                    await _signInManager.SignInAsync(user, isPersistent: true);
                     
 
+                    await _signInManager.SignInAsync(user, isPersistent: true);
 
+
+                    var userProfile = new UserProfile { Address = model.Street, City = model.City,  Id = user.Id, Name = model.Name, Surname = model.Surname,
+                                          /*PhoneNumber = model.PhoneNumber*/  PostalCode = model.ZIP};
+                    
                     //??
                     return RedirectToAction("Forbidden");
                 }
@@ -315,19 +337,7 @@ namespace TestWeb.Controllers
             }
             return invalidresult;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
         /// <summary>
         /// HELPER return and log error

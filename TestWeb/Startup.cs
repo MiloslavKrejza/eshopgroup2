@@ -9,8 +9,8 @@ using Trainee.Core.DAL.Repositories;
 using Trainee.User.Abstraction;
 using Trainee.User.Business;
 using Trainee.User.DAL.Repositories;
-
-
+using Trainee.Core.DAL.Context;
+using Trainee.User.DAL.Context;
 
 namespace TestWeb
 {
@@ -45,7 +45,9 @@ namespace TestWeb
             //ALZA CORE - IDENTITY
             services.AddAlzaCoreIdentity(o => o.connectionString = Configuration.GetSection("ConnectionStrings:AlzaLego.Core.IdentityConnection").Value, Configuration);
 
+            services.AddDbContext<CountryDbContext>();
 
+            services.AddDbContext<UserDbContext>();
 
             services.AddTransient<CountryService, CountryService>();
             services.AddTransient<ICountryRepository, CountryRepository>();

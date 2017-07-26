@@ -46,7 +46,7 @@ namespace TestWeb.Models.AccountViewModels
         [Display(Name = "Stát")]
         public string CountryCode { get; set; }
 
-        public List<Country> Coutries { get; set; }
+        public List<Country> Countries { get; set; }
 
     }
 }
