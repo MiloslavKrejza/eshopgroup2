@@ -140,6 +140,7 @@ namespace TestWeb.Controllers
         [HttpGet]
         [Route("/Account/Register")]
         [AllowAnonymous]
+        
         public IActionResult Register(string returnUrl = null)
         {
             try
@@ -151,16 +152,19 @@ namespace TestWeb.Controllers
 
                 ViewData["ReturnUrl"] = returnUrl;
 
+                /*************Added**************/
 
                 var result = _countryService.GetAllCountries();
                 RegisterViewModel model;
-                if (!result.isOK)//pozoooooooooooooooooor
-                    model = new RegisterViewModel { Coutries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } } /*Coutries = (List<Country>)result.data*/ };
+                if (!result.isOK)            //on dummy data invert condition
+                    model = new RegisterViewModel { /* Coutries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } }*/
+                                Countries = (List<Country>)result.data };
                 else
                     throw new Exception("Invalid model, database type error");
 
+                /********************************/
 
-                return View(model);
+                return View("Register",model);
             }
             catch (Exception e)
             {

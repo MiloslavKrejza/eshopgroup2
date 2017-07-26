@@ -64,7 +64,7 @@
                     <label class="text-indent" asp-for="CountryCode">Stát</label>
                     <select class="form-control" asp-for="CountryCode">
                         @{
-                            foreach (Country c in Model.Coutries)
+                            foreach (Country c in Model.Countries)
                             {
                                 <option value="@c.CountryCode">@c.Name</option>
                             }
