@@ -1,4 +1,5 @@
 ﻿// Obecná definice
+﻿@charset "UTF-8";
 
 body {
     padding-top: 50px;
@@ -21,6 +22,14 @@ img {
     height: auto;
 }
 
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.text-indent{
+    padding-left: 8px;
+}
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -61,7 +70,7 @@ textarea {
     text-align: center;
 }
 
-/* Hlavička*/
+//  Hlavička
 
 #hlavicka {
     padding-top: 15px;
@@ -92,7 +101,8 @@ input::-webkit-input-placeholder {
     font-size: 120%;
 }
 
-input:-moz-placeholder { /* Firefox 18- */
+input:-moz-placeholder {
+    /* Firefox 18- */
     padding: 10px !important;
     font-size: 120%;
 }
@@ -116,9 +126,7 @@ input:-ms-input-placeholder {
     color: #555555;
 }
 
-
 /*Menu*/
-
 #menu-item {
     height: 50px;
     font-size: 17px;
@@ -140,12 +148,10 @@ input:-ms-input-placeholder {
 }
 
 /*Hlavní sekce*/
-
 #main-section {
     margin: 0;
     padding: 0;
 }
-
 #render-body {
     padding: 20px;
 }
@@ -258,4 +264,40 @@ input:-ms-input-placeholder {
     @media screen and (max-width: 768px) {
         margin-bottom: 10px;
     }
+}
+/*Layout*/
+#layout {
+    margin-bottom: 40px;
+}
+
+
+/*Patička */
+footer {
+    padding: 20px 50px;
+    background-color: #4484ce;
+}
+
+footer a {
+    color: #e8e8e8;
+}
+
+footer a:hover {
+    color: #444444;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*Formuář*/
+.form-row {
+    margin-bottom: 20px;
+}
+
+#register-button {
+    width: +30%;
+    margin: 20px 0;
+}
+
+.title-register {
+    padding-left: 50px;
+    padding-bottom:20px;
 }

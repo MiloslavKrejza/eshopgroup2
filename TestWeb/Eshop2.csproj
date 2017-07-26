@@ -11,6 +11,10 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-TestWeb-aa6d19cd-86e0-447d-94f4-eb2d5e366e39</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\css\site.scss" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildWebCompiler" Version="1.11.326" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
