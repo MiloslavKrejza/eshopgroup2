@@ -18,7 +18,6 @@ namespace TestWeb.Models.AccountViewModels
         [MaxLength(50, ErrorMessage = "Prosím vyplňte validní PSČ bez mezer.")]
         public string ZIP { get; set; }
 
-
         public string City { get; set; }
 
 
