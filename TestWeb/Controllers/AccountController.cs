@@ -328,7 +328,7 @@ namespace TestWeb.Controllers
                 EditViewModel editModel = new EditViewModel
                 {
                     City = userProfile.City,
-                    Country = userProfile.Country.Name,
+                    CountryCode = userProfile.Country.Name,
                     Email = userIdentity.Email,
                     PostalCode = userProfile.PostalCode,
                     Street = userProfile.Address
@@ -351,14 +351,30 @@ namespace TestWeb.Controllers
         [Route("/Account/Edit")]
         public async Task<IActionResult> Edit(EditViewModel model, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+
             try
             {
+                //TODO make an abstraction methode "Get Countries from DTO" and do it here and there
+
+
                 var userIdentity = await _userManager.GetUserAsync(User);
                 bool isPassCorrect = await _userManager.CheckPasswordAsync(userIdentity, model.Password);
 
                 if (isPassCorrect)
                 {
+                    UserProfile updatedProfile = (UserProfile)_profileService.GetUserProfile(userIdentity.Id).data;
+                    updatedProfile.PostalCode = model.PostalCode;
+                    updatedProfile.Address = model.Street;
+                    updatedProfile.City = model.City;
 
+                    var updateCountry = _countryService.GetCountry(model.CountryCode);
+
+                    updatedProfile.CountryId = ((Country)updateCountry.data).Id;
+
+                    _profileService.UpdateUserProfile(updatedProfile);
+
+                    return View(model);
 
                 }
                 else
@@ -366,6 +382,8 @@ namespace TestWeb.Controllers
                     _logger.LogWarning(2, "Nesprávné heslo.");
                     ModelState.AddModelError("Password", "Nesprávné heslo.");
                 }
+
+                return View(model);
             }
             catch (Exception e)
             {
