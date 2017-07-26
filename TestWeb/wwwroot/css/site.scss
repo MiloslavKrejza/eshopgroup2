@@ -1,3 +1,4 @@
+﻿// Obecná definice
 ﻿@charset "UTF-8";
 
 body {
@@ -6,11 +7,19 @@ body {
     background-color: #f2f9ff;
     color: #444444;
     font-family: 'Montserrat', sans-serif;
+    .body-line {
+        margin-top: 25px;
+    }
 }
 
 hr {
     margin: 0;
     padding: 1px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 .col-centered {
@@ -35,6 +44,7 @@ select,
 textarea {
     max-width: 280px;
 }*/
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
@@ -54,7 +64,14 @@ textarea {
     }
 }
 
-/* Hlavička*/
+// Row
+
+.row-centered {
+    text-align: center;
+}
+
+//  Hlavička
+
 #hlavicka {
     padding-top: 15px;
     padding-right: 20px;
@@ -90,8 +107,7 @@ input:-moz-placeholder {
     font-size: 120%;
 }
 
-input::-moz-placeholder {
-    /* Firefox 19+ */
+input::-moz-placeholder { /* Firefox 19+ */
     padding: 10px !important;
     font-size: 120%;
 }
@@ -136,7 +152,119 @@ input:-ms-input-placeholder {
     margin: 0;
     padding: 0;
 }
+#render-body {
+    padding: 20px;
+}
 
+// Patička
+
+.footer {
+    padding: 20px 50px;
+    background-color: #4484ce;
+
+    a {
+        color: #e8e8e8;
+    }
+
+    a:hover {
+        color: #444444;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    @media screen and (max-width: 768px) {
+        .footer-right {
+            text-align: center;
+            padding-top: 15px;
+        }
+
+        .footer-left {
+            text-align: center;
+        }
+    }
+}
+
+// Images 
+
+.img-profile {
+    width: 150px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+// Profile
+
+.profile {
+    text-align: center;
+
+    .profile-left {
+        font-size: 18px;
+        text-align: left;
+        margin-left: 30px;
+    }
+
+    .profile-right {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .profile-title {
+        font-size: 38px;
+        text-align: center;
+        padding-bottom: 25px;
+    }
+
+    .profile-item {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .profile-align {
+        text-align: right;
+    }
+
+    .second {
+        padding-top: 2.5px;
+    }
+
+    .form-profile {
+        margin: 15px;
+    }
+
+    .change-top {
+        margin-top: 150px;
+        text-align: center;
+    }
+
+    .form-control-file {
+        width: 65%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    } 
+
+    .profile-country {
+        margin-left: 5px;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .profile-info {
+            display: none;
+        }
+    }
+}
+
+// Buttons
+
+.btn-profile {
+    margin-right: 15px;
+    margin-top: 15px;
+    width: 150px;
+
+    @media screen and (max-width: 768px) {
+        margin-bottom: 10px;
+    }
+}
 /*Layout*/
 #layout {
     margin-bottom: 40px;

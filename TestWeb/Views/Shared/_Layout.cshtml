@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Bookstore</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -63,7 +65,6 @@
                 <div class="col-lg-1 text-center">
                     <a href="">
                         <img src="~/images/user-2-48.png" alt="cart" /><br />
-                        <p>Přihlásit</p>
                     </a>
                 </div>
             </div>
@@ -95,14 +96,14 @@
         <hr />
 
         <!-- PATIČKA -->
-        <footer>
+        <div class="footer">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6 footer-left">
                     <a href=""><p>Doprava a platba</p></a>
                     <a href=""><p>Obchodní podmínky</p></a>
                     <a href=""><p>Bezpečné nakupování</p></a>
                 </div>
-                <div class="col-lg-6 text-right">
+                <div class="col-lg-6 text-right footer-right">
                     <p>
                         <strong>Fantastic Books</strong><br />
                         Guttenbergova 5, Liberec<br />
@@ -112,7 +113,7 @@
                     </p>
                 </div>
             </div>
-        </footer>
+        </div>
     </div>
 
     <environment names="Development">
