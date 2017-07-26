@@ -41,5 +41,11 @@ namespace Trainee.Core.DAL.Repositories
             var country = _context.Countries.Where(c => c.Id == id).FirstOrDefault();
             return country;
         }
+
+        public Country GetCountryByCode(string code)
+        {
+            var country = _context.Countries.Where(c => c.CountryCode == code).FirstOrDefault();
+            return country;
+        }
     }
 }

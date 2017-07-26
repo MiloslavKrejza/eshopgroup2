@@ -5,6 +5,7 @@ using System.Text;
 using Trainee.User.DAL.Context;
 using Trainee.User.Abstraction;
 using Trainee.User.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Trainee.User.DAL.Repositories
 {
@@ -38,7 +39,8 @@ namespace Trainee.User.DAL.Repositories
 
         public UserProfile GetProfile(int id)
         {
-            var profile = _context.UserProfiles.FirstOrDefault(p => p.Id == id);
+            var profile = _context.UserProfiles.Where(p => p.Id == id).
+                Include(p => p.Country).Include(p => p.ProfileState).FirstOrDefault();
             return profile;
         }
 

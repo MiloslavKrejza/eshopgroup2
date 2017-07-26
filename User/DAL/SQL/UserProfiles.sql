@@ -18,10 +18,10 @@ CREATE TABLE [dbo].[UserProfiles](
 ALTER TABLE [dbo].[UserProfiles] ADD CONSTRAINT [FK_UserProfiles_Coutries]
 	FOREIGN KEY ([CountryId]) REFERENCES [dbo].[Countries] ([Id]) 
 GO
-ALTER TABLE [dbo].[UserProfiles] ADD CONSTRAINT [FK_UserProfiles_Identities]
-	FOREIGN KEY ([Id]) REFERENCES [dbo].[AspNetUsers] ([Id]) 
-GO
+
 ALTER TABLE [dbo].[UserProfiles] ADD CONSTRAINT [FK_UserProfiles_States]
 	FOREIGN KEY ([ProfileStateId]) REFERENCES [dbo].[ProfileStates] ([Id]) 
 GO
 
+CREATE INDEX UserProfileID_Index ON [dbo].[UserProfiles] (Id)
+GO

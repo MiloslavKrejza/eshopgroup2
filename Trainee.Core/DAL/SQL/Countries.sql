@@ -12,3 +12,8 @@ ALTER TABLE [dbo].[Countries]
 ADD CONSTRAINT [PK_Country]
 	PRIMARY KEY CLUSTERED([Id])
 GO
+
+CREATE INDEX CountryCode_index on [dbo].[Countries] (CountryCode);
+GO
+CREATE INDEX CountryId_index on [dbo].[Countries] (Id);
+GO
