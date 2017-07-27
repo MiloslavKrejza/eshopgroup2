@@ -405,7 +405,7 @@ namespace TestWeb.Controllers
                         ViewData["WrongPassword"] = true;
                     }
 
-                    return RedirectToAction("Details",model);
+                    return RedirectToAction("Details");
 
 
                 }
