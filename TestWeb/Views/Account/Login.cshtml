@@ -37,6 +37,19 @@ else
 {
     <div class="row">
         <div class="col-md-12">
+            <div id="login-error" class="text-center">
+                @if (ViewData["EmailUnknown"] != null)
+                {
+                    <h4 class="text-danger">Tento e-mail neznáme. Použijte správný e-mail nebo se registrujte prosím.</h4>
+
+                }
+
+                @if (ViewData["WrongPassword"] != null)
+                {
+                    <h4 class="text-danger">Bylo vloženo nesprávné heslo. Zkuste se prosím přihlásit znovu.</h4>
+                }
+            </div>
+
             <section>
                 <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
                     <div asp-validation-summary="All" class="text-danger"></div>
@@ -68,6 +81,9 @@ else
             </section>
         </div>
     </div>
+
+
+
 }
 
 

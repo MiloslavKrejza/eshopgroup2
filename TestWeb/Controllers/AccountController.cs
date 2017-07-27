@@ -59,8 +59,7 @@ namespace TestWeb.Controllers
                 //Nesmi byt prihlasen
                 if (_signInManager.IsSignedIn(User))
                     _signInManager.SignOutAsync();
-
-
+                
                 ViewData["ReturnUrl"] = returnUrl;
 
                 return View("Login");
@@ -84,7 +83,7 @@ namespace TestWeb.Controllers
                 //Nesmi byt prihlasen
                 if (_signInManager.IsSignedIn(User))
                     return ErrorActionResult("Uživatel již je přihlášen");
-
+               
 
                 ViewData["ReturnUrl"] = returnUrl;
                 if (ModelState.IsValid)

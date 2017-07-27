@@ -3,7 +3,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: #f2f9ff;
+    background-color: #ff0000;
     color: #444444;
     font-family: 'Montserrat', sans-serif;
     .body-line {
@@ -163,10 +163,6 @@ input:-ms-input-placeholder {
     :hover {
        cursor: pointer;
     }
-}
-
-#login-error {
-    margin-top: 40px;
 }
 
 /*Menu přihlášeného uživatele*/
