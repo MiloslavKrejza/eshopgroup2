@@ -5,11 +5,11 @@
 }
 
 <div class="container">
+    <h2>@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
     <div class="row row-centered profile">
 
         <div id="slip">
-            <div class="col-lg-5 profile-left">
-                <h2>@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
+            <div class="col-lg-5 col-lg-offset-1 profile-left">
                 <div class="col-lg-6 profile-info">
                     <p class="profile-item">Email:</p>
                     <p class="profile-item">Adresa:</p>
@@ -27,15 +27,15 @@
             </div>
 
 
-            <div class="col-lg-4 profile-right">
-                <img src="http://1gr.cz/fotky/idnes/12/042/org/AHA427ac5_PYO01_KOREA_NORTH_0412_11.JPG" alt="profile-photo" class="img-fluid img-profile" /><br />
+            <div class="col-lg-3 profile-right">
+                <img src="~/images/user-2-64.gif" alt="profile-photo" class="img-fluid img-profile" /><br />
                 <button type="button" onclick="showStuff('change', 'slip');" class="btn btn-success btn-profile">Změnit údaje</button>
             </div>
         </div>
 
         <div id="change" style="display: none;" asp-validation-summary="All">
             <div class="col-lg-10 profile-left">
-                <h2>Změna údajů:</h2>
+                <h2>Změna údajů</h2>
                 <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
 
                     <div class="row form-row">
@@ -62,29 +62,30 @@
 
                         <div class="col-lg-8 col-centered">
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label class="text-indent control-label" asp-for="Street"></label>
                                 <input class="form-control" asp-for="Street" />
                                 <span asp-validation-for="Street" class="text-danger"></span>
                             </div>
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label class="text-indent control-label" asp-for="City"></label>
                                 <input class="form-control" asp-for="City" />
                                 <span asp-validation-for="City" class="text-danger"></span>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-lg-4">
+                    <div class="row form-row">
+
+                        <div class="col-lg-8 col-centered">
+
+                            <div class="col-lg-6">
                                 <label class="text-indent control-label" asp-for="PostalCode"></label>
                                 <input class="form-control" asp-for="PostalCode" />
                                 <span asp-validation-for="PostalCode" class="text-danger"></span>
                             </div>
 
-                        </div>
-                    </div>
-
-                    <div class="row form-row">
-                        <div class="col-lg-8 col-centered">
 
                             <div class="col-lg-6">
                                 <label class="text-indent" asp-for="CountryCode">Stát</label>
@@ -104,47 +105,61 @@
 
                                 </select>
                             </div>
-
-                            <div class="col-lg-6">
-                                <label class="text-indent control-label" asp-for="Password"></label>
-                                <input class="form-control" asp-for="Password" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-
                         </div>
 
                     </div>
 
-                    <div class="col-lg-10 change-top col-centered">
-                        <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                        <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 28 TB</small><br />
-                        <button type="submit" class="btn btn-success btn-profile">Uložit</button>
-                        <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
+                    <div class="form-row">
+                        <div class="col-lg-8 col-centered text-center">
+
+                            <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                            <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 5 MB</small><br />
+                        </div>
+                    </div>
+
+
+
+                    <div class="row form-row">
+                        <div class="col-lg-8 col-centered text-center">
+                            <div class="col-lg-6">
+                                <button type="submit" class="btn btn-success btn-profile">Uložit</button>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
+                            </div>
+                        </div>
                     </div>
 
                 </form>
-            
+
+
+
+
+
+
+
             </div>
 
         </div>
-
     </div>
 
-
-    @section Scripts {
-        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-    }
-    <!--
-
-    <div class="col-lg-10"><hr class="body-line" /></div>
-
-    <div class="col-lg-10 cart-items">
-        <h2>Můj košík:</h2>
-    </div>
-
-    <div class="col-lg-10"><hr class="body-line" /></div>
-
-    <div class="col-lg-10 cart">
-        <h2>Mé objednávky:</h2>
-    </div>-->
 </div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+
+<hr class="body-line" />
+
+
+<h2>Můj košík</h2>
+
+
+
+
+<hr class="body-line" />
+
+<h2>Mé objednávky</h2>
+
