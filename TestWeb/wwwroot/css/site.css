@@ -250,17 +250,18 @@ input:-ms-input-placeholder {
   margin-bottom: 40px; }
 
 /*Patička */
-footer {
+.footer {
   padding: 20px 50px;
   background-color: #4484ce; }
-
-footer a {
-  color: #e8e8e8; }
-
-footer a:hover {
-  color: #444444;
-  text-decoration: none;
-  cursor: pointer; }
+  .footer a {
+    color: #e8e8e8; }
+  .footer a:hover {
+    color: #444444;
+    text-decoration: none;
+    cursor: pointer; }
+  @media screen and (max-width: 768px) {
+    .footer {
+      text-align: center; } }
 
 /*Formuář*/
 .form-row {
