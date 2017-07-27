@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\css\site - Kopie.min.css">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\css\site - Kopie.scss" />
     <Content Include="wwwroot\css\site.scss" />
   </ItemGroup>
   <ItemGroup>
