@@ -456,8 +456,8 @@ namespace TestWeb.Controllers
                     //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
                     Street = userProfile.Address,
-                    Password = null
-                    
+                    Password = null,
+                    Email = userIdentity.Email
                 };
 
                 var resultCountry = _countryService.GetAllCountries();
