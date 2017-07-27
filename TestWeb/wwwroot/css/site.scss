@@ -264,7 +264,6 @@ input:-ms-input-placeholder {
     .profile-left {
         font-size: 18px;
         text-align: left;
-        margin-left: 30px;
     }
 
     .profile-right {
@@ -343,19 +342,23 @@ input:-ms-input-placeholder {
 
 
 /*Patička */
-footer {
+.footer {
     padding: 20px 50px;
     background-color: #4484ce;
-}
 
-footer a {
-    color: #e8e8e8;
-}
+    a {
+        color: #e8e8e8;
+    }
 
-footer a:hover {
-    color: #444444;
-    text-decoration: none;
-    cursor: pointer;
+    a:hover {
+        color: #444444;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    @media screen and (max-width: 768px) {
+        text-align: center;
+    }
 }
 
 /*Formuář*/

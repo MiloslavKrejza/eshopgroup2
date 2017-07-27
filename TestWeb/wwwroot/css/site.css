@@ -131,6 +131,18 @@ input:-ms-input-placeholder {
   #prihlasit :hover {
     cursor: pointer; }
 
+/*Login container*/
+#login {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  display: none;
+  position: absolute;
+  z-index: 1; }
+  #login form {
+    padding: 0 20px; }
+
 /*Menu přihlášeného uživatele*/
 #signedUserMenu a {
   background-color: #ffffff; }
@@ -189,8 +201,7 @@ input:-ms-input-placeholder {
   text-align: center; }
   .profile .profile-left {
     font-size: 18px;
-    text-align: left;
-    margin-left: 30px; }
+    text-align: left; }
   .profile .profile-right {
     text-align: center;
     margin-top: 25px; }
@@ -239,17 +250,18 @@ input:-ms-input-placeholder {
   margin-bottom: 40px; }
 
 /*Patička */
-footer {
+.footer {
   padding: 20px 50px;
   background-color: #4484ce; }
-
-footer a {
-  color: #e8e8e8; }
-
-footer a:hover {
-  color: #444444;
-  text-decoration: none;
-  cursor: pointer; }
+  .footer a {
+    color: #e8e8e8; }
+  .footer a:hover {
+    color: #444444;
+    text-decoration: none;
+    cursor: pointer; }
+  @media screen and (max-width: 768px) {
+    .footer {
+      text-align: center; } }
 
 /*Formuář*/
 .form-row {

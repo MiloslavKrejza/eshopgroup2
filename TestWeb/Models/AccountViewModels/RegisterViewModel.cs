@@ -33,11 +33,15 @@ namespace TestWeb.Models.AccountViewModels
         [Required(ErrorMessage = "Prosím vyplňte své příjmení.")]
         public string Surname { get; set; }
 
+        [Display(Name = "Telefon")]
+        [Phone(ErrorMessage = "Prosím vyplňte telefonní číslo.")]
+        public string Phone { get; set; }
+
         [Display(Name = "Ulice")]
         public string Street { get; set; }
 
         [Display(Name = "PSČ")]
-        [MaxLength(50, ErrorMessage = "Prosím vyplňte validní PSČ bez mezer.")]
+        [MaxLength(50, ErrorMessage = "Prosím vyplňte PSČ.")]
         public string PostalCode { get; set; }
 
         [Display(Name = "Město")]
@@ -49,4 +53,5 @@ namespace TestWeb.Models.AccountViewModels
         public List<Country> Countries { get; set; }
 
     }
+
 }

@@ -110,17 +110,23 @@ namespace TestWeb.Controllers
                         var isExist = await _userManager.FindByEmailAsync(model.Email);
                         if (isExist == null)
                         {
+                            ViewData["EmailUnknown"] = true;
+                            /*
                             _logger.LogWarning(2, "Neznámý e-mail.");
                             ModelState.AddModelError("UserName", "Neznámý e-mail.");
+                            */
                         }
                         else
                         {
+                            ViewData["WrongPassword"] = true;
+                            /*
                             _logger.LogWarning(2, "Nesprávné heslo.");
                             ModelState.AddModelError("Password", "Nesprávné heslo.");
+                            */
                         }
 
-
                         return View(model);
+                        
                     }
                 }
 
@@ -138,7 +144,7 @@ namespace TestWeb.Controllers
         // GET: /Account/Register
         [HttpGet]
         [Route("/Account/Register")]
-        [AllowAnonymous] 
+        [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
             try
@@ -186,10 +192,10 @@ namespace TestWeb.Controllers
             try
             {
                 var result = _countryService.GetAllCountries();
-                if (result.isOK)            //on dummy data invert condition
+                if (result.isOK)            
                     model.Countries = (List<Country>)result.data;
 
-                
+
 
 
                 //Nesmi byt prihlasen
@@ -219,7 +225,7 @@ namespace TestWeb.Controllers
                     {
                         ViewData["UserExists"] = false;
                     }
-                       // return RedirectToAction("Uzivatel existuje");
+                    // return RedirectToAction("Uzivatel existuje");
 
 
 
@@ -260,7 +266,7 @@ namespace TestWeb.Controllers
                             var countryByCode = _countryService.GetCountry(model.CountryCode);
                             if (countryByCode.isOK)
                             {
-                               // userProfile.Country = (Country)countryByCode.data;
+                                // userProfile.Country = (Country)countryByCode.data;
                                 userProfile.CountryId = ((Country)countryByCode.data).Id;
                             }
 
@@ -278,12 +284,12 @@ namespace TestWeb.Controllers
                         return RedirectToAction("CHYBA");
                     }
 
-                    
+
 
                     await _signInManager.SignInAsync(user, isPersistent: true);
 
 
-                    
+
 
                     //??
                     return RedirectToAction("Forbidden");
@@ -306,24 +312,105 @@ namespace TestWeb.Controllers
         // GET: /Account/Edit
         [HttpGet]
         [Route("/Account/Edit")]
-        public IActionResult Edit(string returnUrl = null)
+        public async Task<IActionResult> Edit(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
 
             try
             {
+                
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", returnUrl);
 
+                var userIdentity = await _userManager.GetUserAsync(User);
+
+                UserProfile userProfile;
+                var result = _profileService.GetUserProfile(userIdentity.Id);
+
+                if (!result.isOK)
+                    throw new Exception("User profile not found");
+
+                userProfile = (UserProfile)result.data;
+
+                EditViewModel editModel = new EditViewModel
+                {
+                    Name = userProfile.Name,
+                    Surname = userProfile.Surname,
+                    Email = userIdentity.Email,
+                    City = userProfile.City,
+                    CountryCode = userProfile.Country.Name,
+                    PostalCode = userProfile.PostalCode,
+                    Street = userProfile.Address
+                };
+
+                var resultCountry = _countryService.GetAllCountries();
+                if (resultCountry.isOK)
+                    editModel.Countries = (List<Country>)resultCountry.data;
+
+                return View(editModel);
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return ExceptionActionResult(e);
             }
 
 
-            return Forbidden();
+        }
+
+        //
+        // POST: /Account/Edit
+        [HttpPost]
+        [Route("/Account/Edit")]
+        public async Task<IActionResult> Edit(EditViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+
+            try
+            {
+                var result = _countryService.GetAllCountries();
+                if (result.isOK)
+                    model.Countries = (List<Country>)result.data;
+
+
+                //TODO make an abstraction methode "Get Countries from DTO" and do it here and there
+
+
+                var userIdentity = await _userManager.GetUserAsync(User);
+                bool isPassCorrect = await _userManager.CheckPasswordAsync(userIdentity, model.Password);
+
+                if (isPassCorrect)
+                {
+                    UserProfile updatedProfile = (UserProfile)_profileService.GetUserProfile(userIdentity.Id).data;
+                    updatedProfile.PostalCode = model.PostalCode;
+                    updatedProfile.Address = model.Street;
+                    updatedProfile.City = model.City;
+
+                    var updateCountry = _countryService.GetCountry(model.CountryCode);
+
+                    model.CountryCode = ((Country)updateCountry.data).Name;
+
+                    updatedProfile.CountryId = ((Country)updateCountry.data).Id;
+
+                    _profileService.UpdateUserProfile(updatedProfile);
+
+                    return View(model);
+
+                }
+                else
+                {
+                    _logger.LogWarning(2, "Nesprávné heslo.");
+                    ModelState.AddModelError("Password", "Nesprávné heslo.");
+                }
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return ExceptionActionResult(e);
+            }
+
+
         }
 
         //
@@ -389,7 +476,7 @@ namespace TestWeb.Controllers
             }
             return invalidresult;
         }
-        
+
 
         /// <summary>
         /// HELPER return and log error
