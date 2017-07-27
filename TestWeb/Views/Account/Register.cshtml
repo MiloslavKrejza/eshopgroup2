@@ -68,10 +68,18 @@
                 <div class="col-md-6">
                     <label class="text-indent control-label" asp-for="CountryCode"></label>
                     <select class="form-control" asp-for="CountryCode">
+
                         @{
+                            var czechRep = Model.Countries.FirstOrDefault(c => c.CountryCode == "CZ");
+
+                            <option value ="@czechRep.CountryCode">@czechRep.Name</option>
+
                             foreach (Country c in Model.Countries)
                             {
-                                <option value="@c.CountryCode">@c.Name</option>
+                                if (c.CountryCode != "CZ")
+                                {
+                                    <option value="@c.CountryCode">@c.Name</option>
+                                }
                             }
                         }
 
