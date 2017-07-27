@@ -126,7 +126,7 @@ namespace TestWeb.Controllers
                         }
 
                         return View(model);
-                        
+
                     }
                 }
 
@@ -192,7 +192,7 @@ namespace TestWeb.Controllers
             try
             {
                 var result = _countryService.GetAllCountries();
-                if (result.isOK)            
+                if (result.isOK)
                     model.Countries = (List<Country>)result.data;
 
 
@@ -320,7 +320,7 @@ namespace TestWeb.Controllers
 
             try
             {
-                
+
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", returnUrl);
 
@@ -343,7 +343,8 @@ namespace TestWeb.Controllers
                     Country = userProfile.Country,
                     //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
-                    Street = userProfile.Address
+                    Street = userProfile.Address,
+                    Password = null
                 };
 
                 var resultCountry = _countryService.GetAllCountries();
@@ -378,39 +379,46 @@ namespace TestWeb.Controllers
 
                 //TODO make an abstraction methode "Get Countries from DTO" and do it here and there
 
-
                 var userIdentity = await _userManager.GetUserAsync(User);
-                bool isPassCorrect = await _userManager.CheckPasswordAsync(userIdentity, model.Password);
 
-                if (isPassCorrect)
+                if (ModelState.IsValid)
                 {
-                    UserProfile updatedProfile = (UserProfile)_profileService.GetUserProfile(userIdentity.Id).data;
-                    updatedProfile.PostalCode = model.PostalCode;
-                    updatedProfile.Address = model.Street;
-                    updatedProfile.City = model.City;
-                    updatedProfile.Name = model.Name;
-                    updatedProfile.Surname = model.Surname;
-
+                    bool isPassCorrect = await _userManager.CheckPasswordAsync(userIdentity, model.Password);
+                    
                     model.Email = userIdentity.Email;
 
                     var updateCountry = _countryService.GetCountry(model.CountryCode);
-
                     model.Country = (Country)updateCountry.data;
 
-                    updatedProfile.CountryId = model.Country.Id;
 
-                    _profileService.UpdateUserProfile(updatedProfile);
+                    if (isPassCorrect)
+                    {
+                        UserProfile updatedProfile = (UserProfile)_profileService.GetUserProfile(userIdentity.Id).data;
+                        updatedProfile.PostalCode = model.PostalCode;
+                        updatedProfile.Address = model.Street;
+                        updatedProfile.City = model.City;
+                        updatedProfile.Name = model.Name;
+                        updatedProfile.Surname = model.Surname;
+                        updatedProfile.CountryId = model.Country.Id;
+
+
+
+                        _profileService.UpdateUserProfile(updatedProfile);
+                    }
+                    else
+                    {
+                        _logger.LogWarning(2, "Nesprávné heslo.");
+                        ModelState.AddModelError("Password", "Nesprávné heslo.");
+                    }
 
                     return View(model);
+
 
                 }
                 else
                 {
-                    _logger.LogWarning(2, "Nesprávné heslo.");
-                    ModelState.AddModelError("Password", "Nesprávné heslo.");
+                    return RedirectToAction("CHYBA");
                 }
-
-                return View(model);
             }
             catch (Exception e)
             {

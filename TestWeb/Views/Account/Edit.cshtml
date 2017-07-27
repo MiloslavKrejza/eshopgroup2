@@ -125,6 +125,10 @@
 
     </div>
 
+
+    @section Scripts {
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    }
     <!--
 
     <div class="col-lg-10"><hr class="body-line" /></div>
