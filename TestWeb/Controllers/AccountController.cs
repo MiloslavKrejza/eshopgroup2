@@ -110,13 +110,19 @@ namespace TestWeb.Controllers
                         var isExist = await _userManager.FindByEmailAsync(model.Email);
                         if (isExist == null)
                         {
+                            ViewData["EmailUnknown"] = true;
+                            /*
                             _logger.LogWarning(2, "Neznámý e-mail.");
                             ModelState.AddModelError("UserName", "Neznámý e-mail.");
+                            */
                         }
                         else
                         {
+                            ViewData["WrongPassword"] = true;
+                            /*
                             _logger.LogWarning(2, "Nesprávné heslo.");
                             ModelState.AddModelError("Password", "Nesprávné heslo.");
+                            */
                         }
 
                         return View(model);
@@ -328,9 +334,11 @@ namespace TestWeb.Controllers
 
                 EditViewModel editModel = new EditViewModel
                 {
+                    Name = userProfile.Name,
+                    Surname = userProfile.Surname,
+                    Email = userIdentity.Email,
                     City = userProfile.City,
                     CountryCode = userProfile.Country.Name,
-                    Email = userIdentity.Email,
                     PostalCode = userProfile.PostalCode,
                     Street = userProfile.Address
                 };
@@ -379,6 +387,8 @@ namespace TestWeb.Controllers
                     updatedProfile.City = model.City;
 
                     var updateCountry = _countryService.GetCountry(model.CountryCode);
+
+                    model.CountryCode = ((Country)updateCountry.data).Name;
 
                     updatedProfile.CountryId = ((Country)updateCountry.data).Id;
 
