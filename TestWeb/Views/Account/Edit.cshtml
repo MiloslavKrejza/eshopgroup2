@@ -84,39 +84,44 @@
                     </div>
 
                     <div class="row form-row">
+                        <div class="col-lg-8 col-centered">
 
-                        <div class="col-lg-7 col-centered">
-                            <label class="text-indent" asp-for="CountryCode">Stát</label>
-                            <select class="form-control" asp-for="CountryCode">
+                            <div class="col-lg-6">
+                                <label class="text-indent" asp-for="CountryCode">Stát</label>
+                                <select class="form-control" asp-for="CountryCode">
 
-                                <option value="@Model.Country.CountryCode">@Model.Country.Name</option>                               
-                                
-                                @{
-                                    foreach (Country c in Model.Countries)
-                                    {
-                                        if (c.CountryCode != Model.Country.CountryCode)
+                                    <option value="@Model.Country.CountryCode">@Model.Country.Name</option>
+
+                                    @{
+                                        foreach (Country c in Model.Countries)
                                         {
-                                            <option value="@c.CountryCode">@c.Name</option>
+                                            if (c.CountryCode != Model.Country.CountryCode)
+                                            {
+                                                <option value="@c.CountryCode">@c.Name</option>
+                                            }
                                         }
                                     }
-                                }
 
-                            </select>
-                        </div>
+                                </select>
+                            </div>
 
-                        <div class="col-lg-4 col-centered">
-                            <label class="text-indent control-label" asp-for="Password"></label>
-                            <input class="form-control" asp-for="Password" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <div class="col-lg-6">
+                                <label class="text-indent control-label" asp-for="Password"></label>
+                                <input class="form-control" asp-for="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+
                         </div>
 
                     </div>
+
                     <div class="col-lg-10 change-top col-centered">
                         <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
                         <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 28 TB</small><br />
                         <button type="submit" class="btn btn-success btn-profile">Uložit</button>
                         <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
                     </div>
+
                 </form>
             
             </div>
