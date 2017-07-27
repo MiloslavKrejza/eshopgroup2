@@ -119,8 +119,8 @@ namespace TestWeb.Controllers
                             ModelState.AddModelError("Password", "Nesprávné heslo.");
                         }
 
-
-                        return View(model);
+                        return PartialView(model);
+                        
                     }
                 }
 
