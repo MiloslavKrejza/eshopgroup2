@@ -54,8 +54,9 @@
 
         <!--PARTIAL VIEW - LOGIN-->
         <div class="row">
-            <div class="col-md-4 col-md-offset-8">
-                <div class="container"  id="login" style="display:none;">
+
+            <div class="col-md-4 col-md-offset-8 login-container">
+                <div class="container"  id="login" style="display:none";>
                     @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel())
                 </div>
             </div>

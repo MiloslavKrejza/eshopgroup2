@@ -108,6 +108,10 @@ input:-ms-input-placeholder {
     cursor: pointer; }
 
 /*Login container*/
+.login-container {
+  position: relative;
+  right: 45px; }
+
 #login {
   width: 100%;
   background-color: #ffffff;
@@ -138,6 +142,13 @@ input:-ms-input-placeholder {
   z-index: 1; }
   #login form {
     padding: 0 20px; }
+
+/*Menu přihlášeného uživatele*/
+#signedUserMenu a {
+  background-color: #ffffff; }
+
+#signedUserMenu button:hover {
+  text-decoration: none; }
 
 /*Menu*/
 #menu-item {
