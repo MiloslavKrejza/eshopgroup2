@@ -94,6 +94,12 @@
 
 </div>
 
+@if (ViewData["RegisterCompleted"] != null)
+{
+    <h4 class="text-center text-danger">Vaše registrace proběhla úspěšně. Můžete se přihlásit.</h4>
+
+}
+
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
