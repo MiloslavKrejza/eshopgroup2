@@ -1,4 +1,5 @@
-﻿@model EditViewModel
+﻿@using Trainee.Core.DAL.Entities
+@model EditViewModel
 @{
     ViewData["Title"] = "Profil uživatele";
 }
@@ -44,40 +45,53 @@
 
         <div id="change" style="display: none;">
             <div class="col-lg-10 profile-left">
-                <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                    <h2>Změna údajů:</h2>
-                    <div class="col-lg-8 col-centered">
-                        <label class="text-indent" asp-for="Street">Ulice</label>
-                        <input class="form-control" asp-for="Street" />
-                        <span asp-validation-for="Street" class="text-danger"></span>
-                        <label class="text-indent" asp-for="City">Město</label>
-                        <input class="form-control" asp-for="City" />
-                        <span asp-validation-for="City" class="text-danger"></span>
-                        <label class="text-indent" asp-for="ZIP">PSČ</label>
-                        <input class="form-control" asp-for="ZIP" />
-                        <span asp-validation-for="ZIP" class="text-danger"></span>
-                        <label class="text-indent control-label" asp-for="Email">E-mail</label>
-                        <input class="form-control" asp-for="Email" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                        <label class="text-indent" asp-for="Country">Stát</label>
-                        <select class="form-control" asp-for="Country">
-                            @{ string[] city = new string[] { "Česká republika", "Deutschland", "England", "France", "Slovenská republika" };
-                                for (int i = 0; i < city.Length; i++)
-                                {
-                                    <option>@city[i]</option>
+                <h2>Změna údajů:</h2>
+                <form>
+                    <div class="row form-row">
+                        <div class="col-lg-4">
+                            <label class="text-indent control-label" asp-for="Name"></label>
+                            <input class="form-control" asp-for="Name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="text-indent control-label" asp-for="Surname"></label>
+                            <input class="form-control" asp-for="Surname" />
+                            <span asp-validation-for="Surname" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-lg-8">
+                            <label class="text-indent control-label" asp-for="Street"></label>
+                            <input class="form-control" asp-for="Street" />
+                            <span asp-validation-for="Street" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="text-indent" asp-for="Country">Stát</label>
+                            <select class="form-control" asp-for="CountryCode">
+                                @{
+                                    foreach (Country c in Model.Countries)
+                                    {
+                                        <option value="@c.CountryCode">@c.Name</option>
+                                    }
                                 }
-                            }
-                        </select>
-                        <span asp-validation-for="Country" class="text-danger"></span>
-                        <div class="text-small"><small id="fileHelp" class="form-text text-muted">Pole, do kterých nevložíte žádná data se nezmění.</small></div>
 
-                    </div><div class="col-lg-10 col-centered change-top">
-                        <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                        <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 28 MB</small><br />
-                        <button type="submit" class="btn btn-success btn-profile">Uložit</button>
-                        <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
+                            </select>
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="text-indent" asp-for="City">Město</label>
+                            <input class="form-control" asp-for="City" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="text-small"><small id="fileHelp" class="form-text text-muted">Pole, do kterých nevložíte žádná data se nezmění.</small></div>
                     </div>
                 </form>
+                <div class="col-lg-10 change-top">
+                    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                    <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 28 TB</small><br />
+                    <button type="submit" class="btn btn-success btn-profile">Uložit</button>
+                    <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
+                </div>
             </div>
         </div>
 
