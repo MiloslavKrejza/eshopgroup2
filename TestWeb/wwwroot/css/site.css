@@ -194,6 +194,7 @@ input:-ms-input-placeholder {
 
 .img-profile {
   width: 150px;
+  max-height: 300px;
   border-radius: 10px;
   text-align: center; }
 
