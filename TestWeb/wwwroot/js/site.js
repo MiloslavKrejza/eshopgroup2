@@ -11,6 +11,8 @@ function toggleLogin() {
 // Hide and show effect for edit page
 
 function showStuff(id, text, btn) {
+
+    //
     document.getElementById(id).style.display = 'block';
     // hide the lorem ipsum text
     document.getElementById(text).style.display = 'none';

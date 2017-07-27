@@ -409,6 +409,7 @@ namespace TestWeb.Controllers
                     {
                         _logger.LogWarning(2, "Nesprávné heslo.");
                         ModelState.AddModelError("Password", "Nesprávné heslo.");
+                        ViewData["WrongPassword"] = true;
                     }
 
                     return View(model);
