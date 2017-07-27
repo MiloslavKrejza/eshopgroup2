@@ -4,6 +4,15 @@
     ViewData["Title"] = "Profil uživatele";
 }
 
+@if (ViewData["WrongPassword"] != null)
+{
+    <script>
+
+
+
+    </script>
+}
+
 <div class="container">
     <h2>@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
     <div class="row row-centered profile">
