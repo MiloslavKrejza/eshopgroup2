@@ -184,30 +184,27 @@ input:-ms-input-placeholder {
       text-align: center; } }
 
 .img-profile {
-  width: 150px;
-  max-height: 300px;
+  max-height: 150px;
   border-radius: 10px;
   text-align: center; }
 
 .profile {
   text-align: center; }
   .profile .profile-left {
-    font-size: 18px;
     text-align: left; }
   .profile .profile-right {
     text-align: center;
     margin-top: 25px; }
   .profile .profile-title {
-    font-size: 38px;
     text-align: center;
     padding-bottom: 25px; }
   .profile .profile-item {
-    font-size: 20px;
     font-weight: bold; }
   .profile .profile-align {
     text-align: right; }
   .profile .second {
-    padding-top: 2.5px; }
+
+  }
   .profile .form-profile {
     margin: 15px; }
   .profile .change-top {
@@ -218,7 +215,6 @@ input:-ms-input-placeholder {
     text-align: center; }
   .profile .form-control-file {
     width: 40%;
-    text-align: center;
     margin-left: auto;
     margin-right: auto; }
     @media screen and (max-width: 768px) {
