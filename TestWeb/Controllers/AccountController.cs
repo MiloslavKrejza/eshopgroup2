@@ -274,6 +274,8 @@ namespace TestWeb.Controllers
 
                             _profileService.AddUserProfile(userProfile);
 
+                            ViewData["RegisterCompleted"] = true;
+
                             return View(model);
 
                         }
