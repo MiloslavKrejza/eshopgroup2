@@ -22,7 +22,7 @@
                     <p class="second">@Html.DisplayFor(model => model.Street)</p>
                     <p class="second">@Html.DisplayFor(model => model.City)</p>
                     <p class="second">@Html.DisplayFor(model => model.PostalCode)</p>
-                    <p class="second">@Html.DisplayFor(model => model.CountryCode)</p>
+                    <p class="second">@Html.DisplayFor(model => model.Country.Name)</p>
                 </div>
             </div>
 
@@ -88,10 +88,16 @@
                         <div class="col-lg-7 col-centered">
                             <label class="text-indent" asp-for="CountryCode">Stát</label>
                             <select class="form-control" asp-for="CountryCode">
+
+                                <option value="@Model.Country.CountryCode">@Model.Country.Name</option>                               
+                                
                                 @{
                                     foreach (Country c in Model.Countries)
                                     {
-                                        <option value="@c.CountryCode">@c.Name</option>
+                                        if (c.CountryCode != Model.Country.CountryCode)
+                                        {
+                                            <option value="@c.CountryCode">@c.Name</option>
+                                        }
                                     }
                                 }
 

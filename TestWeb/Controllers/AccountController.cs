@@ -338,7 +338,8 @@ namespace TestWeb.Controllers
                     Surname = userProfile.Surname,
                     Email = userIdentity.Email,
                     City = userProfile.City,
-                    CountryCode = userProfile.Country.Name,
+                    Country = userProfile.Country,
+                    //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
                     Street = userProfile.Address
                 };
@@ -392,9 +393,9 @@ namespace TestWeb.Controllers
 
                     var updateCountry = _countryService.GetCountry(model.CountryCode);
 
-                    model.CountryCode = ((Country)updateCountry.data).Name;
+                    model.Country = (Country)updateCountry.data;
 
-                    updatedProfile.CountryId = ((Country)updateCountry.data).Id;
+                    updatedProfile.CountryId = model.Country.Id;
 
                     _profileService.UpdateUserProfile(updatedProfile);
 
