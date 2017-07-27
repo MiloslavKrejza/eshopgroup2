@@ -68,7 +68,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 o.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(14); //cookie expiruje za 14 dní
 
 
-                o.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZěščřžýáíéůúňťď1234567890";
+                o.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890";
                 o.User.RequireUniqueEmail = false;
             })
                .AddEntityFrameworkStores<ApplicationDbContext, int>()
