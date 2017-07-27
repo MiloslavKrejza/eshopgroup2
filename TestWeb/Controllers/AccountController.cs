@@ -388,6 +388,8 @@ namespace TestWeb.Controllers
                     updatedProfile.Name = model.Name;
                     updatedProfile.Surname = model.Surname;
 
+                    model.Email = userIdentity.Email;
+
                     var updateCountry = _countryService.GetCountry(model.CountryCode);
 
                     model.CountryCode = ((Country)updateCountry.data).Name;
