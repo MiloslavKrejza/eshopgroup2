@@ -4,16 +4,6 @@
     ViewData["Title"] = "Profil uživatele";
 }
 
-<script type="text/javascript">
-    function showStuff(id, text, btn) {
-        document.getElementById(id).style.display = 'block';
-        // hide the lorem ipsum text
-        document.getElementById(text).style.display = 'none';
-        // hide the link
-        btn.style.display = 'none';
-    }
-</script>
-
 <div class="container">
     <div class="row row-centered profile">
 
@@ -43,29 +33,59 @@
             </div>
         </div>
 
-        <div id="change" style="display: none;">
+        <div id="change" style="display: none;" asp-validation-summary="All">
             <div class="col-lg-10 profile-left">
                 <h2>Změna údajů:</h2>
-                <form>
+                <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+
                     <div class="row form-row">
-                        <div class="col-lg-4">
-                            <label class="text-indent control-label" asp-for="Name"></label>
-                            <input class="form-control" asp-for="Name" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
+
+                        <div class="col-lg-8 col-centered">
+
+                            <div class="col-lg-6">
+                                <label class="text-indent control-label" asp-for="Name"></label>
+                                <input class="form-control" asp-for="Name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="text-indent control-label" asp-for="Surname"></label>
+                                <input class="form-control" asp-for="Surname" />
+                                <span asp-validation-for="Surname" class="text-danger"></span>
+                            </div>
+
                         </div>
-                        <div class="col-lg-4">
-                            <label class="text-indent control-label" asp-for="Surname"></label>
-                            <input class="form-control" asp-for="Surname" />
-                            <span asp-validation-for="Surname" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="row form-row">
+
+                        <div class="col-lg-6 col-centered">
+
+                            <div class="col-lg-4">
+                                <label class="text-indent control-label" asp-for="Street"></label>
+                                <input class="form-control" asp-for="Street" />
+                                <span asp-validation-for="Street" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="text-indent control-label" asp-for="City"></label>
+                                <input class="form-control" asp-for="City" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="text-indent control-label" asp-for="PostalCode"></label>
+                                <input class="form-control" asp-for="PostalCode" />
+                                <span asp-validation-for="PostalCode" class="text-danger"></span>
+                            </div>
+
                         </div>
                     </div>
+
                     <div class="row form-row">
-                        <div class="col-lg-8">
-                            <label class="text-indent control-label" asp-for="Street"></label>
-                            <input class="form-control" asp-for="Street" />
-                            <span asp-validation-for="Street" class="text-danger"></span>
-                        </div>
-                        <div class="col-lg-6">
+
+                        <div class="col-lg-6 col-centered">
                             <label class="text-indent" asp-for="CountryCode">Stát</label>
                             <select class="form-control" asp-for="CountryCode">
                                 @{
@@ -77,21 +97,19 @@
 
                             </select>
                         </div>
-                        <div class="col-lg-6">
-                            <label class="text-indent" asp-for="City">Město</label>
-                            <input class="form-control" asp-for="City" />
-                            <span asp-validation-for="City" class="text-danger"></span>
-                        </div>
-                        <div class="text-small"><small id="fileHelp" class="form-text text-muted">Pole, do kterých nevložíte žádná data se nezmění.</small></div>
                     </div>
+
                 </form>
-                <div class="col-lg-10 change-top">
+
+                <div class="col-lg-10 change-top col-centered">
                     <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
                     <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 28 TB</small><br />
                     <button type="submit" class="btn btn-success btn-profile">Uložit</button>
                     <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
                 </div>
+
             </div>
+
         </div>
 
     </div>
@@ -109,5 +127,4 @@
     <div class="col-lg-10 cart">
         <h2>Mé objednávky:</h2>
     </div>-->
-
 </div>
