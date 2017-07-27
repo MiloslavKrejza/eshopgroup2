@@ -385,6 +385,8 @@ namespace TestWeb.Controllers
                     updatedProfile.PostalCode = model.PostalCode;
                     updatedProfile.Address = model.Street;
                     updatedProfile.City = model.City;
+                    updatedProfile.Name = model.Name;
+                    updatedProfile.Surname = model.Surname;
 
                     var updateCountry = _countryService.GetCountry(model.CountryCode);
 
