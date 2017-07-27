@@ -1,0 +1,173 @@
+﻿@using Trainee.Core.DAL.Entities
+@model EditViewModel
+@{
+    ViewData["Title"] = "Profil uživatele";
+}
+
+@if (ViewData["WrongPassword"] != null)
+{
+    <script>
+
+
+
+    </script>
+}
+
+<div class="container">
+    <h2>@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
+    <div class="row row-centered profile">
+
+        <div id="slip">
+            <div class="col-lg-5 col-lg-offset-1 profile-left">
+                <div class="col-lg-6 profile-info">
+                    <p class="profile-item">Email:</p>
+                    <p class="profile-item">Adresa:</p>
+                    <p class="profile-item">Město:</p>
+                    <p class="profile-item">PSČ:</p>
+                    <p class="profile-item">Země:</p>
+                </div>
+                <div class="col-lg-6">
+                    <p class="second">@Html.DisplayFor(model => model.Email)</p>
+                    <p class="second">@Html.DisplayFor(model => model.Street)</p>
+                    <p class="second">@Html.DisplayFor(model => model.City)</p>
+                    <p class="second">@Html.DisplayFor(model => model.PostalCode)</p>
+                    <p class="second">@Html.DisplayFor(model => model.Country.Name)</p>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3 profile-right">
+                <img src="~/images/user-2-64.gif" alt="profile-photo" class="img-fluid img-profile" /><br />
+                <button type="button" onclick="showStuff('change', 'slip');" class="btn btn-success btn-profile">Změnit údaje</button>
+            </div>
+        </div>
+
+        <div id="change" style="display: none;" asp-validation-summary="All">
+            <div class="col-lg-10 profile-left">
+                <h2>Změna údajů</h2>
+                <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+
+                    <div class="row form-row">
+
+                        <div class="col-lg-8 col-centered">
+
+                            <div class="col-lg-6">
+                                <label class="text-indent control-label" asp-for="Name"></label>
+                                <input class="form-control" asp-for="Name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="text-indent control-label" asp-for="Surname"></label>
+                                <input class="form-control" asp-for="Surname" />
+                                <span asp-validation-for="Surname" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row form-row">
+
+                        <div class="col-lg-8 col-centered">
+
+                            <div class="col-lg-6">
+                                <label class="text-indent control-label" asp-for="Street"></label>
+                                <input class="form-control" asp-for="Street" />
+                                <span asp-validation-for="Street" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="text-indent control-label" asp-for="City"></label>
+                                <input class="form-control" asp-for="City" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-row">
+
+                        <div class="col-lg-8 col-centered">
+
+                            <div class="col-lg-6">
+                                <label class="text-indent control-label" asp-for="PostalCode"></label>
+                                <input class="form-control" asp-for="PostalCode" />
+                                <span asp-validation-for="PostalCode" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <label class="text-indent" asp-for="CountryCode">Stát</label>
+                                <select class="form-control" asp-for="CountryCode">
+
+                                    <option value="@Model.Country.CountryCode">@Model.Country.Name</option>
+
+                                    @{
+                                        foreach (Country c in Model.Countries)
+                                        {
+                                            if (c.CountryCode != Model.Country.CountryCode)
+                                            {
+                                                <option value="@c.CountryCode">@c.Name</option>
+                                            }
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-lg-8 col-centered text-center">
+
+                            <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                            <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 5 MB</small><br />
+                        </div>
+                    </div>
+
+
+
+                    <div class="row form-row">
+                        <div class="col-lg-8 col-centered text-center">
+                            <div class="col-lg-6">
+                                <button type="submit" class="btn btn-success btn-profile">Uložit</button>
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="button" onclick="showStuff('slip', 'change');" class="btn btn-danger btn-profile">Zrušit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+
+<hr class="body-line" />
+
+
+<h2>Můj košík</h2>
+
+
+
+
+<hr class="body-line" />
+
+<h2>Mé objednávky</h2>
