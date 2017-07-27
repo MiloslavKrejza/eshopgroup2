@@ -3,7 +3,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: #f2f9ff;
+    background-color: #ff0000;
     color: #444444;
     font-family: 'Montserrat', sans-serif;
     .body-line {
@@ -165,10 +165,6 @@ input:-ms-input-placeholder {
     }
 }
 
-#login-error {
-    margin-top: 40px;
-}
-
 /*Menu přihlášeného uživatele*/
 #signedUserMenu {
     a {
@@ -242,7 +238,6 @@ input:-ms-input-placeholder {
 
 .img-profile {
     width: 150px;
-    max-height: 300px;
     border-radius: 10px;
     text-align: center;
 }
@@ -352,7 +347,7 @@ input:-ms-input-placeholder {
     }
 }
 
-/*Registrace*/
+/*Formuář*/
 .form-row {
     margin-bottom: 20px;
 }
@@ -367,8 +362,8 @@ input:-ms-input-placeholder {
     padding-bottom:20px;
 }
 
+// Small text 
 
-// Small text
 .text-small {
     margin-top: 15px;
     text-align: center;
