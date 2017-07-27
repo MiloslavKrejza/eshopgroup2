@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Trainee.Core.DAL.Entities;
 using System.Threading.Tasks;
 
 namespace TestWeb.Models.AccountViewModels
@@ -11,6 +12,10 @@ namespace TestWeb.Models.AccountViewModels
         [Display(Name = "Jméno")]
         [Required(ErrorMessage = "Prosím vyplňte své jméno.")]
         public string Name { get; set; }
+        
+        [EmailAddress]
+        [Display(Name = "E-mail")]
+        public string Email { get; set; }
 
         [Display(Name = "Příjmení")]
         [Required(ErrorMessage = "Prosím vyplňte své příjmení.")]
@@ -30,6 +35,11 @@ namespace TestWeb.Models.AccountViewModels
         public string CountryCode { get; set; }
 
         public List<Country> Countries { get; set; }
+
+        [Display(Name = "Heslo")]
+        [Required(ErrorMessage = "Prosím vyplňte heslo.")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
 
     }
 }
