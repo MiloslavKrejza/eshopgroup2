@@ -319,7 +319,8 @@ namespace TestWeb.Controllers
 
             try
             {
-
+                
+                
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", returnUrl);
 
@@ -337,7 +338,6 @@ namespace TestWeb.Controllers
                 {
                     Name = userProfile.Name,
                     Surname = userProfile.Surname,
-                    Email = userIdentity.Email,
                     City = userProfile.City,
                     Country = userProfile.Country,
                     //CountryCode = userProfile.Country.Name,
@@ -349,8 +349,9 @@ namespace TestWeb.Controllers
                 var resultCountry = _countryService.GetAllCountries();
                 if (resultCountry.isOK)
                     editModel.Countries = (List<Country>)resultCountry.data;
-
+                
                 return View(editModel);
+               
 
             }
             catch (Exception e)
@@ -371,13 +372,6 @@ namespace TestWeb.Controllers
 
             try
             {
-                var result = _countryService.GetAllCountries();
-                if (result.isOK)
-                    model.Countries = (List<Country>)result.data;
-
-
-                //TODO make an abstraction methode "Get Countries from DTO" and do it here and there
-
                 var userIdentity = await _userManager.GetUserAsync(User);
 
                 if (ModelState.IsValid)
@@ -411,7 +405,7 @@ namespace TestWeb.Controllers
                         ViewData["WrongPassword"] = true;
                     }
 
-                    return View(model);
+                    return RedirectToAction("Details",model);
 
 
                 }
@@ -427,6 +421,62 @@ namespace TestWeb.Controllers
 
 
         }
+
+
+        //
+        // GET: /Account/Edit
+        [HttpGet]
+        [Route("/Account/Details")]
+        public async Task<IActionResult> Details(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+
+            try
+            {
+
+                if (!_signInManager.IsSignedIn(User))
+                    return RedirectToAction("Login", returnUrl);
+
+                var userIdentity = await _userManager.GetUserAsync(User);
+
+                UserProfile userProfile;
+                var result = _profileService.GetUserProfile(userIdentity.Id);
+
+                if (!result.isOK)
+                    throw new Exception("User profile not found");
+
+                userProfile = (UserProfile)result.data;
+
+                DetailsViewModel detailsModel = new DetailsViewModel
+                {
+                    Name = userProfile.Name,
+                    Surname = userProfile.Surname,
+                    City = userProfile.City,
+                    Country = userProfile.Country,
+                    //CountryCode = userProfile.Country.Name,
+                    PostalCode = userProfile.PostalCode,
+                    Street = userProfile.Address,
+                    Password = null
+                    
+                };
+
+                var resultCountry = _countryService.GetAllCountries();
+
+                if (resultCountry.isOK)
+                    detailsModel.Countries = (List<Country>)resultCountry.data;
+                else
+                    throw new Exception("Country database error");
+
+                return View(detailsModel);
+
+            }
+            catch (Exception e)
+            {
+                return ExceptionActionResult(e);
+            }
+
+        }
+        
 
         //
         // GET: /Account/Forbidden

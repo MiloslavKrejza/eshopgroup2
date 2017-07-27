@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Trainee.Core.DAL.Entities;
-using System.Threading.Tasks;
 
 namespace TestWeb.Models.AccountViewModels
 {
-    public class EditViewModel : BaseViewModel
+    public class DetailsViewModel
     {
-        [EmailAddress]
-        [Display(Name = "E-mail")]
-        public string Email { get; set; }
-
         [Display(Name = "Jméno")]
         [Required(ErrorMessage = "Prosím vyplňte své jméno.")]
         public string Name { get; set; }
+
+        [EmailAddress]
+        [Display(Name = "E-mail")]
+        public string Email { get; set; }
 
         [Display(Name = "Příjmení")]
         [Required(ErrorMessage = "Prosím vyplňte své příjmení.")]
