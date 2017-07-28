@@ -25,10 +25,10 @@ namespace TestWeb.Controllers
     {
         private IHostingEnvironment _env;
         private ILogger<AccountController> _logger;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly CountryService _countryService;
-        private readonly UserService _profileService;
+        private readonly UserManager<ApplicationUser> _userManager;     //provides ASP.NET Identity profiles
+        private readonly SignInManager<ApplicationUser> _signInManager;     //sign in functionality
+        private readonly CountryService _countryService;    //provides countries
+        private readonly UserService _profileService;       //provides additional non-ASP.NET user profile data
 
         public AccountController(
             IHostingEnvironment env,
@@ -56,7 +56,7 @@ namespace TestWeb.Controllers
         {
             try
             {
-                //Nesmi byt prihlasen
+                //User can't be signed in
                 if (_signInManager.IsSignedIn(User))
                     _signInManager.SignOutAsync();
                 
@@ -80,7 +80,7 @@ namespace TestWeb.Controllers
         {
             try
             {
-                //Nesmi byt prihlasen
+                //User can't be signed in
                 if (_signInManager.IsSignedIn(User))
                     return ErrorActionResult("Uživatel již je přihlášen");
                
@@ -91,7 +91,7 @@ namespace TestWeb.Controllers
 
                     // This doesn't count login failures towards account lockout
                     // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
+                    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
 
@@ -102,26 +102,20 @@ namespace TestWeb.Controllers
                         _logger.LogWarning(2, "someString");
                         ModelState.AddModelError("UserName", "someString");
                         return View("Lockout");
-                    }
+                    } 
                     else
                     {
 
                         var isExist = await _userManager.FindByEmailAsync(model.Email);
-                        if (isExist == null)
+
+                        //two possible causes of failure
+                        if (isExist == null)    //failure due to unknown email
                         {
                             ViewData["EmailUnknown"] = true;
-                            /*
-                            _logger.LogWarning(2, "Neznámý e-mail.");
-                            ModelState.AddModelError("UserName", "Neznámý e-mail.");
-                            */
                         }
-                        else
+                        else        //failure due to wrong password
                         {
                             ViewData["WrongPassword"] = true;
-                            /*
-                            _logger.LogWarning(2, "Nesprávné heslo.");
-                            ModelState.AddModelError("Password", "Nesprávné heslo.");
-                            */
                         }
 
                         return View(model);
@@ -148,21 +142,22 @@ namespace TestWeb.Controllers
         {
             try
             {
-                //Nesmi byt prihlasen
+                //Can't be signed in
                 if (_signInManager.IsSignedIn(User))
                     _signInManager.SignOutAsync();
 
 
                 ViewData["ReturnUrl"] = returnUrl;
 
-                /*************Added**************/
+                /*************Loading countries**************/
 
                 var result = _countryService.GetAllCountries();
                 RegisterViewModel model;
-                if (result.isOK)            //on dummy data invert condition
+
+                if (result.isOK)           
                 {
-                    model = new RegisterViewModel
-                    { /*Countries = new List<Country> { new Country { Name = "Prr", CountryCode = "Byy", Id = 1 } }*/
+                    model = new RegisterViewModel  //we need to provide countries to the user
+                    { 
                         Countries = (List<Country>)result.data
                     };
 
@@ -170,7 +165,7 @@ namespace TestWeb.Controllers
                 else
                     throw new Exception("Invalid model, database type error");
 
-                /********************************/
+                /********************************************/
 
                 return View("Register", model);
             }
@@ -190,32 +185,35 @@ namespace TestWeb.Controllers
         {
             try
             {
+                //loading countries to be shown again
                 var result = _countryService.GetAllCountries();
                 if (result.isOK)
                     model.Countries = (List<Country>)result.data;
+                else
+                    throw new Exception("Invalid model, database type error");
 
-
-
-
-                //Nesmi byt prihlasen
+                
                 if (_signInManager.IsSignedIn(User))
                 {
-                    //await _signInManager.SignOutAsync();
-                    return ErrorActionResult("Uživatel již je přihlášen");
+                    await _signInManager.SignOutAsync();
                 }
 
                 ViewData["ReturnUrl"] = returnUrl;
                 if (ModelState.IsValid)
                 {
-                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email }; //new Identity profile
+
+                    //If needed, can be displayed nicely (normalized) / compared by distinct complete username
+                    string[] usernameTemp = model.Email.Split('@');
+
+                    user.UserName = usernameTemp[0] + usernameTemp[1];
+                    user.NormalizedUserName = usernameTemp[0];
 
 
-                    //Kontrola jestli uzivatel uz neexistuje
-                    if (String.IsNullOrEmpty(user.NormalizedUserName))
-                        user.NormalizedUserName = user.UserName;
-                    var exist = await _userManager.GetUserIdAsync(user);
+                    var exist = await _userManager.FindByEmailAsync(user.Email);
 
-                    if (exist != "")
+                    //only one profile for one email
+                    if (exist != null)
                     {
                         ViewData["UserExists"] = true;
                         return View(model);
@@ -224,45 +222,36 @@ namespace TestWeb.Controllers
                     {
                         ViewData["UserExists"] = false;
                     }
-                    // return RedirectToAction("Uzivatel existuje");
-
-
-
-
-                    //osetreni username
-
-                    string usernameTemp = model.Email.Split('@')[0];
-
-                    user.UserName = usernameTemp;
-
+                   
 
                     //Create AspNet Identity User
                     IdentityResult res = await _userManager.CreateAsync(user, model.Password);
                     IdentityResult res2 = null;
                     if (res.Succeeded)
                     {
-                        //zjisteni ulozeneho Id uzivatele
+                        //Get user Id for Role
                         var resId = await _userManager.GetUserIdAsync(user);
                         user.Id = Int32.Parse(resId);
 
-                        //prirazeni uzivatele do Role
+                        //Set Role (only users for now)
                         res2 = await _userManager.AddToRoleAsync(user, "User");
 
-                        if (res2.Succeeded)
+                        //now UserProfile will be created
+                        if (res2.Succeeded) 
                         {
                             /*********************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
 
                             List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, model.Phone };
-                            int profileState = 1;
+                            int profileState = 1; //complete
 
                             //to be changed if there would be more states
                             foreach (object o in completionList)
-                                profileState = o == null ? 2 : profileState;
+                                profileState = o == null ? 2 : profileState; //incomplete
 
                             /*********************/
 
 
-
+                            
                             var userProfile = new UserProfile
                             {
                                 Address = model.Street,
@@ -276,7 +265,7 @@ namespace TestWeb.Controllers
                             };
 
                             
-
+                            //Getting the selected country
                             var countryByCode = _countryService.GetCountry(model.CountryCode);
                             if (countryByCode.isOK)
                             {
@@ -298,13 +287,7 @@ namespace TestWeb.Controllers
                     {
                         return RedirectToAction("CHYBA");
                     }
-
-
-
-                    await _signInManager.SignInAsync(user, isPersistent: true);
-
-
-
+                    
 
                     //??
                     return RedirectToAction("Forbidden");
@@ -334,10 +317,11 @@ namespace TestWeb.Controllers
             try
             {
                 
-                
+                //the user must be logged in
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", returnUrl);
 
+                //we need his Identity profile to get the id
                 var userIdentity = await _userManager.GetUserAsync(User);
 
                 UserProfile userProfile;
@@ -348,6 +332,7 @@ namespace TestWeb.Controllers
 
                 userProfile = (UserProfile)result.data;
 
+                //their current profile will be passed to the View
                 EditViewModel editModel = new EditViewModel
                 {
                     Name = userProfile.Name,
@@ -390,6 +375,8 @@ namespace TestWeb.Controllers
 
                 if (ModelState.IsValid)
                 {
+
+                    //can be edited only with correct password
                     bool isPassCorrect = await _userManager.CheckPasswordAsync(userIdentity, model.Password);
                     
                     model.Email = userIdentity.Email;
@@ -429,6 +416,7 @@ namespace TestWeb.Controllers
                         ViewData["WrongPassword"] = true;
                     }
 
+                    //display Details of edited profile
                     return RedirectToAction("Details");
 
 
@@ -457,7 +445,7 @@ namespace TestWeb.Controllers
 
             try
             {
-
+                //get the details of the user who is signed in
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", returnUrl);
 
@@ -486,6 +474,7 @@ namespace TestWeb.Controllers
 
                 var resultCountry = _countryService.GetAllCountries();
 
+                //missing country or database
                 if (resultCountry.isOK)
                     detailsModel.Countries = (List<Country>)resultCountry.data;
                 else
