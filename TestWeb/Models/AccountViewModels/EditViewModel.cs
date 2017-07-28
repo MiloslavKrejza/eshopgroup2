@@ -38,7 +38,7 @@ namespace TestWeb.Models.AccountViewModels
 
         public List<Country> Countries { get; set; }
 
-        [Display(Name = "Heslo")]
+        [Display(Name = "")]
         [Required(ErrorMessage = "Prosím vyplňte heslo.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }

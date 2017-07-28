@@ -405,7 +405,7 @@ namespace TestWeb.Controllers
                         ViewData["WrongPassword"] = true;
                     }
 
-                    return RedirectToAction("Details",model);
+                    return RedirectToAction("Details");
 
 
                 }
@@ -456,8 +456,8 @@ namespace TestWeb.Controllers
                     //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
                     Street = userProfile.Address,
-                    Password = null
-                    
+                    Password = null,
+                    Email = userIdentity.Email
                 };
 
                 var resultCountry = _countryService.GetAllCountries();
