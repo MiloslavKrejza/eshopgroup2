@@ -70,8 +70,13 @@
                     <select class="form-control" asp-for="CountryCode">
 
                         @{
+                            var czechRep = Model.Countries.FirstOrDefault(c => c.CountryCode == "CZ");
+
+                            <option value ="@czechRep.CountryCode">@czechRep.Name</option>
+
                             foreach (Country c in Model.Countries)
                             {
+                                if (c.CountryCode != "CZ")
                                 {
                                     <option value="@c.CountryCode">@c.Name</option>
                                 }
