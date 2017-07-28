@@ -94,7 +94,13 @@
 
 @if (ViewData["RegisterCompleted"] != null)
 {
-    <h4 class="text-center text-danger">Vaše registrace proběhla úspěšně. Můžete se přihlásit.</h4>
+    <h4 class="text-center text-danger">Vaše registrace proběhla úspěšně. <a asp-area="" asp-controller="Account" asp-action="Login">Můžete se přihlásit.</a></h4>
+
+}
+
+@if (ViewData["UserExists"] != null)
+{
+    <h4 class="text-center text-danger">Účet s tímto e-mailem už existuje. Zvolte jiný e-mail nebo <a asp-area="" asp-controller="Account" asp-action="Login">pokračujte na přihlášení.</a></h4>
 
 }
 

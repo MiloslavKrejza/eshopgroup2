@@ -221,10 +221,6 @@ namespace TestWeb.Controllers
                         ViewData["UserExists"] = true;
                         return View(model);
                     }
-                    else
-                    {
-                        ViewData["UserExists"] = false;
-                    }
                    
 
                     //Create AspNet Identity User

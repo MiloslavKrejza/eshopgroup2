@@ -172,7 +172,7 @@ input:-ms-input-placeholder {
 }
 
 #login-page-container {
-        width: 360px;
+        width: 380px;
 }
 
 #login-error {
@@ -180,13 +180,17 @@ input:-ms-input-placeholder {
 }
 
 /*Menu přihlášeného uživatele*/
-#signedUserMenu a {
-    background-color: #ffffff;
+#signedUserMenu {
+    a {
+        background-color: transparent;
+    }
+
+    button:hover {
+        text-decoration: none;
+    }
 }
 
-#signedUserMenu button:hover {
-    text-decoration: none;
-}
+
 
 /*Menu*/
 #menu-item {
@@ -325,9 +329,8 @@ input:-ms-input-placeholder {
 }
 
 .profile .form-control-file {
-    width: 40%;
-    margin-left: auto;
-    margin-right:auto;
+    margin-right:0;
+    padding-right: 0;
 }
 
 @media screen and (max-width: 768px) {

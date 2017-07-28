@@ -139,14 +139,14 @@ input:-ms-input-placeholder {
   padding: 0 20px; }
 
 #login-page-container {
-  width: 360px; }
+  width: 380px; }
 
 #login-error {
   margin-top: 40px; }
 
 /*Menu přihlášeného uživatele*/
 #signedUserMenu a {
-  background-color: #ffffff; }
+  background-color: transparent; }
 
 #signedUserMenu button:hover {
   text-decoration: none; }
@@ -255,9 +255,8 @@ input:-ms-input-placeholder {
   text-align: center; }
 
 .profile .form-control-file {
-  width: 40%;
-  margin-left: auto;
-  margin-right: auto; }
+  margin-right: 0;
+  padding-right: 0; }
 
 @media screen and (max-width: 768px) {
   .profile .form-control-file {

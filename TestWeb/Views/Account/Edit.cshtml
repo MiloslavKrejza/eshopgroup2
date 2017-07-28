@@ -12,7 +12,7 @@
         <div class="col-lg-8">
 
             <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                <div id="change" asp-validation-summary="All">
+                <div id="change">
 
                     <div class="row form-row text-left">
                         <div class="col-lg-6">
@@ -74,7 +74,7 @@
                             <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
 
-                        <div class="col-lg-6 col-centered text-center bottom-padding">
+                        <div class="col-lg-6 bottom-padding">
                             <label class="text-indent" for="exampleInputFile">Profilový obrázek</label>
                             <input type="file" class="form-control-file" id="exampleInputFile">
                         </div>
