@@ -258,9 +258,12 @@ namespace TestWeb.Controllers
                                 Id = user.Id,
                                 Name = model.Name,
                                 Surname = model.Surname,
-                                /*PhoneNumber = model.PhoneNumber*/
+                                PhoneNumber = model.Phone,
                                 PostalCode = model.PostalCode
                             };
+
+                            List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, model.Phone };
+                            
 
                             var countryByCode = _countryService.GetCountry(model.CountryCode);
                             if (countryByCode.isOK)
