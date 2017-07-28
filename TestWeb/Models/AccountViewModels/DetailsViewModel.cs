@@ -14,6 +14,9 @@ namespace TestWeb.Models.AccountViewModels
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
+        [Display(Name = "Telefon")]
+        public string Phone { get; set; }
+
         [Display(Name = "Příjmení")]
         [Required(ErrorMessage = "Prosím vyplňte své příjmení.")]
         public string Surname { get; set; }
