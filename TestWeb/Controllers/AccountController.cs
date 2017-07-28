@@ -345,8 +345,8 @@ namespace TestWeb.Controllers
                     Country = userProfile.Country,
                     //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
-                    Street = userProfile.Address,
-                    Password = null
+                    Street = userProfile.Address, Email = userIdentity.Email
+                    //Password = null
                 };
 
                 var resultCountry = _countryService.GetAllCountries();
@@ -367,7 +367,7 @@ namespace TestWeb.Controllers
 
         //
         // POST: /Account/Edit
-        [HttpPost]
+        //[HttpPost]
         [Route("/Account/Edit")]
         public async Task<IActionResult> Edit(EditViewModel model, string returnUrl = null)
         {
@@ -459,7 +459,7 @@ namespace TestWeb.Controllers
                     //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
                     Street = userProfile.Address,
-                    Password = null,
+                    //Password = null,
                     Email = userIdentity.Email
                 };
 
