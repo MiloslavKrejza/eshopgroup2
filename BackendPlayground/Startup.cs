@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Trainee.Core.Business;
-using Trainee.Core.Abstraction;
-using Trainee.Core.DAL.Repositories;
-using Trainee.Core.DAL.Context;
-using Microsoft.EntityFrameworkCore;
 
 namespace BackendPlayground
 {
@@ -30,10 +29,6 @@ namespace BackendPlayground
         {
             // Add framework services.
             services.AddMvc();
-            services.AddTransient<CountryService, CountryService>();
-            services.AddTransient<ICountryRepository, CountryRepository>();
-         
-            services.AddDbContext<CountryDbContext>(opt =>opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
