@@ -340,8 +340,9 @@ namespace TestWeb.Controllers
                     Country = userProfile.Country,
                     //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
-                    Street = userProfile.Address, Email = userIdentity.Email
+                    Street = userProfile.Address, Email = userIdentity.Email,
                     //Password = null
+                    Phone = userProfile.PhoneNumber
                 };
 
                 var resultCountry = _countryService.GetAllCountries();
@@ -404,14 +405,15 @@ namespace TestWeb.Controllers
                         updatedProfile.Surname = model.Surname;
                         updatedProfile.CountryId = model.Country.Id;
                         updatedProfile.ProfileStateId = profileState;
+                        updatedProfile.PhoneNumber = model.Phone;
 
 
                         _profileService.UpdateUserProfile(updatedProfile);
                     }
                     else
                     {
-                        _logger.LogWarning(2, "Nesprávné heslo.");
-                        ModelState.AddModelError("Password", "Nesprávné heslo.");
+                        //_logger.LogWarning(2, "Nesprávné heslo.");
+                        //ModelState.AddModelError("Password", "Nesprávné heslo.");
                         ViewData["WrongPassword"] = true;
                     }
 
@@ -468,7 +470,8 @@ namespace TestWeb.Controllers
                     PostalCode = userProfile.PostalCode,
                     Street = userProfile.Address,
                     //Password = null,
-                    Email = userIdentity.Email
+                    Email = userIdentity.Email,
+                    Phone = userProfile.PhoneNumber
                 };
 
                 var resultCountry = _countryService.GetAllCountries();
