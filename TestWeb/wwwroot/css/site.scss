@@ -30,6 +30,10 @@ img {
     padding-left: 8px;
 }
 
+.bottom-padding {
+    padding-bottom: 25px;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -162,6 +166,10 @@ input:-ms-input-placeholder {
     border: none;
 }
 
+#prihlasit :focus {
+    border: none;
+}
+
 #login-error {
     margin-top: 40px;
 }
@@ -274,6 +282,10 @@ input:-ms-input-placeholder {
 .profile .profile-right {
     text-align: center;
     margin-top: 25px;
+    img {
+        margin-bottom: 10px;
+        padding: 10px;
+    }
 }
 
 .profile .profile-title {
@@ -335,15 +347,21 @@ input:-ms-input-placeholder {
 
 @media screen and (max-width: 768px) {
     .btn-profile {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
 }
 
-#edit-button {
+#edit-button a {
     color: white;
     background-color: #f19f4d;
     text-align: center;
     padding: 10px 20px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
+#cancel-button a {
+    color: white;
+    background-color: #ff0000;
+    text-align: center;
+    padding: 8px 55px;
+    border-radius: 5px;}
