@@ -9,6 +9,7 @@
 
 <div class="container">
     <h2 class="bottom-padding">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
+
     <div class="row row-centered profile">
 
         <div id="slip">
@@ -35,6 +36,7 @@
                 <div id="edit-button">
                     <a asp-action="Edit" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Změnit údaje</a>
                 </div>
+
             </div>
         </div>
     </div>

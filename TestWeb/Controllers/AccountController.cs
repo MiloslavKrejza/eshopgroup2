@@ -250,6 +250,18 @@ namespace TestWeb.Controllers
 
                         if (res2.Succeeded)
                         {
+                            /*********************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
+
+                            List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, model.Phone };
+                            int profileState = 1;
+
+                            //to be changed if there would be more states
+                            foreach (object o in completionList)
+                                profileState = o == null ? 2 : profileState;
+
+                            /*********************/
+
+
 
                             var userProfile = new UserProfile
                             {
@@ -258,9 +270,12 @@ namespace TestWeb.Controllers
                                 Id = user.Id,
                                 Name = model.Name,
                                 Surname = model.Surname,
-                                /*PhoneNumber = model.PhoneNumber*/
-                                PostalCode = model.PostalCode
+                                PhoneNumber = model.Phone,
+                                PostalCode = model.PostalCode,
+                                ProfileStateId = profileState                               
                             };
+
+                            
 
                             var countryByCode = _countryService.GetCountry(model.CountryCode);
                             if (countryByCode.isOK)
@@ -268,8 +283,7 @@ namespace TestWeb.Controllers
                                 // userProfile.Country = (Country)countryByCode.data;
                                 userProfile.CountryId = ((Country)countryByCode.data).Id;
                             }
-
-                            userProfile.ProfileStateId = 1;
+                            
 
                             _profileService.AddUserProfile(userProfile);
 
@@ -342,8 +356,8 @@ namespace TestWeb.Controllers
                     Country = userProfile.Country,
                     //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
-                    Street = userProfile.Address,
-                    Password = null
+                    Street = userProfile.Address, Email = userIdentity.Email
+                    //Password = null
                 };
 
                 var resultCountry = _countryService.GetAllCountries();
@@ -364,7 +378,7 @@ namespace TestWeb.Controllers
 
         //
         // POST: /Account/Edit
-        [HttpPost]
+        //[HttpPost]
         [Route("/Account/Edit")]
         public async Task<IActionResult> Edit(EditViewModel model, string returnUrl = null)
         {
@@ -383,6 +397,16 @@ namespace TestWeb.Controllers
                     var updateCountry = _countryService.GetCountry(model.CountryCode);
                     model.Country = (Country)updateCountry.data;
 
+                    /*******************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
+
+                    List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, /*model.Phone*/ };
+                    int profileState = 1; //complete
+
+                    //to be changed if there would be more states
+                    foreach (object o in completionList)
+                        profileState = o == null ? 2 : profileState; //incomplete
+
+                    /*******************/
 
                     if (isPassCorrect)
                     {
@@ -393,7 +417,7 @@ namespace TestWeb.Controllers
                         updatedProfile.Name = model.Name;
                         updatedProfile.Surname = model.Surname;
                         updatedProfile.CountryId = model.Country.Id;
-
+                        updatedProfile.ProfileStateId = profileState;
 
 
                         _profileService.UpdateUserProfile(updatedProfile);
@@ -405,7 +429,7 @@ namespace TestWeb.Controllers
                         ViewData["WrongPassword"] = true;
                     }
 
-                    return RedirectToAction("Details",model);
+                    return RedirectToAction("Details");
 
 
                 }
@@ -456,8 +480,8 @@ namespace TestWeb.Controllers
                     //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
                     Street = userProfile.Address,
-                    Password = null
-                    
+                    //Password = null,
+                    Email = userIdentity.Email
                 };
 
                 var resultCountry = _countryService.GetAllCountries();
