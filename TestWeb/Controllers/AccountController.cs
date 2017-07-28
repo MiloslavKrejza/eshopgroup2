@@ -250,6 +250,18 @@ namespace TestWeb.Controllers
 
                         if (res2.Succeeded)
                         {
+                            /*********************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
+
+                            List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, model.Phone };
+                            int profileState = 1;
+
+                            //to be changed if there would be more states
+                            foreach (object o in completionList)
+                                profileState = o == null ? 2 : profileState;
+
+                            /*********************/
+
+
 
                             var userProfile = new UserProfile
                             {
@@ -259,10 +271,10 @@ namespace TestWeb.Controllers
                                 Name = model.Name,
                                 Surname = model.Surname,
                                 PhoneNumber = model.Phone,
-                                PostalCode = model.PostalCode
+                                PostalCode = model.PostalCode,
+                                ProfileStateId = profileState                               
                             };
 
-                            List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, model.Phone };
                             
 
                             var countryByCode = _countryService.GetCountry(model.CountryCode);
@@ -271,8 +283,7 @@ namespace TestWeb.Controllers
                                 // userProfile.Country = (Country)countryByCode.data;
                                 userProfile.CountryId = ((Country)countryByCode.data).Id;
                             }
-
-                            userProfile.ProfileStateId = 1;
+                            
 
                             _profileService.AddUserProfile(userProfile);
 
@@ -386,6 +397,16 @@ namespace TestWeb.Controllers
                     var updateCountry = _countryService.GetCountry(model.CountryCode);
                     model.Country = (Country)updateCountry.data;
 
+                    /*******************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
+
+                    List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, /*model.Phone*/ };
+                    int profileState = 1; //complete
+
+                    //to be changed if there would be more states
+                    foreach (object o in completionList)
+                        profileState = o == null ? 2 : profileState; //incomplete
+
+                    /*******************/
 
                     if (isPassCorrect)
                     {
@@ -396,7 +417,7 @@ namespace TestWeb.Controllers
                         updatedProfile.Name = model.Name;
                         updatedProfile.Surname = model.Surname;
                         updatedProfile.CountryId = model.Country.Id;
-
+                        updatedProfile.ProfileStateId = profileState;
 
 
                         _profileService.UpdateUserProfile(updatedProfile);
