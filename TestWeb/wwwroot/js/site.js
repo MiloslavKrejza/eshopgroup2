@@ -11,11 +11,20 @@ function toggleLogin() {
 // Hide and show effect for edit page
 
 function showStuff(id, text, btn) {
-
     //
     document.getElementById(id).style.display = 'block';
-    // hide the lorem ipsum text
+    // hide the login forms
     document.getElementById(text).style.display = 'none';
-    // hide the link
+    // hide the button for login
     btn.style.display = 'none';
+}
+
+// Effect for text on layout
+
+function changeUser() {
+    document.getElementById("login-link").innerHTML = "Účet";
+}
+
+function changeUserBack() {
+    document.getElementById("login-link").innerHTML = "Přihlásit";
 }

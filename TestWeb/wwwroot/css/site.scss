@@ -1,14 +1,14 @@
-﻿// Obecná definice
-
+﻿
 body {
     padding-top: 50px;
     padding-bottom: 20px;
     background-color: #f2f9ff;
     color: #444444;
     font-family: 'Montserrat', sans-serif;
-    .body-line {
-        margin-top: 25px;
-    }
+}
+
+body .body-line {
+    margin-top: 25px;
 }
 
 hr {
@@ -26,8 +26,13 @@ img {
     margin: 0 auto;
 }
 
-.text-indent{
-    padding-left: 8px;
+.text-indent {
+    padding-left: 15px;
+}
+
+.bottom-padding {
+    padding-bottom: 25px;
+
 }
 
 /* Wrapping element */
@@ -43,7 +48,6 @@ select,
 textarea {
     max-width: 280px;
 }*/
-
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
@@ -63,14 +67,11 @@ textarea {
     }
 }
 
-// Row
-
 .row-centered {
     text-align: center;
 }
 
 /*  Hlavička */
-
 #hlavicka {
     padding-top: 15px;
     padding-right: 20px;
@@ -93,7 +94,6 @@ textarea {
     top: 40px;
     height: 45px;
     border-radius: 4px;
-    
 }
 
 input::-webkit-input-placeholder {
@@ -107,7 +107,8 @@ input:-moz-placeholder {
     font-size: 120%;
 }
 
-input::-moz-placeholder { /* Firefox 19+ */
+input::-moz-placeholder {
+    /* Firefox 19+ */
     padding: 10px !important;
     font-size: 120%;
 }
@@ -128,13 +129,27 @@ input:-ms-input-placeholder {
 
 #prihlasit {
     border: none;
-    background-color: #f2f9ff;
+    background-color: inherit;
     padding: 0;
     margin: 0;
-    :hover {
-       cursor: pointer;
-    }
 }
+
+#prihlasit :hover {
+    cursor: pointer;
+}
+
+#prihlasit :active {
+    border: none;
+}
+
+#prihlasit :visited {
+    border: none;
+}
+
+#prihlasit :focus {
+    border: none;
+}
+
 
 /*Login container*/
 .login-container {
@@ -150,19 +165,14 @@ input:-ms-input-placeholder {
     display: none;
     position: absolute;
     z-index: 1;
-    form {
-        padding: 0 20px;
-    }
 }
 
-#prihlasit {
-    border: none;
-    background-color: #f2f9ff ;
-    padding: 0;
-    margin: 0;
-    :hover {
-       cursor: pointer;
-    }
+#login form {
+    padding: 0 20px;
+}
+
+#login-page-container {
+        width: 380px;
 }
 
 #login-error {
@@ -172,13 +182,15 @@ input:-ms-input-placeholder {
 /*Menu přihlášeného uživatele*/
 #signedUserMenu {
     a {
-        background-color: #ffffff;
+        background-color: transparent;
     }
 
     button:hover {
-        text-decoration:none;
+        text-decoration: none;
     }
 }
+
+
 
 /*Menu*/
 #menu-item {
@@ -206,148 +218,35 @@ input:-ms-input-placeholder {
     margin: 0;
     padding: 0;
 }
+
 #render-body {
     padding: 20px;
 }
 
-// Patička
 
-.footer {
-    padding: 20px 50px;
-    background-color: #4484ce;
-
-    a {
-        color: #e8e8e8;
-    }
-
-    a:hover {
-        color: #444444;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    @media screen and (max-width: 768px) {
-        .footer-right {
-            text-align: center;
-            padding-top: 15px;
-        }
-
-        .footer-left {
-            text-align: center;
-        }
-    }
-}
-
-// Images 
-
-.img-profile {
-    width: 150px;
-    max-height: 300px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-// Profile
-
-.profile {
-    text-align: center;
-
-    .profile-left {
-        font-size: 18px;
-        text-align: left;
-    }
-
-    .profile-right {
-        text-align: center;
-        margin-top: 25px;
-    }
-
-    .profile-title {
-        font-size: 38px;
-        text-align: center;
-        padding-bottom: 25px;
-    }
-
-    .profile-item {
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    .profile-align {
-        text-align: right;
-    }
-
-    .second {
-        padding-top: 2.5px;
-    }
-
-    .form-profile {
-        margin: 15px;
-    }
-
-    .change-top {
-        margin-top: 30px;
-        text-align: center;
-    }
-
-    .text-small {
-        padding: 15px;
-        text-align: center;
-    }
-
-    .form-control-file {
-        width: 40%;
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-        @media screen and (max-width: 768px) {
-            width: 100%;
-        }
-    }
-
-    .profile-country {
-        margin-left: 5px;
-    }
-
-    @media screen and (max-width: 768px) {
-        .profile-info {
-            display: none;
-        }
-    }
-}
-
-// Buttons
-
-.btn-profile {
-    margin-top: 15px;
-    width: 150px;
-
-    @media screen and (max-width: 768px) {
-        margin-bottom: 10px;
-    }
-}
 /*Layout*/
 #layout {
     margin-bottom: 40px;
 }
 
-
 /*Patička */
 .footer {
     padding: 20px 50px;
     background-color: #4484ce;
+}
 
-    a {
-        color: #e8e8e8;
-    }
+.footer a {
+    color: #e8e8e8;
+}
 
-    a:hover {
-        color: #444444;
-        text-decoration: none;
-        cursor: pointer;
-    }
+.footer a:hover {
+    color: #444444;
+    text-decoration: none;
+    cursor: pointer;
+}
 
-    @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    .footer {
         text-align: center;
     }
 }
@@ -364,12 +263,121 @@ input:-ms-input-placeholder {
 
 .title-register {
     padding-left: 50px;
-    padding-bottom:20px;
+    padding-bottom: 20px;
 }
 
-
-// Small text
 .text-small {
     margin-top: 15px;
     text-align: center;
 }
+
+.red-star {
+    color: red;
+    font-size: 20px;
+}
+
+/*Details*/
+
+
+.img-profile {
+    max-width: 150px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.profile {
+    text-align: center;
+}
+
+.profile .profile-left {
+    text-align: left;
+    font-size: 18px;
+}
+
+.profile .profile-right {
+    text-align: center;
+
+    img {
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+}
+
+.profile .profile-title {
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.profile .profile-item {
+    font-weight: bold;
+}
+
+.profile .profile-align {
+    text-align: right;
+}
+
+.profile .second {
+}
+
+.profile .form-profile {
+    margin: 15px;
+}
+
+.profile .change-top {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.profile .text-small {
+    padding: 15px;
+    text-align: center;
+}
+
+.profile .form-control-file {
+    margin-right:0;
+    padding-right: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .profile .form-control-file {
+        width: 100%;
+    }
+}
+
+.profile .profile-country {
+    margin-left: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .profile .profile-info {
+        display: none;
+    }
+}
+
+.btn-profile {
+    margin-top: 15px;
+    width: 150px;
+}
+
+@media screen and (max-width: 768px) {
+    .btn-profile {
+        margin-bottom: 15px;
+    }
+}
+
+#edit-button a {
+    color: white;
+    background-color: #f19f4d;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+#cancel-button a {
+    color: white;
+    background-color: #ff0000;
+    text-align: center;
+    padding: 8px 55px;
+    border-radius: 5px;
+}
+
