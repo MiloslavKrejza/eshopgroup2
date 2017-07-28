@@ -31,6 +31,9 @@ namespace TestWeb.Models.AccountViewModels
         [Display(Name = "Město")]
         public string City { get; set; }
 
+        [Display(Name = "Telefon")]
+        public string Phone { get; set; }
+
         [Display(Name = "Stát")]
         public string CountryCode { get; set; }
 
@@ -38,10 +41,7 @@ namespace TestWeb.Models.AccountViewModels
 
         public List<Country> Countries { get; set; }
 
-        [Display(Name = "Heslo")]
-        [Required(ErrorMessage = "Prosím vyplňte heslo.")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        
 
     }
 }

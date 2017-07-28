@@ -6,14 +6,15 @@
 
 
 <div class="container">
+
     <h2 class="bottom-padding">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
-    <div class="row row-centered profile">
-        <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-            <div id="change" asp-validation-summary="All">
+    <div class="row profile">
+        <div class="col-lg-8">
 
-                <div class="col-lg-8 col-centered">
-                    <div class="row form-row">
+            <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                <div id="change" asp-validation-summary="All">
 
+                    <div class="row form-row text-left">
                         <div class="col-lg-6">
                             <label class="text-indent control-label" asp-for="Name"></label>
                             <input class="form-control" asp-for="Name" />
@@ -27,8 +28,7 @@
                         </div>
                     </div>
 
-                    <div class="row form-row">
-
+                    <div class="row form-row text-left">
                         <div class="col-lg-6">
                             <label class="text-indent control-label" asp-for="Street"></label>
                             <input class="form-control" asp-for="Street" />
@@ -42,14 +42,12 @@
                         </div>
                     </div>
 
-                    <div class="row form-row">
-
+                    <div class="row form-row text-left">
                         <div class="col-lg-6">
                             <label class="text-indent control-label" asp-for="PostalCode"></label>
                             <input class="form-control" asp-for="PostalCode" />
                             <span asp-validation-for="PostalCode" class="text-danger"></span>
                         </div>
-
 
                         <div class="col-lg-6">
                             <label class="text-indent" asp-for="CountryCode">Stát</label>
@@ -66,45 +64,42 @@
                                         }
                                     }
                                 }
-
                             </select>
                         </div>
                     </div>
+                    <div class="row text-left">
+                        <div class="col-lg-6">
+                            <label class="text-indent control-label" asp-for="Phone"></label>
+                            <input class="form-control" asp-for="Phone" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
 
-                    <div class="row">
-
-                        <div class="change-top col-centered text-center bottom-padding">
-                            <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                            <small id="fileHelp" class="form-text text-muted">Velikost souboru může být maximálně 28 TB</small><br />
+                        <div class="col-lg-6 col-centered text-center bottom-padding">
+                            <label class="text-indent" for="exampleInputFile">Profilový obrázek</label>
+                            <input type="file" class="form-control-file" id="exampleInputFile">
                         </div>
                     </div>
-                    <hr class="bottom-padding">
+                    <hr class="bottom-padding" />
 
                     <div class="row">
+                        <div class="col-lg-6">
+                            Pro změnu údajů zadejte prosím své heslo:
+                            <br />
+                            <input class="form-control" asp-for="Password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
 
-                            <div class="col-lg-6">
-                                Pro změnu údajů prosím zadejte své heslo:
-                                <br />
-                                <label class="text-indent control-label" asp-for="Password"></label>
-                                <input class="form-control" asp-for="Password" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-lg-6" id="cancel-button">
-                                <a asp-action="Details" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Zrušit</a>
-                                <br />
-                                <button type="submit" class="btn btn-success btn-profile">Uložit</button>
-                            </div>
+                        <div class="col-lg-6" id="cancel-button">
+                            <a asp-action="Details" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Zrušit</a>
+                            <br />
+                            <button type="submit" class="btn btn-success btn-profile">Uložit</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-        </form>
-
+            </form>
+        </div>
     </div>
-
 </div>
-
 
 
 @section Scripts {

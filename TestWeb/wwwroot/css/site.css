@@ -22,7 +22,7 @@ img {
   margin: 0 auto; }
 
 .text-indent {
-  padding-left: 8px; }
+  padding-left: 15px; }
 
 .bottom-padding {
   padding-bottom: 25px; }
@@ -103,23 +103,6 @@ input:-ms-input-placeholder {
 #basket-user a {
   color: #555555; }
 
-/*Login container*/
-.login-container {
-  position: relative;
-  right: 45px; }
-
-#login {
-  width: 100%;
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
-  border-radius: 10px;
-  display: none;
-  position: absolute;
-  z-index: 1; }
-
-#login form {
-  padding: 0 20px; }
-
 #prihlasit {
   border: none;
   background-color: inherit;
@@ -137,6 +120,26 @@ input:-ms-input-placeholder {
 
 #prihlasit :focus {
   border: none; }
+
+/*Login container*/
+.login-container {
+  position: relative;
+  right: 45px; }
+
+#login {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  display: none;
+  position: absolute;
+  z-index: 1; }
+
+#login form {
+  padding: 0 20px; }
+
+#login-page-container {
+  width: 360px; }
 
 #login-error {
   margin-top: 40px; }
@@ -213,7 +216,7 @@ input:-ms-input-placeholder {
 
 /*Details*/
 .img-profile {
-  max-height: 150px;
+  max-width: 150px;
   border-radius: 10px;
   text-align: center; }
 
@@ -221,11 +224,11 @@ input:-ms-input-placeholder {
   text-align: center; }
 
 .profile .profile-left {
-  text-align: left; }
+  text-align: left;
+  font-size: 18px; }
 
 .profile .profile-right {
-  text-align: center;
-  margin-top: 25px; }
+  text-align: center; }
   .profile .profile-right img {
     margin-bottom: 10px;
     padding: 10px; }

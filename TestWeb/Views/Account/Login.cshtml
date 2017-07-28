@@ -18,37 +18,40 @@
 
 }
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <div id="signedUserMenu">
-        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a asp-area="" asp-controller="Account" asp-action="Details" title="Manage">Upravit profil</a>
-                </li>
-                <li>
-                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Odhlásit se</button>
-                </li>
-            </ul>
-        </form>
-    </div>
-}
-else
-{
-    <div class="row">
-        <div class="col-md-12">
-            <div id="login-error" class="text-center">
-                @if (ViewData["EmailUnknown"] != null)
-                {
-                    <h4 class="text-danger">Tento e-mail neznáme. Použijte správný e-mail nebo se registrujte prosím.</h4>
+<div id="login-page-container" class="container-fluid">
 
-                }
-
-                @if (ViewData["WrongPassword"] != null)
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div id="signedUserMenu">
+            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a asp-area="" asp-controller="Account" asp-action="Details" title="Manage">Moje údaje</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Account" asp-action="Edit" title="Manage">Upravit profil</a>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn btn-link navbar-btn navbar-link">Odhlásit se</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div id="login-error" class="text-center">
+            @if (ViewData["EmailUnknown"] != null)
                 {
-                    <h4 class="text-danger">Bylo vloženo nesprávné heslo. Zkuste se prosím přihlásit znovu.</h4>
-                }
-            </div>
+                <h4 class="text-danger">Tento e-mail neznáme. Použijte správný e-mail nebo se registrujte prosím.</h4>
+
+            }
+
+            @if (ViewData["WrongPassword"] != null)
+                {
+                <h4 class="text-danger">Bylo vloženo nesprávné heslo. Zkuste se prosím přihlásit znovu.</h4>
+            }
+        </div>
 
             <section>
                 <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
@@ -71,12 +74,9 @@ else
                     </p>
                 </form>
             </section>
-        </div>
-    </div>
 
-
-
-}
+    }
+</div>
 
 
 
