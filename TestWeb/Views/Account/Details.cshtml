@@ -8,8 +8,8 @@
 
 
 <div class="container">
+    <h2 class="bottom-padding">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
 
-    <h2>@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
     <div class="row row-centered profile">
 
         <div id="slip">
@@ -32,8 +32,11 @@
 
 
             <div class="col-lg-3 profile-right">
-                <img src="~/images/user-2-64.gif" alt="profile-photo" class="img-fluid img-profile" /><br />
-                <a asp-action="Edit" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]" id="edit-button">Změnit údaje.</a>
+                <img src="~/images/user-2-128.png" alt="profile-photo" class="img-fluid img-profile" /><br />
+                <div id="edit-button">
+                    <a asp-action="Edit" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Změnit údaje</a>
+                </div>
+
             </div>
         </div>
     </div>

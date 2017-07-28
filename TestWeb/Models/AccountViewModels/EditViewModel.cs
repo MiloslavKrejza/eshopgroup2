@@ -31,6 +31,9 @@ namespace TestWeb.Models.AccountViewModels
         [Display(Name = "Město")]
         public string City { get; set; }
 
+        [Display(Name = "Telefon")]
+        public string Phone { get; set; }
+
         [Display(Name = "Stát")]
         public string CountryCode { get; set; }
 
