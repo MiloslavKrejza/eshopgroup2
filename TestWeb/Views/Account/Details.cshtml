@@ -8,12 +8,11 @@
 
 
 <div class="container">
-
+    <h2 class="bottom-padding">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
     <div class="row row-centered profile">
 
         <div id="slip">
-            <div class="col-lg-5 profile-left">
-                <h2>@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
+            <div class="col-lg-5 col-lg-offset-1 profile-left">
                 <div class="col-lg-6 profile-info">
                     <p class="profile-item">Email:</p>
                     <p class="profile-item">Adresa:</p>
@@ -31,9 +30,11 @@
             </div>
 
 
-            <div class="col-lg-4 profile-right">
-                <img src="http://1gr.cz/fotky/idnes/12/042/org/AHA427ac5_PYO01_KOREA_NORTH_0412_11.JPG" alt="profile-photo" class="img-fluid img-profile" /><br />
-                <a asp-action="Edit" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Změnit údaje.</a>
+            <div class="col-lg-3 profile-right">
+                <img src="~/images/user-2-128.png" alt="profile-photo" class="img-fluid img-profile" /><br />
+                <div id="edit-button">
+                    <a asp-action="Edit" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Změnit údaje</a>
+                </div>
             </div>
         </div>
     </div>
