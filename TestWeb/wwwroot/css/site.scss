@@ -127,27 +127,6 @@ input:-ms-input-placeholder {
     color: #555555;
 }
 
-
-/*Login container*/
-.login-container {
-    position: relative;
-    right: 45px;
-}
-
-#login {
-    width: 100%;
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 10px;
-    display: none;
-    position: absolute;
-    z-index: 1;
-}
-
-#login form {
-    padding: 0 20px;
-}
-
 #prihlasit {
     border: none;
     background-color: inherit;
@@ -169,6 +148,31 @@ input:-ms-input-placeholder {
 
 #prihlasit :focus {
     border: none;
+}
+
+
+/*Login container*/
+.login-container {
+    position: relative;
+    right: 45px;
+}
+
+#login {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+
+#login form {
+    padding: 0 20px;
+}
+
+#login-page-container {
+        width: 360px;
 }
 
 #login-error {
