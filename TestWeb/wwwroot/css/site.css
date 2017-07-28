@@ -22,7 +22,10 @@ img {
   margin: 0 auto; }
 
 .text-indent {
-  padding-left: 8px; }
+  padding-left: 15px; }
+
+.bottom-padding {
+  padding-bottom: 25px; }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -132,6 +135,9 @@ input:-ms-input-placeholder {
 #prihlasit :visited {
   border: none; }
 
+#prihlasit :focus {
+  border: none; }
+
 #login-error {
   margin-top: 40px; }
 
@@ -207,7 +213,7 @@ input:-ms-input-placeholder {
 
 /*Details*/
 .img-profile {
-  max-height: 150px;
+  max-width: 150px;
   border-radius: 10px;
   text-align: center; }
 
@@ -215,11 +221,14 @@ input:-ms-input-placeholder {
   text-align: center; }
 
 .profile .profile-left {
-  text-align: left; }
+  text-align: left;
+  font-size: 18px; }
 
 .profile .profile-right {
-  text-align: center;
-  margin-top: 25px; }
+  text-align: center; }
+  .profile .profile-right img {
+    margin-bottom: 10px;
+    padding: 10px; }
 
 .profile .profile-title {
   text-align: center;
@@ -264,12 +273,20 @@ input:-ms-input-placeholder {
 
 @media screen and (max-width: 768px) {
   .btn-profile {
-    margin-bottom: 10px; } }
+    margin-bottom: 15px; } }
 
-#edit-button {
+#edit-button a {
   color: white;
   background-color: #f19f4d;
   text-align: center;
   padding: 10px 20px;
-  border-radius: 10px; }
+  border-radius: 5px; }
+
+#cancel-button a {
+  color: white;
+  background-color: #ff0000;
+  text-align: center;
+  padding: 8px 55px;
+  border-radius: 5px; }
+
 
