@@ -31,6 +31,10 @@ namespace TestWeb.Controllers
         private readonly CountryService _countryService;    //provides countries
         private readonly UserService _profileService;       //provides additional non-ASP.NET user profile data
 
+        //on more states, enums (or admin add)
+        private const int COMPLETE = 1;
+        private const int INCOMPLETE = 2;
+
         public AccountController(
             IHostingEnvironment env,
             ILogger<AccountController> logger,
@@ -242,11 +246,11 @@ namespace TestWeb.Controllers
                             /*********************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
 
                             List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, model.Phone };
-                            int profileState = 1; //complete
+                            int profileState = COMPLETE; //complete
 
                             //to be changed if there would be more states
                             foreach (object o in completionList)
-                                profileState = o == null ? 2 : profileState; //incomplete
+                                profileState = o == null ? INCOMPLETE : profileState; //incomplete
 
                             /*********************/
 
@@ -389,11 +393,11 @@ namespace TestWeb.Controllers
                     /*******************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
 
                     List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, /*model.Phone*/ };
-                    int profileState = 1; //complete
+                    int profileState = COMPLETE; //complete
 
                     //to be changed if there would be more states
                     foreach (object o in completionList)
-                        profileState = o == null ? 2 : profileState; //incomplete
+                        profileState = o == null ? INCOMPLETE : profileState; //incomplete
 
                     /*******************/
 
