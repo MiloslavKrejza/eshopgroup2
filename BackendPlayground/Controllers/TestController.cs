@@ -37,10 +37,18 @@ namespace BackendPlayground.Controllers
                 {
                     await model.File.CopyToAsync(stream);
                 }
-                
+
             }
             return View(model);
-           
+
         }
+        [HttpGet]
+        public IActionResult CheckBoxTest()
+        {
+            return View();
+        }
+        [HttpGet("test/product/{name}")]
+        public IActionResult
+        
     }
 }

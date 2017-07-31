@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Trainee.Core.DAL.Entities;
-
 using Microsoft.Extensions.Options;
 
 namespace Trainee.Core.DAL.Context
