@@ -14,6 +14,7 @@
 
         <div id="slip">
             <div class="col-lg-5 col-lg-offset-1 profile-left">
+                <!--Melo by se to narvat do taby-->
                 <div class="col-lg-6 profile-info">
                     <p class="profile-item">Email:</p>
                     <p class="profile-item">Telefon:</p>
@@ -34,7 +35,7 @@
 
 
             <div class="col-lg-3 profile-right">
-                <img src="~/images/user-2-128.png" alt="profile-photo" class="img-fluid img-profile" /><br />
+                <img src="~/images/@(Model.ProfilePicAddress!=""?"profile_pics/"+Model.ProfilePicAddress:"user-2-128.png")" alt="profile-photo" class="img-fluid img-profile" /><br />
                 <div id="edit-button">
                     <a asp-action="Edit" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Změnit údaje</a>
                 </div>

@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Trainee.Core.DAL.Entities;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Http;
+using TestWeb.ViewModels.Validations;
 namespace TestWeb.Models.AccountViewModels
 {
     public class EditViewModel : BaseViewModel
@@ -37,6 +38,9 @@ namespace TestWeb.Models.AccountViewModels
         [Display(Name = "Stát")]
         public string CountryCode { get; set; }
 
+        [IsImage(ErrorMessage ="Zvolený soubor není obrázek.")]
+        public IFormFile ProfileImage { get; set; }
+
         public Country Country { get; set; }
 
         public List<Country> Countries { get; set; }
@@ -45,6 +49,7 @@ namespace TestWeb.Models.AccountViewModels
         [Required(ErrorMessage = "Prosím vyplňte heslo.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        
 
     }
 }

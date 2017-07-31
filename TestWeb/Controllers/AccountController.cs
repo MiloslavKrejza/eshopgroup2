@@ -18,6 +18,7 @@ using Trainee.User.Business;
 using Trainee.User.DAL.Entities;
 using Trainee.Core.DAL.Entities;
 using System.Collections.Generic;
+using System.IO;
 
 namespace TestWeb.Controllers
 {
@@ -59,7 +60,7 @@ namespace TestWeb.Controllers
                 //User can't be signed in
                 if (_signInManager.IsSignedIn(User))
                     _signInManager.SignOutAsync();
-                
+
                 ViewData["ReturnUrl"] = returnUrl;
 
                 return View("Login");
@@ -83,7 +84,7 @@ namespace TestWeb.Controllers
                 //User can't be signed in
                 if (_signInManager.IsSignedIn(User))
                     return ErrorActionResult("Uživatel již je přihlášen");
-               
+
 
                 ViewData["ReturnUrl"] = returnUrl;
                 if (ModelState.IsValid)
@@ -105,7 +106,7 @@ namespace TestWeb.Controllers
                         _logger.LogWarning(2, "someString");
                         ModelState.AddModelError("UserName", "someString");
                         return View("Lockout");
-                    } 
+                    }
                     else
                     {
 
@@ -157,10 +158,10 @@ namespace TestWeb.Controllers
                 var result = _countryService.GetAllCountries();
                 RegisterViewModel model;
 
-                if (result.isOK)           
+                if (result.isOK)
                 {
                     model = new RegisterViewModel  //we need to provide countries to the user
-                    { 
+                    {
                         Countries = (List<Country>)result.data
                     };
 
@@ -195,7 +196,7 @@ namespace TestWeb.Controllers
                 else
                     throw new Exception("Invalid model, database type error");
 
-                
+
                 if (_signInManager.IsSignedIn(User))
                 {
                     await _signInManager.SignOutAsync();
@@ -221,7 +222,7 @@ namespace TestWeb.Controllers
                         ViewData["UserExists"] = true;
                         return View(model);
                     }
-                   
+
 
                     //Create AspNet Identity User
                     IdentityResult res = await _userManager.CreateAsync(user, model.Password);
@@ -236,7 +237,7 @@ namespace TestWeb.Controllers
                         res2 = await _userManager.AddToRoleAsync(user, "User");
 
                         //now UserProfile will be created
-                        if (res2.Succeeded) 
+                        if (res2.Succeeded)
                         {
                             /*********************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
 
@@ -250,7 +251,7 @@ namespace TestWeb.Controllers
                             /*********************/
 
 
-                            
+
                             var userProfile = new UserProfile
                             {
                                 Address = model.Street,
@@ -260,10 +261,10 @@ namespace TestWeb.Controllers
                                 Surname = model.Surname,
                                 PhoneNumber = model.Phone,
                                 PostalCode = model.PostalCode,
-                                ProfileStateId = profileState                               
+                                ProfileStateId = profileState
                             };
 
-                            
+
                             //Getting the selected country
                             var countryByCode = _countryService.GetCountry(model.CountryCode);
                             if (countryByCode.isOK)
@@ -271,7 +272,7 @@ namespace TestWeb.Controllers
                                 // userProfile.Country = (Country)countryByCode.data;
                                 userProfile.CountryId = ((Country)countryByCode.data).Id;
                             }
-                            
+
 
                             _profileService.AddUserProfile(userProfile);
 
@@ -286,7 +287,7 @@ namespace TestWeb.Controllers
                     {
                         return RedirectToAction("CHYBA");
                     }
-                    
+
 
                     //??
                     return RedirectToAction("Forbidden");
@@ -315,7 +316,7 @@ namespace TestWeb.Controllers
 
             try
             {
-                
+
                 //the user must be logged in
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", returnUrl);
@@ -340,7 +341,8 @@ namespace TestWeb.Controllers
                     Country = userProfile.Country,
                     //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
-                    Street = userProfile.Address, Email = userIdentity.Email,
+                    Street = userProfile.Address,
+                    Email = userIdentity.Email,
                     //Password = null
                     Phone = userProfile.PhoneNumber
                 };
@@ -348,9 +350,9 @@ namespace TestWeb.Controllers
                 var resultCountry = _countryService.GetAllCountries();
                 if (resultCountry.isOK)
                     editModel.Countries = (List<Country>)resultCountry.data;
-                
+
                 return View(editModel);
-               
+
 
             }
             catch (Exception e)
@@ -378,7 +380,7 @@ namespace TestWeb.Controllers
 
                     //can be edited only with correct password
                     bool isPassCorrect = await _userManager.CheckPasswordAsync(userIdentity, model.Password);
-                    
+
                     model.Email = userIdentity.Email;
 
                     var updateCountry = _countryService.GetCountry(model.CountryCode);
@@ -397,6 +399,7 @@ namespace TestWeb.Controllers
 
                     if (isPassCorrect)
                     {
+                        string profilePicExtension = model.ProfileImage.FileName.Split('.').Last();
                         UserProfile updatedProfile = (UserProfile)_profileService.GetUserProfile(userIdentity.Id).data;
                         updatedProfile.PostalCode = model.PostalCode;
                         updatedProfile.Address = model.Street;
@@ -406,6 +409,12 @@ namespace TestWeb.Controllers
                         updatedProfile.CountryId = model.Country.Id;
                         updatedProfile.ProfileStateId = profileState;
                         updatedProfile.PhoneNumber = model.Phone;
+                        updatedProfile.ProfilePicAddress = "profile_picture_" + userIdentity.Id + "." + profilePicExtension;
+                        using (var stream = new FileStream(_env.WebRootPath + "/images/profile_pics/" + updatedProfile.ProfilePicAddress, FileMode.Create))
+                        {
+                            await model.ProfileImage.CopyToAsync(stream);
+                        }
+
 
 
                         _profileService.UpdateUserProfile(updatedProfile);
@@ -424,7 +433,9 @@ namespace TestWeb.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("CHYBA");
+                    model.Countries = (List<Country>)_countryService.GetAllCountries().data;
+                    model.Country = (Country)_countryService.GetCountry(model.CountryCode).data;
+                    return View(model);
                 }
             }
             catch (Exception e)
@@ -471,7 +482,9 @@ namespace TestWeb.Controllers
                     Street = userProfile.Address,
                     //Password = null,
                     Email = userIdentity.Email,
-                    Phone = userProfile.PhoneNumber
+                    Phone = userProfile.PhoneNumber,
+                    ProfilePicAddress = userProfile.ProfilePicAddress
+
                 };
 
                 var resultCountry = _countryService.GetAllCountries();
@@ -491,7 +504,7 @@ namespace TestWeb.Controllers
             }
 
         }
-        
+
 
         //
         // GET: /Account/Forbidden

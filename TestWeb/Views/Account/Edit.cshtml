@@ -11,7 +11,7 @@
     <div class="row profile">
         <div class="col-lg-8">
 
-            <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+            <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
                 <div id="change">
 
                     <div class="row form-row text-left">
@@ -75,8 +75,9 @@
                         </div>
 
                         <div class="col-lg-6 bottom-padding">
-                            <label class="text-indent" for="exampleInputFile">Profilový obrázek</label>
-                            <input type="file" class="form-control-file" id="exampleInputFile">
+                            <label class="text-indent" asp-for="ProfileImage">Profilový obrázek</label>
+                            <input asp-for="ProfileImage" type="file" class="form-control-file">
+                            <span asp-validation-for="ProfileImage" class="text-danger"></span>
                         </div>
                     </div>
                     <hr class="bottom-padding" />
