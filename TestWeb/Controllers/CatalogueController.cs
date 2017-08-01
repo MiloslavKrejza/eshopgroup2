@@ -15,5 +15,11 @@ namespace Eshop2.Controllers
         {
             return View();
         }
+
+        // GET: /Catalogue/Cathegory
+        public IActionResult Cathegory()
+        {
+            return View();
+        }
     }
 }

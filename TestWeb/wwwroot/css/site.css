@@ -30,6 +30,13 @@ img {
 .bold {
   font-weight: bold; }
 
+.close-tab {
+  border: none;
+  background-color: transparent;
+  padding: 20px 20px 0 0;
+  margin: 0;
+  float: right; }
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -106,23 +113,20 @@ input:-ms-input-placeholder {
 #basket-user a {
   color: #555555; }
 
-#prihlasit {
+.prihlasit {
   border: none;
-  background-color: inherit;
   padding: 0;
-  margin: 0; }
-
-#prihlasit :hover {
-  cursor: pointer; }
-
-#prihlasit :active {
-  border: none; }
-
-#prihlasit :visited {
-  border: none; }
-
-#prihlasit :focus {
-  border: none; }
+  margin: 0;
+  outline: none; }
+  .prihlasit button {
+    outline: none;
+    background-color: #f2f9ff; }
+    .prihlasit button :focus {
+      outline: none; }
+    .prihlasit button :active {
+      outline: none; }
+    .prihlasit button :visited {
+      outline: none; }
 
 /*Login container*/
 .login-container {
@@ -184,7 +188,7 @@ input:-ms-input-placeholder {
 #layout {
   margin-bottom: 40px; }
 
-/*Patička */
+/*Footer */
 .footer {
   padding: 20px 50px;
   background-color: #4484ce; }
@@ -199,14 +203,18 @@ input:-ms-input-placeholder {
 
 @media screen and (max-width: 768px) {
   .footer {
+    text-align: center !important; } }
+
+@media screen and (max-width: 768px) {
+  .footer .text-right {
     text-align: center; } }
 
-/*Registrace*/
+/*ACCOUNT*/
+/*Registration*/
 .form-row {
   margin-bottom: 20px; }
 
 .register-button {
-  width: +30%;
   margin: 20px 0; }
 
 .title-register {
@@ -299,10 +307,28 @@ input:-ms-input-placeholder {
   border-radius: 5px; }
 
 /*CATALOGUE*/
-/*BOOK PROFILE*/
+/*Book profile*/
 .rating img {
   width: 150px; }
 
 .user rating img {
   width: 50px; }
+
+.product {
+  border-right: solid 1px #dddddd;
+  margin-bottom: 20px; }
+  .product img {
+    padding: 5px; }
+
+.product-right {
+  margin-bottom: 20px; }
+  .product-right img {
+    padding: 5px; }
+
+.main-cathegory {
+  font-size: 130%; }
+
+.book-img {
+  width: 250px;
+  padding: 20px; }
 
