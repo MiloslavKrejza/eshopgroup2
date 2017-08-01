@@ -37,8 +37,10 @@ namespace TestWeb.Models.AccountViewModels
         public Country Country { get; set; }
 
         public List<Country> Countries { get; set; }
+        //proc to vsechno ma validace, kdyz to je jen na ukazani?
+        public string ProfilePicAddress { get; set; }
 
-        
+
 
     }
 }

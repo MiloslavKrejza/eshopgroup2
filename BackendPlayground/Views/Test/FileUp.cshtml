@@ -1,0 +1,8 @@
+@model FileUp
+@using  BackendPlayground.ViewModels
+
+<form method="post" asp-action="FileUp" asp-controller="Test" enctype="multipart/form-data">
+    <input asp-for="File" type="file" value="Model.File.FileName" />
+    <span asp-validation-for="File" class="text-danger"></span>
+    <input type="submit" value="Send"/>
+</form>
