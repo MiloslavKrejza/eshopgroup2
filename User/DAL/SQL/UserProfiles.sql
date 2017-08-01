@@ -15,7 +15,12 @@ CREATE TABLE [dbo].[UserProfiles](
 	[ProfilePicAddress][nvarchar](max) NULL,
 )
 
-ALTER TABLE [dbo].[UserProfiles] ADD CONSTRAINT [FK_UserProfiles_Coutries]
+ALTER TABLE [dbo].[UserProfiles] 
+ADD CONSTRAINT [PK_UserProfiles]
+	PRIMARY KEY CLUSTERED([Id])
+GO
+
+ALTER TABLE [dbo].[UserProfiles] ADD CONSTRAINT [FK_UserProfiles_Countries]
 	FOREIGN KEY ([CountryId]) REFERENCES [dbo].[Countries] ([Id]) 
 GO
 
