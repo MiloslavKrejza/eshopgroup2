@@ -35,6 +35,11 @@ img {
 
 }
 
+.bold {
+    font-weight: bold;
+}
+
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -379,5 +384,21 @@ input:-ms-input-placeholder {
     text-align: center;
     padding: 8px 55px;
     border-radius: 5px;
+}
+
+/*CATALOGUE*/
+
+/*BOOK PROFILE*/
+
+.rating {
+    img {
+        width: 150px;
+    }
+}
+
+.user rating  {
+    img {
+    width: 50px;
+    }
 }
 
