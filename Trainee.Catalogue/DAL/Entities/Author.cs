@@ -13,6 +13,7 @@ namespace Trainee.Catalogue.DAL.Entities
         public int CountryId { get; set; }
         //Referenced properties
         public Country Country { get; set; }
+        public List<Book> Books { get; set; }
 
     }
 }
