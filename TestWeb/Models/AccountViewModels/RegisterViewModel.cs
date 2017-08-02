@@ -48,6 +48,7 @@ namespace TestWeb.Models.AccountViewModels
         public string City { get; set; }
 
         [Display(Name = "Stát")]
+        [Required(ErrorMessage = "Prosím vyberte zemi.")]
         public string CountryCode { get; set; }
 
         public List<Country> Countries { get; set; }
