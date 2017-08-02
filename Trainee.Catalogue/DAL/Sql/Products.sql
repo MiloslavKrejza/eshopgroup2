@@ -9,6 +9,7 @@ CREATE TABLE [dbo].[Products](
 	[LanguageId][int] NOT NULL,
 	[PublisherId][int] NOT NULL,
 	[CategoryId][int] NOT NULL,
+	[BookId][int] NOT NULL,
 
 	[Name][nvarchar](max) NOT NULL,
 	[PicAddress][nvarchar](max) NULL,
@@ -44,4 +45,8 @@ GO
 
 ALTER TABLE [dbo].[Products]
 ADD CONSTRAINT [FK_Products_Categories] FOREIGN KEY([CategoryId]) REFERENCES [dbo].[Categories]
+GO
+
+ALTER TABLE [dbo].[Products]
+ADD CONSTRAINT [FK_Products_Books] FOREIGN KEY([BookId]) REFERENCES [dbo].[Books]
 GO

@@ -7,7 +7,7 @@ using Trainee.Core.DAL.Context;
 
 namespace Trainee.Catalogue.DAL.Context
 {
-    class CatalogueDbContext : CountryDbContext
+    public class CatalogueDbContext : CountryDbContext
     {
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
@@ -48,11 +48,11 @@ namespace Trainee.Catalogue.DAL.Context
             builder.Entity<AuthorBook>().HasKey(ab => new { ab.AuthorId, ab.BookId });
             builder.Entity<AuthorBook>()
                 .HasOne(ab => ab.Author)
-                .WithMany(a => a.AuthorsBooks)
+                .WithMany()
                 .HasForeignKey(ab => ab.AuthorId);
             builder.Entity<AuthorBook>()
                 .HasOne(ab => ab.Book)
-                .WithMany(b => b.AuthorsBooks)
+                .WithMany()
                 .HasForeignKey(ab => ab.BookId);
             //Categories
 
@@ -84,6 +84,7 @@ namespace Trainee.Catalogue.DAL.Context
             builder.Entity<Product>().Property(p => p.LanguageId).IsRequired();
             builder.Entity<Product>().Property(p => p.PublisherId).IsRequired();
             builder.Entity<Product>().Property(p => p.CategoryId).IsRequired();
+            builder.Entity<Product>().Property(p => p.BookId).IsRequired();
             builder.Entity<Product>().HasKey(p => p.Id);
 
             builder.Entity<Product>()
@@ -106,6 +107,10 @@ namespace Trainee.Catalogue.DAL.Context
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
+            builder.Entity<Product>()
+                .HasOne(p => p.Book)
+                .WithMany(b => b.Products)
+                .HasForeignKey(p => p.BookId);
 
 
 
