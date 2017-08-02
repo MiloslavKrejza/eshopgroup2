@@ -11,7 +11,7 @@ namespace Trainee.Catalogue.Abstraction
         /// <summary>
         /// Creates a new Publisher
         /// </summary>
-        /// <param name="Publisher">Publisher to be added</param>
+        /// <param name="publisher">Publisher to be added</param>
         /// <returns>Added Publisher</returns>
         Publisher AddPublisher(Publisher publisher);
 
@@ -31,7 +31,7 @@ namespace Trainee.Catalogue.Abstraction
         /// <summary>
         /// Updates an Publisher in the database
         /// </summary>
-        /// <param name="Publisher">Publisher to be updated</param>
+        /// <param name="publisher">Publisher to be updated</param>
         /// <returns>Updated Publisher profile</returns>
         Publisher UpdatePublisher(Publisher publisher);
 

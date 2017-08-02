@@ -3,7 +3,7 @@ IF EXISTS (SELECT * FROM [dbo].sysobjects WHERE id = OBJECT_ID('[dbo].[Languages
 GO
 
 CREATE TABLE [dbo].[Languages](
-	[Id][int] NOT NULL,
+	[Id][int] IDENTITY(1,1) NOT NULL,
 	[Name][nvarchar](max) NOT NULL
 )
 GO
