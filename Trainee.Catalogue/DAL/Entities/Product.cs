@@ -11,12 +11,12 @@ namespace Trainee.Catalogue.DAL.Entities
         public int PublisherId { get; set; }
         public int FormatId { get; set; }
         public int CategoryId { get; set; }
+        public int StateId { get; set; }
 
         public string Name { get; set; }
         public string PicAddress { get; set; }
         public string Text { get; set; }
         public decimal Price { get; set; }
-        public int StateId { get; set; }
         public int PageCount { get; set; }
         public int Year { get; set; }
         public string ISBN { get; set; }

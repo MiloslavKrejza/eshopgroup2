@@ -64,7 +64,6 @@
                     }
 
                 }
-                
             </div>
         </div>
 
@@ -75,7 +74,7 @@
 
             <div class="col-md-4 col-md-offset-8 login-container">
                 <div class="container"  id="login" style="display:none";>
-                    @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel())
+                    @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel(), ViewData);
                 </div>
             </div>
         </div>
