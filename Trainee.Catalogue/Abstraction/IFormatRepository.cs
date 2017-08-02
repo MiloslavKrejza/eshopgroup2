@@ -11,7 +11,7 @@ namespace Trainee.Catalogue.Abstraction
         /// <summary>
         /// Creates a new Format
         /// </summary>
-        /// <param name="Format">Format to be added</param>
+        /// <param name="format">Format to be added</param>
         /// <returns>Added Format</returns>
         Format AddFormat(Format format);
 
@@ -31,7 +31,7 @@ namespace Trainee.Catalogue.Abstraction
         /// <summary>
         /// Updates an Format in the database
         /// </summary>
-        /// <param name="Format">Format to be updated</param>
+        /// <param name="format">Format to be updated</param>
         /// <returns>Updated Format profile</returns>
         Format UpdateFormat(Format format);
 
