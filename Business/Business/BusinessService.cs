@@ -22,10 +22,9 @@ namespace Trainee.Business.Business
 
         AlzaAdminDTO GetPage(QueryParametersWrapper parameters)
         {
-            var childCategories = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
+            var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
-            query = query.Where(p => childCategories.Contains(p.CategoryId));
-
+            query = query.Where(p => childCategoriesId.Contains(p.CategoryId));
             decimal minPrice = 0;
             decimal maxPrice = decimal.MaxValue;
             QueryResultWrapper result = new QueryResultWrapper();
@@ -77,6 +76,7 @@ namespace Trainee.Business.Business
 
             IQueryable<int> pIds = query.Select(p => p.Id);
             IQueryable<ProductRating> ratings = _productRatingRepository.GetRatings().Where(pr => pIds.Contains(pr.ProductId));
+            //might be bullshite
             var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));
 
             Func<ProductBO, IComparable> sortingParameter;
@@ -109,9 +109,11 @@ namespace Trainee.Business.Business
             result.ResultCount = products.Count();
             products = products.Skip(parameters.PageNum * parameters.PageSize).Take(parameters.PageSize);
             result.Products = products.ToList();
-            return default(AlzaAdminDTO);
+            return AlzaAdminDTO.Data(result);
 
         }
-        AlzaAdminDTO GetProduct(int id) { return null; }
+        AlzaAdminDTO GetProduct(int id) {
+
+        }
     }
 }
