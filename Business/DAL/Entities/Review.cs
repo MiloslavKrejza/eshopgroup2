@@ -12,7 +12,8 @@ namespace Trainee.Business.DAL.Entities
         public DateTime Date { get; set; }
         public string Text { get; set; }
         public int ProductId { get; set; }
-        public UserProfile User { get; set; } 
-            
+        public ProductWithReviewsBO Product { get; set; }
+        public UserWithReviews User { get; set; }
+
     }
 }

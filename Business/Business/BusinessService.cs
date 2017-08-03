@@ -78,7 +78,9 @@ namespace Trainee.Business.Business
             //    case Enums.SortingParameter.Date:
             //        break;
             //}
+            return default(AlzaAdminDTO);
 
         }
+        AlzaAdminDTO GetProduct(int id) { return null; }
     }
 }
