@@ -99,13 +99,13 @@ namespace Eshop2.Controllers
                 {
                     PageNum = model.PageNum,
                     CategoryId = catId, //check this
-                    Authors = model.Authors.Select(a => a.Id).ToList(),
-                    Formats = model.Formats.Select(f => f.Id).ToList(),
-                    Languages = model.Languages.Select(l => l.Id).ToList(),
+                    Authors = model.AuthorsFilter,
+                    Formats = model.FormatsFilter,
+                    Languages = model.LanguagesFilter,
                     MaxPrice = model.MaxPrice,
                     MinPrice = model.MinPrice,
                     PageSize = model.PageSize,
-                    Publishers = model.Publishers.Select(p => p.Id).ToList(),
+                    Publishers = model.PublishersFilter,
                     SortingParameter = model.SortingParameter,
                     SortingType = model.SortingType
                 };
