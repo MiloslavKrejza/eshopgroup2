@@ -13,7 +13,7 @@ namespace BackendPlayground.Controllers
     public class TestController : Controller
     {
         IHostingEnvironment _env;
-        public TestController(IHostingEnvironment env)
+        public TestController(IHostingEnvironment env, CatalogueService catalogueServ)
         {
             _env = env;
         }
@@ -47,8 +47,10 @@ namespace BackendPlayground.Controllers
         {
             return View();
         }
-        [HttpGet("test/product/{name}")]
-        public IActionResult
+        //[HttpGet("test/product/{name}")]
+        //public IActionResult
         
+
+
     }
 }
