@@ -8,5 +8,14 @@ namespace Trainee.Catalogue.DAL.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        //Overriden method of base class (object)
+        public override int GetHashCode()
+        {
+            return Id;
+        }
+        public override bool Equals(object obj)
+        {
+            return Id == ((Language)obj).Id;
+        }
     }
 }
