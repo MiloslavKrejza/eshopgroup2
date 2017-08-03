@@ -7,15 +7,19 @@ using BackendPlayground.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Diagnostics;
+using Trainee.Catalogue.Abstraction;
+using BackendPlayground.ViewModels.TestViewModels;
 
 namespace BackendPlayground.Controllers
 {
     public class TestController : Controller
     {
         IHostingEnvironment _env;
-        public TestController(IHostingEnvironment env)
+        ICategoryRepository _rep;
+        public TestController(IHostingEnvironment env, ICategoryRepository categoryRep)
         {
             _env = env;
+            _rep = categoryRep;
         }
         public IActionResult Index()
         {
@@ -48,7 +52,16 @@ namespace BackendPlayground.Controllers
             return View();
         }
         //[HttpGet("test/product/{name}")]
+        //public IActionResult
+        
+        [HttpGet]
+        public IActionResult CategoryTest()
+        {
+            var result = _rep.GetCategory(1);
+            CategoryTestViewModel model = new CategoryTestViewModel { Category = result };
+            return View(model);
+        }
+
 
     }
 }
-

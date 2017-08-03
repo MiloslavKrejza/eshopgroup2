@@ -8,7 +8,7 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Catalogue.DAL.Repositories
 {
-    class PublisherRepository : IPublisherRepository
+    public class PublisherRepository : IPublisherRepository
     {
         private readonly CatalogueDbContext _context;
 

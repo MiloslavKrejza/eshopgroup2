@@ -79,11 +79,11 @@
         <div class="row" id="main-section">
             <div class="col-md-2 list-group">
 
-                @{string[] cathegory = new string[] { "Fantasy", "Sci-Fi", "Horor", "Herní", "České" };
-                    for (int i = 0; i < cathegory.Length; i++)
+                @{string[] category = new string[] { "Fantasy", "Sci-Fi", "Horor", "Herní", "České" };
+                    for (int i = 0; i < category.Length; i++)
 
                     {<div class="text-capitalize list-group-item menu-item">
-                        <a href=""><p><img src="~/images/@(cathegory[i]).svg" />@cathegory[i]</p></a>
+                        <a href=""><p><img src="~/images/@(category[i]).svg" />@category[i]</p></a>
                     </div>
                         }
                     }

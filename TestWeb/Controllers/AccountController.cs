@@ -19,6 +19,7 @@ using Trainee.User.DAL.Entities;
 using Trainee.Core.DAL.Entities;
 using System.Collections.Generic;
 using System.IO;
+using Eshop2.Abstraction;
 
 namespace TestWeb.Controllers
 {
@@ -71,7 +72,7 @@ namespace TestWeb.Controllers
             }
             catch (Exception e)
             {
-                return ExceptionActionResult(e);
+                return AlzaError.ExceptionActionResult(e);
             }
         }
 
@@ -85,10 +86,11 @@ namespace TestWeb.Controllers
         {
             try
             {
-                //User can't be signed in
-                if (_signInManager.IsSignedIn(User))
-                    return ErrorActionResult("Uživatel již je přihlášen");
+                //Tbd if error ever occurs...
 
+               /* if (_signInManager.IsSignedIn(User))
+                    return ErrorActionResult("Uživatel již je přihlášen");
+                */
 
                 ViewData["ReturnUrl"] = returnUrl;
                 if (ModelState.IsValid)
@@ -137,7 +139,7 @@ namespace TestWeb.Controllers
             }
             catch (Exception e)
             {
-                return ExceptionActionResult(e);
+                return AlzaError.ExceptionActionResult(e);
             }
         }
 
@@ -179,7 +181,7 @@ namespace TestWeb.Controllers
             }
             catch (Exception e)
             {
-                return ExceptionActionResult(e);
+                return AlzaError.ExceptionActionResult(e);
             }
         }
 
@@ -274,7 +276,7 @@ namespace TestWeb.Controllers
                             if (countryByCode.isOK)
                             {
                                 // userProfile.Country = (Country)countryByCode.data;
-                                userProfile.CountryId = ((Country)countryByCode.data).Id;
+                                userProfile.CountryId = countryByCode.data.Id;
                             }
 
 
@@ -305,7 +307,7 @@ namespace TestWeb.Controllers
             }
             catch (Exception e)
             {
-                return ExceptionActionResult(e);
+                return AlzaError.ExceptionActionResult(e);
             }
         }
 
@@ -334,7 +336,7 @@ namespace TestWeb.Controllers
                 if (!result.isOK)
                     throw new Exception("User profile not found");
 
-                userProfile = (UserProfile)result.data;
+                userProfile = result.data;
 
                 //their current profile will be passed to the View
                 EditViewModel editModel = new EditViewModel
@@ -361,7 +363,7 @@ namespace TestWeb.Controllers
             }
             catch (Exception e)
             {
-                return ExceptionActionResult(e);
+                return AlzaError.ExceptionActionResult(e);
             }
 
 
@@ -388,7 +390,7 @@ namespace TestWeb.Controllers
                     model.Email = userIdentity.Email;
 
                     var updateCountry = _countryService.GetCountry(model.CountryCode);
-                    model.Country = (Country)updateCountry.data;
+                    model.Country = updateCountry.data;
 
                     /*******************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
 
@@ -404,7 +406,7 @@ namespace TestWeb.Controllers
                     if (isPassCorrect)
                     {
                         string profilePicExtension = model.ProfileImage.FileName.Split('.').Last();
-                        UserProfile updatedProfile = (UserProfile)_profileService.GetUserProfile(userIdentity.Id).data;
+                        UserProfile updatedProfile = _profileService.GetUserProfile(userIdentity.Id).data;
                         updatedProfile.PostalCode = model.PostalCode;
                         updatedProfile.Address = model.Street;
                         updatedProfile.City = model.City;
@@ -438,13 +440,13 @@ namespace TestWeb.Controllers
                 else
                 {
                     model.Countries = (List<Country>)_countryService.GetAllCountries().data;
-                    model.Country = (Country)_countryService.GetCountry(model.CountryCode).data;
+                    model.Country = _countryService.GetCountry(model.CountryCode).data;
                     return View(model);
                 }
             }
             catch (Exception e)
             {
-                return ExceptionActionResult(e);
+                return AlzaError.ExceptionActionResult(e);
             }
 
 
@@ -473,7 +475,7 @@ namespace TestWeb.Controllers
                 if (!result.isOK)
                     throw new Exception("User profile not found");
 
-                userProfile = (UserProfile)result.data;
+                userProfile = result.data;
 
                 DetailsViewModel detailsModel = new DetailsViewModel
                 {
@@ -504,7 +506,7 @@ namespace TestWeb.Controllers
             }
             catch (Exception e)
             {
-                return ExceptionActionResult(e);
+                return AlzaError.ExceptionActionResult(e);
             }
 
         }
@@ -522,7 +524,7 @@ namespace TestWeb.Controllers
             }
             catch (Exception e)
             {
-                return ExceptionActionResult(e);
+                return AlzaError.ExceptionActionResult(e);
             }
         }
 
@@ -540,219 +542,9 @@ namespace TestWeb.Controllers
             }
             catch (Exception e)
             {
-                return ExceptionActionResult(e);
+                return AlzaError.ExceptionActionResult(e);
             }
         }
-
-
-
-        #region Helpers
-
-
-
-
-        public void ErrorToModel(AlzaAdminDTO dto, BaseViewModel model)
-        {
-            model.ErrorNo = dto.errorNo;
-            foreach (var item in dto.errors)
-            {
-                model.Errors.Add(item);
-            }
-        }
-        public AlzaAdminDTO InvalidModel()
-        {
-            AlzaAdminDTO invalidresult = AlzaAdminDTO.False;
-            foreach (var item in ModelState.ToList())
-            {
-
-                foreach (var item2 in item.Value.Errors)
-                {
-                    invalidresult.errors.Add(item.Key + " - " + item2.ErrorMessage);
-                }
-
-            }
-            return invalidresult;
-        }
-
-
-        /// <summary>
-        /// HELPER return and log error
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public AlzaAdminDTO InvalidIdentityResultDTO(IdentityResult result)
-        {
-            Guid errNo = Guid.NewGuid();
-            StringBuilder res = new StringBuilder();
-
-            foreach (var error in result.Errors)
-            {
-                res.AppendLine(error.Description);
-            }
-
-            _logger.LogError(errNo + " - " + res.ToString());
-            return AlzaAdminDTO.Error(errNo, res.ToString());
-
-        }
-
-        /// <summary>
-        /// HELPER return and log error
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public RedirectToActionResult InvalidIdentityResultActionResult(IdentityResult result)
-        {
-            Guid errNo = Guid.NewGuid();
-            StringBuilder res = new StringBuilder();
-
-            foreach (var error in result.Errors)
-            {
-                res.AppendLine(error.Description);
-            }
-
-            _logger.LogError(errNo + " - " + res.ToString());
-
-
-            BaseViewModel model = new BaseViewModel();
-            model.ErrorNo = errNo;
-            model.Errors.Add(res.ToString());
-
-            return RedirectToAction("someString", "someString", model);
-        }
-
-
-
-        /// <summary>
-        /// HELPER return and log error
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public AlzaAdminDTO ErrorDTO(string text)
-        {
-            Guid errNo = Guid.NewGuid();
-            _logger.LogError(errNo + " - " + text);
-            return AlzaAdminDTO.Error(errNo, "someString");
-        }
-
-        /// <summary>
-        /// HELPER return and log error
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public IActionResult ErrorActionResult(string text)
-        {
-            Guid errNo = Guid.NewGuid();
-            _logger.LogError(errNo + " - " + text);
-
-            BaseViewModel model = new BaseViewModel();
-            model.ErrorNo = errNo;
-            model.Errors.Add(text);
-
-
-
-            /*************************************************************************/
-            //BUG Notification
-
-            //var userId = _userManager.GetUserId(User);
-            //if (String.IsNullOrEmpty(userId))
-            //    userId = "0";
-
-            //var bug = new BugNotification
-            //{
-            //    UserProfileId = Int32.Parse(userId),
-            //    Severity = "Error",
-            //    ErrorNo = errNo,
-            //    CreatedDate = DateTime.Now,
-            //    Note = text
-            //};
-            //_mediator.PublishAsync(bug);
-
-            /*************************************************************************/
-
-
-
-            //FINALni varianta Custom ActionResult
-            return new AlzaActionResult("someString", model);
-
-        }
-
-        /// <summary>
-        /// HELPER return and log error
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public RedirectToActionResult ErrorActionResult(AlzaAdminDTO err)
-        {
-            _logger.LogError(err.errorNo + " - " + err.errorText);
-
-            BaseViewModel model = new BaseViewModel();
-            model.ErrorNo = err.errorNo;
-            model.Errors.Add(err.errorText);
-
-            return RedirectToAction("someString", "someString", model);
-        }
-
-
-
-        /// <summary>
-        /// HELPER return and log error
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public AlzaAdminDTO ExceptionDTO(Exception e)
-        {
-            Guid errNo = Guid.NewGuid();
-            _logger.LogError(errNo + " - " + e.Message + Environment.NewLine + e.StackTrace);
-            return AlzaAdminDTO.Error(errNo, e.Message + Environment.NewLine + e.StackTrace);
-        }
-
-        /// <summary>
-        /// HELPER return and log error
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public IActionResult ExceptionActionResult(Exception e)
-        {
-            Guid errNo = Guid.NewGuid();
-            _logger.LogError(errNo + " - " + e.Message + Environment.NewLine + e.StackTrace);
-
-
-            BaseViewModel model = new BaseViewModel();
-            model.ErrorNo = errNo;
-            model.Errors.Add(e.Message + Environment.NewLine + e.StackTrace);
-
-
-
-            /*************************************************************************/
-            //BUG Notification
-
-            //var userId = _userManager.GetUserId(User);
-            //if (String.IsNullOrEmpty(userId))
-            //    userId = "0";
-
-            //var bug = new BugNotification
-            //{
-            //    UserProfileId = Int32.Parse(userId),
-            //    Severity = "Critical",
-            //    ErrorNo = errNo,
-            //    CreatedDate = DateTime.Now,
-            //    Note = e.Message + Environment.NewLine + e.StackTrace
-            //};
-            //_mediator.PublishAsync(bug);
-
-            /*************************************************************************/
-
-
-
-            return new AlzaActionResult("someString", model);
-
-        }
-
-
-
-        #endregion
-
-
 
         //Odstranit??
         private IActionResult RedirectToLocal(string returnUrl)

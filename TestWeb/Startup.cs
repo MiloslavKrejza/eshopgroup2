@@ -13,6 +13,7 @@ using Trainee.Core.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 
 using Trainee.User.DAL.Context;
+using Trainee.Business.Business;
 
 namespace TestWeb
 {
@@ -52,6 +53,9 @@ namespace TestWeb
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddTransient<UserService, UserService>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+
+            services.AddTransient<BusinessService, BusinessService>();
+
             services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
             services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.User.Users")));
 

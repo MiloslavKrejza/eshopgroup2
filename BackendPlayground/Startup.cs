@@ -7,6 +7,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Trainee.Catalogue.Abstraction;
+using Trainee.Catalogue.DAL.Repositories;
+using Trainee.Catalogue.DAL.Context;
+using Trainee.Core.DAL.Context;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace BackendPlayground
 {
@@ -29,6 +35,9 @@ namespace BackendPlayground
         {
             // Add framework services.
             services.AddMvc();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
+            services.AddDbContext<CatalogueDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Catalogue")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

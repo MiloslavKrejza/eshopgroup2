@@ -3,6 +3,7 @@ using Alza.Core.Module.Http;
 using Trainee.Core.DAL.Entities;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Trainee.Core.Business
 {
@@ -25,29 +26,29 @@ namespace Trainee.Core.Business
         /// </summary>
         /// <param name="id">Country id</param>
         /// <returns>DTO containing the country with matching id</returns>
-        public AlzaAdminDTO GetCountry(int id)
+        public AlzaAdminDTO<Country> GetCountry(int id)
         {
             try
             {
                 var result = _countryRepos.GetCountry(id);
-                return AlzaAdminDTO.Data(result);
+                return AlzaAdminDTO<Country>.Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO<Country>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
 
-        public AlzaAdminDTO GetCountry(string countryCode)
+        public AlzaAdminDTO<Country> GetCountry(string countryCode)
         {
             try
             {
                 var result = _countryRepos.GetCountryByCode(countryCode);
-                return AlzaAdminDTO.Data(result);
+                return AlzaAdminDTO<Country> .Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO<Country> .Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
 
@@ -59,17 +60,17 @@ namespace Trainee.Core.Business
         /// Provides a list of all countries
         /// </summary>
         /// <returns>DTO containing a list of all available countries</returns>
-        public AlzaAdminDTO GetAllCountries()
+        public AlzaAdminDTO<ICollection<Country>> GetAllCountries()
         {
             try
             {
                 var result = _countryRepos.GetCountries().ToList();
                 
-                return AlzaAdminDTO.Data(result);
+                return AlzaAdminDTO<ICollection<Country>>.Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO<ICollection<Country>> .Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
 

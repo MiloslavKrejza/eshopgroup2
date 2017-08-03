@@ -9,7 +9,7 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Catalogue.DAL.Repositories
 {
-    class ProductRepository : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly CatalogueDbContext _context;
 

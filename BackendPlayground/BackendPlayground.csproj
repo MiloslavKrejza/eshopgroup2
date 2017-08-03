@@ -23,7 +23,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Test\" />
+    <ProjectReference Include="..\Trainee.Catalogue\Trainee.Catalogue.csproj" />
   </ItemGroup>
 
 </Project>

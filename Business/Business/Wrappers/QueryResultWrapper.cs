@@ -7,7 +7,7 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Business.Business.Wrappers
 {
-    class QueryResultWrapper
+    public class QueryResultWrapper
     {
         public decimal MinPrice { get; set; }
         public decimal MaxPrice { get; set; }
