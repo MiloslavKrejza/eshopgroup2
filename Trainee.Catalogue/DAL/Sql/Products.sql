@@ -4,19 +4,21 @@ GO
 
 CREATE TABLE [dbo].[Products](
 	[Id][int] IDENTITY(1,1) NOT NULL,
-	[Name][nvarchar](max) NOT NULL,
 	[FormatId][int] NOT NULL,
+	[ProductStateId][int] NOT NULL,
+	[LanguageId][int] NOT NULL,
+	[PublisherId][int] NOT NULL,
+	[CategoryId][int] NOT NULL,
+	[BookId][int] NOT NULL,
+
+	[Name][nvarchar](max) NOT NULL,
 	[PicAddress][nvarchar](max) NULL,
 	[Text][nvarchar](max) NULL,
 	[Price][money] NOT NULL,
-	[ProductStateId][int] NOT NULL,
-	[LanguageId][int] NOT NULL,
 	[PageCount][int] NULL,
 	[Year][int] NULL,
-	[PublisherId][int] NOT NULL,
 	[ISBN][nvarchar](max) NULL,
-	[EAN][nvarchar](max) NULL,
-	[CategoryId][int] NOT NULL
+	[EAN][nvarchar](max) NULL
 	
 )
 GO
@@ -43,4 +45,8 @@ GO
 
 ALTER TABLE [dbo].[Products]
 ADD CONSTRAINT [FK_Products_Categories] FOREIGN KEY([CategoryId]) REFERENCES [dbo].[Categories]
+GO
+
+ALTER TABLE [dbo].[Products]
+ADD CONSTRAINT [FK_Products_Books] FOREIGN KEY([BookId]) REFERENCES [dbo].[Books]
 GO

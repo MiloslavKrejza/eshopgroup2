@@ -55,36 +55,11 @@ img {
     padding-right: 15px;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide 
-input,
-select,
-textarea {
-    max-width: 280px;
-}*/
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
-}
-
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
-}
-
 .row-centered {
     text-align: center;
 }
 
-/*  Hlavička */
+/*  Top bar */
 #hlavicka {
     padding-top: 15px;
     padding-right: 20px;
@@ -97,17 +72,37 @@ textarea {
 
 .logo {
     width: 100%;
-    position: relative;
-    top: 30px;
+}
+
+@media screen and (max-width: 990px) {
+    .logo {
+        width: 30%;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .logo {
+        width: 60%;
+        margin: 0 auto;
+        margin-bottom: 5px;
+    }
 }
 
 #hledat {
-    width: 100%;
-    position: relative;
-    top: 40px;
+    width: 80%;
     height: 45px;
     border-radius: 4px;
 }
+
+@media screen and (max-width: 767px) {
+    #hledat {
+        margin-bottom:5px;
+    }
+}
+
+/* sets indentation of "hledat" input placeholder in all browsers*/
 
 input::-webkit-input-placeholder {
     padding: 10px !important;
@@ -132,19 +127,23 @@ input:-ms-input-placeholder {
 }
 
 #basket-user {
-    padding-top: 15px;
+    padding: 15px 0 0 0;
     font-size: 15px;
 }
 
-#basket-user a {
-    color: #555555;
+@media screen and (max-width: 767px) {
+    #basket-user {
+        margin: 0 auto;
+        position: relative;
+    }
 }
 
-.prihlasit {
+.basket-user-btn {
     border: none;
     padding: 0;
-    margin: 0;
+    margin: 0 5px;
     outline: none;
+    background-color: #f2f9ff;
 
     button {
         outline: none;
@@ -193,7 +192,7 @@ input:-ms-input-placeholder {
     margin-top: 40px;
 }
 
-/*Menu přihlášeného uživatele*/
+/*Signed in user menu*/
 #signedUserMenu {
     a {
         background-color: transparent;
@@ -204,44 +203,45 @@ input:-ms-input-placeholder {
     }
 }
 
+/*Main section*/
+#main-section {
+    margin: 0;
+    padding: 0;
+}
 
 
-/*Menu*/
-#menu-item {
+/*Cathegories*/
+.menu-item {
     height: 50px;
     font-size: 17px;
     padding: 13px 0 10px 10px;
     display: block;
     cursor: pointer;
     color: #4484ce;
+    border-left: none;
+    border-right: none;
     border-bottom: 1px solid #e8e8e8;
+    background-color: #f2f9ff;
 }
 
-#menu-item a:hover {
+.menu-item a:hover {
     text-decoration: none;
     font-size: 110%;
 }
 
-#menu-item img {
+.menu-item img {
     height: 30px;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
-/*Hlavní sekce*/
-#main-section {
-    margin: 0;
-    padding: 0;
-}
-
-#render-body {
-    padding: 20px;
-}
 
 
 /*Layout*/
 #layout {
     margin-bottom: 40px;
 }
+
+
 
 /*Footer */
 .footer {
@@ -259,13 +259,13 @@ input:-ms-input-placeholder {
     cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .footer {
         text-align: center !important;
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .footer .text-right {
         text-align: center;
     }
@@ -359,7 +359,7 @@ input:-ms-input-placeholder {
     padding-right: 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .profile .form-control-file {
         width: 100%;
     }
@@ -369,20 +369,20 @@ input:-ms-input-placeholder {
     margin-left: 5px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .profile .profile-info {
         display: none;
     }
 }
 
-.btn-profile {
-    margin-top: 15px;
+.btn-ulozit {
+    margin-bottom: 15px;
     width: 150px;
 }
 
-@media screen and (max-width: 768px) {
-    .btn-profile {
-        margin-bottom: 15px;
+@media screen and (max-width: 767px) {
+    .btn-ulozit {
+        margin-top: 15px;
     }
 }
 
@@ -401,6 +401,7 @@ input:-ms-input-placeholder {
     padding: 8px 55px;
     border-radius: 5px;
 }
+
 
 /*CATALOGUE*/
 
