@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Alza.Core.Module.Http
 {
-    public class AlzaAdminDTO
+    public class AlzaAdminDTO<TObj>
     {
-        private AlzaAdminDTO(Object data)
+        private AlzaAdminDTO(TObj data)
         {
-            if (data != null)
+            if (!data.Equals(default(TObj)))
             {
                 this.isOK = true;
                 this.isEmpty = false;
@@ -41,7 +41,7 @@ namespace Alza.Core.Module.Http
         public bool isOK { get; set; }
         public bool isEmpty { get; set; }
         public List<string> errors { get; set; } = new List<string>();
-        public Object data { get; set; }
+        public TObj data { get; set; }
 
         public Guid errorNo { get; set; }
         public string errorText {
@@ -61,46 +61,46 @@ namespace Alza.Core.Module.Http
 
 
 
-        public static AlzaAdminDTO False
+        public static AlzaAdminDTO<TObj> False
         {
             get
             {
-                return new AlzaAdminDTO(false);
+                return new AlzaAdminDTO<TObj>(false);
             }
         }
 
-        public static AlzaAdminDTO True
+        public static AlzaAdminDTO<TObj> True
         {
             get
             {
-                return new AlzaAdminDTO(true);
+                return new AlzaAdminDTO<TObj>(true);
             }
         }
 
-        public static AlzaAdminDTO Empty
+        public static AlzaAdminDTO<TObj> Empty
         {
             get
             {
-                return new AlzaAdminDTO(true);
+                return new AlzaAdminDTO<TObj>(true);
             }
         }
 
 
         
-        public static AlzaAdminDTO Error(Guid errorNo, string errorText)
+        public static AlzaAdminDTO<TObj> Error(Guid errorNo, string errorText)
         {
-            return new AlzaAdminDTO(false, errorNo, errorText);
+            return new AlzaAdminDTO<TObj>(false, errorNo, errorText);
         }
 
-        public static AlzaAdminDTO Data(Object data)
+        public static AlzaAdminDTO<TObj> Data(TObj data)
         {
-            return new AlzaAdminDTO(data);
+            return new AlzaAdminDTO<TObj>(data);
         }
 
-        public static AlzaAdminDTO Error(string message)
+        public static AlzaAdminDTO<TObj> Error(string message)
         {
             Guid guid = new Guid();
-            return AlzaAdminDTO.Error(guid, message);
+            return Error(guid, message);
         }
     }
 }
