@@ -8,8 +8,8 @@ namespace Trainee.Business.Abstraction
 {
     public interface IRatedProductRepository
     {
-        IQueryable<RatedProductBO> GetAllRatedProducts();
-        RatedProductBO GetRatedProduct(int id);
+        IQueryable<ProductBO> GetAllRatedProducts();
+        ProductBO GetRatedProduct(int id);
         
     }
 }

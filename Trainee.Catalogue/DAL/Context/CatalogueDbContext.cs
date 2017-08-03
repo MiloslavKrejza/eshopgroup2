@@ -14,7 +14,7 @@ namespace Trainee.Catalogue.DAL.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Format> Formats { get; set; }
         public DbSet<Language> Languages { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductBase> Products { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<ProductState> ProductStates { get; set; }
 
@@ -76,38 +76,38 @@ namespace Trainee.Catalogue.DAL.Context
             builder.Entity<Language>().HasKey(l => l.Id);
 
             //Products
-            builder.Entity<Product>().ToTable("Products");
-            builder.Entity<Product>().Property(p => p.Name).IsRequired();
-            builder.Entity<Product>().Property(p => p.Price).IsRequired();
-            builder.Entity<Product>().Property(p => p.FormatId).IsRequired();
-            builder.Entity<Product>().Property(p => p.StateId).IsRequired();
-            builder.Entity<Product>().Property(p => p.LanguageId).IsRequired();
-            builder.Entity<Product>().Property(p => p.PublisherId).IsRequired();
-            builder.Entity<Product>().Property(p => p.CategoryId).IsRequired();
-            builder.Entity<Product>().Property(p => p.BookId).IsRequired();
-            builder.Entity<Product>().HasKey(p => p.Id);
+            builder.Entity<ProductBase>().ToTable("Products");
+            builder.Entity<ProductBase>().Property(p => p.Name).IsRequired();
+            builder.Entity<ProductBase>().Property(p => p.Price).IsRequired();
+            builder.Entity<ProductBase>().Property(p => p.FormatId).IsRequired();
+            builder.Entity<ProductBase>().Property(p => p.StateId).IsRequired();
+            builder.Entity<ProductBase>().Property(p => p.LanguageId).IsRequired();
+            builder.Entity<ProductBase>().Property(p => p.PublisherId).IsRequired();
+            builder.Entity<ProductBase>().Property(p => p.CategoryId).IsRequired();
+            builder.Entity<ProductBase>().Property(p => p.BookId).IsRequired();
+            builder.Entity<ProductBase>().HasKey(p => p.Id);
 
-            builder.Entity<Product>()
+            builder.Entity<ProductBase>()
                 .HasOne(p => p.Format)
                 .WithMany()
                 .HasForeignKey(p => p.FormatId);
-            builder.Entity<Product>()
+            builder.Entity<ProductBase>()
                 .HasOne(p => p.State)
                 .WithMany()
                 .HasForeignKey(p => p.StateId);
-            builder.Entity<Product>()
+            builder.Entity<ProductBase>()
                 .HasOne(p => p.Language)
                 .WithMany()
                 .HasForeignKey(p => p.LanguageId);
-            builder.Entity<Product>()
+            builder.Entity<ProductBase>()
                 .HasOne(p => p.Publisher)
                 .WithMany()
                 .HasForeignKey(p => p.PublisherId);
-            builder.Entity<Product>()
+            builder.Entity<ProductBase>()
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
-            builder.Entity<Product>()
+            builder.Entity<ProductBase>()
                 .HasOne(p => p.Book)
                 .WithMany(b => b.Products)
                 .HasForeignKey(p => p.BookId);

@@ -15,7 +15,7 @@ namespace Trainee.Business.Business.Wrappers
         public List<Publisher> Publishers { get; set; }
         public List<Language> Languages { get; set; }
         public int ResultCount { get; set; }
-        public List<RatedProductBO> Products { get; set; }
+        public List<ProductBO> Products { get; set; }
         public List<Format> Formats { get; set; }
     }
 }

@@ -14,10 +14,10 @@ namespace Trainee.Business.Business
         IRatedProductRepository _ratedProductRepository;
         IRatedProductRepository _productRepository;
 
-        public AlzaAdminDTO GetPage(QueryParametersWrapper parameters)
+        AlzaAdminDTO GetPage(QueryParametersWrapper parameters)
         {
             //TODO Select products from category
-            IQueryable<Product> query = null; //IQueryable<Product>();
+            IQueryable<ProductBase> query =null;
             decimal minPrice = 0;
             decimal maxPrice = decimal.MaxValue;
             QueryResultWrapper result = new QueryResultWrapper();
@@ -25,7 +25,7 @@ namespace Trainee.Business.Business
             HashSet<Publisher> publishers = new HashSet<Publisher>();
             HashSet<Format> formats = new HashSet<Format>();
             HashSet<Author> authors = new HashSet<Author>();
-            foreach (Product product in query)
+            foreach (ProductBase product in query)
             {
                 minPrice = product.Price < minPrice ? product.Price : minPrice;
                 maxPrice = product.Price > maxPrice ? product.Price : maxPrice;
@@ -66,7 +66,7 @@ namespace Trainee.Business.Business
             {
                 query = query.Where(p => p.Book.AuthorsBooks.Select(ab=>ab.Author).Select(a => a.Id).Intersect(parameters.Authors).Count() > 0);
             }
-            Func<Product, object> sortingParameter;
+            Func<ProductBase, object> sortingParameter;
             //switch (parameters.SortingParameter)
             //{
             //    case Enums.SortingParameter.Price:
@@ -78,9 +78,10 @@ namespace Trainee.Business.Business
             //    case Enums.SortingParameter.Date:
             //        break;
             //}
+            
             return default(AlzaAdminDTO);
 
         }
-        public AlzaAdminDTO GetProduct(int id) { return null; }
+        AlzaAdminDTO GetProduct(int id) { return null; }
     }
 }

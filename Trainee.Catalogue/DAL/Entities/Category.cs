@@ -12,6 +12,6 @@ namespace Trainee.Catalogue.DAL.Entities
         //Referenced properties
         public Category Parent { get; set; }
         public List<Category> Children { get; set; }
-        public List<Product> Products { get; set; }
+        public List<ProductBase> Products { get; set; }
     }
 }

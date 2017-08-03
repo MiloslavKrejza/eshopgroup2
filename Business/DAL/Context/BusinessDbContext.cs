@@ -14,11 +14,11 @@ namespace Trainee.Business.DAL.Context
         
 
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<RatedProductBO> RatedProducts { get; set; }
+        internal DbSet<ProductRating> ProductRatings { get; set; }
         public DbSet<CategoryRelationshipBO> CategoryRelationships { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            
+            builder.Entity<Review>().ToTable("Reviews");
             base.OnModelCreating(builder);
         }
     }

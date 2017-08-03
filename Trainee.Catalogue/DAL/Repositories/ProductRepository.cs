@@ -18,7 +18,7 @@ namespace Trainee.Catalogue.DAL.Repositories
             _context = context;
         }
 
-        public Product AddProduct(Product product)
+        public ProductBase AddProduct(ProductBase product)
         {
             _context.Products.Add(product);
             _context.SaveChanges();
@@ -32,12 +32,12 @@ namespace Trainee.Catalogue.DAL.Repositories
             _context.SaveChanges();
         }
 
-        public IQueryable<Product> GetAllProducts()
+        public IQueryable<ProductBase> GetAllProducts()
         {
             return _context.Products.AsQueryable();
         }
 
-        public Product GetProduct(int id)
+        public ProductBase GetProduct(int id)
         {
             var result = _context.Products
                 .Where(p => p.Id == id)
@@ -54,7 +54,7 @@ namespace Trainee.Catalogue.DAL.Repositories
             return result;
         }
 
-        public Product UpdateProduct(Product product)
+        public ProductBase UpdateProduct(ProductBase product)
         {
             var oldProduct = GetProduct(product.Id);
             _context.Entry(oldProduct).CurrentValues.SetValues(product);
