@@ -3,6 +3,7 @@ using Eshop2.Models.CatalogueViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Trainee.Business.Business;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
@@ -48,7 +49,7 @@ namespace Eshop2.Controllers
 
                     CategoryName = product.Category.Name,
 
-                    Authors = new List<Author>(),
+                    Authors = product.Book.AuthorsBooks.Select(ab => ab.Author).ToList(),
                     ProductFormat = product.Format.Name,
                     Rating = product.AverageRating,
                     Annotation = product.Book.Annotation,
@@ -71,13 +72,7 @@ namespace Eshop2.Controllers
 
                 //to be sure
                 model.Reviews = model.Reviews == null ? new List<Review>() : model.Reviews;
-
-                //manually add authors (as EF core doesn't know many to many :-( )
-                foreach (AuthorBook ab in product.Book.AuthorsBooks)
-                {
-                    model.Authors.Add(ab.Author);
-                }
-
+                
                 return View(model);
             }
             catch (Exception e)
@@ -87,18 +82,36 @@ namespace Eshop2.Controllers
         }
 
         // GET: /Catalogue/Category
-        [HttpGet("/Catalogue/Products/{categoryId}")]
-        public IActionResult Category(int? categoryId)
+        [HttpGet("/Catalogue/Products")]
+        public IActionResult Category(ProductsViewModel model)
         {
             try
             {
-
-                if (categoryId == null)
+                if (model.CategoryId == null)
                 {
-                    //error again
+                    //model.CategoryId = ...
+                    //it means all products OR error .?
                 }
+                int catId = model.CategoryId.Value;
 
-                QueryParametersWrapper parameters = new QueryParametersWrapper { };
+
+                QueryParametersWrapper parameters = new QueryParametersWrapper
+                {
+                    PageNum = model.PageNum,
+                    CategoryId = catId, //check this
+                    Authors = model.Authors.Select(a => a.Id).ToList(),
+                    Formats = model.Formats.Select(f => f.Id).ToList(),
+                    Languages = model.Languages.Select(l => l.Id).ToList(),
+                    MaxPrice = model.MaxPrice,
+                    MinPrice = model.MinPrice,
+                    PageSize = model.PageSize,
+                    Publishers = model.Publishers.Select(p => p.Id).ToList(),
+                    SortingParameter = model.SortingParameter,
+                    SortingType = model.SortingType
+                };
+                
+
+
 
                 var dto = _businessService.GetPage(parameters);
                 if (!dto.isOK)
@@ -108,18 +121,17 @@ namespace Eshop2.Controllers
 
                 QueryResultWrapper result = dto.data;
 
-                //Fill the ViewModel
+                //Fill the ViewModel with new data
+                
+                model.MinPrice = result.MinPrice;
+                model.MaxPrice = result.MaxPrice;
+                model.Authors = result.Authors;
+                model.Formats = result.Formats;
+                model.Languages = result.Languages;
+                model.Products = result.Products;
+                model.Publishers = result.Publishers;
+                model.ResultCount = result.ResultCount;
 
-                ProductsViewModel model = new ProductsViewModel {
-                    MinPrice = result.MinPrice,
-                    MaxPrice = result.MaxPrice,
-                    Authors = result.Authors,
-                    Formats = result.Formats,
-                    Languages = result.Languages,
-                    Products = result.Products,
-                    Publishers = result.Publishers,
-                    ResultCount = result.ResultCount
-                };
 
                 return View(model);
             }
@@ -128,6 +140,6 @@ namespace Eshop2.Controllers
                 return AlzaError.ExceptionActionResult(e);
             }
 
-        }   
+        }
     }
 }
