@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Eshop2.Models.CatalogueViewModels
 {
-    public class CathegoryViewModel
+    public class CategoryViewModel
     {
     }
 }

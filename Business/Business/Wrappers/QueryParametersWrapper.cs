@@ -5,7 +5,7 @@ using Trainee.Business.Business.Enums;
 
 namespace Trainee.Business.Business.Wrappers
 {
-    class QueryParametersWrapper
+    public class QueryParametersWrapper
     {
         public int PageNum { get; set; } = 10;
         public int PageSize { get; set; } = 20; //TODO ask FE

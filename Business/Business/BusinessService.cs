@@ -14,10 +14,10 @@ namespace Trainee.Business.Business
         IRatedProductRepository _ratedProductRepository;
         IRatedProductRepository _productRepository;
 
-        AlzaAdminDTO GetPage(QueryParametersWrapper parameters)
+        public AlzaAdminDTO GetPage(QueryParametersWrapper parameters)
         {
             //TODO Select products from category
-            IQueryable<Product> query = IQueryable<Product>();
+            IQueryable<Product> query = null; //IQueryable<Product>();
             decimal minPrice = 0;
             decimal maxPrice = decimal.MaxValue;
             QueryResultWrapper result = new QueryResultWrapper();
@@ -81,6 +81,6 @@ namespace Trainee.Business.Business
             return default(AlzaAdminDTO);
 
         }
-        AlzaAdminDTO GetProduct(int id) { return null; }
+        public AlzaAdminDTO GetProduct(int id) { return null; }
     }
 }
