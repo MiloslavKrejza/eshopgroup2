@@ -444,3 +444,55 @@ input:-ms-input-placeholder {
     width: 250px;
     padding: 20px;
 }
+
+
+
+/*  Rating system */
+
+
+#rating {
+    text-align: center;
+    perspective: 250px;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+
+    span {
+        cursor: pointer;
+        font-size: 50px;
+        padding: 0 10px;
+        color: #fff;
+        opacity: .5;
+        transition: all 150ms;
+        display: inline-block;
+        -ms-transform: rotateX(45deg);
+        -webkit-transform: rotateX(45deg);
+        transform: rotateX(45deg);
+        transform-origin: center bottom;
+    }
+
+    span.hover {
+        color: #ff0;
+        opacity: 1;
+        transform: rotateX(0deg);
+        text-shadow: 0 0 30px #ffc;
+    }
+}
+
+
+.centerMePlox {
+    margin: 0px auto;
+    width: 75px;
+}
+
+button {
+    border: 2px solid orange;
+    background-color: orange;
+    border-radius: 25px;
+}
+
+#summaryByMiloslavKrejza {
+    margin: 0px 0 0 29px;
+    position: relative;
+    font-size: 25px;
+}
