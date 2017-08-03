@@ -1,4 +1,5 @@
-﻿using Eshop2.Models.CatalogueViewModels;
+﻿using Eshop2.Abstraction;
+using Eshop2.Models.CatalogueViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -79,29 +80,54 @@ namespace Eshop2.Controllers
 
                 return View(model);
             }
-            catch(Exception)
+            catch (Exception e)
             {
-                //please FE generate an error page for me
+                return AlzaError.ExceptionActionResult(e);
             }
         }
 
-        // GET: /Catalogue/Cathegory
-        [HttpGet]
+        // GET: /Catalogue/Category
+        [HttpGet("/Catalogue/Products/{categoryId}")]
         public IActionResult Category(int? categoryId)
         {
-            QueryParametersWrapper parameters = new QueryParametersWrapper { };
-
-            var dto = _businessService.GetPage(parameters);
-            if(!dto.isOK)
+            try
             {
-                //Another error TBD
+
+                if (categoryId == null)
+                {
+                    //error again
+                }
+
+                QueryParametersWrapper parameters = new QueryParametersWrapper { };
+
+                var dto = _businessService.GetPage(parameters);
+                if (!dto.isOK)
+                {
+                    //Another error TBD (bad parameters, bad)
+                }
+
+                QueryResultWrapper result = dto.data;
+
+                //Fill the ViewModel
+
+                ProductsViewModel model = new ProductsViewModel {
+                    MinPrice = result.MinPrice,
+                    MaxPrice = result.MaxPrice,
+                    Authors = result.Authors,
+                    Formats = result.Formats,
+                    Languages = result.Languages,
+                    Products = result.Products,
+                    Publishers = result.Publishers,
+                    ResultCount = result.ResultCount
+                };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                return AlzaError.ExceptionActionResult(e);
             }
 
-            QueryResultWrapper result = dto.data;
-
-            //Fill the ViewModel
-
-            return View();
-        }
+        }   
     }
 }
