@@ -8,7 +8,7 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Catalogue.DAL.Repositories
 {
-    class FormatRepository : IFormatRepository
+    public class FormatRepository : IFormatRepository
     {
         private readonly CatalogueDbContext _context;
 

@@ -1,5 +1,10 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using BackendPlayground.ViewModels.TestViewModels;
+@using Trainee.Catalogue.DAL.Entities;
+
+@model CategoryTestViewModel
+<h1>Category Test</h1>
+<h2>@Model.Category.Name Id: @Model.Category.Id</h2>
+@foreach(Category subCat in Model.Category.Children)
+{
+    <p>@subCat.Name Id: @subCat.Id ParentId: @subCat.ParentId</p>
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Trainee.Catalogue.DAL.Repositories
 {
-    class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly CatalogueDbContext _context;
 
@@ -42,7 +42,7 @@ namespace Trainee.Catalogue.DAL.Repositories
             var category = _context.Categories
                 .Where(c => c.Id == id)
                 .Include(c => c.Parent)
-                    .ThenInclude(c => c.Children)
+                .Include(c => c.Children)
                 .FirstOrDefault();
             return category;
         }

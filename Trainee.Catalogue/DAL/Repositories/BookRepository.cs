@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Trainee.Catalogue.DAL.Repositories
 {
-    class BookRepository : IBookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly CatalogueDbContext _context;
         public BookRepository(CatalogueDbContext context)
