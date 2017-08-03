@@ -32,7 +32,7 @@ namespace Trainee.Business.Business
                 languages.Add(product.Language);
                 publishers.Add(product.Publisher);
                 formats.Add(product.Format);
-                foreach (Author author in product.Book.Authors)
+                foreach (Author author in product.Book.AuthorsBooks.Select(ab => ab.Author))
                 {
                     authors.Add(author);
                 }
@@ -64,7 +64,7 @@ namespace Trainee.Business.Business
             }
             if (parameters.Authors != null)
             {
-                query = query.Where(p => p.Book.Authors.Select(a => a.Id).Intersect(parameters.Authors).Count() > 0);
+                query = query.Where(p => p.Book.AuthorsBooks.Select(ab=>ab.Author).Select(a => a.Id).Intersect(parameters.Authors).Count() > 0);
             }
             Func<Product, object> sortingParameter;
             //switch (parameters.SortingParameter)
