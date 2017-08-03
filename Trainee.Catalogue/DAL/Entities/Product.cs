@@ -29,6 +29,7 @@ namespace Trainee.Catalogue.DAL.Entities
         public Language Language { get; set; }
         public Publisher Publisher { get; set; }
         public Category Category { get; set; }
-        public Book Book { get; set; }
+        public Book Book { get; set; } 
+
     }
 }

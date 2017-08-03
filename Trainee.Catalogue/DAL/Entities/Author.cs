@@ -13,6 +13,16 @@ namespace Trainee.Catalogue.DAL.Entities
         public int? CountryId { get; set; }
         //Referenced properties
         public Country Country { get; set; }
+        //Overriden method of base class (object)
+        public override int GetHashCode()
+        {
+            return Id;
+        }
+        public override bool Equals(object obj)
+        {
+            return Id == ((Author)obj).Id;
+        }
         public List<AuthorBook> AuthorsBooks { get; set; }
+
     }
 }
