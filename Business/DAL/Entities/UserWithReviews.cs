@@ -7,6 +7,7 @@ namespace Trainee.Business.DAL.Entities
 {
     public class UserWithReviews : UserProfile
     {
+        //Might not be used
         public List<Review> Reviews { get; set; }
     }
 }

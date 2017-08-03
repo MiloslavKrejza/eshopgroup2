@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Trainee.Catalogue.DAL.Entities
 {
-    public class Product
+    public class ProductBase
     {
         public int Id { get; set; }
         public int LanguageId { get; set; }

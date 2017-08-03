@@ -13,27 +13,27 @@ namespace Trainee.Catalogue.Abstraction
         /// </summary>
         /// <param name="product">Product to be added</param>
         /// <returns>Added Product</returns>
-        Product AddProduct(Product product);
+        ProductBase AddProduct(ProductBase product);
 
         /// <summary>
         /// Gets a Product with the specified id
         /// </summary>
         /// <param name="id">Id of the Product to be get</param>
         /// <returns>Boook with the specified id</returns>
-        Product GetProduct(int id);
+        ProductBase GetProduct(int id);
 
         /// <summary>
         /// Gets an IQueryable of all Products
         /// </summary>
         /// <returns>IQueryable of Product</returns>
-        IQueryable<Product> GetAllProducts();
+        IQueryable<ProductBase> GetAllProducts();
 
         /// <summary>
         /// Updates a Product in the database
         /// </summary>
         /// <param name="product">Product to be updated</param>
         /// <returns>Updated Product</returns>
-        Product UpdateProduct(Product product);
+        ProductBase UpdateProduct(ProductBase product);
 
         /// <summary>
         /// Deletes a Product with the specified id

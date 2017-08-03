@@ -47,8 +47,8 @@ namespace BackendPlayground.Controllers
         {
             return View();
         }
-        [HttpGet("test/product/{name}")]
-        public IActionResult
-        
+        //[HttpGet("test/product/{name}")]
+
     }
 }
+
