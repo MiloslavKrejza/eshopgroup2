@@ -1,7 +1,26 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+﻿@using Eshop2.Models.CatalogueViewModels;
+@using Trainee.Catalogue.Business;
+@using Trainee.Catalogue.DAL.Entities;
+@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 
+@inject CatalogueService CatalogueService;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
+@{
+    Category currentCategory;
+    if (Model is ProductsViewModel)
+    {
+        var modelCat = Model as ProductsViewModel;
+        currentCategory = modelCat.currentCategory;
+    }
+    else
+    {
+        var result = CatalogueService.GetCategory(1);
+        currentCategory = result.data;
+    }
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +42,7 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
+    
 </head>
 <body>
 
@@ -49,12 +69,12 @@
                     if (SignInManager.IsSignedIn(User))
                     {
                         <script src="~/js/site.js"></script>
-                        <script>changeUser();</script>
+                            <script>changeUser();</script>
                     }
                     else
                     {
                         <script src="~/js/site.js"></script>
-                        <script>changeUserBack();</script>
+                            <script>changeUserBack();</script>
                     }
 
                 }
@@ -84,16 +104,18 @@
                     {<div class="text-capitalize list-group-item menu-item main-background">
                         <a href=""><p><img src="~/images/@(category[i]).svg" />@category[i]</p></a>
                     </div>
-                        }
                     }
+                }
 
+                <div class="list-group-item menu-item">
+                    <a href=""><p>Všichni autoři</p></a>
+                </div>
                     <div class="list-group-item menu-item main-background">
                         <a href=""><p>Všichni autoři</p></a>
                     </div>
                     <div class="list-group-item menu-item main-background">
                         <a href=""><p>Všechny produkty</p></a>
                     </div>
-                
 
             </div>
 

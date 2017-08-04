@@ -21,7 +21,7 @@
     <Content Include="wwwroot\css\site.scss" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BuildWebCompiler" Version="1.11.326" />
+    <PackageReference Include="BuildWebCompiler" Version="1.11.347" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
@@ -47,6 +47,7 @@
     <ProjectReference Include="..\Business\Trainee.Business.csproj" />
     <ProjectReference Include="..\core\Alza.Core.Identity\Alza.Core.Identity.csproj" />
     <ProjectReference Include="..\core\Alza.Core.Module\Alza.Core.Module.csproj" />
+    <ProjectReference Include="..\Trainee.Catalogue\Trainee.Catalogue.csproj" />
     <ProjectReference Include="..\Trainee.Core\Trainee.Core.csproj" />
     <ProjectReference Include="..\User\Trainee.User.csproj" />
   </ItemGroup>

@@ -14,6 +14,11 @@ using Microsoft.EntityFrameworkCore;
 
 using Trainee.User.DAL.Context;
 using Trainee.Business.Business;
+using Trainee.Catalogue.Business;
+using Trainee.Catalogue.Abstraction;
+using Trainee.Catalogue.DAL.Repositories;
+using Trainee.Catalogue.DAL.Context;
+using Trainee.Business.DAL.Context;
 
 namespace TestWeb
 {
@@ -54,10 +59,21 @@ namespace TestWeb
             services.AddTransient<UserService, UserService>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
 
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IFormatRepository, FormatRepository>();
+            services.AddTransient<ILanguageRepository, LanguageRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IPublisherRepository, PublisherRepository>();
+
             services.AddTransient<BusinessService, BusinessService>();
+            services.AddTransient<CatalogueService, CatalogueService>();
 
             services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
             services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.User.Users")));
+            services.AddDbContext<CatalogueDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Catalogue")));
+            services.AddDbContext<BusinessDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Business")));
 
 
             /*************** POSSIBILITIES ***************/

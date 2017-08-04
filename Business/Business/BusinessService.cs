@@ -6,19 +6,25 @@ using System.Text;
 using Trainee.Business.Abstraction;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
+using Trainee.Catalogue.Abstraction;
 using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Business.Business
 {
     public class BusinessService
     {
-        IRatedProductRepository _ratedProductRepository;
-        IRatedProductRepository _productRepository;
+        ICategoryRelationshipRepository _categoryRelationshipRepository;
+        IProductRatingRepository _productRatingRepository;
+        IReviewRepository _reviewRepository;
+        IProductRepository _productRepository;
+        ICategoryRepository _categoryRepository;
 
-        public AlzaAdminDTO<QueryResultWrapper>  GetPage(QueryParametersWrapper parameters)
+
+        AlzaAdminDTO GetPage(QueryParametersWrapper parameters)
         {
-            //TODO Select products from category
-            IQueryable<ProductBase> query =null;
+            var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
+            IQueryable<ProductBase> query = _productRepository.GetAllProducts();
+            query = query.Where(p => childCategoriesId.Contains(p.CategoryId));
             decimal minPrice = 0;
             decimal maxPrice = decimal.MaxValue;
             QueryResultWrapper result = new QueryResultWrapper();
@@ -65,24 +71,49 @@ namespace Trainee.Business.Business
             }
             if (parameters.Authors != null)
             {
-                query = query.Where(p => p.Book.AuthorsBooks.Select(ab=>ab.Author).Select(a => a.Id).Intersect(parameters.Authors).Count() > 0);
+                query = query.Where(p => p.Book.AuthorsBooks.Select(ab => ab.Author).Select(a => a.Id).Intersect(parameters.Authors).Count() > 0);
             }
-            Func<ProductBase, object> sortingParameter;
-            //switch (parameters.SortingParameter)
-            //{
-            //    case Enums.SortingParameter.Price:
-            //        sortingParameter = new Func<Product, object>(p => p.Price);
-            //        break;
-            //    case Enums.SortingParameter.Rating:
-            //        sortingParameter = new Func<Product, object>(p => p.Ra);
-            //        break;
-            //    case Enums.SortingParameter.Date:
-            //        break;
-            //}
-            
-            return default(AlzaAdminDTO<QueryResultWrapper> );
+
+            IQueryable<int> pIds = query.Select(p => p.Id);
+            IQueryable<ProductRating> ratings = _productRatingRepository.GetRatings().Where(pr => pIds.Contains(pr.ProductId));
+            //might be bullshite
+            var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));
+
+            Func<ProductBO, IComparable> sortingParameter;
+            switch (parameters.SortingParameter)
+            {
+                case Enums.SortingParameter.Price:
+                    sortingParameter = p => p.Price;
+                    break;
+                case Enums.SortingParameter.Rating:
+                    sortingParameter = p => p.AverageRating;
+                    break;
+                case Enums.SortingParameter.Date:
+                    sortingParameter = p => p.DateAdded;
+                    break;
+                default:
+                    sortingParameter = p => p.AverageRating;
+                    break;
+            }
+            switch (parameters.SortingType)
+            {
+                case Enums.SortType.Asc:
+                    products = products.OrderBy(sortingParameter).AsQueryable();
+                    break;
+                case Enums.SortType.Desc:
+                    products = products.OrderByDescending(sortingParameter).AsQueryable();
+                    break;
+                default:
+                    break;
+            }
+            result.ResultCount = products.Count();
+            products = products.Skip(parameters.PageNum * parameters.PageSize).Take(parameters.PageSize);
+            result.Products = products.ToList();
+            return AlzaAdminDTO.Data(result);
 
         }
-        public AlzaAdminDTO<ProductBO>  GetProduct(int id) { return null; }
+        AlzaAdminDTO GetProduct(int id) {
+
+        }
     }
 }
