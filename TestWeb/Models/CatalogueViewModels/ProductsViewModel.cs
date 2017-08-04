@@ -22,12 +22,12 @@ namespace Eshop2.Models.CatalogueViewModels
 
         //Filter parameters
         public int PageNum { get; set; } = 10;
-        public int PageSize { get; set; } = 20; //TODO ask FE
+        public int PageSize { get; set; } = 24; //TODO ask FE
         public int? CategoryId { get; set; }
         public decimal? MinPriceFilter { get; set; }
         public decimal? MaxPriceFilter { get; set; }
-        public List<int> AuthorsFilter { get; set; }
-        public List<int> PublishersFilter { get; set; }
+        public int AuthorsFilter { get; set; }
+        public int PublishersFilter { get; set; }
         public List<int> FormatsFilter { get; set; }
         public List<int> LanguagesFilter { get; set; }
         public SortType SortingType { get; set; } //TODO ask for defaults

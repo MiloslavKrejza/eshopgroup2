@@ -99,19 +99,19 @@ namespace Eshop2.Controllers
                 {
                     PageNum = model.PageNum,
                     CategoryId = catId, //check this
-                    Authors = model.AuthorsFilter,
+                    //Authors = model.AuthorsFilter,
                     Formats = model.FormatsFilter,
                     Languages = model.LanguagesFilter,
                     MaxPrice = model.MaxPrice,
                     MinPrice = model.MinPrice,
                     PageSize = model.PageSize,
-                    Publishers = model.PublishersFilter,
+                    //Publishers = model.PublishersFilter,
                     SortingParameter = model.SortingParameter,
                     SortingType = model.SortingType
                 };
                 
 
-
+                
 
                 var dto = _businessService.GetPage(parameters);
                 if (!dto.isOK)

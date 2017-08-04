@@ -6,6 +6,6 @@ namespace Trainee.Business.Business.Enums
 {
     public enum SortingParameter
     {
-        Price, Rating, Date
+        Price, Rating, Date, Name
     }
 }
