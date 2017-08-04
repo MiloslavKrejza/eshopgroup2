@@ -25,16 +25,16 @@ namespace Trainee.User.Business
         /// </summary>
         /// <param name="id">User id</param>
         /// <returns>Returns matching UserProfile in DTO data</returns>
-        public AlzaAdminDTO GetUserProfile(int id)
+        public AlzaAdminDTO<UserProfile>  GetUserProfile(int id)
         {
             try
             {
                 var result = _userRepos.GetProfile(id);
-                return AlzaAdminDTO.Data(result);
+                return AlzaAdminDTO<UserProfile>.Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO.Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO<UserProfile>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
 
         }
@@ -48,7 +48,7 @@ namespace Trainee.User.Business
         /// </summary>
         /// <param name="userProfile">UserProfile to be added into the database</param>
         /// <returns>A DTO object containing the UserProfile in its Data property</returns>
-        public AlzaAdminDTO AddUserProfile(UserProfile userProfile)
+        public AlzaAdminDTO<UserProfile>  AddUserProfile(UserProfile userProfile)
         {
             try
             {
@@ -58,11 +58,11 @@ namespace Trainee.User.Business
                 }
 
                 var result = _userRepos.AddUserProfile(userProfile);
-                return AlzaAdminDTO.Data(result);
+                return AlzaAdminDTO<UserProfile>.Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO.Error(e.Message);
+                return AlzaAdminDTO<UserProfile>.Error(e.Message);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Trainee.User.Business
         /// </summary>
         /// <param name="profile">Updated User profile</param>
         /// <returns>Updated profile in DTO.data</returns>
-        public AlzaAdminDTO UpdateUserProfile(UserProfile profile)
+        public AlzaAdminDTO<UserProfile>  UpdateUserProfile(UserProfile profile)
         {
             try
             {
@@ -86,11 +86,11 @@ namespace Trainee.User.Business
 
 
                 var result = _userRepos.UpdateProfile(profile);
-                return AlzaAdminDTO.Data(result);
+                return AlzaAdminDTO<UserProfile> .Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO.Error(e.Message);
+                return AlzaAdminDTO<UserProfile> .Error(e.Message);
             }
         }
 

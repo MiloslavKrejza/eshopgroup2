@@ -6,10 +6,10 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.Abstraction
 {
-    public interface IRatedProductRepository
+    public interface IProductRatingRepository
     {
-        IQueryable<ProductBO> GetAllRatedProducts();
-        ProductBO GetRatedProduct(int id);
-        
+        ProductRating GetRating(int id);
+        IQueryable<ProductRating> GetRatings();
+
     }
 }

@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Business\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Trainee.Core\Trainee.Core.csproj" />
   </ItemGroup>
 
