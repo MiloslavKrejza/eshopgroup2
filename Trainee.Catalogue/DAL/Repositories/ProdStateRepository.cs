@@ -8,7 +8,7 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Catalogue.DAL.Repositories
 {
-    class ProdStateRepository : IProdStateRepository
+    public class ProdStateRepository : IProdStateRepository
     {
         private readonly CatalogueDbContext _context;
 

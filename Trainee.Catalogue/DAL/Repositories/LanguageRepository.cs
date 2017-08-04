@@ -8,7 +8,7 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Catalogue.DAL.Repositories
 {
-    class LanguageRepository : ILanguageRepository
+    public class LanguageRepository : ILanguageRepository
     {
         private readonly CatalogueDbContext _context;
 

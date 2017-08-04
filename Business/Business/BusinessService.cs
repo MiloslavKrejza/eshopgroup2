@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Trainee.Business.Abstraction;
 using Trainee.Business.Business.Wrappers;
+using Trainee.Business.DAL.Entities;
 using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Business.Business
@@ -14,7 +15,7 @@ namespace Trainee.Business.Business
         IRatedProductRepository _ratedProductRepository;
         IRatedProductRepository _productRepository;
 
-        AlzaAdminDTO GetPage(QueryParametersWrapper parameters)
+        public AlzaAdminDTO<QueryResultWrapper>  GetPage(QueryParametersWrapper parameters)
         {
             //TODO Select products from category
             IQueryable<ProductBase> query =null;
@@ -79,9 +80,9 @@ namespace Trainee.Business.Business
             //        break;
             //}
             
-            return default(AlzaAdminDTO);
+            return default(AlzaAdminDTO<QueryResultWrapper> );
 
         }
-        AlzaAdminDTO GetProduct(int id) { return null; }
+        public AlzaAdminDTO<ProductBO>  GetProduct(int id) { return null; }
     }
 }
