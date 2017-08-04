@@ -36,11 +36,11 @@
                 <input id="hledat" class="center-block" placeholder="Hledat" />
             </div>
             <div id="basket-user" class="col-md-2">
-                <button class="btn basket-user-btn ">
+                <button class="btn basket-user-btn main-background">
                     <img src="~/images/cart-34-48.ico" alt="cart" /><br />
                     <p>Košík</p>
                 </button>
-                <button class="btn basket-user-btn " onclick="toggleLogin();">
+                <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
                     <img src="~/images/user-2-48.png" alt="cart" /><br />
                     <p id="login-link">Přihlásit</p>
                 </button>
@@ -67,9 +67,8 @@
         <!--PARTIAL VIEW - LOGIN-->
         <div class="row">
 
-            <div class="col-md-4 col-md-offset-8 login-container">
+            <div class="col-md-4 login-container">
                 <div class="container" id="login" style="display:none" ;>
-                    <button class="btn close-tab" onclick="toggleLogin()"><p class="text-right">X</p></button>
                     @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel(), ViewData)
                 </div>
             </div>
@@ -82,14 +81,17 @@
                 @{string[] category = new string[] { "Fantasy", "Sci-Fi", "Horor", "Herní", "České" };
                     for (int i = 0; i < category.Length; i++)
 
-                    {<div class="text-capitalize list-group-item menu-item">
+                    {<div class="text-capitalize list-group-item menu-item main-background">
                         <a href=""><p><img src="~/images/@(category[i]).svg" />@category[i]</p></a>
                     </div>
                         }
                     }
 
-                    <div class="list-group-item menu-item">
+                    <div class="list-group-item menu-item main-background">
                         <a href=""><p>Všichni autoři</p></a>
+                    </div>
+                    <div class="list-group-item menu-item main-background">
+                        <a href=""><p>Všechny produkty</p></a>
                     </div>
                 
 

@@ -1,17 +1,19 @@
-﻿
+﻿@using Eshop2.Models.CatalogueViewModels;
+@model BookViewModel
+
 @{
     ViewData["Title"] = "Harry Potter";
 }
 
 <div class="row">
-    <ul class="breadcrumb">
+    <ul class="breadcrumb main-background">
         <li class="main-cathegory"><a href="#">Fantasy</a></li>
         <li><a href="#">Pro mladé</a></li>
     </ul>
 </div>
 <hr />
 <div class="row">
-    <h2>Harry Potter</h2>
+    <h2>@Html.DisplayFor(model => model.Name)</h2>
     <div class="col-lg-8">
         <p class="bold">Joanne K. Rowling</p>
         <p>pevná vazba</p>
