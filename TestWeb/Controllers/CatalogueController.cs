@@ -82,17 +82,17 @@ namespace Eshop2.Controllers
         }
 
         // GET: /Catalogue/Category
-        [HttpGet("/Catalogue/Products")]
-        public IActionResult Category(ProductsViewModel model)
+        [HttpGet("/Catalogue/Products/{categoryId}")]
+        public IActionResult Products(int? categoryId, ProductsViewModel model)
         {
             try
             {
-                if (model.CategoryId == null)
+                if (categoryId == null)
                 {
-                    //model.CategoryId = ...
+                    //categoryId = ...
                     //it means all products OR error .?
                 }
-                int catId = model.CategoryId.Value;
+                int catId = categoryId.Value;
 
 
                 QueryParametersWrapper parameters = new QueryParametersWrapper
