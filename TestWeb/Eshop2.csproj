@@ -21,7 +21,7 @@
     <Content Include="wwwroot\css\site.scss" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BuildWebCompiler" Version="1.11.326" />
+    <PackageReference Include="BuildWebCompiler" Version="1.11.347" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />

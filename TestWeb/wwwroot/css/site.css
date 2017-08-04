@@ -331,12 +331,13 @@ input:-ms-input-placeholder {
   text-align: center;
   perspective: 250px;
   position: relative;
-  width: 100%; }
+  width: 100%;
+  color: red; }
   #rating span {
     cursor: pointer;
     font-size: 50px;
     padding: 0 10px;
-    color: #fff;
+    color: #A7A7A7;
     opacity: .5;
     transition: all 150ms;
     display: inline-block;
@@ -345,7 +346,7 @@ input:-ms-input-placeholder {
     transform: rotateX(45deg);
     transform-origin: center bottom; }
   #rating span.hover {
-    color: #ff0;
+    color: #f19f4d;
     opacity: 1;
     transform: rotateX(0deg);
     text-shadow: 0 0 30px #ffc; }
@@ -358,4 +359,3 @@ input:-ms-input-placeholder {
   margin: 0px 0 0 29px;
   position: relative;
   font-size: 25px; }
-

@@ -455,12 +455,13 @@ input:-ms-input-placeholder {
     perspective: 250px;
     position: relative;
     width: 100%;
+    color: red;
 
     span {
         cursor: pointer;
         font-size: 50px;
         padding: 0 10px;
-        color: #fff;
+        color: #A7A7A7;
         opacity: .5;
         transition: all 150ms;
         display: inline-block;
@@ -471,7 +472,7 @@ input:-ms-input-placeholder {
     }
 
     span.hover {
-        color: #ff0;
+        color: #f19f4d;
         opacity: 1;
         transform: rotateX(0deg);
         text-shadow: 0 0 30px #ffc;
