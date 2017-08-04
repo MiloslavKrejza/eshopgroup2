@@ -453,8 +453,7 @@ input:-ms-input-placeholder {
 #rating {
     text-align: center;
     perspective: 250px;
-    position: absolute;
-    top: 40%;
+    position: relative;
     width: 100%;
 
     span {
@@ -483,12 +482,6 @@ input:-ms-input-placeholder {
 .centerMePlox {
     margin: 0px auto;
     width: 75px;
-}
-
-button {
-    border: 2px solid orange;
-    background-color: orange;
-    border-radius: 25px;
 }
 
 #summaryByMiloslavKrejza {
