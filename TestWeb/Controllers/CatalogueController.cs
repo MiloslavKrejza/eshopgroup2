@@ -22,6 +22,8 @@ namespace Eshop2.Controllers
             _businessService = service;
         }
 
+        
+
         // GET: /Catalogue/Book/BookId
         [HttpGet("/Catalogue/Book/{id}")]
         public IActionResult Book(int? id)
@@ -89,8 +91,7 @@ namespace Eshop2.Controllers
             {
                 if (categoryId == null)
                 {
-                    //categoryId = ...
-                    //it means all products OR error .?
+                    categoryId = 1;
                 }
                 int catId = categoryId.Value;
 

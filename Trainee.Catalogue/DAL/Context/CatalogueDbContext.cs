@@ -57,8 +57,6 @@ namespace Trainee.Catalogue.DAL.Context
             // //AuthorsBooks
 
             builder.Entity<AuthorBook>().ToTable("AuthorsBooks");
-            builder.Entity<AuthorBook>().Property(ab => ab.AuthorId).HasColumnName("AuthorId");
-            builder.Entity<AuthorBook>().Property(ab => ab.BookId).HasColumnName("BookId");
             builder.Entity<AuthorBook>().HasKey(ab => new { ab.AuthorId, ab.BookId });
             // /*
             // builder.Entity<AuthorBook>()

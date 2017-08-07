@@ -32,6 +32,17 @@ namespace Trainee.Business.Business
 
         public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
+
+           
+
+
+            //var asdf = _categoryRelationshipRepository.GetAllRelationships();
+
+            //var asdf2 = asdf.Where(c => c.Id == parameters.CategoryId);
+
+            //var asdf3 = asdf2.Select(c => c.ChildId);
+
+
             var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
             query = query.Where(p => childCategoriesId.Contains(p.CategoryId));
@@ -81,8 +92,10 @@ namespace Trainee.Business.Business
             }
             if (parameters.Authors != null)
             {
-                query = query.Where(p => p.Book.AuthorsBooks.Select(ab => ab.Author).Select(a => a.Id).Intersect(parameters.Authors).Count() > 0);
+                query = query.Where(p => p.Book.AuthorsBooks.Select(ab => ab.Author).Select(a => a.AuthorId).Intersect(parameters.Authors).Count() > 0);
             }
+
+            //ToDo does not work yet
 
             IQueryable<int> pIds = query.Select(p => p.Id);
             IQueryable<ProductRating> ratings = _productRatingRepository.GetRatings().Where(pr => pIds.Contains(pr.ProductId));
