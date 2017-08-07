@@ -51,6 +51,7 @@ namespace Trainee.Catalogue.DAL.Repositories
                 .Include(p => p.Publisher)
                 .Include(p => p.State)
                 .FirstOrDefault();
+
             
             result.Book.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.BookId == result.BookId).ToList();
             
