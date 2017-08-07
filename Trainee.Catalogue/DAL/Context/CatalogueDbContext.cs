@@ -10,6 +10,7 @@ namespace Trainee.Catalogue.DAL.Context
     public class CatalogueDbContext : CountryDbContext
     {
         public DbSet<Author> Authors { get; set; }
+        public DbSet<AuthorBook> AuthorsBooks { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Format> Formats { get; set; }
@@ -31,30 +32,44 @@ namespace Trainee.Catalogue.DAL.Context
 
             builder.Entity<Author>().ToTable("Authors");
             builder.Entity<Author>().Property(a => a.Name).IsRequired();
+            builder.Entity<Author>().Property(a => a.AuthorId).HasColumnName("AuthorId");
             builder.Entity<Author>().Property(a => a.Surname).IsRequired();
-            builder.Entity<Author>().HasKey(a => a.Id);
+            builder.Entity<Author>().HasKey(a => a.AuthorId).HasName("AuthorId");
+            builder.Entity<Author>()
+                .HasMany(a => a.AuthorsBooks)
+                .WithOne(ab => ab.Author)
+                .HasForeignKey(ab => ab.AuthorId);
             builder.Entity<Author>()
                 .HasOne(a => a.Country)
                 .WithMany()
                 .HasForeignKey(a => a.CountryId);
-            //Books
+            //  //Books
 
-            builder.Entity<Book>().ToTable("Books");
-            builder.Entity<Book>().HasKey(b => b.Id);
+           builder.Entity<Book>().ToTable("Books");
+           builder.Entity<Book>().Property(b => b.BookId).HasColumnName("BookId");
+           builder.Entity<Book>().HasKey(b => b.BookId).HasName("BookId");
             builder.Entity<Book>().Property(b => b.Name).IsRequired();
-            //AuthorsBooks
+            builder.Entity<Book>()
+                .HasMany(b => b.AuthorsBooks)
+                .WithOne(ab => ab.Book)
+                .HasForeignKey(ab => ab.BookId);
+
+            // //AuthorsBooks
 
             builder.Entity<AuthorBook>().ToTable("AuthorsBooks");
+            builder.Entity<AuthorBook>().Property(ab => ab.AuthorId).HasColumnName("AuthorId");
+            builder.Entity<AuthorBook>().Property(ab => ab.BookId).HasColumnName("BookId");
             builder.Entity<AuthorBook>().HasKey(ab => new { ab.AuthorId, ab.BookId });
-            builder.Entity<AuthorBook>()
-                .HasOne(ab => ab.Author)
-                .WithMany()
-                .HasForeignKey(ab => ab.AuthorId);
-            builder.Entity<AuthorBook>()
-                .HasOne(ab => ab.Book)
-                .WithMany()
-                .HasForeignKey(ab => ab.BookId);
-            //Categories
+            // /*
+            // builder.Entity<AuthorBook>()
+            //     .HasOne(ab => ab.Author)
+            //     .WithMany()
+            //     .HasForeignKey(ab => ab.AuthorId);//.HasConstraintName("FK_AuthorsBooks_Authors");
+            // builder.Entity<AuthorBook>()
+            //     .HasOne(ab => ab.Book)
+            //     .WithMany(b => b.AuthorsBooks)
+            //     .HasForeignKey(ab => ab.BookId);//.HasConstraintName("FK_AuthorsBooks_Books");*/
+            // //Categories
 
             builder.Entity<Category>().ToTable("Categories");
             builder.Entity<Category>().Property(c => c.Name).IsRequired();
@@ -80,7 +95,7 @@ namespace Trainee.Catalogue.DAL.Context
             builder.Entity<ProductBase>().Property(p => p.Name).IsRequired();
             builder.Entity<ProductBase>().Property(p => p.Price).IsRequired();
             builder.Entity<ProductBase>().Property(p => p.FormatId).IsRequired();
-            builder.Entity<ProductBase>().Property(p => p.StateId).IsRequired();
+            builder.Entity<ProductBase>().Property(p => p.StateId).IsRequired().HasColumnName("ProductStateId");
             builder.Entity<ProductBase>().Property(p => p.LanguageId).IsRequired();
             builder.Entity<ProductBase>().Property(p => p.PublisherId).IsRequired();
             builder.Entity<ProductBase>().Property(p => p.CategoryId).IsRequired();
