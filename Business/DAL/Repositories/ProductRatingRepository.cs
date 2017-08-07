@@ -8,7 +8,7 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.DAL.Repositories
 {
-    class ProductRatingRepository : IProductRatingRepository
+    public class ProductRatingRepository : IProductRatingRepository
     {
         BusinessDbContext _context;
         public ProductRatingRepository(BusinessDbContext context)

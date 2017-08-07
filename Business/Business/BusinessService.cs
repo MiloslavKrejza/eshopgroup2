@@ -19,8 +19,18 @@ namespace Trainee.Business.Business
         IProductRepository _productRepository;
         ICategoryRepository _categoryRepository;
 
+        public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
+                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep)
+        {
+            _categoryRelationshipRepository = catRRep;
+            _productRatingRepository = prodRRep;
+            _reviewRepository = reviewRep;
+            _productRepository = prodRep;
+            _categoryRepository = catRep;
+        }
 
-        AlzaAdminDTO GetPage(QueryParametersWrapper parameters)
+
+        public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
             var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
@@ -109,11 +119,16 @@ namespace Trainee.Business.Business
             result.ResultCount = products.Count();
             products = products.Skip(parameters.PageNum * parameters.PageSize).Take(parameters.PageSize);
             result.Products = products.ToList();
-            return AlzaAdminDTO.Data(result);
+            return AlzaAdminDTO<QueryResultWrapper>.Data(result);
 
         }
-        AlzaAdminDTO GetProduct(int id) {
-
+        public AlzaAdminDTO<ProductBO> GetProduct(int id)
+        {
+            var baseProduct = _productRepository.GetProduct(id);
+            //var avRating = _productRatingRepository.GetRating(id);
+            //var ratings = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
+            ProductBO product = new ProductBO(baseProduct, null, null); //avRating, ratings);
+            return AlzaAdminDTO<ProductBO>.Data(product);
         }
     }
 }

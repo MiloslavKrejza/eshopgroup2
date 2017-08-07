@@ -7,7 +7,7 @@ namespace Trainee.Catalogue.DAL.Entities
 {
     public class Author
     {
-        public int Id { get; set; }
+        public int AuthorId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public int? CountryId { get; set; }
@@ -16,11 +16,11 @@ namespace Trainee.Catalogue.DAL.Entities
         //Overriden method of base class (object)
         public override int GetHashCode()
         {
-            return Id;
+            return AuthorId;
         }
         public override bool Equals(object obj)
         {
-            return Id == ((Author)obj).Id;
+            return AuthorId == ((Author)obj).AuthorId;
         }
         public List<AuthorBook> AuthorsBooks { get; set; }
 
