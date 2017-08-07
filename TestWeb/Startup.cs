@@ -19,6 +19,8 @@ using Trainee.Catalogue.Abstraction;
 using Trainee.Catalogue.DAL.Repositories;
 using Trainee.Catalogue.DAL.Context;
 using Trainee.Business.DAL.Context;
+using Trainee.Business.Abstraction;
+using Trainee.Business.DAL.Repositories;
 
 namespace TestWeb
 {
@@ -67,12 +69,16 @@ namespace TestWeb
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IPublisherRepository, PublisherRepository>();
 
+            services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>();
+            services.AddTransient<IProductRatingRepository, ProductRatingRepository>();
+            services.AddTransient<IReviewRepository, ReviewRepository>();
+
             services.AddTransient<BusinessService, BusinessService>();
             services.AddTransient<CatalogueService, CatalogueService>();
 
             services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
             services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.User.Users")));
-            services.AddDbContext<CatalogueDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Catalogue")));
+            services.AddDbContext<CatalogueDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Catalogue.Cat")));
             services.AddDbContext<BusinessDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Business")));
 
 
@@ -84,6 +90,7 @@ namespace TestWeb
 
             // Add framework services.
             services.AddMvc()
+                //.AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization();
 

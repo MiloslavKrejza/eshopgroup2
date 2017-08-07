@@ -70,7 +70,7 @@ namespace Eshop2.Controllers
 
                 };
 
-                //to be sure
+                //to be sure //Or handle it in view
                 model.Reviews = model.Reviews == null ? new List<Review>() : model.Reviews;
                 
                 return View(model);

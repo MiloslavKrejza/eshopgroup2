@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Trainee.Catalogue.DAL.Entities
@@ -22,6 +23,7 @@ namespace Trainee.Catalogue.DAL.Entities
         public int? Year { get; set; }
         public string ISBN { get; set; }
         public string EAN { get; set; }
+        [NotMapped] //does not work yet
         public DateTime DateAdded { get; set; }
 
         //Referenced properties

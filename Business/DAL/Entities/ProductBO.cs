@@ -14,12 +14,12 @@ namespace Trainee.Business.DAL.Entities
         public List<Review> Reviews { get; set; }
         internal ProductBO(ProductBase product, ProductRating rating, List<Review> reviews = null) 
         {
-            if (product.Id != rating.ProductId)
+           /* if (product.Id != rating.ProductId)
             {
                 throw new Exception("Nesouhlasi ID");
-            }
+            }*/ //Does not work yet
 
-            AverageRating = rating.AverageRating;
+            // AverageRating = rating.AverageRating;
             Reviews = reviews;
             Id = product.Id;
             LanguageId = product.LanguageId;

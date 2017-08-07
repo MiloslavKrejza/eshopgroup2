@@ -19,7 +19,7 @@ CREATE TABLE [dbo].[Products](
 	[Year][int] NULL,
 	[ISBN][nvarchar](max) NULL,
 	[EAN][nvarchar](max) NULL,
-	[DateAdded][datetime] NOT NULL DEFAULT(GETDATE())
+	[DateAdded][datetime] DEFAULT(GETDATE()) NOT NULL 
 )
 GO
 
