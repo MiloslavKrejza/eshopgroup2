@@ -34,7 +34,25 @@ namespace Trainee.Catalogue.DAL.Repositories
 
         public IQueryable<ProductBase> GetAllProducts()
         {
-            return _context.Products.AsQueryable();
+            var result = _context.Products.AsQueryable().ToList();
+
+            
+
+            //this needs to be manually filled PROBABLY
+            foreach(var item in result)
+            {
+                item.Book = _context.Books.Where(b => b.BookId == item.BookId).FirstOrDefault();
+
+                item.Book.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.BookId == item.BookId).ToList();
+
+                foreach (AuthorBook ab in item.Book.AuthorsBooks)
+                {
+                    ab.Author = _context.Authors.Where(a => a.AuthorId == ab.AuthorId).FirstOrDefault();
+                }
+            }
+            int i = 5;
+
+            return result.AsQueryable();
         }
 
         public ProductBase GetProduct(int id)
