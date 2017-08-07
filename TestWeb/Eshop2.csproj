@@ -52,6 +52,7 @@
     <ProjectReference Include="..\User\Trainee.User.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\OrderViewModels\" />
     <Folder Include="wwwroot\images\profile_pics\" />
   </ItemGroup>
 

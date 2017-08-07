@@ -36,6 +36,9 @@ img {
   margin: 0;
   float: right; }
 
+.main-background {
+  background-color: #f2f9ff; }
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -57,7 +60,7 @@ img {
 .logo {
   width: 100%; }
 
-@media screen and (max-width: 990px) {
+@media screen and (max-width: 995px) {
   .logo {
     width: 30%;
     margin: 0 auto;
@@ -110,8 +113,7 @@ input:-ms-input-placeholder {
   border: none;
   padding: 0;
   margin: 0 5px;
-  outline: none;
-  background-color: #f2f9ff; }
+  outline: none; }
   .basket-user-btn button {
     outline: none;
     background-color: #f2f9ff; }
@@ -124,8 +126,24 @@ input:-ms-input-placeholder {
 
 /*Login container*/
 .login-container {
-  position: relative;
-  right: 45px; }
+  position: absolute;
+  right: 45px;
+  width: 450px; }
+
+@media screen and (min-width: 1300px) {
+  .login-container {
+    right: 10%; } }
+
+@media screen and (max-width: 600px) {
+  .login-container {
+    width: 80%;
+    margin: 0 10px; } }
+
+@media screen and (max-width: 450px) {
+  .login-container {
+    width: 90%;
+    left: 0px;
+    right: 0px; } }
 
 #login {
   width: 100%;
@@ -141,6 +159,10 @@ input:-ms-input-placeholder {
 
 #login-page-container {
   width: 380px; }
+
+@media screen and (max-width: 678px) {
+  #login-page-container {
+    width: 100%; } }
 
 #login-error {
   margin-top: 40px; }
@@ -167,8 +189,7 @@ input:-ms-input-placeholder {
   color: #4484ce;
   border-left: none;
   border-right: none;
-  border-bottom: 1px solid #e8e8e8;
-  background-color: #f2f9ff; }
+  border-bottom: 1px solid #e8e8e8; }
 
 .menu-item a:hover {
   text-decoration: none;
