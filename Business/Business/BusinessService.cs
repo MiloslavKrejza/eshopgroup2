@@ -20,7 +20,7 @@ namespace Trainee.Business.Business
         ICategoryRepository _categoryRepository;
 
 
-        AlzaAdminDTO GetPage(QueryParametersWrapper parameters)
+        public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
             var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
@@ -109,10 +109,16 @@ namespace Trainee.Business.Business
             result.ResultCount = products.Count();
             products = products.Skip(parameters.PageNum * parameters.PageSize).Take(parameters.PageSize);
             result.Products = products.ToList();
-            return AlzaAdminDTO.Data(result);
+            return AlzaAdminDTO<QueryResultWrapper>.Data(result);
 
         }
-        AlzaAdminDTO GetProduct(int id) {
+        public AlzaAdminDTO<ProductBO> GetProduct(int id)
+        {
+            var product = _productRepository.GetProduct(id);
+            var rating = _productRatingRepository.GetRating(id);
+            var reviews = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
+            var result = new ProductBO(product, rating, reviews);
+            return AlzaAdminDTO<ProductBO>.Data(result);
 
         }
     }
