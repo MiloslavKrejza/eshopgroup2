@@ -81,7 +81,7 @@ namespace Trainee.Business.Business
             }
             if (parameters.Authors != null)
             {
-                query = query.Where(p => p.Book.AuthorsBooks.Select(ab => ab.Author).Select(a => a.Id).Intersect(parameters.Authors).Count() > 0);
+                query = query.Where(p => p.Book.AuthorsBooks.Select(ab => ab.Author).Select(a => a.AuthorId).Intersect(parameters.Authors).Count() > 0);
             }
 
             IQueryable<int> pIds = query.Select(p => p.Id);
