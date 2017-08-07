@@ -10,7 +10,9 @@ namespace Alza.Core.Module.Http
     {
         private AlzaAdminDTO(TObj data)
         {
-            if (!data.Equals(default(TObj)))
+
+            if (!ReferenceEquals(data, default(TObj)))
+
             {
                 this.isOK = true;
                 this.isEmpty = false;

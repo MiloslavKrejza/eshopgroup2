@@ -1,4 +1,4 @@
-﻿using Eshop2.Abstraction;
+using Eshop2.Abstraction;
 using Eshop2.Models.CatalogueViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,6 +20,7 @@ namespace Eshop2.Controllers
         public CatalogueController(BusinessService service)
         {
             _businessService = service;
+
         }
 
         // GET: /Catalogue/Book/BookId
@@ -70,7 +71,7 @@ namespace Eshop2.Controllers
 
                 };
 
-                //to be sure
+                //to be sure //Or handle it in view
                 model.Reviews = model.Reviews == null ? new List<Review>() : model.Reviews;
                 
                 return View(model);
@@ -82,36 +83,38 @@ namespace Eshop2.Controllers
         }
 
         // GET: /Catalogue/Category
-        [HttpGet("/Catalogue/Products")]
-        public IActionResult Category(ProductsViewModel model)
+        [HttpGet("/Catalogue/Products/{categoryId}")]
+        public IActionResult Products(int? categoryId, ProductsViewModel model)
         {
             try
             {
-                if (model.CategoryId == null)
+                if (categoryId == null)
                 {
-                    //model.CategoryId = ...
+                    //categoryId = ...
                     //it means all products OR error .?
                 }
-                int catId = model.CategoryId.Value;
+                int catId = categoryId.Value;
 
 
                 QueryParametersWrapper parameters = new QueryParametersWrapper
                 {
                     PageNum = model.PageNum,
                     CategoryId = catId, //check this
-                    Authors = model.AuthorsFilter,
+
+                    //Authors = model.AuthorsFilter,
+
                     Formats = model.FormatsFilter,
                     Languages = model.LanguagesFilter,
                     MaxPrice = model.MaxPrice,
                     MinPrice = model.MinPrice,
                     PageSize = model.PageSize,
-                    Publishers = model.PublishersFilter,
+
+                    //Publishers = model.PublishersFilter,
+
                     SortingParameter = model.SortingParameter,
                     SortingType = model.SortingType
                 };
                 
-
-
 
                 var dto = _businessService.GetPage(parameters);
                 if (!dto.isOK)

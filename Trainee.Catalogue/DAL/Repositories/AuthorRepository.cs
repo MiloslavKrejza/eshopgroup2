@@ -28,7 +28,7 @@ namespace Trainee.Catalogue.DAL.Repositories
         public void DeleteAuthor(int id)
         {
 
-            var author = _context.Authors.FirstOrDefault(a => a.Id == id);
+            var author = _context.Authors.FirstOrDefault(a => a.AuthorId == id);
             _context.Authors.Remove(author);
             _context.SaveChanges();
 
@@ -43,11 +43,18 @@ namespace Trainee.Catalogue.DAL.Repositories
         {
 
             var result = _context.Authors
-                .Where(a => a.Id == id)
+                .Where(a => a.AuthorId == id)
                 .Include(a => a.Country)
-                .Include(a => a.AuthorsBooks)
-                    .ThenInclude(ab => ab.Book)
+                //.Include(a => a.AuthorsBooks)
+                   // .ThenInclude(ab => ab.Book)
                 .FirstOrDefault();
+
+            result.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.AuthorId == result.AuthorId).ToList();
+
+            foreach(AuthorBook ab in result.AuthorsBooks)
+            {
+                ab.Book = _context.Books.Where(b => b.BookId == ab.BookId).FirstOrDefault();
+            }
 
             return result;
 
@@ -56,7 +63,7 @@ namespace Trainee.Catalogue.DAL.Repositories
         public Author UpdateAuthor(Author author)
         {
 
-            var oldAuthor = GetAuthor(author.Id);
+            var oldAuthor = GetAuthor(author.AuthorId);
             _context.Entry(oldAuthor).CurrentValues.SetValues(author);
             _context.SaveChanges();
             return author;

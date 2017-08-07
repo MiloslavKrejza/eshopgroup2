@@ -18,8 +18,8 @@ CREATE TABLE [dbo].[Products](
 	[PageCount][int] NULL,
 	[Year][int] NULL,
 	[ISBN][nvarchar](max) NULL,
-	[EAN][nvarchar](max) NULL
-	
+	[EAN][nvarchar](max) NULL,
+	[DateAdded][datetime] DEFAULT(GETDATE()) NOT NULL 
 )
 GO
 

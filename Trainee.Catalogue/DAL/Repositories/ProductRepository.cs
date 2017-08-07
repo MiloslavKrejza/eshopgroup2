@@ -42,15 +42,24 @@ namespace Trainee.Catalogue.DAL.Repositories
             var result = _context.Products
                 .Where(p => p.Id == id)
                 .Include(p => p.Book)
-                    .ThenInclude(b => b.AuthorsBooks)
-                        .ThenInclude(ab => ab.Author)
-                    .ThenInclude(b => b.Country)
+                    //.ThenInclude(b => b.AuthorsBooks)
+                       // .ThenInclude(ab => ab.Author)
+                        //.ThenInclude(a => a.Country)
                 .Include(p => p.Category)
                 .Include(p => p.Format)
                 .Include(p => p.Language)
                 .Include(p => p.Publisher)
                 .Include(p => p.State)
                 .FirstOrDefault();
+
+            
+            result.Book.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.BookId == result.BookId).ToList();
+            
+            foreach(AuthorBook ab in result.Book.AuthorsBooks)
+            {
+                ab.Author = _context.Authors.Where(a => a.AuthorId == ab.AuthorId).FirstOrDefault();
+            }
+
             return result;
         }
 

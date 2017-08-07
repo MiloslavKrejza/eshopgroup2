@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "Košík";
+}
+
+<h2>Košík</h2>
+<div class="row">
+    <div class="col-md-2"><img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="bookcover" /></div>
+    <div class="col-md-9">
+        <p>Harry Potter</p>
+        <p>Joanne K. Rowling</p>
+        <p>skladem - u vás do 3 dnů</p>
+    </div>
+    <hr />
+    <div class="col-md-3">
+        399,- <span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button>Vybrat další knížky</button>
+        </div>
+        <div class="col-md-6">
+            <button asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary">Objednat</button>
+        </div>
+    </div>
+</div>

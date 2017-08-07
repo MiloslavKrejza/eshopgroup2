@@ -30,11 +30,13 @@ namespace Trainee.User.Business
             try
             {
                 var result = _userRepos.GetProfile(id);
-                return AlzaAdminDTO<UserProfile> .Data(result);
+
+                return AlzaAdminDTO<UserProfile>.Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO<UserProfile> .Error(e.Message + Environment.NewLine + e.StackTrace);
+                return AlzaAdminDTO<UserProfile>.Error(e.Message + Environment.NewLine + e.StackTrace);
+
             }
 
         }
@@ -58,11 +60,13 @@ namespace Trainee.User.Business
                 }
 
                 var result = _userRepos.AddUserProfile(userProfile);
-                return AlzaAdminDTO<UserProfile> .Data(result);
+
+                return AlzaAdminDTO<UserProfile>.Data(result);
             }
             catch (Exception e)
             {
-                return AlzaAdminDTO<UserProfile> .Error(e.Message);
+                return AlzaAdminDTO<UserProfile>.Error(e.Message);
+
             }
         }
 

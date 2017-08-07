@@ -6,11 +6,12 @@ namespace Trainee.Catalogue.DAL.Entities
 {
     public class Book
     {
-        public int Id { get; set; }
+        public int BookId { get; set; }
         public string Name { get; set; }
         public string Annotation { get; set; }
         //Referenced properties
         public List<ProductBase> Products { get; set; }
+        //public List<Author> Authors { get; set; }
         public List<AuthorBook> AuthorsBooks { get; set; }
     }
 }

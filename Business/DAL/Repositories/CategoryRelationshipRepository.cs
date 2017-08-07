@@ -9,7 +9,7 @@ using Trainee.Business.DAL.Entities;
 namespace Trainee.Business.DAL.Repositories
 {
 
-    class CategoryRelationshipRepository : ICategoryRelationshipRepository
+    public class CategoryRelationshipRepository : ICategoryRelationshipRepository
     {
         BusinessDbContext _context;
         public CategoryRelationshipRepository(BusinessDbContext context)

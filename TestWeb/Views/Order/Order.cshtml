@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewData["Title"] = "Objednávka";
+}
+
+<h2>Objednávka</h2>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row form-row">
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="Name"></label>
+                    <input class="form-control" asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="Surname"></label>
+                    <input class="form-control" asp-for="Surname" />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="Email"></label>
+                    <input class="form-control" asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="Phone"></label>
+                    <input class="form-control" asp-for="Phone" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="Password"></label>
+                    <input class="form-control" asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="ConfirmPassword"></label>
+                    <input class="form-control" asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="Street"></label>
+                    <input class="form-control" asp-for="Street" />
+                    <span asp-validation-for="Street" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="PostalCode"></label>
+                    <input class="form-control" asp-for="PostalCode" />
+                    <span asp-validation-for="PostalCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-row">
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="City"></label>
+                    <input class="form-control" asp-for="City" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="CountryCode"></label>
+                    <select class="form-control" asp-for="CountryCode">
+                        <option selected disabled>Zvolte zemi...</option>
+                        @{
+                            string[] Country = new string[] { "Czech", "Slovakia", "Germany"};
+
+                            foreach (string coun in Country/*Country c in Model.Countries*/)
+                            {
+
+                                {
+                                    /*<option value="@c.CountryCode">@c.Name</option>*/
+                                    <option value="@Country">@Country</option>
+                                }
+                            }
+                        }
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>Doprava</strong>
+                    <input type="radio" name="shipping" value="Vyzvednuí v prodejně" /> 0 Kč<br />
+                    <input type="radio" name="shipping" value="Česká pošta" /> 69 Kč<br />
+                    <input type="radio" name="shipping" value="PPL" /> 89 Kč<br />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>Platba</strong>
+                    <input type="radio" name="payment" value="Hotově/ kartou při převzetí" /><br />
+                    <input type="radio" name="payment" value="Kartou ihned" /><br />
+                    <input type="radio" name="payment" value="Na dobírku" /> +20 Kč<br />
+                    <input type="radio" name="payment" value="Převodem" /><br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <button class="btn">Zpět do košíku</button>
+        <button class="btn btn-primary" type="submit">Rekapitulace</button>
+    </div>
+
+</div>

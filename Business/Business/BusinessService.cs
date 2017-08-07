@@ -19,6 +19,16 @@ namespace Trainee.Business.Business
         IProductRepository _productRepository;
         ICategoryRepository _categoryRepository;
 
+        public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
+                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep)
+        {
+            _categoryRelationshipRepository = catRRep;
+            _productRatingRepository = prodRRep;
+            _reviewRepository = reviewRep;
+            _productRepository = prodRep;
+            _categoryRepository = catRep;
+        }
+
 
         public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
@@ -71,7 +81,7 @@ namespace Trainee.Business.Business
             }
             if (parameters.Authors != null)
             {
-                query = query.Where(p => p.Book.AuthorsBooks.Select(ab => ab.Author).Select(a => a.Id).Intersect(parameters.Authors).Count() > 0);
+                query = query.Where(p => p.Book.AuthorsBooks.Select(ab => ab.Author).Select(a => a.AuthorId).Intersect(parameters.Authors).Count() > 0);
             }
 
             IQueryable<int> pIds = query.Select(p => p.Id);
@@ -114,11 +124,12 @@ namespace Trainee.Business.Business
         }
         public AlzaAdminDTO<ProductBO> GetProduct(int id)
         {
-            var product = _productRepository.GetProduct(id);
-            var rating = _productRatingRepository.GetRating(id);
-            var reviews = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
-            var result = new ProductBO(product, rating, reviews);
-            return AlzaAdminDTO<ProductBO>.Data(result);
+
+            var baseProduct = _productRepository.GetProduct(id);
+            //var avRating = _productRatingRepository.GetRating(id);
+            //var ratings = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
+            ProductBO product = new ProductBO(baseProduct, null, null); //avRating, ratings);
+            return AlzaAdminDTO<ProductBO>.Data(product);
 
         }
     }
