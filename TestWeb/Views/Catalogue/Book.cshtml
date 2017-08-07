@@ -73,15 +73,80 @@
 </div>
 <hr />
 <div class="row rating">
-    <h3>Hodnocení</h3>
-    <div class="media">
-        <div class="media-left">
-            <img class="media-object" src="~/images/user-2-32.png" />
-        </div>
-        <div class="media-body">
-            <h4 class="media-heading">Petr B. <small><i>1. 8. 2017</i></small></h4>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam egestas wisi a erat. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Nam sed tellus id magna elementum tincidunt. Pellentesque pretium lectus id turpis. Mauris metus. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
-        </div>
+	
+    <h3>Hodnocení</h3> 
+    <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
+    <div class="user-rating">
+        <img src="~/images/user-2-32.png" alt="user icon" /><span class="bold">Petr B.</span><img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" /><br />
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam egestas wisi a erat. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Nam sed tellus id magna elementum tincidunt. Pellentesque pretium lectus id turpis. Mauris metus. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
     </div>
+
+	<div id="rating">
+		<span>★</span>
+		<span>★</span>
+		<span>★</span>
+		<span>★</span>
+		<span>★</span>
+	
+
+		<div class="centerMePlox">
+			<form action="POST">
+
+				<button class="btn btn-primary" type="submit" >Click me!</button>
+				<label for="text" id="summaryByMiloslavKrejza"></label>
+
+			</form>
+		</div>
+	</div>
 </div>
 <hr />
+	
+<script type="text/javascript">
+
+
+	//Initialize
+	function StarRating() {
+
+						this.init();
+			};
+
+
+	StarRating.prototype.init = function() {
+	 this.stars = document.querySelectorAll('#rating span');
+	  for (var i = 0; i < this.stars.length; i++) {
+			this.stars[i].setAttribute('data-count', i);
+			this.stars[i].addEventListener('mouseenter', this.enterStarListener.bind(this));
+	  }
+	  document.querySelector('#rating').addEventListener('mouseleave', this.leaveStarListener.bind(this));
+	};
+	//This method is fired when a user hovers over a single star
+
+StarRating.prototype.enterStarListener = function(e) {
+  this.fillStarsUpToElement(e.target);
+};
+	//This method is fired when the user leaves the #rating element, effectively removing all hover states.
+	//Fill the star ratings up to a specific position.
+StarRating.prototype.fillStarsUpToElement = function(el) {
+   var soucet = 0;
+  // Remove all hover states:
+  for (var i = 0; i < this.stars.length; i++) {
+    if (el == null || this.stars[i].getAttribute('data-count') > el.getAttribute('data-count')) {
+      this.stars[i].classList.remove('hover');
+    } else {
+      this.stars[i].classList.add('hover');
+      soucet++;
+      console.log(soucet);
+
+      var element = document.getElementById("summaryByMiloslavKrejza");
+      element.innerHTML = soucet;
+
+    }
+  }
+};
+
+// Run:
+new StarRating();
+
+
+</script>
+

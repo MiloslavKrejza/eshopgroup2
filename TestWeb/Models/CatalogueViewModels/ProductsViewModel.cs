@@ -20,10 +20,12 @@ namespace Eshop2.Models.CatalogueViewModels
         public List<ProductBO> Products { get; set; }
         public List<Format> Formats { get; set; }
 
+        //Current category
+        public Category currentCategory { get; set; }
+
         //Filter parameters
         public int PageNum { get; set; } = 10;
         public int PageSize { get; set; } = 24; //TODO ask FE
-        public int? CategoryId { get; set; }
         public decimal? MinPriceFilter { get; set; }
         public decimal? MaxPriceFilter { get; set; }
         public int AuthorsFilter { get; set; }
