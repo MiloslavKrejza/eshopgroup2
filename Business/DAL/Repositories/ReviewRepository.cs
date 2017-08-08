@@ -8,7 +8,7 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.DAL.Repositories
 {
-    class ReviewRepository : IReviewRepository
+    public class ReviewRepository : IReviewRepository
 
     {
         BusinessDbContext _context;
