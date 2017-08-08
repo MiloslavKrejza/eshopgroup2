@@ -57,15 +57,18 @@ namespace Trainee.Business.Business
             {
                 minPrice = product.Price < minPrice ? product.Price : minPrice;
                 maxPrice = product.Price > maxPrice ? product.Price : maxPrice;
-                //languages.Add(product.Language);
-                //publishers.Add(product.Publisher);
-                //formats.Add(product.Format);
+                languages.Add(product.Language);
+                publishers.Add(product.Publisher);
+                formats.Add(product.Format);
                 foreach (Author author in product.Book.AuthorsBooks.Select(ab => ab.Author))
                 {
                     authors.Add(author);
                 }
             }
-            
+
+            result.MinPrice = minPrice;
+            result.MaxPrice = maxPrice;
+
             result.Authors = authors.OrderBy(a => a.Surname).Distinct().ToList();
 
             result.Languages = query.Select(p => p.Language).OrderBy(l => l.Name).Distinct().ToList(); //languages.OrderBy(l => l.Name).Distinct().ToList();
@@ -98,11 +101,21 @@ namespace Trainee.Business.Business
             }
 
             //ToDo does not work yet
-
+            /*
             IQueryable<int> pIds = query.Select(p => p.Id);
             IQueryable<ProductRating> ratings = _productRatingRepository.GetRatings().Where(pr => pIds.Contains(pr.ProductId));
-            //might be bullshite
-            var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));
+            ////might be bullshite
+            var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));*/
+
+
+            //temp placeholder
+            List<ProductBO> prods = new List<ProductBO>();
+            foreach (var item in query.ToList())
+            {
+                ProductBO prod = new ProductBO(item, null, null);
+                prods.Add(prod);
+            }
+            var products = prods.AsQueryable();
 
             Func<ProductBO, IComparable> sortingParameter;
             switch (parameters.SortingParameter)

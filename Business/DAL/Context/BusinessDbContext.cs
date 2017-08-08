@@ -28,8 +28,8 @@ namespace Trainee.Business.DAL.Context
             builder.Entity<Review>().ToTable("Reviews");
             builder.Entity<Review>().HasKey(r => new { r.ProductId, r.UserId });
 
-            builder.Entity<ProductRating>().ToTable("dbo.ProductRating");
-            builder.Entity<ProductRating>().HasKey(pr => pr.AverageRating);
+            builder.Entity<ProductRating>().ToTable("dbo.ProductRatings");
+            builder.Entity<ProductRating>().HasKey(pr => pr.ProductId);
 
 
             //builder.Entity<CategoryRelationshipBO>().ToTable("dbo.CategoryRelationships");
