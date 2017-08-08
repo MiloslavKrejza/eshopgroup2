@@ -14,10 +14,6 @@ namespace Trainee.Business.DAL.Repositories
     {
         BusinessDbContext _context;
         string _connectionString;
-        public CategoryRelationshipRepository(BusinessDbContext context)
-        {
-            _context = context;
-        }
         public CategoryRelationshipRepository(string connectionString)
         {
             _connectionString = connectionString;
