@@ -13,6 +13,10 @@ using Trainee.Catalogue.DAL.Context;
 using Trainee.Core.DAL.Context;
 
 using Microsoft.EntityFrameworkCore;
+using Trainee.Business.Abstraction;
+using Trainee.Business.DAL.Repositories;
+using Trainee.Business.Business;
+using Trainee.Business.DAL.Context;
 
 namespace BackendPlayground
 {
@@ -38,6 +42,13 @@ namespace BackendPlayground
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
             services.AddDbContext<CatalogueDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Catalogue")));
+            services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>(sp => { return new CategoryRelationshipRepository(Configuration.GetConnectionString("Trainee.Business")); });
+            services.AddTransient<IProductRatingRepository, ProductRatingRepository>(sp => { return new ProductRatingRepository(Configuration.GetConnectionString("Trainee.Business")); });
+            services.AddTransient<BusinessService, BusinessService>();
+            services.AddDbContext<BusinessDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Business")));
+            services.AddTransient<IReviewRepository, ReviewRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
