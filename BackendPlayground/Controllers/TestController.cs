@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Diagnostics;
 using Trainee.Catalogue.Abstraction;
 using BackendPlayground.ViewModels.TestViewModels;
+using Trainee.Business.DAL.Repositories;
 
 namespace BackendPlayground.Controllers
 {
@@ -57,8 +58,8 @@ namespace BackendPlayground.Controllers
         [HttpGet]
         public IActionResult CategoryTest()
         {
-            var result = _rep.GetCategory(1);
-            CategoryTestViewModel model = new CategoryTestViewModel { Category = result };
+            CategoryRelationshipRepository repo = new CategoryRelationshipRepository("Server=DEVSQL_STAZ\\DEV_STAZ;Database=group2;Trusted_Connection=True;");
+            var model = repo.GetAllRelationships().ToList();
             return View(model);
         }
 

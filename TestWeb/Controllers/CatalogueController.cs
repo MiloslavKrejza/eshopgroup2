@@ -1,4 +1,4 @@
-﻿using Eshop2.Abstraction;
+using Eshop2.Abstraction;
 using Eshop2.Models.CatalogueViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,6 +20,7 @@ namespace Eshop2.Controllers
         public CatalogueController(BusinessService service)
         {
             _businessService = service;
+
         }
 
         
@@ -100,18 +101,20 @@ namespace Eshop2.Controllers
                 {
                     PageNum = model.PageNum,
                     CategoryId = catId, //check this
+
                     //Authors = model.AuthorsFilter,
+
                     Formats = model.FormatsFilter,
                     Languages = model.LanguagesFilter,
                     MaxPrice = model.MaxPrice,
                     MinPrice = model.MinPrice,
                     PageSize = model.PageSize,
+
                     //Publishers = model.PublishersFilter,
+
                     SortingParameter = model.SortingParameter,
                     SortingType = model.SortingType
                 };
-                
-
                 
 
                 var dto = _businessService.GetPage(parameters);

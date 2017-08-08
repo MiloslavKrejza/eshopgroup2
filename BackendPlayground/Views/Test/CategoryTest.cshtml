@@ -1,10 +1,13 @@
 ﻿@using BackendPlayground.ViewModels.TestViewModels;
 @using Trainee.Catalogue.DAL.Entities;
+@using Trainee.Business.DAL.Entities;
 
-@model CategoryTestViewModel
+@model List<CategoryRelationshipBO>
 <h1>Category Test</h1>
-<h2>@Model.Category.Name Id: @Model.Category.Id</h2>
-@foreach(Category subCat in Model.Category.Children)
-{
-    <p>@subCat.Name Id: @subCat.Id ParentId: @subCat.ParentId</p>
-}
+<table>
+    <tr><td>Id</td><td>ChildId</td></tr>
+    @foreach (var relationship in Model)
+    {
+        <tr>   <td>@relationship.Id </td> <td>@relationship.ChildId</td></tr>
+    }
+</table>
