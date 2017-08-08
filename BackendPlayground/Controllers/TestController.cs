@@ -10,6 +10,8 @@ using System.Diagnostics;
 using Trainee.Catalogue.Abstraction;
 using BackendPlayground.ViewModels.TestViewModels;
 using Trainee.Business.DAL.Repositories;
+using Trainee.Business.Business;
+using Trainee.Business.Business.Wrappers;
 
 namespace BackendPlayground.Controllers
 {
@@ -17,8 +19,10 @@ namespace BackendPlayground.Controllers
     {
         IHostingEnvironment _env;
         ICategoryRepository _rep;
-        public TestController(IHostingEnvironment env, ICategoryRepository categoryRep)
+        BusinessService _serv;
+        public TestController(IHostingEnvironment env, ICategoryRepository categoryRep,BusinessService serv)
         {
+            _serv = serv;
             _env = env;
             _rep = categoryRep;
         }
@@ -61,6 +65,14 @@ namespace BackendPlayground.Controllers
             CategoryRelationshipRepository repo = new CategoryRelationshipRepository("Server=DEVSQL_STAZ\\DEV_STAZ;Database=group2;Trusted_Connection=True;");
             var model = repo.GetAllRelationships().ToList();
             return View(model);
+        }
+        [HttpGet]
+        public IActionResult ProductTest()
+        {
+            QueryParametersWrapper filter = new QueryParametersWrapper();
+            var res = _serv.GetPage(filter).data;
+            return View();
+
         }
 
 
