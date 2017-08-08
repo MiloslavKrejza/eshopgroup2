@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Trainee.Business.Business;
+using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
 using Trainee.Catalogue.DAL.Entities;
@@ -95,7 +96,7 @@ namespace Eshop2.Controllers
                     categoryId = 1;
                 }
                 int catId = categoryId.Value;
-
+                model.currentCategory = catId;
 
                 QueryParametersWrapper parameters = new QueryParametersWrapper
                 {
@@ -112,10 +113,16 @@ namespace Eshop2.Controllers
 
                     //Publishers = model.PublishersFilter,
 
-                    SortingParameter = model.SortingParameter,
-                    SortingType = model.SortingType
                 };
-                
+
+                SortingParameter sp;
+                SortType st;
+                Enum.TryParse(model.SortingParameter, out sp);
+                Enum.TryParse(model.SortingParameter, out st);
+
+                parameters.SortingParameter = sp;
+                parameters.SortingType = st;
+
 
                 var dto = _businessService.GetPage(parameters);
                 if (!dto.isOK)
