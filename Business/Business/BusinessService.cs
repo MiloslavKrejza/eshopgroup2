@@ -57,7 +57,7 @@ namespace Trainee.Business.Business
             {
                 minPrice = product.Price < minPrice ? product.Price : minPrice;
                 maxPrice = product.Price > maxPrice ? product.Price : maxPrice;
-                languages.Add(product.Language);
+                //languages.Add(product.Language);
                 publishers.Add(product.Publisher);
                 formats.Add(product.Format);
                 foreach (Author author in product.Book.AuthorsBooks.Select(ab => ab.Author))
@@ -65,10 +65,12 @@ namespace Trainee.Business.Business
                     authors.Add(author);
                 }
             }
-            result.Authors = authors.OrderBy(a => a.Surname).ToList();
-            result.Languages = languages.OrderBy(l => l.Name).ToList();
-            result.Publishers = publishers.OrderBy(p => p.Name).ToList();
-            result.Formats = formats.OrderBy(f => f.Name).ToList();
+            
+            result.Authors = authors.OrderBy(a => a.Surname).Distinct().ToList();
+
+            result.Languages = query.Select(p => p.Language).OrderBy(l => l.Name).Distinct().ToList(); //languages.OrderBy(l => l.Name).Distinct().ToList();
+            result.Publishers = query.Select(p => p.Publisher).OrderBy(p => p.Name).Distinct().ToList(); //publishers.OrderBy(p => p.Name).Distinct().ToList();
+            result.Formats = query.Select(p => p.Format).OrderBy(f => f.Name).Distinct().ToList();  //formats.OrderBy(f => f.Name).Distinct().ToList();
 
             if (parameters.MinPrice != null)
             {

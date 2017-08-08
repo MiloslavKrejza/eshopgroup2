@@ -6,6 +6,7 @@ using System.Text;
 using Trainee.Catalogue.Abstraction;
 using Trainee.Catalogue.DAL.Context;
 using Trainee.Catalogue.DAL.Entities;
+using System.Diagnostics;
 
 namespace Trainee.Catalogue.DAL.Repositories
 {
@@ -34,23 +35,31 @@ namespace Trainee.Catalogue.DAL.Repositories
 
         public IQueryable<ProductBase> GetAllProducts()
         {
-            var result = _context.Products.AsQueryable().ToList();
-
-            
-
-            //this needs to be manually filled PROBABLY
-            foreach(var item in result)
-            {
+            var result = _context.Products
+                //.Include(p => p.Book)
+                   // .ThenInclude(b => b.AuthorsBooks)
+                        //.ThenInclude(ab => ab.Author)
+                   // .ThenInclude(b => b.Country)
+                .Include(p => p.Category)
+                .Include(p => p.Format)
+                .Include(p => p.Language)
+                .Include(p => p.Publisher)
+                .Include(p => p.State)
+                .AsQueryable().ToList();
+            int i = 0;
+             foreach(var item in result)
+             {
                 item.Book = _context.Books.Where(b => b.BookId == item.BookId).FirstOrDefault();
+                 item.Book.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.BookId == item.BookId).ToList();
 
-                item.Book.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.BookId == item.BookId).ToList();
-
-                foreach (AuthorBook ab in item.Book.AuthorsBooks)
-                {
-                    ab.Author = _context.Authors.Where(a => a.AuthorId == ab.AuthorId).FirstOrDefault();
-                }
-            }
-            int i = 5;
+                 foreach (AuthorBook ab in item.Book.AuthorsBooks)
+                 {
+                     ab.Author = _context.Authors.Where(a => a.AuthorId == ab.AuthorId).FirstOrDefault();
+                 }
+                i++;
+                Debug.WriteLine($"{i}: {item.Book.Name} – {item.Name}");
+                 
+             }
 
             return result.AsQueryable();
         }

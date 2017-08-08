@@ -32,9 +32,9 @@ namespace Trainee.Catalogue.DAL.Context
 
             builder.Entity<Author>().ToTable("Authors");
             builder.Entity<Author>().Property(a => a.Name).IsRequired();
-            builder.Entity<Author>().Property(a => a.AuthorId).HasColumnName("AuthorId");
+            builder.Entity<Author>().Property(a => a.AuthorId).HasColumnName("Id");
             builder.Entity<Author>().Property(a => a.Surname).IsRequired();
-            builder.Entity<Author>().HasKey(a => a.AuthorId).HasName("AuthorId");
+            builder.Entity<Author>().HasKey(a => a.AuthorId).HasName("Id");
             builder.Entity<Author>()
                 .HasMany(a => a.AuthorsBooks)
                 .WithOne(ab => ab.Author)
@@ -46,8 +46,8 @@ namespace Trainee.Catalogue.DAL.Context
             //  //Books
 
            builder.Entity<Book>().ToTable("Books");
-           builder.Entity<Book>().Property(b => b.BookId).HasColumnName("BookId");
-           builder.Entity<Book>().HasKey(b => b.BookId).HasName("BookId");
+           builder.Entity<Book>().Property(b => b.BookId).HasColumnName("Id");
+           builder.Entity<Book>().HasKey(b => b.BookId).HasName("Id");
             builder.Entity<Book>().Property(b => b.Name).IsRequired();
             builder.Entity<Book>()
                 .HasMany(b => b.AuthorsBooks)
@@ -98,6 +98,7 @@ namespace Trainee.Catalogue.DAL.Context
             builder.Entity<ProductBase>().Property(p => p.PublisherId).IsRequired();
             builder.Entity<ProductBase>().Property(p => p.CategoryId).IsRequired();
             builder.Entity<ProductBase>().Property(p => p.BookId).IsRequired();
+            builder.Entity<ProductBase>().Property(p => p.DateAdded).IsRequired();
             builder.Entity<ProductBase>().HasKey(p => p.Id);
 
             builder.Entity<ProductBase>()
