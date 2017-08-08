@@ -36,16 +36,17 @@ namespace Trainee.Catalogue.DAL.Repositories
         public IQueryable<ProductBase> GetAllProducts()
         {
             var result = _context.Products
-                //.Include(p => p.Book)
-                   // .ThenInclude(b => b.AuthorsBooks)
-                        //.ThenInclude(ab => ab.Author)
-                   // .ThenInclude(b => b.Country)
+                .Include(p => p.Book)
+                   //.ThenInclude(b => b.AuthorsBooks)
+                     //   .ThenInclude(ab => ab.Author)
+                   //.ThenInclude(b => b.Country)
                 .Include(p => p.Category)
                 .Include(p => p.Format)
                 .Include(p => p.Language)
                 .Include(p => p.Publisher)
                 .Include(p => p.State)
                 .AsQueryable().ToList();
+
             int i = 0;
              foreach(var item in result)
              {

@@ -46,8 +46,8 @@ namespace Trainee.Business.Business
             var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
             query = query.Where(p => childCategoriesId.Contains(p.CategoryId));
-            decimal minPrice = 0;
-            decimal maxPrice = decimal.MaxValue;
+            decimal minPrice = decimal.MaxValue;
+            decimal maxPrice = 0;
             QueryResultWrapper result = new QueryResultWrapper();
             HashSet<Language> languages = new HashSet<Language>();
             HashSet<Publisher> publishers = new HashSet<Publisher>();
@@ -58,8 +58,8 @@ namespace Trainee.Business.Business
                 minPrice = product.Price < minPrice ? product.Price : minPrice;
                 maxPrice = product.Price > maxPrice ? product.Price : maxPrice;
                 //languages.Add(product.Language);
-                publishers.Add(product.Publisher);
-                formats.Add(product.Format);
+                //publishers.Add(product.Publisher);
+                //formats.Add(product.Format);
                 foreach (Author author in product.Book.AuthorsBooks.Select(ab => ab.Author))
                 {
                     authors.Add(author);
@@ -132,7 +132,7 @@ namespace Trainee.Business.Business
                     break;
             }
             result.ResultCount = products.Count();
-            products = products.Skip(parameters.PageNum * parameters.PageSize).Take(parameters.PageSize);
+            products = products.Skip((parameters.PageNum - 1) * parameters.PageSize).Take(parameters.PageSize);
             result.Products = products.ToList();
             return AlzaAdminDTO<QueryResultWrapper>.Data(result);
 

@@ -24,7 +24,7 @@ namespace Eshop2.Models.CatalogueViewModels
         public Category currentCategory { get; set; }
 
         //Filter parameters
-        public int PageNum { get; set; } = 10;
+        public int PageNum { get; set; } = 1;
         public int PageSize { get; set; } = 24; //TODO ask FE
         public decimal? MinPriceFilter { get; set; }
         public decimal? MaxPriceFilter { get; set; }
