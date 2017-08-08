@@ -26,9 +26,17 @@ namespace Trainee.Business.DAL.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Review>().ToTable("Reviews");
-            
+            builder.Entity<Review>().HasKey(r => new { r.ProductId, r.UserId });
 
-            builder.Entity<CategoryRelationshipBO>().ToTable("CategoryRelationships");
+            builder.Entity<ProductRating>().ToTable("dbo.ProductRating");
+            builder.Entity<ProductRating>().HasKey(pr => pr.AverageRating);
+
+
+            //builder.Entity<CategoryRelationshipBO>().ToTable("dbo.CategoryRelationships");
+            //builder.Entity<CategoryRelationshipBO>().HasKey(cr => cr.Id).HasName("Id");
+            //builder.Entity<CategoryRelationshipBO>().Property(cr => cr.ChildId).HasColumnName("ChildId");
+            //builder.Entity<CategoryRelationshipBO>().Property(cr => cr.Id).HasColumnName("Id");
+
             base.OnModelCreating(builder);
         }
     }

@@ -13,8 +13,8 @@ namespace Trainee.Business.DAL.Entities
         public DateTime Date { get; set; }
         public string Text { get; set; }       
         //Referenced properties
-        public UserWithReviews User { get; set; }
-        public ProductBO Product { get; set; }
+        //public UserWithReviews User { get; set; }
+        //public ProductBO Product { get; set; }
 
     }
 }

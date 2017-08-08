@@ -1,4 +1,6 @@
-﻿using System.Linq;
+
+using System.Linq;
+
 using Trainee.Business.Abstraction;
 using Trainee.Business.DAL.Context;
 using Trainee.Business.DAL.Entities;
@@ -22,6 +24,7 @@ namespace Trainee.Business.DAL.Repositories
         }
         public IQueryable<CategoryRelationshipBO> GetAllRelationships()
         {
+
             List<CategoryRelationshipBO> categories = new List<CategoryRelationshipBO>();
             using (var conn = new SqlConnection(_connectionString))
             {
@@ -38,7 +41,7 @@ namespace Trainee.Business.DAL.Repositories
                 }
             }
             return categories.AsQueryable();
-            
+
         }
     }
 }
