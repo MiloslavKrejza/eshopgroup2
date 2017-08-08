@@ -20,6 +20,7 @@ namespace Eshop2.Models.CatalogueViewModels
         public List<ProductBO> Products { get; set; }
         public List<Format> Formats { get; set; }
 
+
         //Current category
         public Category currentCategory { get; set; }
 
@@ -30,6 +31,7 @@ namespace Eshop2.Models.CatalogueViewModels
         public decimal? MaxPriceFilter { get; set; }
         public int AuthorsFilter { get; set; }
         public int PublishersFilter { get; set; }
+
         public List<int> FormatsFilter { get; set; }
         public List<int> LanguagesFilter { get; set; }
         public SortType SortingType { get; set; } //TODO ask for defaults

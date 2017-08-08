@@ -124,11 +124,13 @@ namespace Trainee.Business.Business
         }
         public AlzaAdminDTO<ProductBO> GetProduct(int id)
         {
+
             var baseProduct = _productRepository.GetProduct(id);
             //var avRating = _productRatingRepository.GetRating(id);
             //var ratings = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
             ProductBO product = new ProductBO(baseProduct, null, null); //avRating, ratings);
             return AlzaAdminDTO<ProductBO>.Data(product);
+
         }
     }
 }
