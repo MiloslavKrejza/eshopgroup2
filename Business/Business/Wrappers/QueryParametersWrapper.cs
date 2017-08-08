@@ -9,16 +9,16 @@ namespace Trainee.Business.Business.Wrappers
     {
         //ToDo comment this pls
 
-        public int PageNum { get; set; } = 1;
-        public int PageSize { get; set; } = 24;
-        public int CategoryId { get; set; } = 1;
+        public int PageNum { get; set; }
+        public int PageSize { get; set; }
+        public int CategoryId { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
         public List<int> Authors { get; set; }
         public List<int> Publishers { get; set; }
         public List<int> Formats { get; set; }
         public List<int> Languages { get; set; }
-        public SortType SortingType { get; set; } = SortType.Desc; //TODO ask for defaults
-        public SortingParameter SortingParameter { get; set; } = SortingParameter.Rating;
+        public SortType SortingType { get; set; }
+        public SortingParameter SortingParameter { get; set; }
     }
 }
