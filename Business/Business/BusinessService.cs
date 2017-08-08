@@ -155,8 +155,8 @@ namespace Trainee.Business.Business
 
             var baseProduct = _productRepository.GetProduct(id);
             //var avRating = _productRatingRepository.GetRating(id);
-            //var ratings = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
-            ProductBO product = new ProductBO(baseProduct, null, null); //avRating, ratings);
+            var ratings = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
+            ProductBO product = new ProductBO(baseProduct, null, ratings); //avRating, ratings);
             return AlzaAdminDTO<ProductBO>.Data(product);
 
         }
