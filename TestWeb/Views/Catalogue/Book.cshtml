@@ -8,65 +8,59 @@
 <div class="row">
     <ul class="breadcrumb main-background">
         <li class="main-cathegory"><a href="#">Fantasy</a></li>
-        <li><a href="#">Pro mladé</a></li>
+        <li><a href="#">@Html.DisplayFor(model => model.CategoryName)</a></li>
     </ul>
 </div>
 <hr />
 <div class="row">
     <h2>@Html.DisplayFor(model => model.Name)</h2>
     <div class="col-lg-8">
-        <p class="bold">Joanne K. Rowling</p>
-        <p>pevná vazba</p>
-        <p>hodnocení</p>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam egestas wisi a erat. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Nam sed tellus id magna elementum tincidunt. Pellentesque pretium lectus id turpis. Mauris metus. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Etiam posuere lacus quis dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Integer tempor. Phasellus faucibus molestie nisl. Vivamus porttitor turpis ac leo. Etiam posuere lacus quis dolor. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Maecenas fermentum, sem in pharetra pellentesque, velit turpis volutpat ante, in pharetra metus odio a lectus. Aenean vel massa quis mauris vehicula lacinia. In sem justo, commodo ut, suscipit at, pharetra vitae, orci.</p>
+        <p class="bold">@Html.DisplayFor(model => model.Authors)</p>
+        <p>@Html.DisplayFor(model => model.ProductFormat)</p>
+        <p>@Html.DisplayFor(model => model.Rating)</p>
+        <p>@Html.DisplayFor(model => model.Annotation)</p>
+        <p>@Html.DisplayFor(model => model.ProductText)</p>
+        <p>@Html.DisplayFor(model => model.State)</p>
+        <p>@Html.DisplayFor(model => model.Price)</p>
+        <button class="btn btn-primary">Do košíku</button>
     </div>
     <div class="col-lg-4">
         <div class="row">
             <img class="book-img" src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="Harry Potter" />
         </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <p>skladem</p>
-                <p>399,-</p>
-            </div>
-            <div class="col-lg-6">
-                <button class="btn btn-primary">Do košíku</button>
-            </div>
-        </div>
     </div>
 </div>
 <hr />
 <div class="row">
-    <div class="col-lg-6">
-        <table>
+    <div class="col-md-6">
+        <table class="details-table">
             <tr>
-                <td class="col-lg-6">Jazyk:</td>
-                <td class="col-lg-6">český</td>
+                <td class="col-md-6">Jazyk:</td>
+                <td class="col-md-6 details-right">@Html.DisplayFor(model => model.Language)</td>
             </tr>
             <tr>
-                <td class="col-lg-6">Počet stran:</td>
-                <td class="col-lg-6">563</td>
+                <td class="col-md-6">Počet stran:</td>
+                <td class="col-md-6 details-right">@Html.DisplayFor(model => model.PageCount)</td>
             </tr>
             <tr>
-                <td class="col-lg-6">Rok vydání:</td>
-                <td class="col-lg-6">1997</td>
+                <td class="col-md-6">Rok vydání:</td>
+                <td class="col-md-6 details-right">@Html.DisplayFor(model => model.Year)</td>
             </tr>
         </table>
     </div>
-
-    <div class="col-lg-6">
-        <table>
+    <div class="col-md-6">
+        <table class="details-table">
             <tr>
-                <td class="col-lg-6">Vydavatel:</td>
-                <td class="col-lg-6">Albatros</td>
+                <td class="col-md-6">Vydavatel:</td>
+                <td class="col-md-6">@Html.DisplayFor(model => model.Publisher)</td>
             </tr>
             <tr>
-                <td class="col-lg-6">ISBN:</td>
-                <td class="col-lg-6">1-569-8596-8745</td>
+                <td class="col-md-6">ISBN:</td>
+                <td class="col-md-6">@Html.DisplayFor(model => model.ISBN)</td>
             </tr>
             <tr>
-                <td class="col-lg-6">EAN:</td>
-                <td class="col-lg-6">35698545</td>
+                <td class="col-md-6">EAN:</td>
+                <td class="col-md-6">@Html.DisplayFor(model => model.EAN)</td>
             </tr>
         </table>
     </div>
@@ -80,7 +74,7 @@
         <img src="~/images/user-2-32.png" alt="user icon" /><span class="bold">Petr B.</span><img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" /><br />
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam egestas wisi a erat. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Nam sed tellus id magna elementum tincidunt. Pellentesque pretium lectus id turpis. Mauris metus. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
     </div>
-
+   
 	<div id="rating">
 		<span>★</span>
 		<span>★</span>
@@ -98,6 +92,7 @@
 			</form>
 		</div>
 	</div>
+           <!-- STAR RATING ALTERNATIVE <div id="hearts" class="starrr"></div>-->
 </div>
 <hr />
 	

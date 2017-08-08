@@ -56,10 +56,10 @@
                 <input id="hledat" class="center-block" placeholder="Hledat" />
             </div>
             <div id="basket-user" class="col-md-2">
-                <button asp-area="" asp-controller="Order" asp-action="cart" class="btn basket-user-btn main-background">
+                <a asp-area="" asp-controller="Order" asp-action="cart" class="btn basket-user-btn main-background">
                     <img src="~/images/cart-34-48.ico" alt="cart" /><br />
                     <p>Košík</p>
-                </button>
+                </a>
                 <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
                     <img src="~/images/user-2-48.png" alt="cart" /><br />
                     <p id="login-link">Přihlásit</p>
@@ -98,12 +98,12 @@
         <div class="row" id="main-section">
             <div class="col-md-2 list-group">
 
-                @{string[] category = new string[] { "Fantasy", "Sci-Fi", "Horor", "Herní", "České" };
-                    for (int i = 0; i < category.Length; i++)
+                @{foreach (Category c in currentCategory.Children)
+                    {
+                        <div class="text-capitalize list-group-item menu-item main-background">
+                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="1"><p><!--<img src="~/images/(c.ico).svg" />-->@c.Name</p></a>
+                        </div>
 
-                    {<div class="text-capitalize list-group-item menu-item main-background">
-                        <a href=""><p><img src="~/images/@(category[i]).svg" />@category[i]</p></a>
-                    </div>
                     }
                 }
 
