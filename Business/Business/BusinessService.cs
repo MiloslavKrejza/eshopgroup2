@@ -32,11 +32,22 @@ namespace Trainee.Business.Business
 
         public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
+
+           
+
+
+            //var asdf = _categoryRelationshipRepository.GetAllRelationships();
+
+            //var asdf2 = asdf.Where(c => c.Id == parameters.CategoryId);
+
+            //var asdf3 = asdf2.Select(c => c.ChildId);
+
+
             var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
             query = query.Where(p => childCategoriesId.Contains(p.CategoryId));
-            decimal minPrice = 0;
-            decimal maxPrice = decimal.MaxValue;
+            decimal minPrice = decimal.MaxValue;
+            decimal maxPrice = 0;
             QueryResultWrapper result = new QueryResultWrapper();
             HashSet<Language> languages = new HashSet<Language>();
             HashSet<Publisher> publishers = new HashSet<Publisher>();
@@ -54,10 +65,15 @@ namespace Trainee.Business.Business
                     authors.Add(author);
                 }
             }
-            result.Authors = authors.OrderBy(a => a.Surname).ToList();
-            result.Languages = languages.OrderBy(l => l.Name).ToList();
-            result.Publishers = publishers.OrderBy(p => p.Name).ToList();
-            result.Formats = formats.OrderBy(f => f.Name).ToList();
+
+            result.MinPrice = minPrice;
+            result.MaxPrice = maxPrice;
+
+            result.Authors = authors.OrderBy(a => a.Surname).Distinct().ToList();
+
+            result.Languages = query.Select(p => p.Language).OrderBy(l => l.Name).Distinct().ToList(); //languages.OrderBy(l => l.Name).Distinct().ToList();
+            result.Publishers = query.Select(p => p.Publisher).OrderBy(p => p.Name).Distinct().ToList(); //publishers.OrderBy(p => p.Name).Distinct().ToList();
+            result.Formats = query.Select(p => p.Format).OrderBy(f => f.Name).Distinct().ToList();  //formats.OrderBy(f => f.Name).Distinct().ToList();
 
             if (parameters.MinPrice != null)
             {
@@ -84,10 +100,22 @@ namespace Trainee.Business.Business
                 query = query.Where(p => p.Book.AuthorsBooks.Select(ab => ab.Author).Select(a => a.AuthorId).Intersect(parameters.Authors).Count() > 0);
             }
 
+            //ToDo does not work yet
+            /*
             IQueryable<int> pIds = query.Select(p => p.Id);
             IQueryable<ProductRating> ratings = _productRatingRepository.GetRatings().Where(pr => pIds.Contains(pr.ProductId));
-            //might be bullshite
-            var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));
+            ////might be bullshite
+            var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));*/
+
+
+            //temp placeholder
+            List<ProductBO> prods = new List<ProductBO>();
+            foreach (var item in query.ToList())
+            {
+                ProductBO prod = new ProductBO(item, null, null);
+                prods.Add(prod);
+            }
+            var products = prods.AsQueryable();
 
             Func<ProductBO, IComparable> sortingParameter;
             switch (parameters.SortingParameter)
@@ -117,7 +145,7 @@ namespace Trainee.Business.Business
                     break;
             }
             result.ResultCount = products.Count();
-            products = products.Skip(parameters.PageNum * parameters.PageSize).Take(parameters.PageSize);
+            products = products.Skip((parameters.PageNum - 1) * parameters.PageSize).Take(parameters.PageSize);
             result.Products = products.ToList();
             return AlzaAdminDTO<QueryResultWrapper>.Data(result);
 

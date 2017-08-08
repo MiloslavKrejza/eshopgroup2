@@ -11,8 +11,8 @@ namespace Eshop2.Models.CatalogueViewModels
     public class ProductsViewModel
     {
         //Filter results
-        public decimal MinPrice { get; set; }
-        public decimal MaxPrice { get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? MaxPrice { get; set; }
         public List<Author> Authors { get; set; }
         public List<Publisher> Publishers { get; set; }
         public List<Language> Languages { get; set; }
@@ -25,8 +25,8 @@ namespace Eshop2.Models.CatalogueViewModels
         public Category currentCategory { get; set; }
 
         //Filter parameters
-        public int PageNum { get; set; } = 10;
-        public int PageSize { get; set; } = 24; //TODO ask FE
+        public int PageNum { get; set; } = 1;
+        public int PageSize { get; set; } = 24; 
         public decimal? MinPriceFilter { get; set; }
         public decimal? MaxPriceFilter { get; set; }
         public int AuthorsFilter { get; set; }
@@ -34,7 +34,8 @@ namespace Eshop2.Models.CatalogueViewModels
 
         public List<int> FormatsFilter { get; set; }
         public List<int> LanguagesFilter { get; set; }
-        public SortType SortingType { get; set; } //TODO ask for defaults
-        public SortingParameter SortingParameter { get; set; }
+
+        public string SortingType { get; set; } //TODO ask for defaults
+        public string SortingParameter { get; set; }
     }
 }

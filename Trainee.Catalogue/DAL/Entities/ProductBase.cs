@@ -23,7 +23,7 @@ namespace Trainee.Catalogue.DAL.Entities
         public int? Year { get; set; }
         public string ISBN { get; set; }
         public string EAN { get; set; }
-        [NotMapped] //does not work yet
+        
         public DateTime DateAdded { get; set; }
 
         //Referenced properties
