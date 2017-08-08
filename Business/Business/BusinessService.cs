@@ -101,21 +101,21 @@ namespace Trainee.Business.Business
             }
 
             //ToDo does not work yet
-            /*
+            
             IQueryable<int> pIds = query.Select(p => p.Id);
             IQueryable<ProductRating> ratings = _productRatingRepository.GetRatings().Where(pr => pIds.Contains(pr.ProductId));
-            ////might be bullshite
-            var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));*/
+            ////might be bullshite...actually is bullshite
+            //var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));
 
 
             //temp placeholder
-            List<ProductBO> prods = new List<ProductBO>();
+           /* List<ProductBO> prods = new List<ProductBO>();
             foreach (var item in query.ToList())
             {
                 ProductBO prod = new ProductBO(item, null, null);
                 prods.Add(prod);
             }
-            var products = prods.AsQueryable();
+            var products = prods.AsQueryable();*/
 
             Func<ProductBO, IComparable> sortingParameter;
             switch (parameters.SortingParameter)

@@ -44,7 +44,7 @@ namespace Trainee.Business.DAL.Repositories
         public IQueryable<ProductRating> GetRatings()
         {
             List<ProductRating> res = new List<ProductRating>();
-            string queryString = "SELECT * FROM dbo.ProductRating;";
+            string queryString = "SELECT * FROM dbo.ProductRatings;";
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, conn);
@@ -53,8 +53,12 @@ namespace Trainee.Business.DAL.Repositories
                 conn.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    res.Add
-                        (new ProductRating() { ProductId = (int)reader[0], AverageRating = (decimal)reader[1] });
+                    while(reader.Read())
+                    {
+                        var result = new ProductRating() { ProductId = (int)reader[0] };
+                        result.AverageRating = reader[1] == DBNull.Value ? null : (decimal?)reader[1];
+                        res.Add(result);
+                    }
                 }
             }
             return res.AsQueryable();
