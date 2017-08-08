@@ -69,11 +69,11 @@ namespace Trainee.Business.Business
             result.MinPrice = minPrice;
             result.MaxPrice = maxPrice;
 
-            result.Authors = authors.OrderBy(a => a.Surname).Distinct().ToList();
+            result.Authors = authors.OrderBy(a => a.Surname).ToList();
 
-            result.Languages = query.Select(p => p.Language).OrderBy(l => l.Name).Distinct().ToList(); //languages.OrderBy(l => l.Name).Distinct().ToList();
-            result.Publishers = query.Select(p => p.Publisher).OrderBy(p => p.Name).Distinct().ToList(); //publishers.OrderBy(p => p.Name).Distinct().ToList();
-            result.Formats = query.Select(p => p.Format).OrderBy(f => f.Name).Distinct().ToList();  //formats.OrderBy(f => f.Name).Distinct().ToList();
+            result.Languages = languages.OrderBy(l => l.Name).ToList();
+            result.Publishers = publishers.OrderBy(p => p.Name).ToList();
+            result.Formats = formats.OrderBy(f => f.Name).ToList();
 
             if (parameters.MinPrice != null)
             {
