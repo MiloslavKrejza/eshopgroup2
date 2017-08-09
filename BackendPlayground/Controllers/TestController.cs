@@ -75,12 +75,11 @@ namespace BackendPlayground.Controllers
             
             
         }
-        [HttpGet("/Test/ProductTest/{id}")]
-        public IActionResult ProductTest(int id)
+        [HttpGet("/Test/ProductTest/")]
+        public IActionResult ProductTest()
         {
-           // QueryParametersWrapper filter = new QueryParametersWrapper() {SortingType=SortType.Asc,SortingParameter=SortingParameter.Name,PageSize=5,CategoryId=5,PageNum=1 };
-            var res = _serv.GetProduct(id).data;
-            
+           QueryParametersWrapper filter = new QueryParametersWrapper() {SortingType=SortType.Asc,SortingParameter=SortingParameter.Name,PageSize=50,CategoryId=1,PageNum=1 };
+            var res = _serv.GetPage(filter).data;
             return View();
 
         }

@@ -60,8 +60,8 @@ namespace BackendPlayground
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IFormatRepository, FormatRepository>();
             services.AddTransient<ILanguageRepository, LanguageRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IPublisherRepository, PublisherRepository>();
+            
+
 
             services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>(sp => { return new CategoryRelationshipRepository(Configuration.GetConnectionString("Trainee.Business")); });
             services.AddTransient<IProductRatingRepository, ProductRatingRepository>(sp => { return new ProductRatingRepository(Configuration.GetConnectionString("Trainee.Business")); });
@@ -69,12 +69,12 @@ namespace BackendPlayground
 
             services.AddTransient<BusinessService, BusinessService>();
             //services.AddTransient<CatalogueService, CatalogueService>();
-
-
             services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
             services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.User.Users")));
             services.AddDbContext<CatalogueDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Catalogue.Cat")));
             services.AddDbContext<BusinessDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Business")));
+            services.AddTransient<IPublisherRepository, PublisherRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>(sp => { return new ProductRepository(services.BuildServiceProvider().GetService<CatalogueDbContext>(),Configuration.GetConnectionString("Trainee.Business")); });
 
         }
 

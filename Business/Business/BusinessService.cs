@@ -1,8 +1,10 @@
 ﻿using Alza.Core.Module.Http;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Trainee.Business.Abstraction;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
@@ -36,6 +38,9 @@ namespace Trainee.Business.Business
 
         public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
             query = query.Where(p => childCategoriesId.Contains(p.CategoryId));
@@ -134,6 +139,8 @@ namespace Trainee.Business.Business
             result.ResultCount = products.Count();
             products = products.Skip((parameters.PageNum - 1) * parameters.PageSize).Take(parameters.PageSize);
             result.Products = products.ToList();
+            stopwatch.Stop();
+            Debug.Write($"Operation took {stopwatch.ElapsedMilliseconds}");
             return AlzaAdminDTO<QueryResultWrapper>.Data(result);
 
         }
@@ -146,6 +153,7 @@ namespace Trainee.Business.Business
             var users = _userProfileRepository.GetAllProfiles().Where(p => reviews.Select(r => r.UserId).Contains(p.Id));
             reviews = reviews.Join(users, r => r.UserId, p => p.Id, (r, p) => { r.User = p; return r; }).ToList();
             var product = new ProductBO(baseProduct, avRating, reviews);
+            
             return AlzaAdminDTO<ProductBO>.Data(product);
 
         }

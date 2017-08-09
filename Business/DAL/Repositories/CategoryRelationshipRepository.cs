@@ -1,6 +1,5 @@
 
 using System.Linq;
-
 using Trainee.Business.Abstraction;
 using Trainee.Business.DAL.Context;
 using Trainee.Business.DAL.Entities;

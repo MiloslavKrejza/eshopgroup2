@@ -8,4 +8,12 @@
     <ProjectReference Include="..\Trainee.Core\Trainee.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\DAL\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.3.1" />
+  </ItemGroup>
+
 </Project>
