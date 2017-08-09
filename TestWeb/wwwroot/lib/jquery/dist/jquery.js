@@ -9829,3 +9829,8 @@ if ( !noGlobal ) {
 
 return jQuery;
 }));
+
+
+$(function () {
+    $("#priceFilter").slider();
+});

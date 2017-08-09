@@ -32,7 +32,6 @@ img {
 
 .bottom-padding {
     padding-bottom: 25px;
-
 }
 
 .bold {
@@ -49,6 +48,18 @@ img {
 
 .main-background {
     background-color: #f2f9ff;
+}
+
+.italics {
+    font-style: italic;
+}
+
+.text-warning {
+    color: red;
+}
+
+.text-success {
+    color: forestgreen;
 }
 
 
@@ -102,7 +113,7 @@ img {
 
 @media screen and (max-width: 767px) {
     #hledat {
-        margin-bottom:5px;
+        margin-bottom: 5px;
     }
 }
 
@@ -147,6 +158,7 @@ input:-ms-input-placeholder {
     padding: 0;
     margin: 0 5px;
     outline: none;
+    color: #444444;
 
     button {
         outline: none;
@@ -186,7 +198,6 @@ input:-ms-input-placeholder {
     .login-container {
         width: 80%;
         margin: 0 10px;
-
     }
 }
 
@@ -198,24 +209,24 @@ input:-ms-input-placeholder {
     }
 }
 
-    #login {
-        width: 100%;
-        background-color: #ffffff;
-        border: 1px solid #dddddd;
-        border-radius: 10px;
-        display: none;
-        position: absolute;
-        z-index: 1;
-    }
+#login {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
 
 
-    #login form {
-        padding: 0 20px;
-    }
+#login form {
+    padding: 0 20px;
+}
 
-    #login-page-container {
-        width: 380px;
-    }
+#login-page-container {
+    width: 380px;
+}
 
 @media screen and (max-width: 678px) {
     #login-page-container {
@@ -223,267 +234,284 @@ input:-ms-input-placeholder {
     }
 }
 
-    #login-error {
-        margin-top: 40px;
+#login-error {
+    margin-top: 40px;
+}
+
+/*Signed in user menu*/
+#signedUserMenu {
+    a {
+        background-color: transparent;
     }
 
-    /*Signed in user menu*/
-    #signedUserMenu {
-        a {
-            background-color: transparent;
-        }
-
-        button:hover {
-            text-decoration: none;
-        }
-    }
-
-    /*Main section*/
-    #main-section {
-        margin: 0;
-        padding: 0;
-    }
-
-
-    /*Cathegories*/
-    .menu-item {
-        height: 50px;
-        font-size: 17px;
-        padding: 13px 0 10px 10px;
-        display: block;
-        cursor: pointer;
-        color: #4484ce;
-        border-left: none;
-        border-right: none;
-        border-bottom: 1px solid #e8e8e8;
-    }
-
-    .menu-item a:hover {
+    button:hover {
         text-decoration: none;
-        font-size: 110%;
     }
+}
 
-    .menu-item img {
-        height: 30px;
-        margin-right: 10px;
-    }
-
-
-
-    /*Layout*/
-    #layout {
-        margin-bottom: 40px;
-    }
+/*Main section*/
+#main-section {
+    margin: 0;
+    padding: 0;
+}
 
 
+/*Cathegories*/
+.menu-item {
+    height: 50px;
+    font-size: 15px;
+    padding: 13px 0 10px 10px;
+    display: block;
+    cursor: pointer;
+    color: #4484ce;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #e8e8e8;
+}
 
-    /*Footer */
-    .footer {
-        padding: 20px 50px;
-        background-color: #4484ce;
-    }
+.menu-item a:hover {
+    text-decoration: none;
+    font-size: 110%;
+}
 
-    .footer a {
-        color: #e8e8e8;
-    }
-
-    .footer a:hover {
-        color: #444444;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    @media screen and (max-width: 767px) {
-        .footer {
-            text-align: center !important;
-        }
-    }
-
-    @media screen and (max-width: 767px) {
-        .footer .text-right {
-            text-align: center;
-        }
-    }
-
-    /*ACCOUNT*/
-
-    /*Registration*/
-    .form-row {
-        margin-bottom: 20px;
-    }
-
-    .register-button {
-        margin: 20px 0;
-    }
-
-    .title-register {
-        padding-left: 50px;
-        padding-bottom: 20px;
-    }
-
-    .text-small {
-        margin-top: 15px;
-        text-align: center;
-    }
-
-    .red-star {
-        color: red;
-        font-size: 20px;
-    }
-
-    /*Details*/
-
-
-    .img-profile {
-        max-width: 150px;
-        border-radius: 10px;
-        text-align: center;
-    }
-
-    .profile {
-        text-align: center;
-    }
-
-    .profile .profile-left {
-        text-align: left;
-        font-size: 18px;
-    }
-
-    .profile .profile-right {
-        text-align: center;
-
-        img {
-            margin-bottom: 10px;
-            padding: 10px;
-        }
-    }
-
-    .profile .profile-title {
-        text-align: center;
-        padding-bottom: 25px;
-    }
-
-    .profile .profile-item {
-        font-weight: bold;
-    }
-
-    .profile .profile-align {
-        text-align: right;
-    }
-
-    .profile .second {
-    }
-
-    .profile .form-profile {
-        margin: 15px;
-    }
-
-    .profile .change-top {
-        margin-top: 30px;
-        text-align: center;
-    }
-
-    .profile .text-small {
-        padding: 15px;
-        text-align: center;
-    }
-
-    .profile .form-control-file {
-        margin-right: 0;
-        padding-right: 0;
-    }
-
-    @media screen and (max-width: 767px) {
-        .profile .form-control-file {
-            width: 100%;
-        }
-    }
-
-    .profile .profile-country {
-        margin-left: 5px;
-    }
-
-    @media screen and (max-width: 767px) {
-        .profile .profile-info {
-            display: none;
-        }
-    }
-
-    .btn-ulozit {
-        margin-bottom: 15px;
-        width: 150px;
-    }
-
-    @media screen and (max-width: 767px) {
-        .btn-ulozit {
-            margin-top: 15px;
-        }
-    }
-
-    #edit-button a {
-        color: white;
-        background-color: #f19f4d;
-        text-align: center;
-        padding: 10px 20px;
-        border-radius: 5px;
-    }
-
-    #cancel-button a {
-        color: white;
-        background-color: #ff0000;
-        text-align: center;
-        padding: 8px 55px;
-        border-radius: 5px;
-    }
-
-
-    /*CATALOGUE*/
-
-    /*Book profile*/
-
-    .rating {
-        img {
-            width: 150px;
-        }
-    }
-
-    .user rating {
-        img {
-            width: 50px;
-        }
-    }
-
-    .product {
-        border-right: solid 1px #dddddd;
-        margin-bottom: 20px;
-
-        img {
-            padding: 5px;
-        }
-    }
-
-    .product-right {
-        margin-bottom: 20px;
-
-        img {
-            padding: 5px;
-        }
-    }
-
-    .main-cathegory {
-        font-size: 130%;
-    }
-
-.book-img {
-    width: 250px;
-    padding: 20px;
+.menu-item img {
+    height: 30px;
+    margin-right: 10px;
 }
 
 
 
+/*Layout*/
+#layout {
+    margin-bottom: 40px;
+}
+
+
+
+/*Footer */
+.footer {
+    padding: 20px 50px;
+    background-color: #4484ce;
+}
+
+.footer a {
+    color: #e8e8e8;
+}
+
+.footer a:hover {
+    color: #444444;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+    .footer {
+        text-align: center !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .footer .text-right {
+        text-align: center;
+    }
+}
+
+/*ACCOUNT*/
+
+/*Registration*/
+.form-row {
+    margin-bottom: 20px;
+}
+
+.register-button {
+    margin: 20px 0;
+}
+
+.title-register {
+    padding-left: 50px;
+    padding-bottom: 20px;
+}
+
+.text-small {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.red-star {
+    color: red;
+    font-size: 20px;
+}
+
+/*Details*/
+
+
+.img-profile {
+    max-width: 150px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.profile {
+    text-align: center;
+}
+
+.profile .profile-left {
+    text-align: left;
+    font-size: 18px;
+}
+
+.profile .profile-right {
+    text-align: center;
+
+    img {
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+}
+
+.profile .profile-title {
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.profile .profile-item {
+    font-weight: bold;
+}
+
+.profile .profile-align {
+    text-align: right;
+}
+
+.profile .second {
+}
+
+.profile .form-profile {
+    margin: 15px;
+}
+
+.profile .change-top {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.profile .text-small {
+    padding: 15px;
+    text-align: center;
+}
+
+.profile .form-control-file {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+@media screen and (max-width: 767px) {
+    .profile .form-control-file {
+        width: 100%;
+    }
+}
+
+.profile .profile-country {
+    margin-left: 5px;
+}
+
+@media screen and (max-width: 767px) {
+    .profile .profile-info {
+        display: none;
+    }
+}
+
+.btn-ulozit {
+    margin-bottom: 15px;
+    width: 150px;
+}
+
+@media screen and (max-width: 767px) {
+    .btn-ulozit {
+        margin-top: 15px;
+    }
+}
+
+#edit-button a {
+    color: white;
+    background-color: #f19f4d;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+#cancel-button a {
+    color: white;
+    background-color: #ff0000;
+    text-align: center;
+    padding: 8px 55px;
+    border-radius: 5px;
+}
+
+
+/*CATALOGUE*/
+
+/*Book profile*/
+
+.rating {
+    img {
+        width: 150px;
+    }
+}
+
+.user rating {
+    img {
+        width: 50px;
+    }
+}
+
+.product {
+    border-right: solid 1px #dddddd;
+    margin-bottom: 20px;
+
+    img {
+        padding: 5px;
+    }
+
+    a {
+        color: #444444 !important;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    a:hover {
+        color: #444444 !important;
+        text-decoration: none;
+    }
+}
+
+.product-right {
+    margin-bottom: 20px;
+
+    img {
+        padding: 5px;
+    }
+}
+
+.main-cathegory {
+    font-size: 130%;
+}
+
+.book-img {
+    width: 200px;
+    padding: 20px;
+}
+
+.details-table {
+    td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    }
+}
+
+.details-right {
+    padding-left: 5px;
+}
 /*  Rating system */
-
-
 #rating {
     text-align: center;
     perspective: 250px;
@@ -524,4 +552,36 @@ input:-ms-input-placeholder {
     position: relative;
     font-size: 25px;
 }
+
+/* ORDER */
+
+/* Cart */
+
+.cart-item {
+    img {
+        max-height: 100px;
+        margin-left: 50px;
+    }
+}
+
+.order-button {
+    position: absolute;
+    right: 50px;
+}
+
+.triangle-left {
+    margin-right: 5px;
+}
+
+.triangle-right {
+    margin-left: 5px;
+}
+
+.total-price {
+    margin-right: 50px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Order */
 
