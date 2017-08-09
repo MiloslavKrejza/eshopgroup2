@@ -50,6 +50,18 @@ img {
     background-color: #f2f9ff;
 }
 
+.italics {
+    font-style: italic;
+}
+
+.text-warning {
+    color: red;
+}
+
+.text-success {
+    color: forestgreen;
+}
+
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -458,6 +470,17 @@ input:-ms-input-placeholder {
 
     img {
         padding: 5px;
+    }
+
+    a {
+        color: #444444 !important;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    a:hover {
+        color: #444444 !important;
+        text-decoration: none;
     }
 }
 

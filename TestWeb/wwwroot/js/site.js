@@ -154,6 +154,3 @@ var slider = new Slider('#priceFilter', {
 }
 );*/
 
-$(function () {
-    $("#priceFilter").slider();
-});

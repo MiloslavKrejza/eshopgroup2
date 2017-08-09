@@ -39,6 +39,15 @@ img {
 .main-background {
   background-color: #f2f9ff; }
 
+.italics {
+  font-style: italic; }
+
+.text-warning {
+  color: red; }
+
+.text-success {
+  color: forestgreen; }
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -335,6 +344,13 @@ input:-ms-input-placeholder {
   margin-bottom: 20px; }
   .product img {
     padding: 5px; }
+  .product a {
+    color: #444444 !important;
+    text-decoration: none;
+    cursor: pointer; }
+  .product a:hover {
+    color: #444444 !important;
+    text-decoration: none; }
 
 .product-right {
   margin-bottom: 20px; }
@@ -411,3 +427,4 @@ input:-ms-input-placeholder {
   font-weight: bold; }
 
 /* Order */
+
