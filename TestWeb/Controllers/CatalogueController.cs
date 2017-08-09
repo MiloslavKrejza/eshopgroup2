@@ -36,7 +36,7 @@ namespace Eshop2.Controllers
         
 
         // GET: /Catalogue/Book/BookId
-        [HttpGet("/Catalogue/Book/{id}")]
+        [HttpGet("/Catalogue/Book/{id?}")]
         public IActionResult Book(int? id)
         {
             try
@@ -44,14 +44,12 @@ namespace Eshop2.Controllers
 
                 if (id == null)
                 {
-                    //OR redirect to action "Missing product" (probably better)
-                    ViewData["MissingProduct"] = true;
-                    return View();
+                    return RedirectToAction("Error", "Home");
                 }
                 var dto = _businessService.GetProduct(id.Value);
-                if (!dto.isOK)
+                if (!dto.isOK || dto.isEmpty)
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Error", "Home");
                 }
 
                 ProductBO product = dto.data;
@@ -64,7 +62,7 @@ namespace Eshop2.Controllers
 
                     Authors = product.Book.AuthorsBooks.Select(ab => ab.Author).ToList(),
                     ProductFormat = product.Format.Name,
-                    Rating = product.AverageRating,
+                    AverageRating = product.AverageRating,
                     Annotation = product.Book.Annotation,
                     ProductText = product.Text,
                     PicAddress = product.PicAddress,
@@ -124,6 +122,7 @@ namespace Eshop2.Controllers
                 }
                 else
                 {
+                    //todo remove this
                     _businessService.UpdateReview(review);
                 }
                 return View(model);
@@ -157,7 +156,7 @@ namespace Eshop2.Controllers
                         PageNum = model.PageNum,
                         CategoryId = catId, //check this
 
-                        //Authors = model.AuthorsFilter,
+                        Authors = new List<int>(model.AuthorsFilter),
 
                         Formats = model.FormatsFilter,
                         Languages = model.LanguagesFilter,
@@ -165,7 +164,7 @@ namespace Eshop2.Controllers
                         MinPrice = model.MinPrice,
                         PageSize = model.PageSize,
 
-                        //Publishers = model.PublishersFilter,
+                        Publishers = new List<int>(model.PublishersFilter)
 
                     };
 
@@ -181,7 +180,7 @@ namespace Eshop2.Controllers
                     var dto = _businessService.GetPage(parameters);
                     if (!dto.isOK)
                     {
-                        //Another error TBD (bad parameters, bad)
+                        return RedirectToAction("Error", "Home");
                     }
 
                     QueryResultWrapper result = dto.data;
@@ -202,7 +201,7 @@ namespace Eshop2.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Error", "Home");
                 }
             }
             catch (Exception e)

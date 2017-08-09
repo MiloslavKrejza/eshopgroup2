@@ -15,7 +15,7 @@ namespace Eshop2.Models.CatalogueViewModels
 
         public List<Author> Authors { get; set; }
         public string ProductFormat { get; set; }
-        public decimal? Rating { get; set; }
+        public decimal? AverageRating { get; set; }
         public string Annotation { get; set; }
         public string ProductText { get; set; }
         public string PicAddress { get; set; }

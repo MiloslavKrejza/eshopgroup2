@@ -80,6 +80,8 @@ namespace Trainee.Catalogue.DAL.Repositories
                 .Include(p => p.State)
                 .FirstOrDefault();
 
+            if (ReferenceEquals(result, null))
+                return result;
             
             result.Book.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.BookId == result.BookId).ToList();
             

@@ -148,6 +148,10 @@ namespace Trainee.Business.Business
         {
 
             var baseProduct = _productRepository.GetProduct(id);
+            //is this fine?
+            if (ReferenceEquals(baseProduct,null))
+                return AlzaAdminDTO<ProductBO>.Data(null);
+
             //var avRating = _productRatingRepository.GetRating(id);
             var ratings = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
             ProductBO product = new ProductBO(baseProduct, null, ratings); //avRating, ratings);
