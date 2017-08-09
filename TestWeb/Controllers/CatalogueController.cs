@@ -169,18 +169,13 @@ namespace Eshop2.Controllers
                         MaxPrice = model.MaxPrice,
                         MinPrice = model.MinPrice,
                         PageSize = model.PageSize,
+                        SortingParameter = model.SortingParameter,
+                        SortingType = model.SortingType,
 
                         Publishers = new List<int>(model.PublishersFilter)
 
                     };
-
-                    SortingParameter sp;
-                    SortType st;
-                    Enum.TryParse(model.SortingParameter, out sp);
-                    Enum.TryParse(model.SortingParameter, out st);
-
-                    parameters.SortingParameter = sp;
-                    parameters.SortingType = st;
+                    
 
 
                     var dto = _businessService.GetPage(parameters);
