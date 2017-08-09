@@ -29,6 +29,9 @@ function changeUserBack() {
     document.getElementById("login-link").innerHTML = "Přihlásit";
 }
 
+
+document.getElementsByClass('filters').removeAttribute('multiple');
+
 /*ALTERNATIVE STAR RATING
 
 var __slice = [].slice;

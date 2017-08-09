@@ -8,16 +8,16 @@
     ViewData["Title"] = Html.DisplayFor(model => model.currentCategory.Name);
 }
 <h2>@ViewData["Title"]</h2>
-
+<!--
 <b>@Html.DisplayFor(model => model.MinPrice)</b>
 <div id="priceFilter"></div>
-<!--<input id="priceFilter" type="text" class="span2" value="" data-slider-min="@Model.MinPrice" data-slider-max="@Model.MaxPrice" data-slider-step="10" data-slider-value="[@Model.MinPrice, @Model.MinPrice]" />
--->
-<b>@Html.DisplayFor(model => model.MaxPrice)</b>
+<input id="priceFilter" type="text" class="span2" value="" data-slider-min="@Model.MinPrice" data-slider-max="@Model.MaxPrice" data-slider-step="10" data-slider-value="[@Model.MinPrice, @Model.MinPrice]" />
+
+<b>@Html.DisplayFor(model => model.MaxPrice)</b>-->
 
 <form>
     <label class="control-label" asp-for="Authors">Autor</label>
-    <select asp-for="Authors" class="form-control">
+    <select asp-for="Authors" class="form-control filters">
         @{
             foreach (Author a in Model.Authors)
             {
@@ -89,7 +89,7 @@
             ProductBO p = Model.Products[i];
             <div class="col-lg-3 text-center product">
                 <a asp-area="" asp-controller="catalogue" asp-action="book" asp-route-id="@p.Id">
-                    <img src="@p.PicAddress" alt="@p.Name" />
+                    <img src="~/images/product_images/@p.PicAddress" alt="@p.Name" />
                     <p class="bold">@p.Name</p>
                     <p>
                         @foreach (var ab in p.Book.AuthorsBooks)
