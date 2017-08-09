@@ -33,7 +33,7 @@ namespace Trainee.Business.Business
         public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
 
-           
+
 
 
             //var asdf = _categoryRelationshipRepository.GetAllRelationships();
@@ -101,21 +101,15 @@ namespace Trainee.Business.Business
             }
 
             //ToDo does not work yet
-            
-            IQueryable<int> pIds = query.Select(p => p.Id);
+
+            List<int> pIds = query.Select(p => p.Id).ToList();
             IQueryable<ProductRating> ratings = _productRatingRepository.GetRatings().Where(pr => pIds.Contains(pr.ProductId));
             ////might be bullshite...actually is bullshite
-            //var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));
+            var products = query.Join(ratings, q => q.Id, r => r.ProductId, (p, r) => new { product = p, rating = r }).Select(x => new ProductBO(x.product, x.rating, null));
 
 
-            //temp placeholder
-           /* List<ProductBO> prods = new List<ProductBO>();
-            foreach (var item in query.ToList())
-            {
-                ProductBO prod = new ProductBO(item, null, null);
-                prods.Add(prod);
-            }
-            var products = prods.AsQueryable();*/
+
+            
 
             Func<ProductBO, IComparable> sortingParameter;
             switch (parameters.SortingParameter)
