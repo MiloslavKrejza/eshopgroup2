@@ -154,6 +154,10 @@ namespace Trainee.Catalogue.DAL.Repositories
                 .FirstOrDefault();
 
 
+            if (ReferenceEquals(result, null))
+                return result;
+            
+
             result.Book.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.BookId == result.BookId).ToList();
 
             foreach (AuthorBook ab in result.Book.AuthorsBooks)

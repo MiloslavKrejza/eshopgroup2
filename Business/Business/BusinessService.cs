@@ -148,14 +148,58 @@ namespace Trainee.Business.Business
         {
 
             var baseProduct = _productRepository.GetProduct(id);
+
+          if (ReferenceEquals(baseProduct,null))
+                return AlzaAdminDTO<ProductBO>.Data(null);
             var avRating = _productRatingRepository.GetRating(id);
             var reviews = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
             var users = _userProfileRepository.GetAllProfiles().Where(p => reviews.Select(r => r.UserId).Contains(p.Id));
             reviews = reviews.Join(users, r => r.UserId, p => p.Id, (r, p) => { r.User = p; return r; }).ToList();
             var product = new ProductBO(baseProduct, avRating, reviews);
-            
+
             return AlzaAdminDTO<ProductBO>.Data(product);
 
+        }
+
+        public AlzaAdminDTO<Review> AddReview(Review review)
+        {
+            try
+            {
+                return AlzaAdminDTO<Review>.Data(_reviewRepository.AddReview(review));
+            }
+            catch(Exception e)
+            {
+                return AlzaAdminDTO<Review>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public AlzaAdminDTO<Review> GetReview(int userId, int productId)
+        {
+            try
+            {
+                return AlzaAdminDTO<Review>.Data(_reviewRepository.GetReview(userId, productId));
+            }
+            catch(Exception e)
+            {
+                return AlzaAdminDTO<Review>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public AlzaAdminDTO<Review> UpdateReview(Review review)
+        {
+            try
+            {
+                return AlzaAdminDTO<Review>.Data(_reviewRepository.UpdateReview(review));
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<Review>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public void DeleteReview(int userId, int productId)
+        {
+            _reviewRepository.DeleteReview(userId, productId);
         }
     }
 }

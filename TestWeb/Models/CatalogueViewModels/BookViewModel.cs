@@ -15,10 +15,11 @@ namespace Eshop2.Models.CatalogueViewModels
 
         public List<Author> Authors { get; set; }
         public string ProductFormat { get; set; }
-        public decimal? Rating { get; set; }
+        public decimal? AverageRating { get; set; }
         public string Annotation { get; set; }
         public string ProductText { get; set; }
         public string PicAddress { get; set; }
+        public int ProductId { get; set; }
 
         public string State { get; set; }
         public decimal Price { get; set; }
@@ -31,6 +32,9 @@ namespace Eshop2.Models.CatalogueViewModels
         public string ISBN { get; set; }
         public string EAN { get; set; }
         
+        public int NewRating { get; set; }
+        public string ReviewText { get; set; }
+
         public List<Review> Reviews { get; set; }
 
     }
