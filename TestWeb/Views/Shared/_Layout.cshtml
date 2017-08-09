@@ -33,6 +33,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -101,7 +102,7 @@
                 @{foreach (Category c in currentCategory.Children)
                     {
                         <div class="list-group-item menu-item main-background">
-                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="1"><p><!--<img src="~/images/(c.ico).svg" />-->@c.Name</p></a>
+                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><!--<img src="~/images/(c.ico).svg" />-->@c.Name</p></a>
                         </div>
 
                     }

@@ -147,3 +147,13 @@ $(document).ready(function () {
 });
 
 */
+
+/* Slider - filtrování podle ceny
+var slider = new Slider('#priceFilter', {
+    tooltip: 'always'
+}
+);*/
+
+$(function () {
+    $("#priceFilter").slider();
+});

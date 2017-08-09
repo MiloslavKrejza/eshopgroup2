@@ -4,76 +4,40 @@
 @model ProductsViewModel
 
 @{
-    ViewData["Title"] = "Fantasy";
+    ViewData["Title"] = Html.DisplayFor(model => model.currentCategory.Name);
 }
 <h2>@ViewData["Title"]</h2>
 
-
+<b>@Html.DisplayFor(model => model.MinPrice)</b> 
+<div id="priceFilter"></div>
+<!--<input id="priceFilter" type="text" class="span2" value="" data-slider-min="@Model.MinPrice" data-slider-max="@Model.MaxPrice" data-slider-step="10" data-slider-value="[@Model.MinPrice, @Model.MinPrice]" /> 
+--><b>@Html.DisplayFor(model => model.MaxPrice)</b>
 <div class="row">
+    @{ 
 
-    @{foreach (ProductBO p in Model.Products)
+        for (int i = 0; i < Model.Products.Count; i++)
         {
+
+            ProductBO p = Model.Products[i];
             <div class="col-lg-2 text-center product">
-                <img src="@p.PicAddress" alt="Harry Potter" />
+                <img src="@p.PicAddress" alt="@p.Name" />
                 <p>@p.Name</p>
-                <p>Joanne K. Rowling</p>
-               <!-- <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />-->
+                @foreach (var ab in p.Book.AuthorsBooks)
+                {<span>@ab.Author.Name @ab.Author.Surname, </span>}
+                <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
                 <p>@p.Price</p>
-                <button>Do košíku</button>
+                <button class="btn btn-primary">Do košíku</button>
             </div>
+
+            if ((i+1) % 6 == 0)
+            {
+                @Html.Raw("</div>")
+                @Html.Raw("<div class='row'>")
+            }
         }
 
-    }
-    <!--
-                <div class="col-lg-2 text-center product">
-                    <img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="Harry Potter" />
-                    <p>Harry Potter a Kámen mudrců</p>
-                    <p>Joanne K. Rowling</p>
-                    <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
-                    <p>199,-</p>
-                    <button>Do košíku</button>
-                </div>
-                <div class="col-lg-2 text-center product">
-                    <img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="Harry Potter" />
-                    <p>Harry Potter a Kámen mudrců</p>
-                    <p>Joanne K. Rowling</p>
-                    <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
-                    <p>199,-</p>
-                    <button>Do košíku</button>
-                </div>
-                <div class="col-lg-2 text-center product">
-                    <img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="Harry Potter" />
-                    <p>Harry Potter a Kámen mudrců</p>
-                    <p>Joanne K. Rowling</p>
-                    <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
-                    <p>199,-</p>
-                    <button>Do košíku</button>
-                </div>
-                <div class="col-lg-2 text-center product">
-                    <img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="Harry Potter" />
-                    <p>Harry Potter a Kámen mudrců</p>
-                    <p>Joanne K. Rowling</p>
-                    <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
-                    <p>199,-</p>
-                    <button>Do košíku</button>
-                </div>
-                <div class="col-lg-2 text-center product">
-                    <img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="Harry Potter" />
-                    <p>Harry Potter a Kámen mudrců</p>
-                    <p>Joanne K. Rowling</p>
-                    <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
-                    <p>199,-</p>
-                    <button>Do košíku</button>
-                </div>
-                <div class="col-lg-2 text-center product-right">
-                    <img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="Harry Potter" />
-                    <p>Harry Potter a Kámen mudrců</p>
-                    <p>Joanne K. Rowling</p>
-                    <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
-                    <p>199,-</p>
-                    <button>Do košíku</button>
-                </div>-->
-            </div>
-        
+        }
+ 
+</div>
 
 <hr />
