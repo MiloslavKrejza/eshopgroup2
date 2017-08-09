@@ -93,13 +93,14 @@
 		<span>★</span>
 	
 
-		<div class="centerMePlox">	
+		<div class="centerMePlox">
 						
 			<form asp-area="" asp-controller="Catalogue" asp-action="Book" method="post" id="sendRatingData" class="navbar-right">
-			
+
 				<input class="form-control" asp-for="NewRating" id="valueHodnota" min="1" max="5"/>
 				<label class="text-primary" asp-for="ReviewText">Vzkaz</label>
-				<textarea rows="5" cols="5" class="form-control" asp-for="ReviewText">
+				<textarea rows="5" cols="20" class="form-control" asp-for="ReviewText">
+			
 				</textarea>
 				<button class="btn btn-primary" type="submit">Click me!</button>
 			</form>
@@ -110,6 +111,9 @@
 <hr />
 	
 <script type="text/javascript">
+
+
+
 
 	var elementos = document.getElementById("valueHodnota");
 	elementos.style.display = "none";
