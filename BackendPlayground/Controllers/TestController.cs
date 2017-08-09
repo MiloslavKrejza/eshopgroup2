@@ -13,6 +13,7 @@ using Trainee.Business.DAL.Repositories;
 using Trainee.Business.Business;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.Business.Enums;
+using Newtonsoft.Json;
 
 namespace BackendPlayground.Controllers
 {
@@ -74,11 +75,12 @@ namespace BackendPlayground.Controllers
             
             
         }
-        [HttpGet]
-        public IActionResult ProductTest()
+        [HttpGet("/Test/ProductTest/{id}")]
+        public IActionResult ProductTest(int id)
         {
            // QueryParametersWrapper filter = new QueryParametersWrapper() {SortingType=SortType.Asc,SortingParameter=SortingParameter.Name,PageSize=5,CategoryId=5,PageNum=1 };
-            var res = _serv.GetProduct(15).data;
+            var res = _serv.GetProduct(id).data;
+            
             return View();
 
         }

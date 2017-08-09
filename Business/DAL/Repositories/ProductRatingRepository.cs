@@ -35,7 +35,8 @@ namespace Trainee.Business.DAL.Repositories
                 conn.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    res = new ProductRating() { ProductId = (int)reader[0], AverageRating = (decimal)reader[1] };
+                    reader.Read();
+                    res = new ProductRating() { ProductId = (int)reader[0], AverageRating = (reader[1]!=DBNull.Value)?(decimal?)reader[1]:null };
                 }
             }
             return res;
