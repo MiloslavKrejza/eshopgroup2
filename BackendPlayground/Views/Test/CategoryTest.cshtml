@@ -2,12 +2,5 @@
 @using Trainee.Catalogue.DAL.Entities;
 @using Trainee.Business.DAL.Entities;
 
-@model List<CategoryRelationshipBO>
+
 <h1>Category Test</h1>
-<table>
-    <tr><td>Id</td><td>ChildId</td></tr>
-    @foreach (var relationship in Model)
-    {
-        <tr>   <td>@relationship.Id </td> <td>@relationship.ChildId</td></tr>
-    }
-</table>
