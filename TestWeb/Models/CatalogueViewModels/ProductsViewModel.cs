@@ -29,11 +29,11 @@ namespace Eshop2.Models.CatalogueViewModels
         public int PageSize { get; set; } = 24; 
         public decimal? MinPriceFilter { get; set; }
         public decimal? MaxPriceFilter { get; set; }
-        public int AuthorsFilter { get; set; }
-        public int PublishersFilter { get; set; }
+        public int? AuthorsFilter { get; set; }
+        public int? PublishersFilter { get; set; }
 
-        public int FormatsFilter { get; set; }
-        public int LanguagesFilter { get; set; }
+        public int? FormatsFilter { get; set; }
+        public int? LanguagesFilter { get; set; }
 
         public SortType SortingType { get; set; } //TODO ask for defaults
         public SortingParameter SortingParameter { get; set; }

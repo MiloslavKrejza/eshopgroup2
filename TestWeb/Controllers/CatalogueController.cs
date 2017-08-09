@@ -33,7 +33,7 @@ namespace Eshop2.Controllers
 
         }
 
-        
+
 
         // GET: /Catalogue/Book/BookId
         [HttpGet("/Catalogue/Book/{id?}")]
@@ -84,7 +84,7 @@ namespace Eshop2.Controllers
 
                 //to be sure //Or handle it in view
                 model.Reviews = model.Reviews == null ? new List<Review>() : model.Reviews;
-                
+
                 return View(model);
             }
             catch (Exception e)
@@ -101,7 +101,7 @@ namespace Eshop2.Controllers
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", "Account", $"~/Catalogue/Book/{id}");
 
-                
+
                 _businessService.GetProduct(id.Value);
                 model.ProductId = id.Value;
 
@@ -127,7 +127,7 @@ namespace Eshop2.Controllers
                 }
                 return View(model);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return AlzaError.ExceptionActionResult(e);
             }
@@ -141,7 +141,7 @@ namespace Eshop2.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
 
                     if (id == null)
@@ -152,7 +152,7 @@ namespace Eshop2.Controllers
 
                     model.currentCategory = _catalogueService.GetCategory(catId).data;
 
-                    if(model.currentCategory == null)
+                    if (model.currentCategory == null)
                     {
                         return RedirectToAction("Error", "Home");
                     }
@@ -162,20 +162,22 @@ namespace Eshop2.Controllers
                         PageNum = model.PageNum,
                         CategoryId = catId, //check this
 
-                        Authors = new List<int>(model.AuthorsFilter),
 
-                        Formats = new List<int>(model.FormatsFilter),
-                        Languages = new List<int>(model.LanguagesFilter),
                         MaxPrice = model.MaxPrice,
                         MinPrice = model.MinPrice,
                         PageSize = model.PageSize,
                         SortingParameter = model.SortingParameter,
                         SortingType = model.SortingType,
 
-                        Publishers = new List<int>(model.PublishersFilter)
 
                     };
-                    
+
+                    parameters.Formats = model.FormatsFilter == null ? null : new List<int>(model.FormatsFilter.Value);
+                    parameters.Languages = model.LanguagesFilter == null ? null : new List<int>(model.LanguagesFilter.Value);
+                    parameters.Authors = model.AuthorsFilter == null ? null : new List<int>(model.AuthorsFilter.Value);
+                    parameters.Publishers = model.PublishersFilter == null ? null: new List<int>(model.PublishersFilter.Value);
+
+
 
 
                     var dto = _businessService.GetPage(parameters);
