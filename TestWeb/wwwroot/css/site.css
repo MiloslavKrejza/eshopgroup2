@@ -380,3 +380,6 @@ input:-ms-input-placeholder {
   margin: 0px 0 0 29px;
   position: relative;
   font-size: 25px; }
+
+#sendRatingData {
+  position: relative; }

@@ -81,8 +81,9 @@
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam egestas wisi a erat. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Nam sed tellus id magna elementum tincidunt. Pellentesque pretium lectus id turpis. Mauris metus. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
     </div>
 
-
+	<hr />
 	
+	<h3>Ohodnotit produkt</h3>
 
 	<div id="rating">
 		<span>★</span>
@@ -92,13 +93,17 @@
 		<span>★</span>
 	
 
-		<div class="centerMePlox">
-			<form action="POST">
-
-				<button class="btn btn-primary" type="submit" >Click me!</button>
-				<label for="text" id="summaryByMiloslavKrejza"></label>
-
+		<div class="centerMePlox">	
+						
+			<form asp-area="" asp-controller="Catalogue" asp-action="Book" method="post" id="sendRatingData" class="navbar-right">
+			
+				<input class="form-control" asp-for="NewRating" id="valueHodnota" min="1" max="5"/>
+				<label class="text-primary" asp-for="ReviewText">Vzkaz</label>
+				<textarea rows="5" cols="5" class="form-control" asp-for="ReviewText">
+				</textarea>
+				<button class="btn btn-primary" type="submit">Click me!</button>
 			</form>
+
 		</div>
 	</div>
 </div>
@@ -106,9 +111,12 @@
 	
 <script type="text/javascript">
 
+	var elementos = document.getElementById("valueHodnota");
+	elementos.style.display = "none";
 
 	//Initialize
 	function StarRating() {
+						
 
 						this.init();
 			};
@@ -124,28 +132,34 @@
 	};
 	//This method is fired when a user hovers over a single star
 
-StarRating.prototype.enterStarListener = function(e) {
-  this.fillStarsUpToElement(e.target);
-};
-	//This method is fired when the user leaves the #rating element, effectively removing all hover states.
-	//Fill the star ratings up to a specific position.
-StarRating.prototype.fillStarsUpToElement = function(el) {
-   var soucet = 0;
-  // Remove all hover states:
-  for (var i = 0; i < this.stars.length; i++) {
-    if (el == null || this.stars[i].getAttribute('data-count') > el.getAttribute('data-count')) {
-      this.stars[i].classList.remove('hover');
-    } else {
-      this.stars[i].classList.add('hover');
-      soucet++;
-      console.log(soucet);
+	StarRating.prototype.enterStarListener = function(e) {
+	  this.fillStarsUpToElement(e.target);
+	};
+		//This method is fired when the user leaves the #rating element, effectively removing all hover states.
+		//Fill the star ratings up to a specific position.
+	StarRating.prototype.fillStarsUpToElement = function(el) {
+	   var soucet = 0;
+	  // Remove all hover states:
+	  for (var i = 0; i < this.stars.length; i++) {
+		if (el == null || this.stars[i].getAttribute('data-count') > el.getAttribute('data-count')) {
+		  this.stars[i].classList.remove('hover');
+		} else {
+		  this.stars[i].classList.add('hover');
+		  soucet++;
+		  console.log(soucet);
 
-      var element = document.getElementById("summaryByMiloslavKrejza");
-      element.innerHTML = soucet;
+   //   var element = document.getElementById("summaryByMiloslavKrejza");
+	  //element.innerHTML = soucet;
 
-    }
-  }
-};
+	  
+
+		  elementos.setAttribute("value", soucet);
+			
+		  
+
+		}
+	  }
+	};
 
 // Run:
 new StarRating();
