@@ -9,8 +9,8 @@ namespace Trainee.Business.Business.Wrappers
     {
         //ToDo comment this pls
 
-        public int PageNum { get; set; } = 10;
-        public int PageSize { get; set; } = 20; //TODO ask FE
+        public int PageNum { get; set; }
+        public int PageSize { get; set; }
         public int CategoryId { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
@@ -18,7 +18,7 @@ namespace Trainee.Business.Business.Wrappers
         public List<int> Publishers { get; set; }
         public List<int> Formats { get; set; }
         public List<int> Languages { get; set; }
-        public SortType SortingType { get; set; } //TODO ask for defaults
+        public SortType SortingType { get; set; }
         public SortingParameter SortingParameter { get; set; }
     }
 }

@@ -69,11 +69,11 @@ namespace Trainee.Business.Business
             result.MinPrice = minPrice;
             result.MaxPrice = maxPrice;
 
-            result.Authors = authors.OrderBy(a => a.Surname).Distinct().ToList();
+            result.Authors = authors.OrderBy(a => a.Surname).ToList();
 
-            result.Languages = query.Select(p => p.Language).OrderBy(l => l.Name).Distinct().ToList(); //languages.OrderBy(l => l.Name).Distinct().ToList();
-            result.Publishers = query.Select(p => p.Publisher).OrderBy(p => p.Name).Distinct().ToList(); //publishers.OrderBy(p => p.Name).Distinct().ToList();
-            result.Formats = query.Select(p => p.Format).OrderBy(f => f.Name).Distinct().ToList();  //formats.OrderBy(f => f.Name).Distinct().ToList();
+            result.Languages = languages.OrderBy(l => l.Name).ToList();
+            result.Publishers = publishers.OrderBy(p => p.Name).ToList();
+            result.Formats = formats.OrderBy(f => f.Name).ToList();
 
             if (parameters.MinPrice != null)
             {
@@ -101,21 +101,21 @@ namespace Trainee.Business.Business
             }
 
             //ToDo does not work yet
-            /*
+            
             IQueryable<int> pIds = query.Select(p => p.Id);
             IQueryable<ProductRating> ratings = _productRatingRepository.GetRatings().Where(pr => pIds.Contains(pr.ProductId));
-            ////might be bullshite
-            var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));*/
+            ////might be bullshite...actually is bullshite
+            //var products = query.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new ProductBO(p, r, null));
 
 
             //temp placeholder
-            List<ProductBO> prods = new List<ProductBO>();
+           /* List<ProductBO> prods = new List<ProductBO>();
             foreach (var item in query.ToList())
             {
                 ProductBO prod = new ProductBO(item, null, null);
                 prods.Add(prod);
             }
-            var products = prods.AsQueryable();
+            var products = prods.AsQueryable();*/
 
             Func<ProductBO, IComparable> sortingParameter;
             switch (parameters.SortingParameter)
@@ -155,8 +155,8 @@ namespace Trainee.Business.Business
 
             var baseProduct = _productRepository.GetProduct(id);
             //var avRating = _productRatingRepository.GetRating(id);
-            //var ratings = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
-            ProductBO product = new ProductBO(baseProduct, null, null); //avRating, ratings);
+            var ratings = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
+            ProductBO product = new ProductBO(baseProduct, null, ratings); //avRating, ratings);
             return AlzaAdminDTO<ProductBO>.Data(product);
 
         }

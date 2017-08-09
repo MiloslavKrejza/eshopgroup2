@@ -72,8 +72,8 @@ namespace TestWeb
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IPublisherRepository, PublisherRepository>();
 
-            services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>();
-            services.AddTransient<IProductRatingRepository, ProductRatingRepository>();
+            services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>(sp => { return new CategoryRelationshipRepository(Configuration.GetConnectionString("Trainee.Business")); });
+            services.AddTransient<IProductRatingRepository, ProductRatingRepository>(sp => { return new ProductRatingRepository(Configuration.GetConnectionString("Trainee.Business")); });
             services.AddTransient<IReviewRepository, ReviewRepository>();
 
             services.AddTransient<BusinessService, BusinessService>();
