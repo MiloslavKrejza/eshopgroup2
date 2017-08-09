@@ -12,6 +12,7 @@ using BackendPlayground.ViewModels.TestViewModels;
 using Trainee.Business.DAL.Repositories;
 using Trainee.Business.Business;
 using Trainee.Business.Business.Wrappers;
+using Trainee.Business.Business.Enums;
 
 namespace BackendPlayground.Controllers
 {
@@ -61,15 +62,22 @@ namespace BackendPlayground.Controllers
         
         [HttpGet]
         public IActionResult CategoryTest()
-        {
-            CategoryRelationshipRepository repo = new CategoryRelationshipRepository("Server=DEVSQL_STAZ\\DEV_STAZ;Database=group2;Trusted_Connection=True;");
-            var model = repo.GetAllRelationships().ToList();
-            return View(model);
+        {var repo = new ProductRatingRepository("Server=DEVSQL_STAZ\\DEV_STAZ;Database=group2;Trusted_Connection=True;");
+            var rand = new Random();
+            List<int> idList = new List<int>();
+            for (int i = 0; i < 500; i++)
+            {
+                idList.Add(rand.Next(1, 999));
+            }
+            var test = repo.GetRatings().Where(r => idList.Contains(r.ProductId));
+            return View();
+            
+            
         }
         [HttpGet]
         public IActionResult ProductTest()
         {
-            QueryParametersWrapper filter = new QueryParametersWrapper();
+            QueryParametersWrapper filter = new QueryParametersWrapper() {SortingType=SortType.Asc,SortingParameter=SortingParameter.Name,PageSize=5,CategoryId=5,PageNum=1 };
             var res = _serv.GetPage(filter).data;
             return View();
 
