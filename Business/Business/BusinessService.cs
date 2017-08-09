@@ -160,5 +160,46 @@ namespace Trainee.Business.Business
             return AlzaAdminDTO<ProductBO>.Data(product);
 
         }
+
+        public AlzaAdminDTO<Review> AddReview(Review review)
+        {
+            try
+            {
+                return AlzaAdminDTO<Review>.Data(_reviewRepository.AddReview(review));
+            }
+            catch(Exception e)
+            {
+                return AlzaAdminDTO<Review>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public AlzaAdminDTO<Review> GetReview(int userId, int productId)
+        {
+            try
+            {
+                return AlzaAdminDTO<Review>.Data(_reviewRepository.GetReview(userId, productId));
+            }
+            catch(Exception e)
+            {
+                return AlzaAdminDTO<Review>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public AlzaAdminDTO<Review> UpdateReview(Review review)
+        {
+            try
+            {
+                return AlzaAdminDTO<Review>.Data(_reviewRepository.UpdateReview(review));
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<Review>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public void DeleteReview(int userId, int productId)
+        {
+            _reviewRepository.DeleteReview(userId, productId);
+        }
     }
 }

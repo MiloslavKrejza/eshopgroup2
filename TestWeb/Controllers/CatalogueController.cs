@@ -1,5 +1,7 @@
+using Alza.Core.Identity.Dal.Entities;
 using Eshop2.Abstraction;
 using Eshop2.Models.CatalogueViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,11 +21,15 @@ namespace Eshop2.Controllers
     {
         private readonly BusinessService _businessService;
         private readonly CatalogueService _catalogueService;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CatalogueController(BusinessService service, CatalogueService catService)
+        public CatalogueController(BusinessService service, CatalogueService catService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             _businessService = service;
             _catalogueService = catService;
+            _signInManager = signInManager;
+            _userManager = userManager;
 
         }
 
@@ -45,7 +51,7 @@ namespace Eshop2.Controllers
                 var dto = _businessService.GetProduct(id.Value);
                 if (!dto.isOK)
                 {
-                    //Unknown id, redirect?
+                    return RedirectToAction("Error");
                 }
 
                 ProductBO product = dto.data;
@@ -62,6 +68,7 @@ namespace Eshop2.Controllers
                     Annotation = product.Book.Annotation,
                     ProductText = product.Text,
                     PicAddress = product.PicAddress,
+                    ProductId = product.Id,
 
                     State = product.State.Name,
                     Price = product.Price,
@@ -87,6 +94,47 @@ namespace Eshop2.Controllers
                 return AlzaError.ExceptionActionResult(e);
             }
         }
+        // GET: /Catalogue/Book/BookId
+        [HttpPost("/Catalogue/Book/{id}")]
+        public IActionResult Book(int? id, BookViewModel model)
+        {
+            try
+            {
+                if (!_signInManager.IsSignedIn(User))
+                    return RedirectToAction("Login", "Account", $"~/Catalogue/Book/{id}");
+
+                
+                _businessService.GetProduct(id.Value);
+                model.ProductId = id.Value;
+
+
+
+                Review review = new Review
+                {
+                    Date = DateTime.Now,
+                    ProductId = model.ProductId,
+                    Rating = model.NewRating,
+                    Text = model.ReviewText,
+                    UserId = _userManager.GetUserAsync(User).Id
+                };
+
+                if (_businessService.GetReview(review.UserId, review.ProductId).isEmpty)
+                {
+                    _businessService.AddReview(review);
+                }
+                else
+                {
+                    _businessService.UpdateReview(review);
+                }
+                return View(model);
+            }
+            catch(Exception e)
+            {
+                return AlzaError.ExceptionActionResult(e);
+            }
+        }
+
+
 
         // GET: /Catalogue/Category
         [HttpGet("/Catalogue/Products/{categoryId}")]
@@ -94,60 +142,68 @@ namespace Eshop2.Controllers
         {
             try
             {
-                if (categoryId == null)
+                if(ModelState.IsValid)
                 {
-                    categoryId = 1;
+
+                    if (categoryId == null)
+                    {
+                        categoryId = 1;
+                    }
+                    int catId = categoryId.Value;
+                    model.currentCategory = _catalogueService.GetCategory(catId).data;
+
+                    QueryParametersWrapper parameters = new QueryParametersWrapper
+                    {
+                        PageNum = model.PageNum,
+                        CategoryId = catId, //check this
+
+                        //Authors = model.AuthorsFilter,
+
+                        Formats = model.FormatsFilter,
+                        Languages = model.LanguagesFilter,
+                        MaxPrice = model.MaxPrice,
+                        MinPrice = model.MinPrice,
+                        PageSize = model.PageSize,
+
+                        //Publishers = model.PublishersFilter,
+
+                    };
+
+                    SortingParameter sp;
+                    SortType st;
+                    Enum.TryParse(model.SortingParameter, out sp);
+                    Enum.TryParse(model.SortingParameter, out st);
+
+                    parameters.SortingParameter = sp;
+                    parameters.SortingType = st;
+
+
+                    var dto = _businessService.GetPage(parameters);
+                    if (!dto.isOK)
+                    {
+                        //Another error TBD (bad parameters, bad)
+                    }
+
+                    QueryResultWrapper result = dto.data;
+
+                    //Fill the ViewModel with new data
+
+                    model.MinPrice = result.MinPrice;
+                    model.MaxPrice = result.MaxPrice;
+                    model.Authors = result.Authors;
+                    model.Formats = result.Formats;
+                    model.Languages = result.Languages;
+                    model.Products = result.Products;
+                    model.Publishers = result.Publishers;
+                    model.ResultCount = result.ResultCount;
+
+
+                    return View(model);
                 }
-                int catId = categoryId.Value;
-                model.currentCategory = _catalogueService.GetCategory(catId).data;
-
-                QueryParametersWrapper parameters = new QueryParametersWrapper
+                else
                 {
-                    PageNum = model.PageNum,
-                    CategoryId = catId, //check this
-
-                    //Authors = model.AuthorsFilter,
-
-                    Formats = model.FormatsFilter,
-                    Languages = model.LanguagesFilter,
-                    MaxPrice = model.MaxPrice,
-                    MinPrice = model.MinPrice,
-                    PageSize = model.PageSize,
-
-                    //Publishers = model.PublishersFilter,
-
-                };
-
-                SortingParameter sp;
-                SortType st;
-                Enum.TryParse(model.SortingParameter, out sp);
-                Enum.TryParse(model.SortingParameter, out st);
-
-                parameters.SortingParameter = sp;
-                parameters.SortingType = st;
-
-
-                var dto = _businessService.GetPage(parameters);
-                if (!dto.isOK)
-                {
-                    //Another error TBD (bad parameters, bad)
+                    return RedirectToAction("Index", "Home");
                 }
-
-                QueryResultWrapper result = dto.data;
-
-                //Fill the ViewModel with new data
-                
-                model.MinPrice = result.MinPrice;
-                model.MaxPrice = result.MaxPrice;
-                model.Authors = result.Authors;
-                model.Formats = result.Formats;
-                model.Languages = result.Languages;
-                model.Products = result.Products;
-                model.Publishers = result.Publishers;
-                model.ResultCount = result.ResultCount;
-
-
-                return View(model);
             }
             catch (Exception e)
             {
