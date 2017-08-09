@@ -32,10 +32,10 @@ namespace Eshop2.Models.CatalogueViewModels
         public int AuthorsFilter { get; set; }
         public int PublishersFilter { get; set; }
 
-        public List<int> FormatsFilter { get; set; }
-        public List<int> LanguagesFilter { get; set; }
+        public int FormatsFilter { get; set; }
+        public int LanguagesFilter { get; set; }
 
-        public string SortingType { get; set; } //TODO ask for defaults
-        public string SortingParameter { get; set; }
+        public SortType SortingType { get; set; } //TODO ask for defaults
+        public SortingParameter SortingParameter { get; set; }
     }
 }

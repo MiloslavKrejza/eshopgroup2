@@ -136,20 +136,26 @@ namespace Eshop2.Controllers
 
 
         // GET: /Catalogue/Category
-        [HttpGet("/Catalogue/Products/{categoryId}")]
-        public IActionResult Products(int? categoryId, ProductsViewModel model)
+        [HttpGet("/Catalogue/Products/{id?}")]
+        public IActionResult Products(int? id, ProductsViewModel model)
         {
             try
             {
                 if(ModelState.IsValid)
                 {
 
-                    if (categoryId == null)
+                    if (id == null)
                     {
-                        categoryId = 1;
+                        id = 1;
                     }
-                    int catId = categoryId.Value;
+                    int catId = id.Value;
+
                     model.currentCategory = _catalogueService.GetCategory(catId).data;
+
+                    if(model.currentCategory == null)
+                    {
+                        return RedirectToAction("Error", "Home");
+                    }
 
                     QueryParametersWrapper parameters = new QueryParametersWrapper
                     {
@@ -158,8 +164,8 @@ namespace Eshop2.Controllers
 
                         Authors = new List<int>(model.AuthorsFilter),
 
-                        Formats = model.FormatsFilter,
-                        Languages = model.LanguagesFilter,
+                        Formats = new List<int>(model.FormatsFilter),
+                        Languages = new List<int>(model.LanguagesFilter),
                         MaxPrice = model.MaxPrice,
                         MinPrice = model.MinPrice,
                         PageSize = model.PageSize,
