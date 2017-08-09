@@ -1,13 +1,16 @@
 ﻿using Alza.Core.Module.Http;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Trainee.Business.Abstraction;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
 using Trainee.Catalogue.Abstraction;
 using Trainee.Catalogue.DAL.Entities;
+using Trainee.User.Abstraction;
 
 namespace Trainee.Business.Business
 {
@@ -18,30 +21,25 @@ namespace Trainee.Business.Business
         IReviewRepository _reviewRepository;
         IProductRepository _productRepository;
         ICategoryRepository _categoryRepository;
+        IUserProfileRepository _userProfileRepository;
 
         public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
-                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep)
+                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep)
         {
             _categoryRelationshipRepository = catRRep;
             _productRatingRepository = prodRRep;
             _reviewRepository = reviewRep;
             _productRepository = prodRep;
             _categoryRepository = catRep;
+            _userProfileRepository = userRep;
+
         }
 
 
         public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
-
-
-
-
-            //var asdf = _categoryRelationshipRepository.GetAllRelationships();
-
-            //var asdf2 = asdf.Where(c => c.Id == parameters.CategoryId);
-
-            //var asdf3 = asdf2.Select(c => c.ChildId);
-
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
@@ -109,7 +107,7 @@ namespace Trainee.Business.Business
 
 
 
-            
+
 
             Func<ProductBO, IComparable> sortingParameter;
             switch (parameters.SortingParameter)
@@ -141,6 +139,8 @@ namespace Trainee.Business.Business
             result.ResultCount = products.Count();
             products = products.Skip((parameters.PageNum - 1) * parameters.PageSize).Take(parameters.PageSize);
             result.Products = products.ToList();
+            stopwatch.Stop();
+            Debug.Write($"Operation took {stopwatch.ElapsedMilliseconds}");
             return AlzaAdminDTO<QueryResultWrapper>.Data(result);
 
         }
@@ -148,9 +148,15 @@ namespace Trainee.Business.Business
         {
 
             var baseProduct = _productRepository.GetProduct(id);
-            //var avRating = _productRatingRepository.GetRating(id);
-            var ratings = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
-            ProductBO product = new ProductBO(baseProduct, null, ratings); //avRating, ratings);
+
+          if (ReferenceEquals(baseProduct,null))
+                return AlzaAdminDTO<ProductBO>.Data(null);
+            var avRating = _productRatingRepository.GetRating(id);
+            var reviews = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
+            var users = _userProfileRepository.GetAllProfiles().Where(p => reviews.Select(r => r.UserId).Contains(p.Id));
+            reviews = reviews.Join(users, r => r.UserId, p => p.Id, (r, p) => { r.User = p; return r; }).ToList();
+            var product = new ProductBO(baseProduct, avRating, reviews);
+
             return AlzaAdminDTO<ProductBO>.Data(product);
 
         }

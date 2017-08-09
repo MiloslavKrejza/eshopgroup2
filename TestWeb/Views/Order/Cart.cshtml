@@ -3,24 +3,41 @@
     ViewData["Title"] = "Košík";
 }
 
-<h2>Košík</h2>
-<div class="row">
+<h2 class="bottom-padding">Košík</h2>
+<div class="row cart-item bottom-padding">
     <div class="col-md-2"><img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="bookcover" /></div>
-    <div class="col-md-9">
-        <p>Harry Potter</p>
+    <div class="col-md-4">
+        <p><strong>Harry Potter</strong></p>
         <p>Joanne K. Rowling</p>
+        </div>
+    <div class="col-md-3">
         <p>skladem - u vás do 3 dnů</p>
     </div>
-    <hr />
+    <div class="col-md-1">
+        399,- 
+    </div>
+    <div class="col-md-2"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span></div>
+</div>
+
+<div class="row cart-item bottom-padding">
+    <div class="col-md-2"><img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="bookcover" /></div>
+    <div class="col-md-4">
+        <p><strong>Harry Potter</strong></p>
+        <p>Joanne K. Rowling</p>
+    </div>
     <div class="col-md-3">
-        399,- <span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span>
+        <p>skladem - u vás do 3 dnů</p>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <button>Vybrat další knížky</button>
-        </div>
-        <div class="col-md-6">
-            <button asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary">Objednat</button>
-        </div>
+    <div class="col-md-1">
+        399,-
     </div>
+    <div class="col-md-2"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span></div>
+</div>
+
+<hr class="bottom-padding"/>
+
+<div class="row text-indent">
+    <div class="total-price text-right bottom-padding"><p>Celková cena: 798,-</p></div>
+        <button class="btn"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</button>
+        <button asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></button>
 </div>

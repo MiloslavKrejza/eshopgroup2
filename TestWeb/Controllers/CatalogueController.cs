@@ -33,10 +33,10 @@ namespace Eshop2.Controllers
 
         }
 
-        
+
 
         // GET: /Catalogue/Book/BookId
-        [HttpGet("/Catalogue/Book/{id}")]
+        [HttpGet("/Catalogue/Book/{id?}")]
         public IActionResult Book(int? id)
         {
             try
@@ -44,14 +44,12 @@ namespace Eshop2.Controllers
 
                 if (id == null)
                 {
-                    //OR redirect to action "Missing product" (probably better)
-                    ViewData["MissingProduct"] = true;
-                    return View();
+                    return RedirectToAction("Error", "Home");
                 }
                 var dto = _businessService.GetProduct(id.Value);
-                if (!dto.isOK)
+                if (!dto.isOK || dto.isEmpty)
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Error", "Home");
                 }
 
                 ProductBO product = dto.data;
@@ -64,7 +62,7 @@ namespace Eshop2.Controllers
 
                     Authors = product.Book.AuthorsBooks.Select(ab => ab.Author).ToList(),
                     ProductFormat = product.Format.Name,
-                    Rating = product.AverageRating,
+                    AverageRating = product.AverageRating,
                     Annotation = product.Book.Annotation,
                     ProductText = product.Text,
                     PicAddress = product.PicAddress,
@@ -86,7 +84,7 @@ namespace Eshop2.Controllers
 
                 //to be sure //Or handle it in view
                 model.Reviews = model.Reviews == null ? new List<Review>() : model.Reviews;
-                
+
                 return View(model);
             }
             catch (Exception e)
@@ -103,7 +101,7 @@ namespace Eshop2.Controllers
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", "Account", $"~/Catalogue/Book/{id}");
 
-                
+
                 _businessService.GetProduct(id.Value);
                 model.ProductId = id.Value;
 
@@ -124,11 +122,12 @@ namespace Eshop2.Controllers
                 }
                 else
                 {
+                    //todo remove this
                     _businessService.UpdateReview(review);
                 }
                 return View(model);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return AlzaError.ExceptionActionResult(e);
             }
@@ -137,51 +136,54 @@ namespace Eshop2.Controllers
 
 
         // GET: /Catalogue/Category
-        [HttpGet("/Catalogue/Products/{categoryId}")]
-        public IActionResult Products(int? categoryId, ProductsViewModel model)
+        [HttpGet("/Catalogue/Products/{id?}")]
+        public IActionResult Products(int? id, ProductsViewModel model)
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
 
-                    if (categoryId == null)
+                    if (id == null)
                     {
-                        categoryId = 1;
+                        id = 1;
                     }
-                    int catId = categoryId.Value;
+                    int catId = id.Value;
+
                     model.currentCategory = _catalogueService.GetCategory(catId).data;
+
+                    if (model.currentCategory == null)
+                    {
+                        return RedirectToAction("Error", "Home");
+                    }
 
                     QueryParametersWrapper parameters = new QueryParametersWrapper
                     {
                         PageNum = model.PageNum,
                         CategoryId = catId, //check this
 
-                        //Authors = model.AuthorsFilter,
 
-                        Formats = model.FormatsFilter,
-                        Languages = model.LanguagesFilter,
                         MaxPrice = model.MaxPrice,
                         MinPrice = model.MinPrice,
                         PageSize = model.PageSize,
+                        SortingParameter = model.SortingParameter,
+                        SortingType = model.SortingType,
 
-                        //Publishers = model.PublishersFilter,
 
                     };
 
-                    SortingParameter sp;
-                    SortType st;
-                    Enum.TryParse(model.SortingParameter, out sp);
-                    Enum.TryParse(model.SortingParameter, out st);
+                    parameters.Formats = model.FormatsFilter == null ? null : new List<int>(model.FormatsFilter.Value);
+                    parameters.Languages = model.LanguagesFilter == null ? null : new List<int>(model.LanguagesFilter.Value);
+                    parameters.Authors = model.AuthorsFilter == null ? null : new List<int>(model.AuthorsFilter.Value);
+                    parameters.Publishers = model.PublishersFilter == null ? null: new List<int>(model.PublishersFilter.Value);
 
-                    parameters.SortingParameter = sp;
-                    parameters.SortingType = st;
+
 
 
                     var dto = _businessService.GetPage(parameters);
                     if (!dto.isOK)
                     {
-                        //Another error TBD (bad parameters, bad)
+                        return RedirectToAction("Error", "Home");
                     }
 
                     QueryResultWrapper result = dto.data;
@@ -202,7 +204,7 @@ namespace Eshop2.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Error", "Home");
                 }
             }
             catch (Exception e)

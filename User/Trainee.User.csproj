@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="jQuery" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\core\Alza.Core.Identity\Alza.Core.Identity.csproj" />
     <ProjectReference Include="..\core\Alza.Core.Module\Alza.Core.Module.csproj" />
     <ProjectReference Include="..\Trainee.Core\Trainee.Core.csproj" />

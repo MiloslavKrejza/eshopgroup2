@@ -6,6 +6,8 @@
 <h2>Objednávka</h2>
 <div class="form-group">
     <div class="row">
+
+       
         <div class="col-md-6">
             <div class="row form-row">
                 <div class="col-md-6">
@@ -19,6 +21,8 @@
                     <span asp-validation-for="Surname" class="text-danger"></span>
                 </div>
             </div>
+
+             
             <div class="row form-row">
                 <div class="col-md-6">
                     <label class="text-indent control-label" asp-for="Email"></label>
@@ -83,27 +87,27 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+      <div class="col-md-6">
             <div class="row">
                 <div class="col-md-6">
-                    <strong>Doprava</strong>
-                    <input type="radio" name="shipping" value="Vyzvednuí v prodejně" /> 0 Kč<br />
-                    <input type="radio" name="shipping" value="Česká pošta" /> 69 Kč<br />
-                    <input type="radio" name="shipping" value="PPL" /> 89 Kč<br />
+                    <strong>Doprava</strong><br />
+                    <input type="radio" name="shipping" value="Vyzvednutí v prodejně" /> Vyzvednutí v prodejně 0 Kč<br />
+                    <input type="radio" name="shipping" value="Česká pošta" /> Česká pošta 69 Kč<br />
+                    <input type="radio" name="shipping" value="PPL" /> PPL 89 Kč<br />
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <strong>Platba</strong>
-                    <input type="radio" name="payment" value="Hotově/ kartou při převzetí" /><br />
-                    <input type="radio" name="payment" value="Kartou ihned" /><br />
-                    <input type="radio" name="payment" value="Na dobírku" /> +20 Kč<br />
-                    <input type="radio" name="payment" value="Převodem" /><br />
+                    <strong>Platba</strong><br />
+                    <input type="radio" name="payment" value="Hotově/ kartou při převzetí" /> Hotově/ kartou při převzetí<br />
+                    <input type="radio" name="payment" value="Kartou ihned" /> Kartou ihned<br />
+                    <input type="radio" name="payment" value="Na dobírku" /> Na dobírku<br />
+                    <input type="radio" name="payment" value="Převodem" /> Převodem<br />
                 </div>
             </div>
         </div>
     </div>
-
+    
     <div class="row">
         <button class="btn">Zpět do košíku</button>
         <button class="btn btn-primary" type="submit">Rekapitulace</button>

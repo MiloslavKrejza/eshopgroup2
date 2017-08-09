@@ -218,7 +218,7 @@ namespace Eshop2.Controllers
 
 
 
-            return new AlzaActionResult("someString", model);
+            return new AlzaActionResult("Error", model);
 
         }
 

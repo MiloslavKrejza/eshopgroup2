@@ -26,7 +26,7 @@ namespace Trainee.Business.DAL.Repositories
         public ProductRating GetRating(int id)
         {
             ProductRating res;
-            string queryString = "SELECT * FROM dbo.ProductRating WHERE Id = @id;";
+            string queryString = "SELECT * FROM dbo.ProductRatings WHERE Id = @id;";
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, conn);
@@ -35,7 +35,8 @@ namespace Trainee.Business.DAL.Repositories
                 conn.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    res = new ProductRating() { ProductId = (int)reader[0], AverageRating = (decimal)reader[1] };
+                    reader.Read();
+                    res = new ProductRating() { ProductId = (int)reader[0], AverageRating = (reader[1]!=DBNull.Value)?(decimal?)reader[1]:null };
                 }
             }
             return res;

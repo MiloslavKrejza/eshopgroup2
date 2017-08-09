@@ -12,14 +12,11 @@ namespace Trainee.Business.DAL.Entities
     {
         public decimal? AverageRating { get; set; }
         public List<Review> Reviews { get; set; }
-        internal ProductBO(ProductBase product, ProductRating rating, List<Review> reviews = null) 
+        internal ProductBO(ProductBase product, ProductRating rating, List<Review> reviews = null)
         {
-           /* if (product.Id != rating.ProductId)
-            {
-                throw new Exception("Nesouhlasi ID");
-            }*/ //Does not work yet
 
-            // AverageRating = rating.AverageRating;
+
+            AverageRating = rating.AverageRating;
             Reviews = reviews;
             Id = product.Id;
             LanguageId = product.LanguageId;
