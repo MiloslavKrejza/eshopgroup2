@@ -26,7 +26,7 @@ namespace Trainee.Business.DAL.Repositories
         public ProductRating GetRating(int id)
         {
             ProductRating res;
-            string queryString = "SELECT * FROM dbo.ProductRating WHERE Id = @id;";
+            string queryString = "SELECT * FROM dbo.ProductRatings WHERE Id = @id;";
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, conn);

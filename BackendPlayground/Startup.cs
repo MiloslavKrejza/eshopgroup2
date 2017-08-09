@@ -17,6 +17,13 @@ using Trainee.Business.Abstraction;
 using Trainee.Business.DAL.Repositories;
 using Trainee.Business.Business;
 using Trainee.Business.DAL.Context;
+using Trainee.User.DAL.Context;
+using Trainee.User.Business;
+using Trainee.Core.Abstraction;
+using Trainee.Core.Business;
+using Trainee.User.Abstraction;
+using Trainee.Core.DAL.Repositories;
+using Trainee.User.DAL.Repositories;
 
 namespace BackendPlayground
 {
@@ -39,15 +46,35 @@ namespace BackendPlayground
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddAlzaCoreIdentity(o => o.connectionString = Configuration.GetSection("ConnectionStrings:Alza.Core.IdentityConnection").Value, Configuration);
+
+            services.AddTransient<CountryService, CountryService>();
+            services.AddTransient<ICountryRepository, CountryRepository>();
+            services.AddTransient<UserService, UserService>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+
+
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
-            services.AddDbContext<CatalogueDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Catalogue")));
+            services.AddTransient<IFormatRepository, FormatRepository>();
+            services.AddTransient<ILanguageRepository, LanguageRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IPublisherRepository, PublisherRepository>();
+
             services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>(sp => { return new CategoryRelationshipRepository(Configuration.GetConnectionString("Trainee.Business")); });
             services.AddTransient<IProductRatingRepository, ProductRatingRepository>(sp => { return new ProductRatingRepository(Configuration.GetConnectionString("Trainee.Business")); });
-            services.AddTransient<BusinessService, BusinessService>();
-            services.AddDbContext<BusinessDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Business")));
             services.AddTransient<IReviewRepository, ReviewRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
+
+            services.AddTransient<BusinessService, BusinessService>();
+            //services.AddTransient<CatalogueService, CatalogueService>();
+
+
+            services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
+            services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.User.Users")));
+            services.AddDbContext<CatalogueDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Catalogue.Cat")));
+            services.AddDbContext<BusinessDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Business")));
 
         }
 

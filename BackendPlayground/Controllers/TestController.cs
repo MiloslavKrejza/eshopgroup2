@@ -77,8 +77,8 @@ namespace BackendPlayground.Controllers
         [HttpGet]
         public IActionResult ProductTest()
         {
-            QueryParametersWrapper filter = new QueryParametersWrapper() {SortingType=SortType.Asc,SortingParameter=SortingParameter.Name,PageSize=5,CategoryId=5,PageNum=1 };
-            var res = _serv.GetPage(filter).data;
+           // QueryParametersWrapper filter = new QueryParametersWrapper() {SortingType=SortType.Asc,SortingParameter=SortingParameter.Name,PageSize=5,CategoryId=5,PageNum=1 };
+            var res = _serv.GetProduct(15).data;
             return View();
 
         }
