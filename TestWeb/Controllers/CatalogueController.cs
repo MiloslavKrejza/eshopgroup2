@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Trainee.Business.Business;
 using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
@@ -68,24 +69,30 @@ namespace Eshop2.Controllers
         }
         // GET: /Catalogue/Book/BookId
         [HttpPost("/Catalogue/Book/{id}")]
-        public IActionResult Book(int? id, BookViewModel model)
+        public async Task<IActionResult> Book(int? id, BookViewModel model)
         {
             try
             {
-
+                //to add a review, user must be signed in
                 if (!_signInManager.IsSignedIn(User))
-                    return RedirectToAction("Login", "Account", $"~/Catalogue/Book/{id}");
+                    return RedirectToAction("Login", "Account", new { returnUrl = $"/Catalogue/Book/{id}" });
 
                 if (id == null)
                 {
                     return RedirectToAction("Error", "Home");
                 }
+                
+                if (_businessService.GetProduct(id.Value) == null)
+                    return RedirectToAction("Error", "Home");
 
-                _businessService.GetProduct(id.Value);
                 model.ProductId = id.Value;
                 
 
+
+                var user = await _userManager.GetUserAsync(User);
+
                 ViewData["productId"] = id;
+
 
                 Review review = new Review
                 {
@@ -93,20 +100,17 @@ namespace Eshop2.Controllers
                     ProductId = model.ProductId,
                     Rating = model.NewRating,
                     Text = model.ReviewText,
-                    UserId = _userManager.GetUserAsync(User).Id
+                    UserId = user.Id
                 };
 
+                //review can be added only if there is no other 
                 if (_businessService.GetReview(review.UserId, review.ProductId).isEmpty)
                 {
                     _businessService.AddReview(review);
                 }
-                else
-                {
-                    //todo remove this
-                    _businessService.UpdateReview(review);
-                }
 
                 model = _bookLoader.LoadBookModel(id.Value);
+
 
                 return View(model);
             }
@@ -158,7 +162,7 @@ namespace Eshop2.Controllers
                     parameters.Formats = model.FormatsFilter == null ? null : new List<int>(model.FormatsFilter.Value);
                     parameters.Languages = model.LanguagesFilter == null ? null : new List<int>(model.LanguagesFilter.Value);
                     parameters.Authors = model.AuthorsFilter == null ? null : new List<int>(model.AuthorsFilter.Value);
-                    parameters.Publishers = model.PublishersFilter == null ? null: new List<int>(model.PublishersFilter.Value);
+                    parameters.Publishers = model.PublishersFilter == null ? null : new List<int>(model.PublishersFilter.Value);
 
 
 
