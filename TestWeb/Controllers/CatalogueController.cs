@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Trainee.Business.Business;
 using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
@@ -96,19 +97,20 @@ namespace Eshop2.Controllers
         }
         // GET: /Catalogue/Book/BookId
         [HttpPost("/Catalogue/Book/{id}")]
-        public IActionResult Book(int? id, BookViewModel model)
+        public async Task<IActionResult> Book(int? id, BookViewModel model)
         {
             try
             {
 
                 if (!_signInManager.IsSignedIn(User))
-                    return RedirectToAction("Login", "Account", $"~/Catalogue/Book/{id}");
+                    return RedirectToAction("Login", "Account", new { returnUrl = $"/Catalogue/Book/{id}" });
 
 
                 _businessService.GetProduct(id.Value);
                 model.ProductId = id.Value;
 
-
+                var user = await _userManager.GetUserAsync(User);
+                
 
                 Review review = new Review
                 {
@@ -116,7 +118,7 @@ namespace Eshop2.Controllers
                     ProductId = model.ProductId,
                     Rating = model.NewRating,
                     Text = model.ReviewText,
-                    UserId = _userManager.GetUserAsync(User).Id
+                    UserId = user.Id
                 };
 
                 if (_businessService.GetReview(review.UserId, review.ProductId).isEmpty)

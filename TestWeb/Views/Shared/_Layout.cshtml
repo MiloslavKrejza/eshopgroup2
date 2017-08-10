@@ -8,6 +8,8 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
+
+    ViewData["returnUrl"] = Context.Request.Path;
     Category currentCategory;
     if (Model is ProductsViewModel)
     {
