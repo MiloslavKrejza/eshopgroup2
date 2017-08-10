@@ -21,7 +21,7 @@
 			{<span class="bold">@a.Name @a.Surname, </span> }
 		</p>
 		<p class="italics">@Html.DisplayFor(model => model.ProductFormat)</p>
-		<p>@Html.DisplayFor(model => model.Rating)</p>
+		<p>@Html.DisplayFor(model => model.AverageRating)</p>
 		<p>@Html.DisplayFor(model => model.Annotation)</p>
 		<p>@Html.DisplayFor(model => model.ProductText)</p>
 
@@ -42,6 +42,8 @@
 	</div>
 	<div class="col-lg-4">
 		<div class="row">
+
+			@*Route to image files directed from database*@
 			<img class="book-img" src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="Harry Potter" />
 		</div>
 	</div>
@@ -109,8 +111,7 @@
 
 				<input class="form-control" asp-for="NewRating" id="valueHodnota" min="1" max="5"/>
 				<label class="text-primary" asp-for="ReviewText">Vzkaz</label>
-				<textarea rows="5" cols="20" class="form-control" asp-for="ReviewText">
-			
+				<textarea rows="5" cols="20" class="form-control" asp-for="ReviewText">			
 				</textarea>
 				<button class="btn btn-primary" type="submit">Click me!</button>
 			</form>

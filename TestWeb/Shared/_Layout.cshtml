@@ -1,0 +1,175 @@
+﻿@using Eshop2.Models.CatalogueViewModels;
+@using Trainee.Catalogue.Business;
+@using Trainee.Catalogue.DAL.Entities;
+@
+
+@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+
+@inject CatalogueService CatalogueService;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    Category currentCategory;
+    if (Model is ProductsViewModel)
+    {
+        var modelCat = Model as ProductsViewModel;
+        currentCategory = modelCat.currentCategory;
+    }
+    else
+    {
+        var result = CatalogueService.GetCategory(1);
+        currentCategory = result.data;
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bookstore</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    </environment>
+    @Html.Raw(JavaScriptSnippet.FullScript)
+    
+</head>
+<body>
+
+    <div class="container body-content container-fluid">
+        <!-- HLAVIČKA -->
+        <div class="row" id="hlavicka">
+            <div class="col-md-2">
+                <a asp-area="" asp-controller="Home" asp-action="Index"><img class="logo img-responsive" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
+            </div>
+            <div class="col-md-8">
+                <input id="hledat" class="center-block" placeholder="Hledat" />
+            </div>
+            <div id="basket-user" class="col-md-2">
+                <a asp-area="" asp-controller="Order" asp-action="cart" class="btn basket-user-btn main-background">
+                    <img src="~/images/cart-34-48.ico" alt="cart" /><br />
+                    <p>Košík</p>
+                </a>
+                <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
+                    <img src="~/images/user-2-48.png" alt="cart" /><br />
+                    <p id="login-link">Přihlásit</p>
+                </button>
+
+                @{
+                    if (SignInManager.IsSignedIn(User))
+                    {
+                        <script src="~/js/site.js"></script>
+                            <script>changeUser();</script>
+                    }
+                    else
+                    {
+                        <script src="~/js/site.js"></script>
+                            <script>changeUserBack();</script>
+                    }
+
+                }
+
+            </div>
+        </div>
+
+        <hr />
+
+        <!--PARTIAL VIEW - LOGIN-->
+        <div class="row">
+
+            <div class="col-md-4 login-container">
+                <div class="container" id="login" style="display:none" ;>
+                    @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel(), ViewData)
+                </div>
+            </div>
+        </div>
+
+        <!-- MENU-->
+        <div class="row" id="main-section">
+            <div class="col-md-2 list-group">
+
+                @{foreach (Category c in currentCategory.Children)
+                    {
+                        <div class="list-group-item menu-item main-background">
+                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><!--<img src="~/images/(c.ico).svg" />-->@c.Name</p></a>
+                        </div>
+
+                    }
+                }
+
+                    <div class="list-group-item menu-item main-background">
+                        <a href=""><p>Všichni autoři</p></a>
+                    </div>
+                    <div class="list-group-item menu-item main-background">
+                        <a href=""><p>Všechny produkty</p></a>
+                    </div>
+                
+
+            </div>
+
+            <!-- OBSAH -->
+            <div class="col-md-10" id="layout">
+                @RenderBody()
+            </div>
+        </div>   <!--main section closing-->
+
+        <hr />
+
+        <!-- PATIČKA -->
+        <div class="footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href=""><p>Doprava a platba</p></a>
+                    <a href=""><p>Obchodní podmínky</p></a>
+                    <a href=""><p>Bezpečné nakupování</p></a>
+                </div>
+                <div class="col-md-6 text-right">
+                    <p>
+                        <strong>Fantastic Books</strong><br />
+                        Guttenbergova 5, Liberec<br />
+                        IČ: 285 64 952<br />
+                        +420 531 648 523<br />
+                        ahoj@fantasticbooks.cz
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
