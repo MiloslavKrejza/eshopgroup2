@@ -23,14 +23,15 @@ namespace Eshop2.Controllers
         private readonly CatalogueService _catalogueService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly BookLoader _bookLoader;
 
-        public CatalogueController(BusinessService service, CatalogueService catService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public CatalogueController(BusinessService businessService, CatalogueService catService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
-            _businessService = service;
+            _businessService = businessService;
             _catalogueService = catService;
             _signInManager = signInManager;
             _userManager = userManager;
-
+            _bookLoader = new BookLoader(businessService);
         }
 
 
@@ -46,41 +47,10 @@ namespace Eshop2.Controllers
                 {
                     return RedirectToAction("Error", "Home");
                 }
-                var dto = _businessService.GetProduct(id.Value);
-                if (!dto.isOK || dto.isEmpty)
-                {
-                    return RedirectToAction("Error", "Home");
-                }
 
-                ProductBO product = dto.data;
+                ViewData["productId"] = id;
 
-                BookViewModel model = new BookViewModel
-                {
-                    Name = product.Name,
-
-                    CategoryName = product.Category.Name,
-
-                    Authors = product.Book.AuthorsBooks.Select(ab => ab.Author).ToList(),
-                    ProductFormat = product.Format.Name,
-                    AverageRating = product.AverageRating,
-                    Annotation = product.Book.Annotation,
-                    ProductText = product.Text,
-                    PicAddress = product.PicAddress,
-                    ProductId = product.Id,
-
-                    State = product.State.Name,
-                    Price = product.Price,
-                    Language = product.Language.Name,
-
-                    PageCount = product.PageCount,
-                    Year = product.Year,
-                    Publisher = product.Publisher.Name,
-                    ISBN = product.ISBN,
-                    EAN = product.EAN,
-
-                    Reviews = product.Reviews
-
-                };
+                BookViewModel model = _bookLoader.LoadBookModel(id.Value);
 
                 //to be sure //Or handle it in view
                 model.Reviews = model.Reviews == null ? new List<Review>() : model.Reviews;
@@ -101,11 +71,16 @@ namespace Eshop2.Controllers
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", "Account", $"~/Catalogue/Book/{id}");
 
+                if (id == null)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
 
                 _businessService.GetProduct(id.Value);
                 model.ProductId = id.Value;
+                
 
-
+                ViewData["productId"] = id;
 
                 Review review = new Review
                 {
@@ -125,6 +100,9 @@ namespace Eshop2.Controllers
                     //todo remove this
                     _businessService.UpdateReview(review);
                 }
+
+                model = _bookLoader.LoadBookModel(id.Value);
+
                 return View(model);
             }
             catch (Exception e)
