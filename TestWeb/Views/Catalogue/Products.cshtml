@@ -1,83 +1,113 @@
 ﻿@using Eshop2.Models.CatalogueViewModels;
 @using Trainee.Business.DAL.Entities
 @using Trainee.Catalogue.DAL.Entities
+@using Trainee.Business.Business.Enums
 
 @model ProductsViewModel
-
+@section Scripts
+{
+    <script>
+        $(function () {
+            var handle = $("#custom-handle");
+            $("#priceFilter").slider(
+                {
+                    range: true,
+                    min: @Math.Truncate(Model.MinPrice.Value),
+                    max: @Math.Round(Model.MaxPrice.Value),
+                    values: [ @Math.Truncate(Model.MinPrice.Value), @Math.Round(Model.MaxPrice.Value) ],
+                    create: function () {
+                        handle.text($(this).slider("min-value"));
+                    },
+                    slide: function (event, ui) {
+                        handle.text(ui.value);
+                    }
+                });
+        });
+    </script>
+}
 @{
     ViewData["Title"] = Html.DisplayFor(model => model.currentCategory.Name);
 }
 <h2>@ViewData["Title"]</h2>
 
-<b>@Html.DisplayFor(model => model.MinPrice)</b>
-<div id="priceFilter"></div>
-<!--<input id="priceFilter" type="text" class="span2" value="" data-slider-min="@Model.MinPrice" data-slider-max="@Model.MaxPrice" data-slider-step="10" data-slider-value="[@Model.MinPrice, @Model.MinPrice]" />
--->
-<b>@Html.DisplayFor(model => model.MaxPrice)</b>
 
-<form>
-    <label class="control-label" asp-for="Authors">Autor</label>
-    <select asp-for="Authors" class="form-control">
-        @{
-            foreach (Author a in Model.Authors)
-            {
-                <option value="@a.AuthorId">@a.Surname, @a.Name</option>
 
-            }
-        }
-    </select>
-</form>
-
-<div class="row">
+<div class="row filters">
     <form>
         <div class="col-md-3">
-            <label asp-for="Authors">Autor</label>
-            <select class="selectpicker" asp-for="Authors" data-live-search="true">
+            <label>Cena</label>
+            <div id="priceFilter">
+                <div id="custom-handle" class="ui-slider-handle"></div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label asp-for="AuthorsFilter">Autor</label>
+            <select class="form-control selectpicker" asp-for="AuthorsFilter" data-live-search="true">
+                <option selected value="@null">Hledat...</option>
                 @{
                     foreach (Author a in Model.Authors)
                     {
-                        <option>@a.Surname, @a.Name</option>}
+                        <option value="@a.AuthorId">@a.Surname, @a.Name</option>}
                 }
             </select>
         </div>
-<!--
-        <div class="col-md-3">
-            <label asp-for="Publishers">Vydavatelství</label>
-            <select class="form-control" asp-for="Publishers">
+        <div class="col-md-2">
+            <label asp-for="PublishersFilter">Vydavatelství</label>
+            <select class="form-control " asp-for="PublishersFilter">
+                <option selected value="@null">Filtrovat...</option>
                 @{
                     foreach (Publisher p in Model.Publishers)
                     {
-                        <option>@p.Name</option>}
+                        <option value="@p.Id">@p.Name</option>}
                 }
             </select>
         </div>
 
         <div class="col-md-2">
-            <label asp-for="Languages">Jazyk</label>
-            <select class="form-control" asp-for="Languages">
+            <label asp-for="LanguagesFilter">Jazyk</label>
+            <select class="form-control " asp-for="LanguagesFilter">
+                <option selected value="@null">Filtrovat...</option>
                 @{
                     foreach (Language l in Model.Languages)
                     {
-                        <option>@l.Name</option>}
+                        <option value="@l.Id">@l.Name</option>}
                 }
             </select>
         </div>
 
         <div class="col-md-2">
-            <label asp-for="Formats">Formát</label>
-            <select class="form-control" asp-for="Formats">
+            <label asp-for="FormatsFilter">Formát</label>
+            <select class="form-control " asp-for="FormatsFilter">
+                <option selected value="@null">Filtrovat...</option>
                 @{
                     foreach (Format f in Model.Formats)
                     {
-                        <option>@f.Name</option>}
+                        <option value="@f.Id">@f.Name</option>}
                 }
             </select>
         </div>
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary">Filtrovat</button>
-        </div>-->
+        <div class="col-md-1">
+            <button type="submit" class="filter-btn">Filtrovat</button>
+        </div>
     </form>
 </div>
+<div class="row ">
+    <form>
+        <div class="col-md-3">
+            <label asp-for="SortingParameter">Řadit podle...</label>
+            <select class="form-control" asp-for="SortingParameter" asp-items="Html.GetEnumSelectList<SortingParameter>()"></select>
+        </div>
+        <div class="col-md-2">
+            <label asp-for="SortingType">Řadit...</label>
+            <select class="form-control" asp-for="SortingType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="filter-btn">Seřadit</button>
+        </div>
+    </form>
+</div>
+
+<hr class="bottom-padding" />
 
 
 <div class="row">
@@ -89,29 +119,48 @@
             ProductBO p = Model.Products[i];
             <div class="col-lg-3 text-center product">
                 <a asp-area="" asp-controller="catalogue" asp-action="book" asp-route-id="@p.Id">
-                    <img src="@p.PicAddress" alt="@p.Name" />
-                    <p class="bold">@p.Name</p>
-                    <p>
-                        @foreach (var ab in p.Book.AuthorsBooks)
-                        {<span>@ab.Author.Name @ab.Author.Surname, </span>}
-                    </p>
-                    <p><img style="width:100px" src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" /></p>
-                    <p class="italics">@p.Format.Name</p>
-                    <p>@p.Price</p>
+                    <img src="~/images/product_images/@p.PicAddress" alt="@p.Name" />
+                    <p class="bold" id="book-title">@p.Name</p>
+                    <p id="book-authors">
+
+                        @{
+                            var ab = p.Book.AuthorsBooks;
+
+                            for (int j = 0; j < ab.Count; j++)
+
+                            {
+                                <span>
+                                    @ab[j].Author.Name @ab[j].Author.Surname@if (j != ab.Count - 1)
+                                    {@Html.Raw(", ")}
+                                </span>
+                            }
+                        }
+                    </p><p><img style="width:100px" src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" /></p><p class="italics">@p.Format.Name</p>
+                    <p>@String.Format("{0:C}", p.Price)</p>
                 </a>
                 <button class="btn btn-primary">Do košíku</button>
 
             </div>
 
-            if ((i + 1) % 4 == 0)
-            {
-                @Html.Raw("</div>")
-                @Html.Raw("<div class='row'>")
-            }
-        }
+                            if ((i + 1) % 4 == 0)
+                            {
+                                @Html.Raw("</div>")
+                                @Html.Raw("<div class='row'>")
+                                }
+                            }
 
     }
 
 </div>
+<div class="col-centered">
+    <ul class="pagination col-centered paging">
+        @for (int i = 0; i < Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize); i++)
+            {
+            <li><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="@i">@(i + 1)</a></li>
+        }
+    </ul>
+</div>
 
-<hr />
+
+
+

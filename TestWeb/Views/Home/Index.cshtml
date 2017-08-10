@@ -1,24 +1,4 @@
-﻿@{
+﻿@using Eshop2.Models.CatalogueViewModels;
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="container">
-    <div class="row">
-        <h1>Vítejte na nejlepším eshopu na celém světě.</h1>
-        <p>
-			<a asp-action="Book" asp-controller="Catalogue" asp-route-returnurl="@ViewData["ReturnUrl"]">Katalog</a>
-			<a href="/Catalogue/Book/1">Zasraný odkaz na Harryho Pottera</a>
-		
-        </p>
-
-        1<div id="priceFilter"></div>10
-    </div>
-
-    
-</div>
-
-<script>
-    $(function () {
-        $("#priceFilter").slider();
-    });
-</script>

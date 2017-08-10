@@ -1,8 +1,11 @@
-﻿@using Eshop2.Models.CatalogueViewModels;
+@using Eshop2.Models.CatalogueViewModels;
+@using Trainee.Catalogue.Business;
 @using Trainee.Catalogue.DAL.Entities;
 @inject UserManager<ApplicationUser> UserManager;
 @inject SignInManager<ApplicationUser> SignInManager;
+
 @model BookViewModel
+@inject CatalogueService _catService;
 
 @{
 	ViewData["Title"] = "Harry Potter";
@@ -15,10 +18,14 @@
 	var reviewPresent = Model.Reviews.Where(r => r.UserId == uId).Where(r => r.ProductId == (int)ViewData["productId"]).FirstOrDefault();
 }
 
+@{ 
+    Category parentCategory = _catService.GetCategory(Model.Category.ParentId.Value).data;
+}
+
 <div class="row">
 	<ul class="breadcrumb main-background">
-		<li class="main-cathegory"><a href="#">Fantasy</a></li>
-		<li><a href="#">@Html.DisplayFor(model => model.CategoryName)</a></li>
+		<li class="main-cathegory"><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@parentCategory.Id">@parentCategory.Name</a></li>
+		<li><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.Category.Id">@Html.DisplayFor(model => model.Category.Name)</a></li>
 	</ul>
 </div>
 <hr />
