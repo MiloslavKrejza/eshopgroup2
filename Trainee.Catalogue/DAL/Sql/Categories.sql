@@ -5,7 +5,8 @@ GO
 CREATE TABLE [dbo].[Categories](
 	[Id][int] IDENTITY(1,1) NOT NULL,
 	[Name][nvarchar](max) NOT NULL,
-	[ParentId][int] NULL
+	[ParentId][int] NULL,
+	[PicAddress][nvarchar](max) NULL 
 )
 GO
 

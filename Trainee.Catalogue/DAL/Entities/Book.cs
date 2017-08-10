@@ -11,7 +11,6 @@ namespace Trainee.Catalogue.DAL.Entities
         public string Annotation { get; set; }
         //Referenced properties
         public List<ProductBase> Products { get; set; }
-        //public List<Author> Authors { get; set; }
         public List<AuthorBook> AuthorsBooks { get; set; }
     }
 }
