@@ -1,15 +1,21 @@
 ﻿@using Eshop2.Models.CatalogueViewModels;
 @using Trainee.Catalogue.DAL.Entities
+@using Trainee.Catalogue.Business;
 @model BookViewModel
+@inject CatalogueService _catService;
 
 @{
 	ViewData["Title"] = "Harry Potter";
 }
 
+@{ 
+    Category parentCategory = _catService.GetCategory(Model.Category.ParentId.Value).data;
+}
+
 <div class="row">
 	<ul class="breadcrumb main-background">
-		<li class="main-cathegory"><a href="#">Fantasy</a></li>
-		<li><a href="#">@Html.DisplayFor(model => model.CategoryName)</a></li>
+		<li class="main-cathegory"><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@parentCategory.Id">@parentCategory.Name</a></li>
+		<li><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.Category.Id">@Html.DisplayFor(model => model.Category.Name)</a></li>
 	</ul>
 </div>
 <hr />
@@ -21,7 +27,7 @@
         {<span class="bold">@a.Name @a.Surname, </span> }
     </p>
 		<p class="italics">@Html.DisplayFor(model => model.ProductFormat)</p>
-		<p>@Html.DisplayFor(model => model.Rating)</p>
+		<p>@Html.DisplayFor(model => model.AverageRating)</p>
 		<p>@Html.DisplayFor(model => model.Annotation)</p>
 		<p>@Html.DisplayFor(model => model.ProductText)</p>
 		

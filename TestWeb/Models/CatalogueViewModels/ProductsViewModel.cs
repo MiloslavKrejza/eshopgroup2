@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Trainee.Business.Business.Enums;
@@ -23,6 +24,8 @@ namespace Eshop2.Models.CatalogueViewModels
 
         //Current category
         public Category currentCategory { get; set; }
+
+        
 
         //Filter parameters
         public int PageNum { get; set; } = 1;

@@ -511,6 +511,45 @@ input:-ms-input-placeholder {
 .details-right {
     padding-left: 5px;
 }
+
+    /* Products catalogue */
+
+.filters {
+    select {
+        margin-bottom:5px;
+    }
+}
+
+.filter-btn {
+    position: relative;
+    top: 23px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+#custom-handle {
+    width: 3em;
+    height: 1.6em;
+    top: 50%;
+    margin-top: -.8em;
+    text-align: center;
+    line-height: 1.6em;
+}
+
+#book-title {
+    height: 40px;
+}
+
+#book-authors {
+    height: 60px;
+}
+
+.paging {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+
 /*  Rating system */
 #rating {
     text-align: center;

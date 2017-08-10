@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Trainee.Business.DAL.Entities;
@@ -11,7 +12,7 @@ namespace Eshop2.Models.CatalogueViewModels
     {
         public string Name { get; set; }
 
-        public string CategoryName { get; set; } //or Category
+        public Category Category { get; set; } 
 
         public List<Author> Authors { get; set; }
         public string ProductFormat { get; set; }
