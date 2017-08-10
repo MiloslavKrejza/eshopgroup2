@@ -41,12 +41,13 @@ namespace Eshop2.Controllers
         {
             try
             {
-
+                //book id missing
                 if (id == null)
                 {
                     return RedirectToAction("Error", "Home");
                 }
                 var dto = _businessService.GetProduct(id.Value);
+                //missing product (unknown product id)
                 if (!dto.isOK || dto.isEmpty)
                 {
                     return RedirectToAction("Error", "Home");
@@ -54,6 +55,7 @@ namespace Eshop2.Controllers
 
                 ProductBO product = dto.data;
 
+                //creating the model using product data
                 BookViewModel model = new BookViewModel
                 {
                     Name = product.Name,
@@ -98,6 +100,7 @@ namespace Eshop2.Controllers
         {
             try
             {
+
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", "Account", $"~/Catalogue/Book/{id}");
 
