@@ -283,8 +283,9 @@ namespace TestWeb.Controllers
                             _profileService.AddUserProfile(userProfile);
 
                             ViewData["RegisterCompleted"] = true;
-
-                            return View(model);
+                            if(ReferenceEquals(returnUrl, null))
+                                return View(model);
+                            return RedirectToLocal(returnUrl);
 
                         }
 
@@ -533,20 +534,20 @@ namespace TestWeb.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl = null)
         {
             try
             {
                 await _signInManager.SignOutAsync();
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToLocal(returnUrl);
+                //return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             catch (Exception e)
             {
                 return AlzaError.ExceptionActionResult(e);
             }
         }
-
-        //Odstranit??
+        
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))

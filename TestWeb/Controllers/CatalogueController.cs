@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Trainee.Business.Business;
 using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
@@ -23,14 +24,15 @@ namespace Eshop2.Controllers
         private readonly CatalogueService _catalogueService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly BookLoader _bookLoader;
 
-        public CatalogueController(BusinessService service, CatalogueService catService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public CatalogueController(BusinessService businessService, CatalogueService catService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
-            _businessService = service;
+            _businessService = businessService;
             _catalogueService = catService;
             _signInManager = signInManager;
             _userManager = userManager;
-
+            _bookLoader = new BookLoader(businessService);
         }
 
 
@@ -41,46 +43,20 @@ namespace Eshop2.Controllers
         {
             try
             {
-
+                //book id missing
                 if (id == null)
                 {
                     return RedirectToAction("Error", "Home");
                 }
-                var dto = _businessService.GetProduct(id.Value);
-                if (!dto.isOK || dto.isEmpty)
-                {
-                    return RedirectToAction("Error", "Home");
-                }
 
-                ProductBO product = dto.data;
 
-                BookViewModel model = new BookViewModel
-                {
-                    Name = product.Name,
 
-                    Category = product.Category,
+                ViewData["productId"] = id;
 
-                    Authors = product.Book.AuthorsBooks.Select(ab => ab.Author).ToList(),
-                    ProductFormat = product.Format.Name,
-                    AverageRating = product.AverageRating,
-                    Annotation = product.Book.Annotation,
-                    ProductText = product.Text,
-                    PicAddress = product.PicAddress,
-                    ProductId = product.Id,
-
-                    State = product.State.Name,
-                    Price = product.Price,
-                    Language = product.Language.Name,
-
-                    PageCount = product.PageCount,
-                    Year = product.Year,
-                    Publisher = product.Publisher.Name,
-                    ISBN = product.ISBN,
-                    EAN = product.EAN,
-
-                    Reviews = product.Reviews
-
-                };
+                BookViewModel model = _bookLoader.LoadBookModel(id.Value);
+                if(model == null)
+                  return RedirectToAction("Error", "Home");
+                
 
                 //to be sure //Or handle it in view
                 model.Reviews = model.Reviews == null ? new List<Review>() : model.Reviews;
@@ -94,17 +70,29 @@ namespace Eshop2.Controllers
         }
         // POST: /Catalogue/Book/BookId
         [HttpPost("/Catalogue/Book/{id}")]
-        public IActionResult Book(int? id, BookViewModel model)
+        public async Task<IActionResult> Book(int? id, BookViewModel model)
         {
             try
             {
+                //to add a review, user must be signed in
                 if (!_signInManager.IsSignedIn(User))
-                    return RedirectToAction("Login", "Account", $"~/Catalogue/Book/{id}");
+                    return RedirectToAction("Login", "Account", new { returnUrl = $"/Catalogue/Book/{id}" });
 
+                if (id == null)
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+                
+                if (_businessService.GetProduct(id.Value) == null)
+                    return RedirectToAction("Error", "Home");
 
-                _businessService.GetProduct(id.Value);
                 model.ProductId = id.Value;
+                
 
+
+                var user = await _userManager.GetUserAsync(User);
+
+                ViewData["productId"] = id;
 
 
                 Review review = new Review
@@ -113,18 +101,18 @@ namespace Eshop2.Controllers
                     ProductId = model.ProductId,
                     Rating = model.NewRating,
                     Text = model.ReviewText,
-                    UserId = _userManager.GetUserAsync(User).Id
+                    UserId = user.Id
                 };
 
+                //review can be added only if there is no other 
                 if (_businessService.GetReview(review.UserId, review.ProductId).isEmpty)
                 {
                     _businessService.AddReview(review);
                 }
-                else
-                {
-                    //todo remove this
-                    _businessService.UpdateReview(review);
-                }
+
+                model = _bookLoader.LoadBookModel(id.Value);
+
+
                 return View(model);
             }
             catch (Exception e)
@@ -183,6 +171,7 @@ namespace Eshop2.Controllers
                     parameters.Languages = model.LanguagesFilter == null ? null : new List<int>() { model.LanguagesFilter.Value };
                     parameters.Authors = model.AuthorsFilter == null ? null : new List<int>(){model.AuthorsFilter.Value};
                     parameters.Publishers = model.PublishersFilter == null ? null: new List<int>() { model.PublishersFilter.Value };
+
 
 
 

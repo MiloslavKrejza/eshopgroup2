@@ -1,6 +1,10 @@
 ﻿@using Eshop2.Models.CatalogueViewModels;
 @using Trainee.Catalogue.Business;
 @using Trainee.Catalogue.DAL.Entities;
+@using Microsoft.AspNetCore.Identity;
+@using Alza.Core.Identity.Dal.Entities;
+@using TestWeb.Models.AccountViewModels;
+
 @inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 
 @inject CatalogueService CatalogueService;
@@ -8,8 +12,6 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-
-    ViewData["returnUrl"] = Context.Request.Path;
     Category currentCategory;
     if (Model is ProductsViewModel)
     {
@@ -35,8 +37,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -102,8 +103,6 @@
         <div class="row" id="main-section">
             <div class="col-md-2 list-group">
 
-               
-
                 @{foreach (Category c in currentCategory.Children)
                     {
                         <div class="list-group-item menu-item main-background">
@@ -155,12 +154,6 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-                crossorigin="anonymous"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
         <script src="~/js/site.js"></script>
     </environment>
     <environment names="Staging,Production">
@@ -176,25 +169,9 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-
-        <script src="https://code.jquery.com/ui/1.7.2/jquery-ui.min.js"
-                integrity="sha256-4h4SHCCUAKFl7xWF9JeZp9tnU8lmM5bt6G3kNK6E4ek="
-                crossorigin="anonymous"></script>
-
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)
-<!--
-    <script>
-        $(function () {
-            $("#priceFilter").slider(
-                {
-                    range: true,
-                });
-        });
-    </script>
--->
-    
 </body>
 </html>
