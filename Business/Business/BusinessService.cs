@@ -177,7 +177,9 @@ namespace Trainee.Business.Business
         {
             try
             {
-                return AlzaAdminDTO<Review>.Data(_reviewRepository.GetReview(userId, productId));
+                var result = _reviewRepository.GetReview(userId, productId);
+                result.User = _userProfileRepository.GetProfile(result.UserId);
+                return AlzaAdminDTO<Review>.Data(result);
             }
             catch(Exception e)
             {
