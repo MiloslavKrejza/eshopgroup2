@@ -396,10 +396,6 @@ input:-ms-input-placeholder {
     transform: rotateX(0deg);
     text-shadow: 0 0 30px #ffc; }
 
-.centerMePlox {
-  margin: 0px auto;
-  width: 75px; }
-
 #summaryByMiloslavKrejza {
   margin: 0px 0 0 29px;
   position: relative;
@@ -427,3 +423,4 @@ input:-ms-input-placeholder {
   font-weight: bold; }
 
 /* Order */
+/*Reviews*/
