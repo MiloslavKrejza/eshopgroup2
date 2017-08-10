@@ -39,7 +39,7 @@ namespace Trainee.Business.Business
         public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
             Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            //stopwatch.Start();
 
             var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
@@ -63,7 +63,7 @@ namespace Trainee.Business.Business
                     authors.Add(author);
                 }
             }
-
+            //stopwatch.Start();
             result.MinPrice = minPrice;
             result.MaxPrice = maxPrice;
 
@@ -154,7 +154,7 @@ namespace Trainee.Business.Business
             var avRating = _productRatingRepository.GetRating(id);
             var reviews = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
             var users = _userProfileRepository.GetAllProfiles().Where(p => reviews.Select(r => r.UserId).Contains(p.Id));
-            reviews = reviews.Join(users, r => r.UserId, p => p.Id, (r, p) => { r.User = p; return r; }).ToList();
+            reviews = reviews.Join(users, r => r.UserId, p => p.Id, (r, p) => { r.User = p; return r; }).OrderBy(r => r.Date).ToList();
             var product = new ProductBO(baseProduct, avRating, reviews);
 
             return AlzaAdminDTO<ProductBO>.Data(product);
