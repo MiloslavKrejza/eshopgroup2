@@ -92,7 +92,7 @@ namespace Eshop2.Controllers
                 return AlzaError.ExceptionActionResult(e);
             }
         }
-        // GET: /Catalogue/Book/BookId
+        // POST: /Catalogue/Book/BookId
         [HttpPost("/Catalogue/Book/{id}")]
         public IActionResult Book(int? id, BookViewModel model)
         {
