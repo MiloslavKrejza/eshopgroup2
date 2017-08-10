@@ -21,6 +21,9 @@
         var result = CatalogueService.GetCategory(1);
         currentCategory = result.data;
     }
+    int parentId = currentCategory.Parent == null ? 1 : currentCategory.ParentId.Value;
+
+    string parentName = currentCategory.Parent == null ? "Všechny knížky" : currentCategory.Parent.Name;
 }
 
 <!DOCTYPE html>
@@ -56,10 +59,7 @@
             <div class="col-md-2">
                 <a asp-area="" asp-controller="Home" asp-action="Index"><img class="logo img-responsive" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
             </div>
-            <div class="col-md-8">
-                <input id="hledat" class="center-block" placeholder="Hledat" />
-            </div>
-            <div id="basket-user" class="col-md-2">
+            <div id="basket-user" class="col-md-2 col-md-offset-8">
                 <a asp-area="" asp-controller="Order" asp-action="cart" class="btn basket-user-btn main-background">
                     <img src="~/images/cart-34-48.ico" alt="cart" /><br />
                     <p>Košík</p>
@@ -103,7 +103,7 @@
             <div class="col-md-2 list-group">
 
                 <div class="list-group-item menu-item main-background">
-                    <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@currentCategory.ParentId"><p><!--<img src="~/images/(c.ico).svg" />currentCategory.Parent.Name--></p></a>
+                    <strong><a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@parentId"><p><!--<img src="~/images/(c.ico).svg" />-->@parentName</p></a></strong>
                 </div>
                
 
@@ -116,15 +116,7 @@
                         </div>
 
                     }
-                }
-
-                    <div class="list-group-item menu-item main-background">
-                        <a href=""><p>Všichni autoři</p></a>
-                    </div>
-                    <div class="list-group-item menu-item main-background">
-                        <a href=""><p>Všechny produkty</p></a>
-                    </div>
-                
+                }                
 
             </div>
 
