@@ -68,7 +68,7 @@ namespace Eshop2.Controllers
                 return AlzaError.ExceptionActionResult(e);
             }
         }
-        // GET: /Catalogue/Book/BookId
+        // POST: /Catalogue/Book/BookId
         [HttpPost("/Catalogue/Book/{id}")]
         public async Task<IActionResult> Book(int? id, BookViewModel model)
         {
