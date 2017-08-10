@@ -31,7 +31,7 @@ namespace Eshop2.Abstraction
             {
                 Name = product.Name,
 
-                CategoryName = product.Category.Name,
+                Category = product.Category,
 
                 Authors = product.Book.AuthorsBooks.Select(ab => ab.Author).ToList(),
                 ProductFormat = product.Format.Name,
