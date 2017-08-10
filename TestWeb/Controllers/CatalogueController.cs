@@ -101,16 +101,18 @@ namespace Eshop2.Controllers
         {
             try
             {
-
+                //to add a review, user must be signed in
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", "Account", new { returnUrl = $"/Catalogue/Book/{id}" });
 
 
-                _businessService.GetProduct(id.Value);
+                if (_businessService.GetProduct(id.Value) == null)
+                    return RedirectToAction("Error", "Home");
+
                 model.ProductId = id.Value;
 
                 var user = await _userManager.GetUserAsync(User);
-                
+
 
                 Review review = new Review
                 {
@@ -121,15 +123,12 @@ namespace Eshop2.Controllers
                     UserId = user.Id
                 };
 
+                //review can be added only if there is no other 
                 if (_businessService.GetReview(review.UserId, review.ProductId).isEmpty)
                 {
                     _businessService.AddReview(review);
                 }
-                else
-                {
-                    //todo remove this
-                    _businessService.UpdateReview(review);
-                }
+
                 return View(model);
             }
             catch (Exception e)
@@ -180,7 +179,7 @@ namespace Eshop2.Controllers
                     parameters.Formats = model.FormatsFilter == null ? null : new List<int>(model.FormatsFilter.Value);
                     parameters.Languages = model.LanguagesFilter == null ? null : new List<int>(model.LanguagesFilter.Value);
                     parameters.Authors = model.AuthorsFilter == null ? null : new List<int>(model.AuthorsFilter.Value);
-                    parameters.Publishers = model.PublishersFilter == null ? null: new List<int>(model.PublishersFilter.Value);
+                    parameters.Publishers = model.PublishersFilter == null ? null : new List<int>(model.PublishersFilter.Value);
 
 
 
