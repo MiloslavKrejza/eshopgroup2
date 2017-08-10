@@ -31,9 +31,9 @@
 <h2>@ViewData["Title"]</h2>
 
 
+<form>
+    <div class="row filters">
 
-<div class="row filters">
-    <form>
         <div class="col-md-3">
             <label>Cena</label>
             <div id="priceFilter">
@@ -86,13 +86,9 @@
                 }
             </select>
         </div>
-        <div class="col-md-1">
-            <button type="submit" class="filter-btn">Filtrovat</button>
-        </div>
-    </form>
-</div>
-<div class="row ">
-    <form>
+    </div>
+    <div class="row ">
+
         <div class="col-md-3">
             <label asp-for="SortingParameter">Řadit podle...</label>
             <select class="form-control" asp-for="SortingParameter" asp-items="Html.GetEnumSelectList<SortingParameter>()"></select>
@@ -102,10 +98,13 @@
             <select class="form-control" asp-for="SortingType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
         </div>
         <div class="col-md-1">
-            <button type="submit" class="filter-btn">Seřadit</button>
+            <button type="submit" class="filter-btn">Filtrovat</button>
         </div>
-    </form>
-</div>
+        <div class="col-md-1">
+            <a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
+        </div>
+    </div>
+</form>
 
 <hr class="bottom-padding" />
 

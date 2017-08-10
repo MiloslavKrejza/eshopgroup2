@@ -102,9 +102,14 @@
         <div class="row" id="main-section">
             <div class="col-md-2 list-group">
 
+                <div class="list-group-item menu-item main-background">
+                    <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@currentCategory.ParentId"><p><!--<img src="~/images/(c.ico).svg" />currentCategory.Parent.Name--></p></a>
+                </div>
                
 
-                @{foreach (Category c in currentCategory.Children)
+                @{ 
+
+                    foreach (Category c in currentCategory.Children)
                     {
                         <div class="list-group-item menu-item main-background">
                             <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><!--<img src="~/images/(c.ico).svg" />-->@c.Name</p></a>
