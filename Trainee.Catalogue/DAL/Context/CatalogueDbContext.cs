@@ -43,8 +43,8 @@ namespace Trainee.Catalogue.DAL.Context
                 .HasOne(a => a.Country)
                 .WithMany()
                 .HasForeignKey(a => a.CountryId);
-            //  //Books
 
+            //Books
            builder.Entity<Book>().ToTable("Books");
            builder.Entity<Book>().Property(b => b.BookId).HasColumnName("Id");
            builder.Entity<Book>().HasKey(b => b.BookId).HasName("Id");
@@ -54,20 +54,10 @@ namespace Trainee.Catalogue.DAL.Context
                 .WithOne(ab => ab.Book)
                 .HasForeignKey(ab => ab.BookId);
 
-            // //AuthorsBooks
-
+            //AuthorsBooks
             builder.Entity<AuthorBook>().ToTable("AuthorsBooks");
             builder.Entity<AuthorBook>().HasKey(ab => new { ab.AuthorId, ab.BookId });
-            // /*
-            // builder.Entity<AuthorBook>()
-            //     .HasOne(ab => ab.Author)
-            //     .WithMany()
-            //     .HasForeignKey(ab => ab.AuthorId);//.HasConstraintName("FK_AuthorsBooks_Authors");
-            // builder.Entity<AuthorBook>()
-            //     .HasOne(ab => ab.Book)
-            //     .WithMany(b => b.AuthorsBooks)
-            //     .HasForeignKey(ab => ab.BookId);//.HasConstraintName("FK_AuthorsBooks_Books");*/
-            // //Categories
+            
 
             builder.Entity<Category>().ToTable("Categories");
             builder.Entity<Category>().Property(c => c.Name).IsRequired();

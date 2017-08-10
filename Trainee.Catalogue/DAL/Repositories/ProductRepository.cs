@@ -42,6 +42,7 @@ namespace Trainee.Catalogue.DAL.Repositories
         {
 
             List<ProductBase> result = new List<ProductBase>();
+            //ADO.NET is used to work with database views
             string queryString = "SELECT * FROM CompleteProducts ORDER BY ProductId ASC";
             using (var conn = new SqlConnection(_connectionString))
             {
@@ -53,6 +54,7 @@ namespace Trainee.Catalogue.DAL.Repositories
                     int previousProductId = 0;
                     while (reader.Read())
                     {
+                        //Has to be reviewed if column names change by chance
                         int id = (int)reader["ProductId"];
                         int bookId = (int)reader["BookId"];
                         if (id != previousProductId)
@@ -143,9 +145,6 @@ namespace Trainee.Catalogue.DAL.Repositories
             var result = _context.Products
                 .Where(p => p.Id == id)
                 .Include(p => p.Book)
-                //.ThenInclude(b => b.AuthorsBooks)
-                // .ThenInclude(ab => ab.Author)
-                //.ThenInclude(a => a.Country)
                 .Include(p => p.Category)
                 .Include(p => p.Format)
                 .Include(p => p.Language)
@@ -153,11 +152,11 @@ namespace Trainee.Catalogue.DAL.Repositories
                 .Include(p => p.State)
                 .FirstOrDefault();
 
-
+            //Unknown id would throw an NullReferenceException
             if (ReferenceEquals(result, null))
                 return result;
             
-
+            //manually adding, as EF core does not support many to many (and therefore ThenInclude is buggy)
             result.Book.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.BookId == result.BookId).ToList();
 
             foreach (AuthorBook ab in result.Book.AuthorsBooks)

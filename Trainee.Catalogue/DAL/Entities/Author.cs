@@ -12,6 +12,8 @@ namespace Trainee.Catalogue.DAL.Entities
         public string Surname { get; set; }
         public int? CountryId { get; set; }
         //Referenced properties
+
+        public List<AuthorBook> AuthorsBooks { get; set; }
         public Country Country { get; set; }
         //Overriden method of base class (object)
         public override int GetHashCode()
@@ -22,7 +24,6 @@ namespace Trainee.Catalogue.DAL.Entities
         {
             return AuthorId == ((Author)obj).AuthorId;
         }
-        public List<AuthorBook> AuthorsBooks { get; set; }
 
     }
 }
