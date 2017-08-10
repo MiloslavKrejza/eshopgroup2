@@ -45,8 +45,6 @@ namespace Trainee.Catalogue.DAL.Repositories
             var result = _context.Authors
                 .Where(a => a.AuthorId == id)
                 .Include(a => a.Country)
-                //.Include(a => a.AuthorsBooks)
-                   // .ThenInclude(ab => ab.Book)
                 .FirstOrDefault();
 
             result.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.AuthorId == result.AuthorId).ToList();

@@ -42,15 +42,19 @@ namespace Eshop2.Controllers
         {
             try
             {
-
+                //book id missing
                 if (id == null)
                 {
                     return RedirectToAction("Error", "Home");
                 }
 
+
                 ViewData["productId"] = id;
 
                 BookViewModel model = _bookLoader.LoadBookModel(id.Value);
+                if(model == null)
+                  return RedirectToAction("Error", "Home");
+                
 
                 //to be sure //Or handle it in view
                 model.Reviews = model.Reviews == null ? new List<Review>() : model.Reviews;
@@ -68,6 +72,7 @@ namespace Eshop2.Controllers
         {
             try
             {
+
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("Login", "Account", $"~/Catalogue/Book/{id}");
 

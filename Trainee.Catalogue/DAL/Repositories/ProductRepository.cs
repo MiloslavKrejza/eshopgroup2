@@ -42,6 +42,7 @@ namespace Trainee.Catalogue.DAL.Repositories
         {
 
             List<ProductBase> result = new List<ProductBase>();
+            //ADO.NET is used to work with database views
             string queryString = "SELECT * FROM CompleteProducts ORDER BY ProductId ASC";
             using (var conn = new SqlConnection(_connectionString))
             {
@@ -51,10 +52,15 @@ namespace Trainee.Catalogue.DAL.Repositories
                 {
                     ProductBase currentProduct = null;
                     int previousProductId = 0;
+
+                    //read all products
                     while (reader.Read())
                     {
+                        //Has to be reviewed if column names change by chance
                         int id = (int)reader["ProductId"];
                         int bookId = (int)reader["BookId"];
+
+                        //if they differ, stop adding AuthorsBooks and make a new product
                         if (id != previousProductId)
                         {
                             previousProductId = id;
@@ -86,6 +92,7 @@ namespace Trainee.Catalogue.DAL.Repositories
                             int? pageCount = reader["PageCount"] != DBNull.Value ? (int?)reader["PageCount"] : null;
                             DateTime dateAdded = (DateTime)reader["DateAdded"];
 
+                            //creating principal entities
                             Publisher pub = new Publisher() { Id = publisherId, Name = publisherName };
                             Category cat = new Category() { Name = categoryName, Id = catagoryId };
                             Language lang = new Language() { Id = languageId, Name = languageName };
@@ -119,6 +126,7 @@ namespace Trainee.Catalogue.DAL.Repositories
                                 StateId = stateId
                             };
                         }
+                        //else add a new authorbook, author
                         int? countryId = reader["AuthorCountryId"] != DBNull.Value ? (int?)reader["AuthorCountryId"] : null;
                         Country country = countryId != null ? new Country() { Name = (string)reader["AuthorCountryName"], Id = (int)countryId, CountryCode = (string)reader["AuthorCountryCode"] } : null;
                         int authorId = (int)reader["AuthorId"];
@@ -143,9 +151,6 @@ namespace Trainee.Catalogue.DAL.Repositories
             var result = _context.Products
                 .Where(p => p.Id == id)
                 .Include(p => p.Book)
-                //.ThenInclude(b => b.AuthorsBooks)
-                // .ThenInclude(ab => ab.Author)
-                //.ThenInclude(a => a.Country)
                 .Include(p => p.Category)
                 .Include(p => p.Format)
                 .Include(p => p.Language)
@@ -153,11 +158,11 @@ namespace Trainee.Catalogue.DAL.Repositories
                 .Include(p => p.State)
                 .FirstOrDefault();
 
-
+            //Unknown id would throw an NullReferenceException
             if (ReferenceEquals(result, null))
                 return result;
             
-
+            //manually adding, as EF core does not support many to many (and therefore ThenInclude is buggy)
             result.Book.AuthorsBooks = _context.AuthorsBooks.Where(ab => ab.BookId == result.BookId).ToList();
 
             foreach (AuthorBook ab in result.Book.AuthorsBooks)
