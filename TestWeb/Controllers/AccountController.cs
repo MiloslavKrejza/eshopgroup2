@@ -23,6 +23,9 @@ using Eshop2.Abstraction;
 
 namespace TestWeb.Controllers
 {
+    /// <summary>
+    /// This Controller class provides Login, Registration, Edit and Profile details to the user
+    /// </summary>
     public class AccountController : Controller
     {
         private IHostingEnvironment _env;
@@ -393,7 +396,7 @@ namespace TestWeb.Controllers
 
                     /*******************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
 
-                    List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, /*model.Phone*/ };
+                    List<object> completionList = new List<object> { model.Street, model.City, model.PostalCode, model.Phone };
                     int profileState = COMPLETE; //complete
 
                     //to be changed if there would be more states
@@ -487,10 +490,8 @@ namespace TestWeb.Controllers
                     Surname = userProfile.Surname,
                     City = userProfile.City,
                     Country = userProfile.Country,
-                    //CountryCode = userProfile.Country.Name,
                     PostalCode = userProfile.PostalCode,
                     Street = userProfile.Address,
-                    //Password = null,
                     Email = userIdentity.Email,
                     Phone = userProfile.PhoneNumber,
                     ProfilePicAddress = userProfile.ProfilePicAddress

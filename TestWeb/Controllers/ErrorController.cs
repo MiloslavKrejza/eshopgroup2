@@ -15,6 +15,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Eshop2.Controllers
 {
+    /// <summary>
+    /// This class provides error handling methods
+    /// </summary>
     public class ErrorController : Controller
     {
 

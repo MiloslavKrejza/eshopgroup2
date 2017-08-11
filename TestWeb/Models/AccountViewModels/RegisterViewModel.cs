@@ -7,6 +7,9 @@ using Trainee.Core.DAL.Entities;
 
 namespace TestWeb.Models.AccountViewModels
 {
+    /// <summary>
+    /// This ViewModel provides all important data to display on the Register View page
+    /// </summary>
 	public class RegisterViewModel : BaseViewModel
     {
         [Required(ErrorMessage = "Prosím vyplňte e-mail.")]

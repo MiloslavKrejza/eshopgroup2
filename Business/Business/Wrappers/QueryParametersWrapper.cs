@@ -5,6 +5,9 @@ using Trainee.Business.Business.Enums;
 
 namespace Trainee.Business.Business.Wrappers
 {
+    /// <summary>
+    /// This class is a DTO made for filter parameters
+    /// </summary>
     public class QueryParametersWrapper
     {
 

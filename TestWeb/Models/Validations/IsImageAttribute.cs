@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TestWeb.ViewModels.Validations
 {
+    /// <summary>
+    /// This class provides additional file validation for uploaded images
+    /// </summary>
     internal class IsImageAttribute : ValidationAttribute
     {
         

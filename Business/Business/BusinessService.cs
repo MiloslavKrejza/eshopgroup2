@@ -14,6 +14,9 @@ using Trainee.User.Abstraction;
 
 namespace Trainee.Business.Business
 {
+    /// <summary>
+    /// This service provides access to products with reviews and ratings included
+    /// </summary>
     public class BusinessService
     {
         ICategoryRelationshipRepository _categoryRelationshipRepository;
