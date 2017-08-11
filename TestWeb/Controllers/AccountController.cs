@@ -267,7 +267,8 @@ namespace TestWeb.Controllers
                                 Surname = model.Surname,
                                 PhoneNumber = model.Phone,
                                 PostalCode = model.PostalCode,
-                                ProfileStateId = profileState
+                                ProfileStateId = profileState,
+                                ProfilePicAddress = "default.jpg"
                             };
 
 
