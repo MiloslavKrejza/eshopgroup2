@@ -35,7 +35,6 @@ namespace Eshop2.Abstraction
 
                 Authors = product.Book.AuthorsBooks.Select(ab => ab.Author).ToList(),
                 ProductFormat = product.Format.Name,
-                AverageRating = product.AverageRating,
                 Annotation = product.Book.Annotation,
                 ProductText = product.Text,
                 PicAddress = product.PicAddress,
@@ -55,7 +54,10 @@ namespace Eshop2.Abstraction
 
             };
 
+            model.StarPercent = product.AverageRating == null ? 0 : (int)Math.Truncate(product.AverageRating.Value);
+            
             return model;
+
 
         }
 
