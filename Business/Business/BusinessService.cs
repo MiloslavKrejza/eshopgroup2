@@ -35,15 +35,25 @@ namespace Trainee.Business.Business
 
         }
 
-
+        /// <summary>
+        /// Gets a page of product with applied filtering
+        /// </summary>
+        /// <param name="parameters">Filter parameters</param>
+        /// <returns>Page of products</returns>
         public AlzaAdminDTO<QueryResultWrapper> GetPage(QueryParametersWrapper parameters)
         {
             Stopwatch stopwatch = new Stopwatch();
-            //stopwatch.Start();
+            stopwatch.Start();
 
+            //get all children of the specified category
             var childCategoriesId = _categoryRelationshipRepository.GetAllRelationships().Where(c => c.Id == parameters.CategoryId).Select(c => c.ChildId);
+
+            //get all products
             IQueryable<ProductBase> query = _productRepository.GetAllProducts();
+
+            //return only products which belong in these categories
             query = query.Where(p => childCategoriesId.Contains(p.CategoryId));
+
             decimal minPrice = decimal.MaxValue;
             decimal maxPrice = 0;
             QueryResultWrapper result = new QueryResultWrapper();
@@ -51,6 +61,8 @@ namespace Trainee.Business.Business
             HashSet<Publisher> publishers = new HashSet<Publisher>();
             HashSet<Format> formats = new HashSet<Format>();
             HashSet<Author> authors = new HashSet<Author>();
+
+            //specifying filter options correspondingly
             foreach (ProductBase product in query)
             {
                 minPrice = product.Price < minPrice ? product.Price : minPrice;
@@ -63,7 +75,7 @@ namespace Trainee.Business.Business
                     authors.Add(author);
                 }
             }
-            //stopwatch.Start();
+
             result.MinPrice = minPrice;
             result.MaxPrice = maxPrice;
 
@@ -73,6 +85,7 @@ namespace Trainee.Business.Business
             result.Publishers = publishers.OrderBy(p => p.Name).ToList();
             result.Formats = formats.OrderBy(f => f.Name).ToList();
 
+            //filtering
             if (parameters.MinPrice != null)
             {
                 query = query.Where(p => p.Price >= parameters.MinPrice);
@@ -98,17 +111,16 @@ namespace Trainee.Business.Business
                 query = query.Where(p => p.Book.AuthorsBooks.Select(ab => ab.Author).Select(a => a.AuthorId).Intersect(parameters.Authors).Count() > 0);
             }
 
-            //ToDo does not work yet
 
+            //Add average ratings
             List<int> pIds = query.Select(p => p.Id).ToList();
             IQueryable<ProductRating> ratings = _productRatingRepository.GetRatings().Where(pr => pIds.Contains(pr.ProductId));
-            ////might be bullshite...actually is bullshite
             var products = query.Join(ratings, q => q.Id, r => r.ProductId, (p, r) => new { product = p, rating = r }).Select(x => new ProductBO(x.product, x.rating, null));
 
 
 
 
-
+            //sort
             Func<ProductBO, IComparable> sortingParameter;
             switch (parameters.SortingParameter)
             {
@@ -120,6 +132,9 @@ namespace Trainee.Business.Business
                     break;
                 case Enums.SortingParameter.Date:
                     sortingParameter = p => p.DateAdded;
+                    break;
+                case Enums.SortingParameter.Name:
+                    sortingParameter = p => p.Name;
                     break;
                 default:
                     sortingParameter = p => p.AverageRating;
@@ -136,6 +151,8 @@ namespace Trainee.Business.Business
                 default:
                     break;
             }
+
+            //return a "page"
             result.ResultCount = products.Count();
             products = products.Skip((parameters.PageNum - 1) * parameters.PageSize).Take(parameters.PageSize);
             result.Products = products.ToList();
@@ -144,14 +161,23 @@ namespace Trainee.Business.Business
             return AlzaAdminDTO<QueryResultWrapper>.Data(result);
 
         }
+
+        /// <summary>
+        /// Get a product with reviews and ratings
+        /// </summary>
+        /// <param name="id">Product id</param>
+        /// <returns>DTO of Product with Reviews and Average rating</returns>
         public AlzaAdminDTO<ProductBO> GetProduct(int id)
         {
 
             var baseProduct = _productRepository.GetProduct(id);
 
-          if (ReferenceEquals(baseProduct,null))
+            if (ReferenceEquals(baseProduct, null))
                 return AlzaAdminDTO<ProductBO>.Data(null);
+            //average rating of the product
             var avRating = _productRatingRepository.GetRating(id);
+
+            //get product reviews and users who submitted the reviews
             var reviews = _reviewRepository.GetReviews().Where(r => r.ProductId == id).ToList();
             var users = _userProfileRepository.GetAllProfiles().Where(p => reviews.Select(r => r.UserId).Contains(p.Id));
             reviews = reviews.Join(users, r => r.UserId, p => p.Id, (r, p) => { r.User = p; return r; }).OrderBy(r => r.Date).ToList();
@@ -167,7 +193,7 @@ namespace Trainee.Business.Business
             {
                 return AlzaAdminDTO<Review>.Data(_reviewRepository.AddReview(review));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return AlzaAdminDTO<Review>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
@@ -181,7 +207,7 @@ namespace Trainee.Business.Business
                 result.User = _userProfileRepository.GetProfile(result.UserId);
                 return AlzaAdminDTO<Review>.Data(result);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return AlzaAdminDTO<Review>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }

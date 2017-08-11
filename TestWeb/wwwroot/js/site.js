@@ -29,6 +29,7 @@ function changeUserBack() {
     document.getElementById("login-link").innerHTML = "Přihlásit";
 }
 
+
 /*ALTERNATIVE STAR RATING
 
 var __slice = [].slice;
@@ -148,9 +149,15 @@ $(document).ready(function () {
 
 */
 
-/* Slider - filtrování podle ceny
-var slider = new Slider('#priceFilter', {
-    tooltip: 'always'
-}
-);*/
+
+//$(function () {
+//    $("#priceFilter").slider();
+//});
+
+
+///*Slider - filtrování podle ceny*/
+//var slider = new Slider('#priceFilter', {
+//    tooltip: 'always'
+//}
+//);
 

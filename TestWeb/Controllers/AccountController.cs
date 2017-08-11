@@ -283,21 +283,18 @@ namespace TestWeb.Controllers
                             _profileService.AddUserProfile(userProfile);
 
                             ViewData["RegisterCompleted"] = true;
-                            if(ReferenceEquals(returnUrl, null))
-                                return View(model);
-                            return RedirectToLocal(returnUrl);
+                            return View(model);
 
                         }
 
                     }
                     else
                     {
-                        return RedirectToAction("CHYBA");
+                        return RedirectToAction("Error", "Home");
                     }
 
 
-                    //??
-                    return RedirectToAction("Forbidden");
+                    return RedirectToAction("Error", "Home");
                 }
 
 

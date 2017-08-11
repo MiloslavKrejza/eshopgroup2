@@ -50,6 +50,7 @@ namespace Eshop2.Controllers
                 }
 
 
+
                 ViewData["productId"] = id;
 
                 BookViewModel model = _bookLoader.LoadBookModel(id.Value);
@@ -67,7 +68,7 @@ namespace Eshop2.Controllers
                 return AlzaError.ExceptionActionResult(e);
             }
         }
-        // GET: /Catalogue/Book/BookId
+        // POST: /Catalogue/Book/BookId
         [HttpPost("/Catalogue/Book/{id}")]
         public async Task<IActionResult> Book(int? id, BookViewModel model)
         {
@@ -123,8 +124,8 @@ namespace Eshop2.Controllers
 
 
         // GET: /Catalogue/Category
-        [HttpGet("/Catalogue/Products/{id?}")]
-        public IActionResult Products(int? id, ProductsViewModel model)
+        [HttpGet("/Catalogue/Products/{id?}/{pageNum?}")]
+        public IActionResult Products(int? id, int? pageNum, ProductsViewModel model)
         {
             try
             {
@@ -138,15 +139,22 @@ namespace Eshop2.Controllers
                     int catId = id.Value;
 
                     model.currentCategory = _catalogueService.GetCategory(catId).data;
+                    
 
                     if (model.currentCategory == null)
                     {
                         return RedirectToAction("Error", "Home");
                     }
 
+                    if(pageNum == null)
+                    {
+                        pageNum = 1;
+                    }
+                    model.PageNum = pageNum.Value;
+
                     QueryParametersWrapper parameters = new QueryParametersWrapper
                     {
-                        PageNum = model.PageNum,
+                        PageNum = pageNum.Value,
                         CategoryId = catId, //check this
 
 
@@ -159,10 +167,11 @@ namespace Eshop2.Controllers
 
                     };
 
-                    parameters.Formats = model.FormatsFilter == null ? null : new List<int>(model.FormatsFilter.Value);
-                    parameters.Languages = model.LanguagesFilter == null ? null : new List<int>(model.LanguagesFilter.Value);
-                    parameters.Authors = model.AuthorsFilter == null ? null : new List<int>(model.AuthorsFilter.Value);
-                    parameters.Publishers = model.PublishersFilter == null ? null : new List<int>(model.PublishersFilter.Value);
+                    parameters.Formats = model.FormatsFilter == null ? null : new List<int>(){model.FormatsFilter.Value};
+                    parameters.Languages = model.LanguagesFilter == null ? null : new List<int>() { model.LanguagesFilter.Value };
+                    parameters.Authors = model.AuthorsFilter == null ? null : new List<int>(){model.AuthorsFilter.Value};
+                    parameters.Publishers = model.PublishersFilter == null ? null: new List<int>() { model.PublishersFilter.Value };
+
 
 
 
@@ -185,6 +194,7 @@ namespace Eshop2.Controllers
                     model.Products = result.Products;
                     model.Publishers = result.Publishers;
                     model.ResultCount = result.ResultCount;
+                    
 
 
                     return View(model);

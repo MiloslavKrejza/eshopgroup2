@@ -21,6 +21,9 @@
         var result = CatalogueService.GetCategory(1);
         currentCategory = result.data;
     }
+    int parentId = currentCategory.Parent == null ? 1 : currentCategory.ParentId.Value;
+
+    string parentName = currentCategory.Parent == null ? "Všechny knížky" : currentCategory.Parent.Name;
 }
 
 <!DOCTYPE html>
@@ -35,7 +38,8 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -55,10 +59,7 @@
             <div class="col-md-2">
                 <a asp-area="" asp-controller="Home" asp-action="Index"><img class="logo img-responsive" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
             </div>
-            <div class="col-md-8">
-                <input id="hledat" class="center-block" placeholder="Hledat" />
-            </div>
-            <div id="basket-user" class="col-md-2">
+            <div id="basket-user" class="col-md-2 col-md-offset-8">
                 <a asp-area="" asp-controller="Order" asp-action="cart" class="btn basket-user-btn main-background">
                     <img src="~/images/cart-34-48.ico" alt="cart" /><br />
                     <p>Košík</p>
@@ -101,22 +102,21 @@
         <div class="row" id="main-section">
             <div class="col-md-2 list-group">
 
-                @{foreach (Category c in currentCategory.Children)
+                <div class="list-group-item menu-item main-background">
+                    <strong><a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@parentId"><p><!--<img src="~/images/(c.ico).svg" />-->@parentName</p></a></strong>
+                </div>
+               
+
+                @{ 
+
+                    foreach (Category c in currentCategory.Children)
                     {
                         <div class="list-group-item menu-item main-background">
                             <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><!--<img src="~/images/(c.ico).svg" />-->@c.Name</p></a>
                         </div>
 
                     }
-                }
-
-                    <div class="list-group-item menu-item main-background">
-                        <a href=""><p>Všichni autoři</p></a>
-                    </div>
-                    <div class="list-group-item menu-item main-background">
-                        <a href=""><p>Všechny produkty</p></a>
-                    </div>
-                
+                }                
 
             </div>
 
@@ -152,6 +152,12 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
         <script src="~/js/site.js"></script>
     </environment>
     <environment names="Staging,Production">
@@ -167,9 +173,25 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
+
+        <script src="https://code.jquery.com/ui/1.7.2/jquery-ui.min.js"
+                integrity="sha256-4h4SHCCUAKFl7xWF9JeZp9tnU8lmM5bt6G3kNK6E4ek="
+                crossorigin="anonymous"></script>
+
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)
+<!--
+    <script>
+        $(function () {
+            $("#priceFilter").slider(
+                {
+                    range: true,
+                });
+        });
+    </script>
+-->
+    
 </body>
 </html>

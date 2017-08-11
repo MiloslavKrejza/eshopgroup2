@@ -41,9 +41,11 @@ namespace Trainee.Catalogue.DAL.Repositories
         {
             var category = _context.Categories
                 .Where(c => c.Id == id)
-                .Include(c => c.Parent)
                 .Include(c => c.Children)
                 .FirstOrDefault();
+            category.Parent = _context.Categories.Where(c => c.Id == category.ParentId).FirstOrDefault();
+            category.ParentId = category.Parent?.Id;
+
             return category;
         }
 
