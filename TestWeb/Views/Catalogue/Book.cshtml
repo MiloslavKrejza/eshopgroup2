@@ -80,7 +80,6 @@
 		<div class="ratings">
 			<div class="empty-stars"></div>
 			@{string averageRatingString = (Model.AverageRating * 20).ToString().Replace(',', '.'); }
-			<!--	Need to use javascript here due to e-->
 			<div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
 			@*<span id="takeTheValue" style="display:none;">@Model.StarPercent</span>*@
 			
@@ -243,7 +242,7 @@ else
 	if (review.UserId != uId)
 	{
 		int procent = (int)Math.Truncate(review.Rating / 5.0 * 100) ;
-
+		
 
 		<div class="user-rating">
 			<div class="ratings">
