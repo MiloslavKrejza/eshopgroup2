@@ -69,14 +69,41 @@
 <div class="row">
 	<h2>@Html.DisplayFor(model => model.Name)</h2>
 	<div class="col-lg-8">
-		<p>
-			@foreach (Author a in Model.Authors)
-			{
-				<span class="bold">@a.Name @a.Surname, </span> 
-			}
+		<p class="bold">
+            
+			@{
+                var ab = Model.Authors;
+
+                for (int j = 0; j < ab.Count; j++)
+
+                {
+                    <span>
+                        @ab[j].Name @ab[j].Surname@if (j != ab.Count - 1)
+                        {@Html.Raw(", ")}
+                    </span>
+                }
+            }
 		</p>
 		<p class="italics">@Html.DisplayFor(model => model.ProductFormat)</p>
+		<p>@Html.DisplayFor(model => model.AverageRating)</p>
+		<p>@Html.DisplayFor(model => model.Annotation)</p>
+		<p>@Html.DisplayFor(model => model.ProductText)</p>
 
+		@if (Model.State == "Available")
+		{
+			<p class="text-success">
+				@Html.DisplayFor(model => model.State)
+			</p>
+		}
+		else
+		{
+			<p class="text-warning">
+				@Html.DisplayFor(model => model.State)
+			</p>
+		}
+		<p>@Html.DisplayFor(model => model.Price) Kč</p>
+	</div>
+  
 		<div class="ratings">
 			<div class="empty-stars"></div>
 
@@ -101,31 +128,11 @@
 				based on <span itemprop="ratingCount"></span> user ratings.
 			</div>
 		</div>*@
-
-			<p>@Html.DisplayFor(model => model.Annotation)</p>
-			<p>@Html.DisplayFor(model => model.ProductText)</p>
-
-			@if (Model.State == "available")
-			{
-				<p class="text-success">
-					@Html.DisplayFor(model => model.State)
-				</p>
-			}
-			else
-			{
-				<p class="text-warning">
-					@Html.DisplayFor(model => model.State)
-				</p>
-			}
-			<p>@Html.DisplayFor(model => model.Price) Kč</p>
-			<button class="btn btn-primary">Do košíku</button>
-		</div>
 	<div class="col-lg-4">
 		<div class="row">
 
 			@*Route to image files directed from database*@
-
-			<img class="book-img" src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="Harry Potter" />
+			<img class="book-img" src="~/images/product_images/@Model.PicAddress" alt="@Model.Name" />
 		</div>
 	</div>
 </div>

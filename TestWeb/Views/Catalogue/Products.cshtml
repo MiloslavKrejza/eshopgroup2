@@ -8,18 +8,23 @@
 {
     <script>
         $(function () {
-            var handle = $("#custom-handle");
+            var tooltip = function (sliderObj, ui) {
+                val1 = '<div class="slider_tooltip" asp-for="MinPriceFilter">' + sliderObj.slider("values", 0) + '</div>';
+                val2 = '<div class="slider_tooltip" asp-for="MaxPriceFilter">' + sliderObj.slider("values", 1) + '</div>';
+                sliderObj.children('.ui-slider-handle').first().html(val1);
+                sliderObj.children('.ui-slider-handle').last().html(val2);
+            };
             $("#priceFilter").slider(
                 {
                     range: true,
                     min: @Math.Truncate(Model.MinPrice.Value),
                     max: @Math.Round(Model.MaxPrice.Value),
                     values: [ @Math.Truncate(Model.MinPrice.Value), @Math.Round(Model.MaxPrice.Value) ],
-                    create: function () {
-                        handle.text($(this).slider("min-value"));
+                    slide: function (e, ui) {
+                        tooltip($(this), ui);
                     },
-                    slide: function (event, ui) {
-                        handle.text(ui.value);
+                    create: function (e, ui) {
+                        tooltip($(this), ui);
                     }
                 });
         });
@@ -31,15 +36,8 @@
 <h2>@ViewData["Title"]</h2>
 
 
-<form>
+<form class="bottom-padding">
     <div class="row filters">
-
-        <div class="col-md-3">
-            <label>Cena</label>
-            <div id="priceFilter">
-                <div id="custom-handle" class="ui-slider-handle"></div>
-            </div>
-        </div>
         <div class="col-md-2">
             <label asp-for="AuthorsFilter">Autor</label>
             <select class="form-control selectpicker" asp-for="AuthorsFilter" data-live-search="true">
@@ -97,11 +95,11 @@
             <label asp-for="SortingType">Řadit...</label>
             <select class="form-control" asp-for="SortingType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
         </div>
-        <div class="col-md-1">
-            <button type="submit" class="filter-btn">Filtrovat</button>
+        <div class="col-md-2">
+            <button type="submit" class="filter-btn btn btn-primary">Filtrovat</button>
         </div>
-        <div class="col-md-1">
-            <a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
+        <div class="col-md-2">
+            <a class="filter-btn btn btn-default" asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
         </div>
     </div>
 </form>
@@ -118,20 +116,32 @@
             ProductBO p = Model.Products[i];
             <div class="col-lg-3 text-center product">
                 <a asp-area="" asp-controller="catalogue" asp-action="book" asp-route-id="@p.Id">
-                    <img src="~/images/product_images/@p.PicAddress" alt="@p.Name" />
-                    <p class="bold" id="book-title">@p.Name</p>
-                    <p id="book-authors">
+                    <img class="book-picture" src="~/images/product_images/@p.PicAddress" alt="@p.Name" />
+                    <p class="bold book-title">@p.Name</p>
+                    <p class="book-authors">
 
                         @{
-                            var ab = p.Book.AuthorsBooks;
+                            @*Write out first two authors*@
+                        var ab = p.Book.AuthorsBooks;
 
-                            for (int j = 0; j < ab.Count; j++)
+                        for (int j = 0; j < ab.Count; j++)
 
+                        {
+                            if (j == 0)
                             {
-                                <span>
-                                    @ab[j].Author.Name @ab[j].Author.Surname@if (j != ab.Count - 1)
-                                    {@Html.Raw(", ")}
-                                </span>
+                                    @ab[j].Author.Name @Html.Raw(" ") @ab[j].Author.Surname
+
+                                }
+                                else if (j == 1)
+                                {
+                                   @Html.Raw(", ")@ab[j].Author.Name @Html.Raw(" ") @ab[j].Author.Surname
+                                    }
+                                else
+                                {
+                                    @Html.Raw(" a další")
+                                    break;
+
+                                }
                             }
                         }
                     </p><p><img style="width:100px" src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" /></p><p class="italics">@p.Format.Name</p>
@@ -144,6 +154,7 @@
                             if ((i + 1) % 4 == 0)
                             {
                                 @Html.Raw("</div>")
+                                @Html.Raw("<hr class='bottom-padding' />")
                                 @Html.Raw("<div class='row'>")
                                 }
                             }
@@ -152,13 +163,14 @@
 
 </div>
 <div class="col-centered">
-    <ul class="pagination col-centered paging">
+    <ul class="pagination text-center paging">
         @for (int i = 0; i < Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize); i++)
             {
             <li><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="@i">@(i + 1)</a></li>
         }
     </ul>
 </div>
+
 
 
 
