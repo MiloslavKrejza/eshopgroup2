@@ -133,6 +133,9 @@ namespace Trainee.Business.Business
                 case Enums.SortingParameter.Date:
                     sortingParameter = p => p.DateAdded;
                     break;
+                case Enums.SortingParameter.Name:
+                    sortingParameter = p => p.Name;
+                    break;
                 default:
                     sortingParameter = p => p.AverageRating;
                     break;
