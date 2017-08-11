@@ -273,11 +273,11 @@ namespace TestWeb.Controllers
 
 
                             //Getting the selected country
-                            var countryByCode = _countryService.GetCountry(model.CountryCode);
-                            if (countryByCode.isOK)
+                            var countryById = _countryService.GetCountry(model.CountryId);
+                            if (countryById.isOK)
                             {
                                 // userProfile.Country = (Country)countryByCode.data;
-                                userProfile.CountryId = countryByCode.data.Id;
+                                userProfile.CountryId = countryById.data.Id;
                             }
 
 
@@ -388,7 +388,7 @@ namespace TestWeb.Controllers
 
                     model.Email = userIdentity.Email;
 
-                    var updateCountry = _countryService.GetCountry(model.CountryCode);
+                    var updateCountry = _countryService.GetCountry(model.CountryId);
                     model.Country = updateCountry.data;
 
                     /*******************/ //should be redone, if it would be checked anywhere else (for now it is only in Register and Edit)
@@ -404,7 +404,7 @@ namespace TestWeb.Controllers
 
                     if (isPassCorrect)
                     {
-                        string profilePicExtension = model.ProfileImage.FileName.Split('.').Last();
+                        
                         UserProfile updatedProfile = _profileService.GetUserProfile(userIdentity.Id).data;
                         updatedProfile.PostalCode = model.PostalCode;
                         updatedProfile.Address = model.Street;
@@ -414,10 +414,15 @@ namespace TestWeb.Controllers
                         updatedProfile.CountryId = model.Country.Id;
                         updatedProfile.ProfileStateId = profileState;
                         updatedProfile.PhoneNumber = model.Phone;
-                        updatedProfile.ProfilePicAddress = "profile_picture_" + userIdentity.Id + "." + profilePicExtension;
-                        using (var stream = new FileStream(_env.WebRootPath + "/images/profile_pics/" + updatedProfile.ProfilePicAddress, FileMode.Create))
+
+                        if (model.ProfileImage != null)
                         {
-                            await model.ProfileImage.CopyToAsync(stream);
+                            string profilePicExtension = model.ProfileImage.FileName.Split('.').Last();
+                            updatedProfile.ProfilePicAddress = "profile_picture_" + userIdentity.Id + "." + profilePicExtension;
+                            using (var stream = new FileStream(_env.WebRootPath + "/images/profile_pics/" + updatedProfile.ProfilePicAddress, FileMode.Create))
+                            {
+                                await model.ProfileImage.CopyToAsync(stream);
+                            }
                         }
 
 
@@ -439,7 +444,7 @@ namespace TestWeb.Controllers
                 else
                 {
                     model.Countries = (List<Country>)_countryService.GetAllCountries().data;
-                    model.Country = _countryService.GetCountry(model.CountryCode).data;
+                    model.Country = _countryService.GetCountry(model.CountryId).data;
                     return View(model);
                 }
             }

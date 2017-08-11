@@ -49,7 +49,7 @@ namespace TestWeb.Models.AccountViewModels
 
         [Display(Name = "Stát")]
         [Required(ErrorMessage = "Prosím vyberte zemi.")]
-        public string CountryCode { get; set; }
+        public string CountryId { get; set; }
 
         public List<Country> Countries { get; set; }
 

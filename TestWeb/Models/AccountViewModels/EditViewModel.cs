@@ -36,7 +36,7 @@ namespace TestWeb.Models.AccountViewModels
         public string Phone { get; set; }
 
         [Display(Name = "Stát")]
-        public string CountryCode { get; set; }
+        public int CountryId { get; set; }
 
         [IsImage(ErrorMessage ="Zvolený soubor není obrázek.")]
         public IFormFile ProfileImage { get; set; }

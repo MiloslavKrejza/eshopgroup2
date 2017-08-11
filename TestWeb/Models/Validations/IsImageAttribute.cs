@@ -11,7 +11,7 @@ namespace TestWeb.ViewModels.Validations
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
             IFormFile file = (IFormFile)value;
-            if (!file.ContentType.Contains("image"))
+            if (file != null && !file.ContentType.Contains("image"))
             {
                 return new ValidationResult(ErrorMessage);
             }
