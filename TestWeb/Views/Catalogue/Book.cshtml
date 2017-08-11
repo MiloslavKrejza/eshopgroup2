@@ -1,11 +1,8 @@
-@using Eshop2.Models.CatalogueViewModels;
-@using Trainee.Catalogue.Business;
+﻿@using Eshop2.Models.CatalogueViewModels;
 @using Trainee.Catalogue.DAL.Entities;
 @inject UserManager<ApplicationUser> UserManager;
 @inject SignInManager<ApplicationUser> SignInManager;
-
 @model BookViewModel
-@inject CatalogueService _catService;
 
 @{
 	ViewData["Title"] = "Harry Potter";
@@ -16,16 +13,56 @@
 	int uId = result == null ? -1 : result.Id;
 
 	var reviewPresent = Model.Reviews.Where(r => r.UserId == uId).Where(r => r.ProductId == (int)ViewData["productId"]).FirstOrDefault();
+
+	var reviewCounter = 0;
+    
+
+
 }
 
-@{ 
-    Category parentCategory = _catService.GetCategory(Model.Category.ParentId.Value).data;
+
+
+<style type="text/css">
+
+	.ratings {
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    color: #b1b1b1;
+    overflow: hidden;
 }
+.full-stars {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #fde16d;
+}
+.empty-stars:before, .full-stars:before {
+    content:"\2605\2605\2605\2605\2605";
+    font-size: 14pt;
+}
+.empty-stars:before {
+    -webkit-text-stroke: 1px #848484;
+}
+.full-stars:before {
+    -webkit-text-stroke: 1px orange;
+}
+/* Webkit-text-stroke is not supported on firefox or IE */
+
+/* Firefox */
+ @@-moz-document url-prefix() {
+    .full-stars {
+        color: #ECBE24;
+    }
+}
+</style>
 
 <div class="row">
 	<ul class="breadcrumb main-background">
-		<li class="main-cathegory"><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@parentCategory.Id">@parentCategory.Name</a></li>
-		<li><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.Category.Id">@Html.DisplayFor(model => model.Category.Name)</a></li>
+		<li class="main-cathegory"><a href="#">Fantasy</a></li>
+		<li><a href="#">@Html.DisplayFor(model => model.Category.Name)</a></li>
 	</ul>
 </div>
 <hr />
@@ -66,6 +103,31 @@
 		}
 		<p>@Html.DisplayFor(model => model.Price) Kč</p>
 	</div>
+  
+		<div class="ratings">
+			<div class="empty-stars"></div>
+
+			<!--	Need to use javascript here due to e-->
+			<div class="full-stars" id="insertTheValue"></div>
+			<span id="takeTheValue" style="display:none;">@Model.StarPercent</span>
+			
+		</div>
+
+		
+
+
+
+
+
+		@*<div itemscope itemtype="http://schema.org/Product" style="display:none;" >
+			<img itemprop="image" src="~/images/product_images/@Model.PicAddress" alt="@Html.DisplayFor(model => model.Name)" />
+			<span itemprop="name">@Html.DisplayFor(model => model.Name)</span>
+			<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+				<span itemprop="ratingValue">@Html.DisplayFor(model => model.AverageRating)</span>
+				out of <span itemprop="bestRating">5</span>
+				based on <span itemprop="ratingCount"></span> user ratings.
+			</div>
+		</div>*@
 	<div class="col-lg-4">
 		<div class="row">
 
@@ -74,9 +136,6 @@
 		</div>
 	</div>
 </div>
-
-<button class="btn btn-primary btn-to-cart">Do košíku</button>
-
 <hr />
 <div class="row">
 	<div class="col-md-6">
@@ -114,66 +173,98 @@
 </div>
 <hr />
 
+
 	
-    @*<h3>Hodnocení</h3> 
+    @*
+		<h3>Hodnocení</h3> 
     <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
     <div class="user-rating">
         <img src="~/images/user-2-32.png" alt="user icon" /><span class="bold">Petr B.</span><img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" /><br />
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam egestas wisi a erat. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Nam sed tellus id magna elementum tincidunt. Pellentesque pretium lectus id turpis. Mauris metus. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
     </div>
 
-	<hr />*@
+	<hr />
 
+		*@
+				<!--	Is user logged in? -->
+				
 @if (reviewPresent != null)
 {
+	@reviewPresent.Rating
+	<!--	Representation of present user desctiption-->
+
+	<div class="user-rating">
+		<img src="@reviewPresent.User.ProfilePicAddress" alt="@reviewPresent.User.Name" /><span class="bold">@reviewPresent.User.Name</span>
+		<br />
+		<p>@reviewPresent.Text</p>
+	</div>
+
+	
 
 }
 else
 {
+	<!-- User loves to hate the product if the page doesn't contain commentary -->
 	<div class="row rating">
-		<h3>Ohodnotit produkt</h3>
+		<div class="col-sm-12">
 
-		<div id="rating">
-			<span>★</span>
-			<span>★</span>
-			<span>★</span>
-			<span>★</span>
-			<span>★</span>
+			<div id="rating">
+				<span>★</span>
+				<span>★</span>
+				<span>★</span>
+				<span>★</span>
+				<span>★</span>
+			</div>		
+				<div class="col-sm-12">
+					<div class="text-center">
+
+						<form asp-area="" asp-controller="Catalogue" asp-action="Book" method="post" id="sendRatingData" class="navbar-right" style="max-width: 100%;" >
+
+							<input class="form-control" asp-for="NewRating" id="valueHodnota" min="1" max="5" />
+							<label class="text-primary" asp-for="ReviewText">Vzkaz</label>	
+							<textarea  class="form-control" rows="8" cols="500" asp-for="ReviewText" style="max-width: 100%; " required></textarea>
+							<br />
+							<button class="btn btn-primary" type="submit">Click me!</button>
+							<br />
+						</form>
 
 
-			<div class="centerMePlox">
-
-				<form asp-area="" asp-controller="Catalogue" asp-action="Book" method="post" id="sendRatingData" class="navbar-right">
-
-					<input class="form-control" asp-for="NewRating" id="valueHodnota" min="1" max="5" />
-					<label class="text-primary" asp-for="ReviewText">Vzkaz</label>
-					<textarea rows="5" class="form-control" asp-for="ReviewText">			
-				</textarea>
-					<button class="btn btn-primary" type="submit">Click me!</button>
-				</form>
-
+					</div>
+				</div>
 			</div>
-		</div>
 	</div>
 	<hr />
 }
 
+<!--	You have chosen to show others cool reviews -->
+
 @foreach (var review in Model.Reviews)
 {
+	reviewCounter++;
+
 	if (review.UserId != uId)
 	{
-		<img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />				
+		int procent = (int)Math.Truncate(review.Rating / 5.0 * 100) ;
+
+
 		<div class="user-rating">
-			<img src="~/images/user-2-32.png" alt="user icon" /><span class="bold">Petr B.</span><code> User.ImagePath?</code>
-			<img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" />
+			<div class="ratings">
+				<div class="empty-stars"></div>
+				<div class="full-stars" style="width:@procent%;"></div>
+			</div>
+			<span class="bold">@review.User.Name</span>
 			<br />
-			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam egestas wisi a erat. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Nam sed tellus id magna elementum tincidunt. Pellentesque pretium lectus id turpis. Mauris metus. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+			<p>@review.Text</p>
 		</div>
 
-		<hr />
 	}
-}
 
+
+
+	}
+
+
+<script src="~/js/averageRating.js"></script>
 
 <script type="text/javascript">
 
@@ -185,9 +276,7 @@ else
 
 	//Initialize
 	function StarRating() {
-						
-
-						this.init();
+				this.init();
 			};
 
 

@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace Trainee.Core.Business
 {
+    /// <summary>
+    /// This service provides access to countries
+    /// </summary>
     public class CountryService
     {
         private readonly ICountryRepository _countryRepos;

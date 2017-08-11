@@ -6,6 +6,9 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Catalogue.Abstraction
 {
+    /// <summary>
+    /// This repository provides CRUD operations for publishers
+    /// </summary>
     public interface IPublisherRepository
     {
         /// <summary>

@@ -9,6 +9,9 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Eshop2.Models.CatalogueViewModels
 {
+    /// <summary>
+    /// This ViewModel provides all important data to display on the Products View page
+    /// </summary>
     public class ProductsViewModel
     {
         //Filter results

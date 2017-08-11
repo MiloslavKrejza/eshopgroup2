@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Trainee.Business.Business;
-using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
 using Trainee.Catalogue.Business;
-using Trainee.Catalogue.DAL.Entities;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Eshop2.Controllers
 {
+    /// <summary>
+    /// This controller provides a list of products and book details
+    /// </summary>
     public class CatalogueController : Controller
     {
         private readonly BusinessService _businessService;

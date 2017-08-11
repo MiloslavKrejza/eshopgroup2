@@ -6,6 +6,9 @@ using Trainee.User.DAL.Entities;
 
 namespace Trainee.User.Abstraction
 {
+    /// <summary>
+    /// This repository provides CRUD operations for profiles
+    /// </summary>
     public interface IUserProfileRepository
     {
         /// <summary>

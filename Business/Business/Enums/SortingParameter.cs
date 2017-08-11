@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Trainee.Business.Business.Enums
 {
+    /// <summary>
+    /// This class contains sorting parameters for products
+    /// </summary>
     public enum SortingParameter
     {
         [Display(Name = "Od nejnovější")]

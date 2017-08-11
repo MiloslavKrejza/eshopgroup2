@@ -7,6 +7,9 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Catalogue.Business
 {
+    /// <summary>
+    /// This service provides access to a category and to its son and parent categories
+    /// </summary>
     public class CatalogueService
     {
         private readonly ICategoryRepository _catRepos; 
