@@ -14,10 +14,7 @@
 
 	var reviewPresent = Model.Reviews.Where(r => r.UserId == uId).Where(r => r.ProductId == (int)ViewData["productId"]).FirstOrDefault();
 
-	// počítání reviews, viz dole foreach
-	int reviewCounter = 0;
-
-
+	var reviewCounter = 0;
 
 }
 
@@ -89,7 +86,7 @@
 			<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
 				<span itemprop="ratingValue">@Html.DisplayFor(model => model.AverageRating)</span>
 				out of <span itemprop="bestRating">5</span>
-				based on <span itemprop="ratingCount">@reviewCounter</span> user ratings.
+				based on <span itemprop="ratingCount"></span> user ratings.
 			</div>
 		</div>
 
