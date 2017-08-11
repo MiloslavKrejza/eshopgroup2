@@ -39,7 +39,7 @@ namespace Eshop2.Abstraction
                 ProductText = product.Text,
                 PicAddress = product.PicAddress,
                 ProductId = product.Id,
-
+                AverageRating = product.AverageRating,            
                 State = product.State.Name,
                 Price = product.Price,
                 Language = product.Language.Name,

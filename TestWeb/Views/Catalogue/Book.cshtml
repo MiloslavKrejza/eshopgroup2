@@ -16,7 +16,10 @@
 
 	var reviewCounter = 0;
 
+
 }
+
+
 
 <style type="text/css">
 
@@ -58,7 +61,7 @@
 <div class="row">
 	<ul class="breadcrumb main-background">
 		<li class="main-cathegory"><a href="#">Fantasy</a></li>
-		<li><a href="#">@Html.DisplayFor(model => model.CategoryName)</a></li>
+		<li><a href="#">@Html.DisplayFor(model => model.Category.Name)</a></li>
 	</ul>
 </div>
 <hr />
@@ -75,12 +78,20 @@
 
 		<div class="ratings">
 			<div class="empty-stars"></div>
-			<div class="full-stars" style="width:50%;"></div>
+
+			<!--	Need to use javascript here due to e-->
+			<div class="full-stars" id="insertTheValue"></div>
+			<span id="takeTheValue" style="display:none;">@Model.StarPercent</span>
+			
 		</div>
 
+		
 
-		<!--	Google utility which displays stars right in the search site content	-->
-		<div itemscope itemtype="http://schema.org/Product" style="display:none;" >
+
+
+
+
+		@*<div itemscope itemtype="http://schema.org/Product" style="display:none;" >
 			<img itemprop="image" src="~/images/product_images/@Model.PicAddress" alt="@Html.DisplayFor(model => model.Name)" />
 			<span itemprop="name">@Html.DisplayFor(model => model.Name)</span>
 			<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
@@ -88,10 +99,8 @@
 				out of <span itemprop="bestRating">5</span>
 				based on <span itemprop="ratingCount"></span> user ratings.
 			</div>
-		</div>
+		</div>*@
 
-		<!--	End of it   -->
-			<p>@Html.DisplayFor(model => model.AverageRating)</p>
 			<p>@Html.DisplayFor(model => model.Annotation)</p>
 			<p>@Html.DisplayFor(model => model.ProductText)</p>
 
@@ -156,6 +165,7 @@
 </div>
 <hr />
 
+
 	
     @*
 		<h3>Hodnocení</h3> 
@@ -168,12 +178,13 @@
 	<hr />
 
 		*@
-
+				<!--	Is user logged in? -->
+				
 @if (reviewPresent != null)
 {
 	@reviewPresent.Rating
+	<!--	Representation of present user desctiption-->
 
-	
 	<div class="user-rating">
 		<img src="@reviewPresent.User.ProfilePicAddress" alt="@reviewPresent.User.Name" /><span class="bold">@reviewPresent.User.Name</span>
 		<br />
@@ -185,6 +196,7 @@
 }
 else
 {
+	<!-- User loves to hate the product if the page doesn't contain commentary -->
 	<div class="row rating">
 		<div class="col-sm-12">
 
@@ -216,21 +228,23 @@ else
 	<hr />
 }
 
+<!--	You have chosen to show others cool reviews -->
+
 @foreach (var review in Model.Reviews)
 {
-	reviewCounter++; 
+	reviewCounter++;
 
 	if (review.UserId != uId)
 	{
-		
+		int procent = (int)Math.Truncate(review.Rating / 5.0 * 100) ;
 
-		
+
 		<div class="user-rating">
 			<div class="ratings">
 				<div class="empty-stars"></div>
-				<div class="full-stars" style="width:50%;"></div>
+				<div class="full-stars" style="width:@procent%;"></div>
 			</div>
-			<img src="~/images/" alt="@review.User.Name" /><span class="bold">@review.User.Name</span>
+			<span class="bold">@review.User.Name</span>
 			<br />
 			<p>@review.Text</p>
 		</div>
@@ -241,6 +255,8 @@ else
 
 	}
 
+
+<script src="~/js/averageRating.js"></script>
 
 <script type="text/javascript">
 
