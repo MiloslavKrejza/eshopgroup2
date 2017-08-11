@@ -49,17 +49,17 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <label class="text-indent" asp-for="CountryCode">Stát</label>
-                            <select class="form-control" asp-for="CountryCode">
+                            <label class="text-indent" asp-for="CountryId">Stát</label>
+                            <select class="form-control" asp-for="CountryId">
 
-                                <option value="@Model.Country.CountryCode">@Model.Country.Name</option>
+                                <option value="@Model.Country.Id">@Model.Country.Name</option>
 
                                 @{
                                     foreach (Country c in Model.Countries)
                                     {
-                                        if (c.CountryCode != Model.Country.CountryCode)
+                                        if (c.Id != Model.Country.Id)
                                         {
-                                            <option value="@c.CountryCode">@c.Name</option>
+                                            <option value="@c.Id">@c.Name</option>
                                         }
                                     }
                                 }

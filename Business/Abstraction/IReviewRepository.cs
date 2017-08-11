@@ -6,6 +6,9 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.Abstraction
 {
+    /// <summary>
+    /// This repository provides CRUD operations for Reviews
+    /// </summary>
     public interface IReviewRepository
     {
         /// <summary>

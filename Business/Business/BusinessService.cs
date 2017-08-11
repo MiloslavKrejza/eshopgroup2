@@ -14,6 +14,9 @@ using Trainee.User.Abstraction;
 
 namespace Trainee.Business.Business
 {
+    /// <summary>
+    /// This service provides access to products with reviews and ratings included
+    /// </summary>
     public class BusinessService
     {
         ICategoryRelationshipRepository _categoryRelationshipRepository;
@@ -132,6 +135,9 @@ namespace Trainee.Business.Business
                     break;
                 case Enums.SortingParameter.Date:
                     sortingParameter = p => p.DateAdded;
+                    break;
+                case Enums.SortingParameter.Name:
+                    sortingParameter = p => p.Name;
                     break;
                 default:
                     sortingParameter = p => p.AverageRating;

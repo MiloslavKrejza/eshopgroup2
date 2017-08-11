@@ -6,6 +6,9 @@ using Trainee.User.DAL.Entities;
 
 namespace Trainee.Business.DAL.Entities
 {
+    /// <summary>
+    /// This class represents a review rated by a specific user
+    /// </summary>
     public class Review
     {
         public int UserId { get; set; }

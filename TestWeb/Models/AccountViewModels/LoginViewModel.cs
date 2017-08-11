@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace TestWeb.Models.AccountViewModels
 {
+    /// <summary>
+    /// This ViewModel provides all important data to display on the Login View page
+    /// </summary>
     public class LoginViewModel : BaseViewModel
     {
         [Required]

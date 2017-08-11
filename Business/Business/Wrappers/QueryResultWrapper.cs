@@ -7,6 +7,9 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Trainee.Business.Business.Wrappers
 {
+    /// <summary>
+    /// This class is a DTO made for transport of filtering results
+    /// </summary>
     public class QueryResultWrapper
     {
         public decimal MinPrice { get; set; }

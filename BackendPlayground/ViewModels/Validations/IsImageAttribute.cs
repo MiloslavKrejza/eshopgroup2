@@ -7,9 +7,7 @@ namespace BackendPlayground.ViewModels
 {
     internal class IsImageAttribute : ValidationAttribute
     {
-        private string fileName;
-
-
+       
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
             FileUp file = (FileUp)context.ObjectInstance;

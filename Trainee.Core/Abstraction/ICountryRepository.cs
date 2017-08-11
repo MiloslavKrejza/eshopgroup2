@@ -6,6 +6,9 @@ using Trainee.Core.DAL.Entities;
 
 namespace Trainee.Core.Abstraction
 {
+    /// <summary>
+    /// This repository provides CRUD operations for countries
+    /// </summary>
     public interface ICountryRepository
     {
         /// <summary>
