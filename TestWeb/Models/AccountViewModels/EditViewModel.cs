@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 using TestWeb.ViewModels.Validations;
 namespace TestWeb.Models.AccountViewModels
 {
+    /// <summary>
+    /// This ViewModel provides all important data to display on the Edit View page
+    /// </summary>
     public class EditViewModel : BaseViewModel
     {
         [EmailAddress]
@@ -36,9 +39,9 @@ namespace TestWeb.Models.AccountViewModels
         public string Phone { get; set; }
 
         [Display(Name = "Stát")]
-        public string CountryCode { get; set; }
+        public int CountryId { get; set; }
 
-        [IsImage(ErrorMessage ="Zvolený soubor není obrázek.")]
+        [IsImage(ErrorMessage = "Zvolený soubor není obrázek.")]
         public IFormFile ProfileImage { get; set; }
 
         public Country Country { get; set; }
@@ -49,7 +52,7 @@ namespace TestWeb.Models.AccountViewModels
         [Required(ErrorMessage = "Prosím vyplňte heslo.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        
+
 
     }
 }

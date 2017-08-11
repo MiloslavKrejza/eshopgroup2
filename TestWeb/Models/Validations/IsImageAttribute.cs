@@ -5,15 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TestWeb.ViewModels.Validations
 {
+    /// <summary>
+    /// This class provides additional file validation for uploaded images
+    /// </summary>
     internal class IsImageAttribute : ValidationAttribute
     {
-        private string fileName;
-
-
+        
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
             IFormFile file = (IFormFile)value;
-            if (!file.ContentType.Contains("image"))
+            if (file != null && !file.ContentType.Contains("image"))
             {
                 return new ValidationResult(ErrorMessage);
             }

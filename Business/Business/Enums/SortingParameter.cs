@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Trainee.Business.Business.Enums
 {
+    /// <summary>
+    /// This class contains sorting parameters for products
+    /// </summary>
     public enum SortingParameter
     {
-        [Display(Name = "Cena")]
+        [Display(Name = "Od nejnovější")]
+        Date,
+        [Display(Name = "Ceny")]
         Price,
         [Display(Name = "Hodnocení")]
         Rating,
-        [Display(Name = "Datum")]
-        Date,
-        [Display(Name = "Název")]
+        [Display(Name = "Názvu")]
         Name
     }
 }

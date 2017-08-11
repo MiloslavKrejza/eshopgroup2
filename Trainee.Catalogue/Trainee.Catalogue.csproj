@@ -5,9 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+
+    <PackageReference Include="jQuery" Version="3.1.1" />
+    <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
+
     <Compile Remove="Repositories\**" />
     <EmbeddedResource Remove="Repositories\**" />
     <None Remove="Repositories\**" />
+
   </ItemGroup>
 
   <ItemGroup>

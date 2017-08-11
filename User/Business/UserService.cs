@@ -5,6 +5,9 @@ using Trainee.User.DAL.Entities;
 
 namespace Trainee.User.Business
 {
+    /// <summary>
+    /// This service provides access to non-ASP.NET Identity user profiles
+    /// </summary>
     public class UserService
     {
         private readonly IUserProfileRepository _userRepos;

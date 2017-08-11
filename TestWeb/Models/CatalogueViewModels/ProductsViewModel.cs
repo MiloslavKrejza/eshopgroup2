@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Trainee.Business.Business.Enums;
@@ -8,6 +9,9 @@ using Trainee.Catalogue.DAL.Entities;
 
 namespace Eshop2.Models.CatalogueViewModels
 {
+    /// <summary>
+    /// This ViewModel provides all important data to display on the Products View page
+    /// </summary>
     public class ProductsViewModel
     {
         //Filter results
@@ -23,6 +27,8 @@ namespace Eshop2.Models.CatalogueViewModels
 
         //Current category
         public Category currentCategory { get; set; }
+
+        
 
         //Filter parameters
         public int PageNum { get; set; } = 1;

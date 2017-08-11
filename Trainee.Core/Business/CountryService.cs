@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace Trainee.Core.Business
 {
+    /// <summary>
+    /// This service provides access to countries
+    /// </summary>
     public class CountryService
     {
         private readonly ICountryRepository _countryRepos;
@@ -39,7 +42,7 @@ namespace Trainee.Core.Business
             }
         }
 
-        public AlzaAdminDTO<Country> GetCountry(string countryCode)
+        /*public AlzaAdminDTO<Country> GetCountry(string countryCode)
         {
             try
             {
@@ -50,7 +53,7 @@ namespace Trainee.Core.Business
             {
                 return AlzaAdminDTO<Country> .Error(e.Message + Environment.NewLine + e.StackTrace);
             }
-        }
+        }*/
 
         /****************************************/
         /*         GET ALL COUNTRIES            */

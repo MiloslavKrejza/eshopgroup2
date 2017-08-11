@@ -4,6 +4,9 @@ using Trainee.Core.DAL.Entities;
 
 namespace TestWeb.Models.AccountViewModels
 {
+    /// <summary>
+    /// This ViewModel provides all important data to display on the Details View page
+    /// </summary>
     public class DetailsViewModel
     {
         [Display(Name = "Jméno")]

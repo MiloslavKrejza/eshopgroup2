@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -18,6 +19,7 @@ namespace Trainee.Catalogue.DAL.Entities
         public string Name { get; set; }
         public string PicAddress { get; set; }
         public string Text { get; set; }
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
         public int? PageCount { get; set; }
         public int? Year { get; set; }

@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TestWeb.Controllers
 {
+    /// <summary>
+    /// This is a home controller providing basic data
+    /// </summary>
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Products", "Catalogue", new { id = 1, pageNum = 1 });
         }
 
         public IActionResult About()
