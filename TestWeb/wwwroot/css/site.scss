@@ -484,6 +484,13 @@ input:-ms-input-placeholder {
     }
 }
 
+@media screen and (max-width: 1200px) {
+    .product {
+        border-right: none;
+    }
+}
+
+
 .product-right {
     margin-bottom: 20px;
 
@@ -508,6 +515,12 @@ input:-ms-input-placeholder {
     }
 }
 
+@media screen and (max-width: 1200px) {
+    .details-table {
+        margin-bottom: 10px;
+    }
+}
+
 .details-right {
     padding-left: 5px;
 }
@@ -518,6 +531,18 @@ input:-ms-input-placeholder {
 
     /* Products catalogue */
 
+
+.slider_tooltip {
+    position: absolute;
+    top: -8px;
+    left: -2px;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #BBBBBB;
+    background-color: white;
+    outline: none;
+}
+
 .filters {
     select {
         margin-bottom:5px;
@@ -526,28 +551,24 @@ input:-ms-input-placeholder {
 
 .filter-btn {
     position: relative;
-    top: 23px;
-    height: 30px;
-    margin-bottom: 5px;
+    top: 25px;
+    height: 33px;
+    width: 120px;
+    margin-bottom: 12px;
 }
 
-#custom-handle {
-    width: 3em;
-    height: 1.6em;
-    top: 50%;
-    margin-top: -.8em;
-    text-align: center;
-    line-height: 1.6em;
-}
-
-#book-title {
+.book-title {
     height: 40px;
 }
 
-#book-authors {
-    height: 60px;
+.book-authors {
+    height: 40px;
 }
 
+.book-picture {
+    height: 120px;
+
+}
 .paging {
     margin-right: 0px;
     margin-left: 0px;

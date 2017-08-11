@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Content Include="wwwroot\css\site.scss" />
+    <Content Include="wwwroot\images\profile_pics\user-2-128.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildWebCompiler" Version="1.11.347" />
@@ -59,9 +60,6 @@
     <ProjectReference Include="..\Trainee.Catalogue\Trainee.Catalogue.csproj" />
     <ProjectReference Include="..\Trainee.Core\Trainee.Core.csproj" />
     <ProjectReference Include="..\User\Trainee.User.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\images\profile_pics\" />
   </ItemGroup>
 
 </Project>
