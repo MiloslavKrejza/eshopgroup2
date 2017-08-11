@@ -7,9 +7,7 @@ namespace TestWeb.ViewModels.Validations
 {
     internal class IsImageAttribute : ValidationAttribute
     {
-        private string fileName;
-
-
+        
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
             IFormFile file = (IFormFile)value;
