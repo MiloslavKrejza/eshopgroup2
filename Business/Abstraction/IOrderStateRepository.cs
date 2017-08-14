@@ -6,7 +6,7 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.Abstraction
 {
-    interface IOrderStateRepository
+    public interface IOrderStateRepository
     {
         /// <summary>
         /// Gets an OrderState

@@ -5,7 +5,7 @@ using Trainee.User.DAL.Entities;
 
 namespace Trainee.Business.DAL.Entities
 {
-    class Order
+    public class Order
     {
         public int Id { get; set; }
         public int? UserId { get; set; }
@@ -27,6 +27,7 @@ namespace Trainee.Business.DAL.Entities
         //Referenced
         public OrderState OrderState { get; set; }
         public Payment Payment { get; set; }
+        public Shipping Shipping { get; set; }
         public List<OrderItem> OrderItems { get; set; }
     }
 }

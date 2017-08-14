@@ -3,39 +3,41 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.Abstraction
 {
-    interface ICartRepository
+    public interface ICartItemRepository
     {
         /// <summary>
         /// Gets a Cart
         /// </summary>
-        /// <param name="cartId">Cart id</param>
+        /// <param name="visitorId">Visitor identifier</param>
+        /// <param name="productId">Product identifier</param>
         /// <returns>Cart by id</returns>
-        Cart GetCart(int cartId);
+        CartItem GetCartItem(int visitorId, int productId);
 
         /// <summary>
         /// Gets all Carts
         /// </summary>
         /// <returns>IQueryable of Cart</returns>
-        IQueryable<Cart> GetCarts();
+        IQueryable<CartItem> GetCartItems();
 
         /// <summary>
         /// Adds a new Cart
         /// </summary>
-        /// <param name="cartId">New Cart</param>
+        /// <param name="cartItem">New Cart Item</param>
         /// <returns>Added Cart</returns> 
-        Cart AddCart(Cart cart);
+        CartItem AddCartItem(CartItem cartItem);
 
         /// <summary>
         /// Updates a Cart with new data
         /// </summary>
-        /// <param name="cart">Cart data to update</param>
+        /// <param name="cartItem">Cart data to update</param>
         /// <returns>Updated Cart</returns>
-        Cart UpdateCart(Cart cart);
+        CartItem UpdateCartItem(CartItem cartItem);
 
         /// <summary>
         /// Deletes a Cart with specified CartId
         /// </summary>
-        /// <param name="cartId">Cart identifier</param>
-        void DeleteCart(int cartId);
+        /// <param name="visitorId">Visitor identifier</param>
+        /// <param name="productId">Product identifier</param>
+        void DeleteCartItem(int visitorId, int productId);
     }
 }

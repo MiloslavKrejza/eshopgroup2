@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Trainee.Business.DAL.Entities
 {
-    class Cart
+    public class CartItem
     {
         public int? UserId { get; set; }
         public int VisitorId { get; set; }

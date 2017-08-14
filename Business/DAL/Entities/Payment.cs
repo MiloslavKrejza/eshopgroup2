@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Trainee.Business.DAL.Entities
 {
-    class Payment
+    public class Payment
     {
         public int Id { get; set; }
         public string Name { get; set; }

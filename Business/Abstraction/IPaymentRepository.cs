@@ -6,7 +6,7 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.Abstraction
 {
-    interface IPaymentRepository
+    public interface IPaymentRepository
     {
         /// <summary>
         /// Gets a Payment type

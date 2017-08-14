@@ -6,7 +6,7 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.Abstraction
 {
-    interface IShippingRepository
+    public interface IShippingRepository
     {
         /// <summary>
         /// Gets Shipping type
