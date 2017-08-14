@@ -8,5 +8,7 @@ namespace Trainee.Business.DAL.Entities
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }
+        public decimal Price { get; set; }
+        public int Amount { get; set; }
     }
 }

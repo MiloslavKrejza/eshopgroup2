@@ -11,10 +11,12 @@ namespace Trainee.Business.DAL.Entities
         public int? UserId { get; set; }
         public int StateId { get; set; }
         public int PaymentId { get; set; }
+        public int ShippingId { get; set; }
 
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
+        public string Address { get; set; }
         public int CountryId { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
