@@ -18,7 +18,6 @@ namespace Alza.Core.Identity.Business
             : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)
         {
            
-            int i = 5;
         }
 
         
