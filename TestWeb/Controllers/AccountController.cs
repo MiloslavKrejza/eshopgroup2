@@ -407,7 +407,7 @@ namespace TestWeb.Controllers
 
                     if (isPassCorrect)
                     {
-                        
+                       
                         UserProfile updatedProfile = _profileService.GetUserProfile(userIdentity.Id).data;
                         updatedProfile.PostalCode = model.PostalCode;
                         updatedProfile.Address = model.Street;
@@ -425,6 +425,17 @@ namespace TestWeb.Controllers
                             using (var stream = new FileStream(_env.WebRootPath + "/images/profile_pics/" + updatedProfile.ProfilePicAddress, FileMode.Create))
                             {
                                 await model.ProfileImage.CopyToAsync(stream);
+                            }
+                        }
+
+
+                        if(model.NewPassword != null)
+                        {
+                            var result = await _userManager.ChangePasswordAsync(userIdentity, model.Password, model.NewPassword);
+
+                            if(!result.Succeeded)
+                            {
+                                return RedirectToAction("Error", "Home");
                             }
                         }
 
