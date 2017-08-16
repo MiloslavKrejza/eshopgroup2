@@ -83,6 +83,18 @@ namespace BackendPlayground.Controllers
             return View();
 
         }
+        [HttpPost] 
+        public IActionResult AjaxTest(AjaxTest test)
+        {
+            var variable = _serv.GetProduct(15);
+            return Json(variable);
+        }
+        [HttpGet]
+        public IActionResult CookieTest()
+        {
+            HttpContext.Response.Cookies.Append("test", "lorem ipsum");
+            return View();
+        }
 
 
     }

@@ -70,7 +70,11 @@ namespace TestWeb
             services.AddTransient<IFormatRepository, FormatRepository>();
             services.AddTransient<ILanguageRepository, LanguageRepository>();
             services.AddTransient<IPublisherRepository, PublisherRepository>();
-
+            services.AddTransient<ICartItemRepository, CartItemRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderStateRepository, OrderStateRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
+            services.AddTransient<IShippingRepository, ShippingRepository>();
             services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>(sp => { return new CategoryRelationshipRepository(Configuration.GetConnectionString("Trainee.Business")); });
             services.AddTransient<IProductRepository, ProductRepository>(sp => { return new ProductRepository(services.BuildServiceProvider().GetService<CatalogueDbContext>(), Configuration.GetConnectionString("Trainee.Catalogue.Cat")); });
             services.AddTransient<IReviewRepository, ReviewRepository>();
