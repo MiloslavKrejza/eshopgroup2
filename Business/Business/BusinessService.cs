@@ -19,18 +19,21 @@ namespace Trainee.Business.Business
     /// </summary>
     public class BusinessService
     {
-        ICategoryRelationshipRepository _categoryRelationshipRepository;
-        IProductRatingRepository _productRatingRepository;
-        IReviewRepository _reviewRepository;
-        IProductRepository _productRepository;
-        ICategoryRepository _categoryRepository;
-        IUserProfileRepository _userProfileRepository;
-        ICartItemRepository _cartItemRepository;
-        IOrderRepository _orderRepository;
-        IShippingRepository _shippingRepository;
-        IPaymentRepository _paymentRepository;
+        private readonly ICategoryRelationshipRepository _categoryRelationshipRepository;
+        private readonly IProductRatingRepository _productRatingRepository;
+        private readonly IReviewRepository _reviewRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IUserProfileRepository _userProfileRepository;
+        private readonly ICartItemRepository _cartItemRepository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IShippingRepository _shippingRepository;
+        private readonly IPaymentRepository _paymentRepository;
+        private readonly IOrderItemRepository _orderItemRepository;
+
         public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
-                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, ICartItemRepository cartRep, IOrderRepository orderRep, IShippingRepository shipRep, IPaymentRepository payRep)
+                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, ICartItemRepository cartRep, IOrderRepository orderRep, 
+                IShippingRepository shipRep, IPaymentRepository payRep, IOrderItemRepository orderItemRep)
         {
             _categoryRelationshipRepository = catRRep;
             _productRatingRepository = prodRRep;
@@ -42,6 +45,7 @@ namespace Trainee.Business.Business
             _orderRepository = orderRep;
             _paymentRepository = payRep;
             _shippingRepository = shipRep;
+            _orderItemRepository = orderItemRep;
         }
         #region Products
 
@@ -256,7 +260,7 @@ namespace Trainee.Business.Business
         }
         #endregion
         #region Cart and Orders
-        AlzaAdminDTO<List<CartItem>> GetCart(int visitorId)
+        public AlzaAdminDTO<List<CartItem>> GetCart(string visitorId)
         {
             try
             {
@@ -274,7 +278,7 @@ namespace Trainee.Business.Business
 
         }
 
-        AlzaAdminDTO<List<CartItem>> AddToCart(int visitorId, int? userId, int productId, int amount = 1)
+        public AlzaAdminDTO<List<CartItem>> AddToCart(string visitorId, int? userId, int productId, int amount = 1)
         {
             try
             {
@@ -297,7 +301,7 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
-        AlzaAdminDTO<List<CartItem>> DeleteFromCart(int visitorId, int productId)
+        public AlzaAdminDTO<List<CartItem>> DeleteFromCart(string visitorId, int productId)
         {
             try
             {
@@ -309,7 +313,7 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
-        AlzaAdminDTO<Order> AddOrder(Order order, int visitorId)
+        public AlzaAdminDTO<Order> AddOrder(Order order, string visitorId)
         {
             try
             {
@@ -326,7 +330,7 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<Order>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
-        AlzaAdminDTO<Order> GetOrder(int orderId)
+        public AlzaAdminDTO<Order> GetOrder(int orderId)
         {
             try
             {
@@ -341,7 +345,22 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<Order>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
-        AlzaAdminDTO<List<Shipping>> GetShippings()
+
+        public AlzaAdminDTO<OrderItem> AddOrderItem(OrderItem item)
+        {
+            
+            try
+            {
+                var orderItem = _orderItemRepository.AddOrderItem(item);
+                return AlzaAdminDTO<OrderItem>.Data(orderItem);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<OrderItem>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public AlzaAdminDTO<List<Shipping>> GetShippings()
         {
             try
             {
@@ -353,7 +372,7 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<Shipping>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
-        AlzaAdminDTO<List<Payment>> GetPayments()
+        public AlzaAdminDTO<List<Payment>> GetPayments()
         {
             try
             {

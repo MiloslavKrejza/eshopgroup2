@@ -22,7 +22,7 @@ using Trainee.Catalogue.DAL.Context;
 using Trainee.Business.DAL.Context;
 using Trainee.Business.Abstraction;
 using Trainee.Business.DAL.Repositories;
-
+using Microsoft.AspNetCore.Http;
 
 namespace TestWeb
 {
@@ -53,6 +53,7 @@ namespace TestWeb
             // Add functionality to inject IOptions<T>
             services.AddOptions();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //ALZA CORE - IDENTITY
 

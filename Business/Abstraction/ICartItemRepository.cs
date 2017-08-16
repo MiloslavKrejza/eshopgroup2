@@ -11,7 +11,7 @@ namespace Trainee.Business.Abstraction
         /// <param name="visitorId">Visitor identifier</param>
         /// <param name="productId">Product identifier</param>
         /// <returns>Cart by id</returns>
-        CartItem GetCartItem(int visitorId, int productId);
+        CartItem GetCartItem(string visitorId, int productId);
 
         /// <summary>
         /// Gets all Carts
@@ -38,6 +38,6 @@ namespace Trainee.Business.Abstraction
         /// </summary>
         /// <param name="visitorId">Visitor identifier</param>
         /// <param name="productId">Product identifier</param>
-        void DeleteCartItem(int visitorId, int productId);
+        void DeleteCartItem(string visitorId, int productId);
     }
 }
