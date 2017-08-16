@@ -8,7 +8,7 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.DAL.Repositories
 {
-    class PaymentRepository : IPaymentRepository
+  public  class PaymentRepository : IPaymentRepository
     {
         private readonly BusinessDbContext _context;
 
