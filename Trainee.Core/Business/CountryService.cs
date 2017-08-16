@@ -42,7 +42,7 @@ namespace Trainee.Core.Business
             }
         }
 
-        public AlzaAdminDTO<Country> GetCountry(string countryCode)
+        /*public AlzaAdminDTO<Country> GetCountry(string countryCode)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace Trainee.Core.Business
             {
                 return AlzaAdminDTO<Country> .Error(e.Message + Environment.NewLine + e.StackTrace);
             }
-        }
+        }*/
 
         /****************************************/
         /*         GET ALL COUNTRIES            */

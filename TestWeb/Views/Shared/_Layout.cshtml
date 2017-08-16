@@ -21,6 +21,7 @@
         var result = CatalogueService.GetCategory(1);
         currentCategory = result.data;
     }
+
     int parentId = currentCategory.Parent == null ? 1 : currentCategory.ParentId.Value;
 
     string parentName = currentCategory.Parent == null ? "Všechny knížky" : currentCategory.Parent.Name;
@@ -49,6 +50,7 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     </environment>
+
     @Html.Raw(JavaScriptSnippet.FullScript)
     
 </head>

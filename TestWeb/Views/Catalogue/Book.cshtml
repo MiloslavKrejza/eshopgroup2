@@ -18,6 +18,7 @@
     
 
 
+
 }
 
 
@@ -102,14 +103,17 @@
 			</p>
 		}
 		<p>@Html.DisplayFor(model => model.Price) Kč</p>
+
+		<button class="btn btn-info" type="submit" asp-controller="Order" asp-action="Cart">Koupit</button>
+
+
 	</div>
   
 		<div class="ratings">
 			<div class="empty-stars"></div>
-
-			<!--	Need to use javascript here due to e-->
-			<div class="full-stars" id="insertTheValue"></div>
-			<span id="takeTheValue" style="display:none;">@Model.StarPercent</span>
+			@{string averageRatingString = (Model.AverageRating * 20).ToString().Replace(',', '.'); }
+			<div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
+			@*<span id="takeTheValue" style="display:none;">@Model.StarPercent</span>*@
 			
 		</div>
 
@@ -190,17 +194,22 @@
 				
 @if (reviewPresent != null)
 {
-	@reviewPresent.Rating
+	decimal stars = reviewPresent.Rating * 20;
+
+
 	<!--	Representation of present user desctiption-->
 
 	<div class="user-rating">
-		<img src="@reviewPresent.User.ProfilePicAddress" alt="@reviewPresent.User.Name" /><span class="bold">@reviewPresent.User.Name</span>
+		<div class="ratings">
+			<div class="empty-stars"></div>
+			<div class="full-stars" style="width:@stars.ToString()%;"></div>
+		</div>
+		<span class="bold">@reviewPresent.User.Name</span>
 		<br />
 		<p>@reviewPresent.Text</p>
 	</div>
 
 	
-
 }
 else
 {
@@ -245,7 +254,7 @@ else
 	if (review.UserId != uId)
 	{
 		int procent = (int)Math.Truncate(review.Rating / 5.0 * 100) ;
-
+		
 
 		<div class="user-rating">
 			<div class="ratings">
@@ -257,14 +266,13 @@ else
 			<p>@review.Text</p>
 		</div>
 
-	}
+	}	
 
 
 
 	}
 
 
-<script src="~/js/averageRating.js"></script>
 
 <script type="text/javascript">
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Trainee.Business.DAL.Entities;
 
 namespace Eshop2.Models.OrderViewModels
 {
@@ -48,7 +49,16 @@ namespace Eshop2.Models.OrderViewModels
 
         [Display(Name = "Stát")]
         [Required(ErrorMessage = "Prosím vyberte zemi.")]
-        public string CountryCode { get; set; }
+        public int CountryId { get; set; }
+
+        public int PaymentId { get; set; }
+        public int ShippingId { get; set; }
+
+
+        public OrderState OrderState { get; set; }
+        public Payment Payment { get; set; }
+        public Shipping Shipping { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
 
        // public List<Country> Countries { get; set; }
 

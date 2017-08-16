@@ -1,0 +1,13 @@
+SELECT Products.***, Products.***,... $(I want to exlude category columns)$ FROM [dbo].[CompleteProducts] AS prods
+INNER JOIN  (SELECT * FROM [dbo].[CategoryRelationships] WHERE [Id] = $ParentId$) AS cats  ON cats.[ChildId] = [prods].[CategoryId]
+
+WHERE
+[Price] BETWEEN $MinPrice$ AND $MaxPrice$
+AND
+[LanguageId] IN ($enumerate list with commas$)
+AND
+[FormatId] IN ($enumerate format list$)
+AND
+[PublisherId] IN
+AND
+[BookId] IN (SELECT BookId FROM (SELECT * FROM AuthorsBooks AS ab INNER JOIN Authors on ab.AuthorId = Authors.Id WHERE nejakyAuthorId IN (debilniAutori))

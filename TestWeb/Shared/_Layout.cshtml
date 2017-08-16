@@ -86,7 +86,7 @@
 
             </div>
         </div>
-
+		</div>
         <hr />
 
         <!--PARTIAL VIEW - LOGIN-->
@@ -130,26 +130,7 @@
 
         <hr />
 
-        <!-- PATIČKA -->
-        <div class="footer">
-            <div class="row">
-                <div class="col-md-6">
-                    <a href=""><p>Doprava a platba</p></a>
-                    <a href=""><p>Obchodní podmínky</p></a>
-                    <a href=""><p>Bezpečné nakupování</p></a>
-                </div>
-                <div class="col-md-6 text-right">
-                    <p>
-                        <strong>Fantastic Books</strong><br />
-                        Guttenbergova 5, Liberec<br />
-                        IČ: 285 64 952<br />
-                        +420 531 648 523<br />
-                        ahoj@fantasticbooks.cz
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+		@Html.Partial("~/Shared/_Footer.cshtml");
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
