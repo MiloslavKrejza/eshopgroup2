@@ -9,7 +9,7 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.DAL.Repositories
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly BusinessDbContext _context;
 
