@@ -1,4 +1,6 @@
 ﻿@using Eshop2.Models.OrderViewModels
+@using Trainee.Core.DAL.Entities
+@using Trainee.Business.DAL.Entities
 @model OrderViewModel
 @{
     ViewData["Title"] = "Dodací údaje";
@@ -13,19 +15,19 @@
             <div class="row form-row">
                 <div class="col-md-6">
                     <label class="text-indent control-label" asp-for="Name"></label>
-                    <input class="form-control" asp-for="Name" value="@Html.DisplayFor(model => model.Name)"/>
+                    <input class="form-control" asp-for="Name" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label class="text-indent control-label" asp-for="Surname"></label>
-                    <input class="form-control" asp-for="@Model.Surname" />
+                    <input class="form-control" asp-for="Surname" />
                     <span asp-validation-for="Surname" class="text-danger"></span>
                 </div>
             </div>
             <div class="row form-row">
                 <div class="col-md-6">
                     <label class="text-indent control-label" asp-for="Email"></label>
-                    <input class="form-control" asp-for="Email" value="@Html.DisplayFor(model => model.Email)" />
+                    <input class="form-control" asp-for="Email"  />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
@@ -53,48 +55,56 @@
                     <input class="form-control" asp-for="City" />
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="CountryCode"></label>
-                    <select class="form-control" asp-for="CountryCode">
-                        <option selected disabled>Zvolte zemi...</option>
-                        @{
-                            string[] Country = new string[] { "Czech", "Slovakia", "Germany" };
+                @*AŽ BUDE CONTROLLER*@
+                @*
+    <div class="col-md-6">
+        <label class="text-indent control-label" asp-for="CountryId"></label>
+        <select class="form-control" asp-for="CountryId">
+            <option selected disabled>Zvolte zemi...</option>
+            @{
 
-                            foreach (string coun in Country/*Country c in Model.Countries*/)
-                            {
 
-                                {
-                                    /*<option value="@c.CountryCode">@c.Name</option>*/
-                                    <option value="@Country">@Country</option>
-                                }
-                            }
-                        }
+                foreach (Country c in Model.Countries)
+                {
 
-                    </select>
-                </div>
+                    {
+                        <option value="@c.Id">@c.Name</option>
+                    }
+                }
+            }
 
+        </select>
+    </div>
+                *@
             </div>
         </div>
 
         <div class="row bottom-padding">
             <div class="col-md-6">
                 <strong class="text-indent">Doprava</strong><br />
-                <input type="radio" name="shipping" value="Vyzvednutí v prodejně" /> Vyzvednutí v prodejně 0 Kč<br />
-                <input type="radio" name="shipping" value="Česká pošta" /> Česká pošta 69 Kč<br />
-                <input type="radio" name="shipping" value="PPL" /> PPL 89 Kč<br />
+
+                @{ 
+                    foreach (Shipping s in Model.Shipping)
+                    {
+                        <input type="radio" value="@s.Id" /> @s.Name <br />
+                    }
+                }
             </div>
             <div class="col-md-6">
                 <strong class="text-indent">Platba</strong><br />
-                <input type="radio" name="payment" value="Hotově/ kartou při převzetí" /> Hotově/ kartou při převzetí<br />
-                <input type="radio" name="payment" value="Kartou ihned" /> Kartou ihned<br />
-                <input type="radio" name="payment" value="Na dobírku" /> Na dobírku +30 Kč<br />
-                <input type="radio" name="payment" value="Převodem" /> Převodem<br />
+
+                @{
+                    foreach (Payment p in Model.Payment)
+                    {
+                        <input type="radio" value="@p.Id" /> @p.Name <br />
+                    }
+                }
             </div>
         </div>
     </div>
 
     <div class="row">
-        <button class="btn"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</button>
-        <button asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary order-button">Rekapitulace<span class="glyphicon glyphicon-menu-right triangle-right"></span></button>
+        <a class="btn btn-default" asp-area="" asp-controller="Order" asp-action="Cart"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</a>
+        <button type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>
     </div>
 </form>

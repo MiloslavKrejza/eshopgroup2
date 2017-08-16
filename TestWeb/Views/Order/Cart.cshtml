@@ -1,43 +1,64 @@
-﻿
+﻿@using Eshop2.Models.OrderViewModels
+@using Trainee.Business.DAL.Entities
+@model CartViewModel
 @{
     ViewData["Title"] = "Košík";
 }
 
 <h2 class="bottom-padding">@ViewData["Title"]</h2>
-<div class="row cart-item bottom-padding">
-    <div class="col-md-2"><img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="bookcover" /></div>
-    <div class="col-md-4">
-        <p><strong>Harry Potter</strong></p>
-        <p>Joanne K. Rowling</p>
-        </div>
-    <div class="col-md-3">
-        <p>skladem - u vás do 3 dnů</p>
-    </div>
-    <div class="col-md-1">
-        399,- 
-    </div>
-    <div class="col-md-2"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span></div>
-</div>
+    @{
+        foreach (CartItem c in Model.Cart)
+        {
+            <div class="row cart-item bottom-padding">
+                <div class="col-md-2"><img src="images/product_images/@c.Product.PicAddress" alt="bookcover" /></div>
+                <div class="col-md-4">
+                    <p><strong>@c.Product.Name</strong></p>
+                    <p>@{
+                        var a = c.Product.Book.AuthorsBooks;
+                        for (int i = 0; i < a.Count; i++)
+                        {
+                            if (i == 0)
+                            {
+                                @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
 
-<div class="row cart-item bottom-padding">
-    <div class="col-md-2"><img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="bookcover" /></div>
-    <div class="col-md-4">
-        <p><strong>Harry Potter</strong></p>
-        <p>Joanne K. Rowling</p>
-    </div>
-    <div class="col-md-3">
-        <p>skladem - u vás do 3 dnů</p>
-    </div>
-    <div class="col-md-1">
-        399,-
-    </div>
-    <div class="col-md-2"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span></div>
-</div>
+                            }
+                            else if (i == 1)
+                            {
+                                @Html.Raw(", ")@a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
+                            }
+                            else
+                            {
+                                @Html.Raw(",...")
+                                break;
+
+                            }
+                        }
+                    }
+                    }</p>
+                </div>
+                <div class="col-md-3">
+                    <p>@c.Product.State</p>
+                </div>
+                <div class="col-md-1">
+                    @c.Product.Price
+                </div>
+                <div class="col-md-2"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span></div>
+            </div>
+        }
+    }
 
 <hr class="bottom-padding"/>
 
 <div class="row text-indent">
-    <div class="total-price text-right bottom-padding"><p>Celková cena: 798,-</p></div>
-        <button class="btn"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</button>
-        <button asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></button>
+    <div class="total-price text-right bottom-padding">
+        <p>Celková cena: @{
+        decimal totalPrice = 0;
+        foreach (CartItem c in Model.Cart)
+        {
+            totalPrice += c.Product.Price;
+        }
+    }</p>
+    </div>
+        <a class="btn btn-default" asp-area="" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
+        <a asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
 </div>
