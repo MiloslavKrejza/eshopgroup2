@@ -47,7 +47,7 @@ namespace Trainee.Business.DAL.Repositories
         public CartItem UpdateCartItem(CartItem cartItem)
         {
             var oldItem = _context.CartItems
-                .FirstOrDefault(ci => ci.VisitorId == cartItem.VisitorId && ci.UserId == cartItem.UserId);
+                .FirstOrDefault(ci => ci.VisitorId == cartItem.VisitorId && ci.ProductId == cartItem.ProductId);
             _context.Entry(oldItem).CurrentValues.SetValues(cartItem);
             _context.SaveChanges();
             return cartItem;
