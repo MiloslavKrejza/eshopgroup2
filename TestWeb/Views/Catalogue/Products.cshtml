@@ -254,7 +254,9 @@
 
 				<li class=@(LastPage == Model.PageNum ? "active" : "" )>
 				<a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="@(Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize))">Poslední</a>
-					@*<a href="~/Home/Index?page=@Model.PageNum">Poslední</a>*@
-				</li>			}
-		</ul>}
+			
+				</li>			
+			}
+		</ul>
+	 }
 </div>
