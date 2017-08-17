@@ -8,7 +8,7 @@
 
 <h2 class="bottom-padding">@ViewData["Title"]</h2>
 
-<form>
+<form asp-action="Order" asp-controller="Order">
     <div class="order">
         <div class="row bottom-padding">
 
@@ -55,8 +55,7 @@
                     <input class="form-control" asp-for="City" />
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
-                @*AŽ BUDE CONTROLLER*@
-                @*
+                
     <div class="col-md-6">
         <label class="text-indent control-label" asp-for="CountryId"></label>
         <select class="form-control" asp-for="CountryId">
@@ -75,7 +74,7 @@
 
         </select>
     </div>
-                *@
+               
             </div>
         </div>
 
