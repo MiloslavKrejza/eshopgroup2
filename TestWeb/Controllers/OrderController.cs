@@ -82,47 +82,7 @@ namespace Eshop2.Controllers
             }
 
         }
-
-        public async Task<IActionResult> Redirect()
-        {
-            try
-            {
-                CookieHelper cookieHelper = new CookieHelper(_accessor);
-
-                AlzaAdminDTO<List<CartItem>> result;
-                if (_signInManager.IsSignedIn(User))
-                {
-                    var user = await _userManager.GetUserAsync(User);
-                    result = _businessService.GetCart(user.Id);
-                }
-                else
-                {
-                    string cookieId = cookieHelper.GetVisitorId();
-                    result = _businessService.GetCart(cookieId);
-                }
-                if (!result.isOK)
-                    throw new Exception("Could not find the cart");
-
-                var cart = result.data;
-
-                if (cart.Count == 0)
-                {
-                    TempData["emptyCart"] = true;
-                    return RedirectToAction("Cart");
-                }
-
-                OrderViewModel model = new OrderViewModel();
-
-                model.Items = cart;
-
-
-                return RedirectToAction("Order");
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Error", "Home");
-            }
-        }
+        
 
         // GET: /Order/Order/
         [HttpGet]
@@ -178,7 +138,7 @@ namespace Eshop2.Controllers
         }
 
         [HttpPost("/Order/Order/")]
-        public async Task<IActionResult> SendOrder(OrderViewModel model)
+        public async Task<IActionResult> Order(OrderViewModel model)
         {
             try
             {
