@@ -56,58 +56,10 @@ namespace Eshop2.Models.OrderViewModels
         public int PaymentId { get; set; }
         public int ShippingId { get; set; }
 
-        private List<Payment> payment;
-        public List<Payment> Payment
-        {
-            get
-            {
-                return payment == null ? new List<Payment>() : payment;
-            }
-            set
-            {
-                payment = value;
-            }
-        }
-        private List<Shipping> shipping;
-        public List<Shipping> Shipping
-        {
-            get
-            {
-                return shipping == null ? new List<Shipping>() : shipping;
-            }
-            set
-            {
-                shipping = value;
-            }
-        }
-        private List<CartItem> items;
-
-        [IsCollectionFilled]
-        public List<CartItem> Items
-        {
-            get
-            {
-                return items == null ? new List<CartItem>() : items;
-            }
-            set
-            {
-                items = value;
-            }
-        }
-        private List<Country> countries;
-
-        
-        public List<Country> Countries
-        {
-            get
-            {
-                return countries == null ? new List<Country>() : countries;
-            }
-            set
-            {
-                countries = value;
-            }
-        }
+        public List<Payment> Payment { get; set; }
+        public List<Shipping> Shipping { get; set; }
+        public List<CartItem> Items { get; set; }
+        public List<Country> Countries { get; set; }
         
         
 

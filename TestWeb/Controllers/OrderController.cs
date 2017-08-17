@@ -54,7 +54,6 @@ namespace Eshop2.Controllers
                 {
                     var user = await _userManager.GetUserAsync(User);
                     result = _businessService.GetCart(user.Id);
-                    throw new Exception("Prr");
                 }
                 else
                 {
@@ -93,7 +92,6 @@ namespace Eshop2.Controllers
                 {
                     var user = await _userManager.GetUserAsync(User);
                     result = _businessService.GetCart(user.Id);
-                    throw new Exception("prr");
                 }
                 else
                 {
@@ -114,12 +112,9 @@ namespace Eshop2.Controllers
                 OrderViewModel model = new OrderViewModel();
 
                 model.Items = cart;
-                model.Countries = _countryService.GetAllCountries().data.ToList();
-                model.Shipping = _businessService.GetShippings().data.ToList();
-                model.Payment = _businessService.GetPayments().data.ToList();
 
 
-                return RedirectToAction("Order", model);
+                return RedirectToAction("Order");
             }
             catch (Exception e)
             {
@@ -129,12 +124,43 @@ namespace Eshop2.Controllers
 
         // GET: /Order/Order/
         [HttpGet]
-        public IActionResult Order(OrderViewModel model)
+        public async Task<IActionResult> Order()
         {
             try
             {
+                CookieHelper cookieHelper = new CookieHelper(_accessor);
+
+                AlzaAdminDTO<List<CartItem>> result;
+                if (_signInManager.IsSignedIn(User))
+                {
+                    var user = await _userManager.GetUserAsync(User);
+                    result = _businessService.GetCart(user.Id);
+                }
+                else
+                {
+                    string cookieId = cookieHelper.GetVisitorId();
+                    result = _businessService.GetCart(cookieId);
+                }
+                if (!result.isOK)
+                    throw new Exception("Could not find the cart");
+
+                var cart = result.data;
+
+                if (cart.Count == 0)
+                {
+                    TempData["emptyCart"] = true;
+                    return RedirectToAction("Cart");
+                }
+
+                OrderViewModel model = new OrderViewModel();
+
+                model.Items = cart;
+
                 if (model.Items.Count > 0)
                 {
+                    model.Countries = _countryService.GetAllCountries().data.ToList();
+                    model.Shipping = _businessService.GetShippings().data.ToList();
+                    model.Payment = _businessService.GetPayments().data.ToList();
                     return View(model);
                 }
                 else
@@ -225,11 +251,21 @@ namespace Eshop2.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddToCart([FromBody]AddToCartModel model)
+        public async Task<IActionResult> AddToCart([FromBody]AddToCartModel model)
         {
             var settings = new JsonSerializerSettings();
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            var result = _businessService.AddToCart("???", null, model.ProductId, model.Amount);
+
+            CookieHelper helper = new CookieHelper(_accessor);
+            string cookieId = helper.GetVisitorId();
+            int? uid = null;
+            if (_signInManager.IsSignedIn(User))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                uid = user.Id;
+            }
+
+            var result = _businessService.AddToCart(cookieId, uid, model.ProductId, model.Amount);
             return Json(result,settings);
 
         }
