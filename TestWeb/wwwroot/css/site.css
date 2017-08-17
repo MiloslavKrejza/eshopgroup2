@@ -472,6 +472,27 @@ input:-ms-input-placeholder {
   width: 80%;
   margin: 0 auto; }
 
+/* Order login */
+.partiallogin {
+  margin: 0 20px; }
+
+.partialloginpart {
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0 5px;
+  width: 30%; }
+  .partialloginpart label {
+    margin-left: 25px; }
+  .partialloginpart input {
+    width: 80%;
+    margin: 0 auto; }
+  .partialloginpart img {
+    height: 170px;
+    margin-bottom: 0; }
+  .partialloginpart p {
+    font-size: 16px; }
+
 /*Reviews*/
 .ratings {
   position: relative;
@@ -507,3 +528,4 @@ input:-ms-input-placeholder {
 @-moz-document url-prefix() {
   .full-stars {
     color: #ECBE24; } }
+
