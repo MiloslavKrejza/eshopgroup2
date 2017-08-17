@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Eshop2.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Trainee.Business.DAL.Entities;
+using Trainee.Core.DAL.Entities;
 
 namespace Eshop2.Models.OrderViewModels
 {
@@ -13,16 +16,6 @@ namespace Eshop2.Models.OrderViewModels
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
-        [Display(Name = "Heslo")]
-        [Required(ErrorMessage = "Prosím vyplňte heslo.")]
-        [StringLength(100, ErrorMessage = "Heslo musí mít alespoň {2} a nejvýše {1} znaků.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Display(Name = "Potvrďte heslo")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Hesla musí být shodná.")]
-        public string ConfirmPassword { get; set; }
 
         [Display(Name = "Jméno")]
         [Required(ErrorMessage = "Prosím vyplňte své jméno.")]
@@ -48,9 +41,20 @@ namespace Eshop2.Models.OrderViewModels
 
         [Display(Name = "Stát")]
         [Required(ErrorMessage = "Prosím vyberte zemi.")]
-        public string CountryCode { get; set; }
+        public int CountryId { get; set; }
 
-       // public List<Country> Countries { get; set; }
+        public int PaymentId { get; set; }
+        public int ShippingId { get; set; }
+
+        public List<Payment> Payment { get; set; }
+        public List<Shipping> Shipping { get; set; }
+        public List<CartItem> Items { get; set; }
+        public List<Country> Countries { get; set; }
+        public List<CartItem> Cart { get; set; }
+
+
+
+
 
     }
 }

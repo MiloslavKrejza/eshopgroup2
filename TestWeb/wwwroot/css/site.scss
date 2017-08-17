@@ -7,6 +7,10 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+h2 {
+    padding-bottom: 20px;
+}
+
 body .body-line {
     margin-top: 25px;
 }
@@ -327,11 +331,6 @@ input:-ms-input-placeholder {
     margin: 20px 0;
 }
 
-.title-register {
-    padding-left: 50px;
-    padding-bottom: 20px;
-}
-
 .text-small {
     margin-top: 15px;
     text-align: center;
@@ -525,7 +524,16 @@ input:-ms-input-placeholder {
     padding-left: 5px;
 }
 
-.btn-to-cart {
+.product-count {
+    width: 55px;
+    margin-right: 50px;
+    padding-left: 10px;
+    border: solid 1px #aaaaaa;
+    border-radius: 5px;
+
+}
+
+.btn-addtocart {
     margin-bottom: 10px;
 }
 
@@ -617,10 +625,27 @@ input:-ms-input-placeholder {
 /* Cart */
 
 .cart-item {
+    margin-left: 20px;
+
     img {
         max-height: 100px;
-        margin-left: 50px;
     }
+
+    a {
+        color: #444444;
+    }
+}
+
+.remove {
+    color: red;
+    cursor: pointer;
+
+}
+
+.change-count {
+    margin-right: 50px;
+    background-color: #f19f4d;
+    border-color: #f19f4d;
 }
 
 .order-button {
@@ -637,17 +662,63 @@ input:-ms-input-placeholder {
 }
 
 .total-price {
-    margin-right: 50px;
+    padding-right: 50px;
     font-size: 16px;
     font-weight: bold;
 }
 
 /* Order */
 
+.order {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Order login */
+
+.orderlogin {
+    margin: 0 20px;    
+}
+
+.partiallogin {
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0 5px;
+    width: 45%;
+
+    label {
+        margin-left: 35px;
+    }
+
+    input {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+.register-container {
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0 0 10px;
+
+    img {
+        margin: 0;
+        height: 90px;
+    }
+
+    p {
+        font-size: 16px;
+        margin: 20px 0 0;
+    }
+}
+
+
+    
 
 
 /*Reviews*/
-
 .ratings {
     position: relative;
     vertical-align: middle;

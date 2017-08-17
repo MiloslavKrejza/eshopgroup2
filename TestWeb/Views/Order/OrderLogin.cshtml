@@ -1,0 +1,29 @@
+﻿@using Eshop2.Models.OrderViewModels
+
+@{
+    ViewData["Title"] = "Přihlášení k objednávce";
+}
+
+<h2>Chcete se přihlásit?</h2>
+
+<div class="row orderlogin">
+    <div class="col-md-6 partiallogin">
+        @Html.Partial("~/Views/Shared/_LoginPartial.cshtml", new LoginViewModel(), ViewData)
+    </div>
+    <div class="col-md-6">
+        <div class="row text-center register-container">
+            <a asp-controller="Account" asp-action="register">
+                <div class="col-md-6"><img src="~/images/register.svg" /></div>
+                <div class="col-md-6"><p>Nemáte účet? Zaregistrujte se</p></div>
+            </a>
+        </div>
+
+        <div class="row text-center register-container">
+            <a asp-controller="Order" asp-action="Order">
+                <div class="col-md-6"><img src="~/images/fast-order.svg" /></div>
+                <div class="col-md-6"><p>Nakoupit bez registrace</p></div>
+            </a>
+        </div>
+    </div>
+
+</div>

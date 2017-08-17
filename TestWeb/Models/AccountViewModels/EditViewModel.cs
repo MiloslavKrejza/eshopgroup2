@@ -48,6 +48,16 @@ namespace TestWeb.Models.AccountViewModels
 
         public List<Country> Countries { get; set; }
 
+        [Display(Name = "Nové heslo")]
+        [DataType(DataType.Password)]
+        [StringLength(100, ErrorMessage = "Heslo musí mít alespoň {2} a nejvýše {1} znaků.", MinimumLength = 6)]
+        public string NewPassword { get; set; }
+
+        [Display(Name = "Potvrdit nové heslo")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Hesla musí být shodná.")]
+        public string ConfirmNewPassword { get; set; }
+
         [Display(Name = "Heslo")]
         [Required(ErrorMessage = "Prosím vyplňte heslo.")]
         [DataType(DataType.Password)]

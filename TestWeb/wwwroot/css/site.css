@@ -5,6 +5,9 @@
   color: #444444;
   font-family: 'Montserrat', sans-serif; }
 
+h2 {
+  padding-bottom: 20px; }
+
 body .body-line {
   margin-top: 25px; }
 
@@ -242,10 +245,6 @@ input:-ms-input-placeholder {
 .register-button {
   margin: 20px 0; }
 
-.title-register {
-  padding-left: 50px;
-  padding-bottom: 20px; }
-
 .text-small {
   margin-top: 15px;
   text-align: center; }
@@ -379,7 +378,14 @@ input:-ms-input-placeholder {
 .details-right {
   padding-left: 5px; }
 
-.btn-to-cart {
+.product-count {
+  width: 55px;
+  margin-right: 50px;
+  padding-left: 10px;
+  border: solid 1px #aaaaaa;
+  border-radius: 5px; }
+
+.btn-addtocart {
   margin-bottom: 10px; }
 
 /* Products catalogue */
@@ -448,9 +454,21 @@ input:-ms-input-placeholder {
 
 /* ORDER */
 /* Cart */
-.cart-item img {
-  max-height: 100px;
-  margin-left: 50px; }
+.cart-item {
+  margin-left: 20px; }
+  .cart-item img {
+    max-height: 100px; }
+  .cart-item a {
+    color: #444444; }
+
+.remove {
+  color: red;
+  cursor: pointer; }
+
+.change-count {
+  margin-right: 50px;
+  background-color: #f19f4d;
+  border-color: #f19f4d; }
 
 .order-button {
   position: absolute;
@@ -463,11 +481,43 @@ input:-ms-input-placeholder {
   margin-left: 5px; }
 
 .total-price {
-  margin-right: 50px;
+  padding-right: 50px;
   font-size: 16px;
   font-weight: bold; }
 
 /* Order */
+.order {
+  width: 80%;
+  margin: 0 auto; }
+
+/* Order login */
+.orderlogin {
+  margin: 0 20px; }
+
+.partiallogin {
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0 5px;
+  width: 45%; }
+  .partiallogin label {
+    margin-left: 35px; }
+  .partiallogin input {
+    width: 80%;
+    margin: 0 auto; }
+
+.register-container {
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0 0 10px; }
+  .register-container img {
+    margin: 0;
+    height: 90px; }
+  .register-container p {
+    font-size: 16px;
+    margin: 20px 0 0; }
+
 /*Reviews*/
 .ratings {
   position: relative;
@@ -503,3 +553,4 @@ input:-ms-input-placeholder {
 @-moz-document url-prefix() {
   .full-stars {
     color: #ECBE24; } }
+

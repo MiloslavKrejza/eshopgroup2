@@ -22,7 +22,7 @@ namespace BackendPlayground.Controllers
         IHostingEnvironment _env;
         ICategoryRepository _rep;
         BusinessService _serv;
-        public TestController(IHostingEnvironment env, ICategoryRepository categoryRep,BusinessService serv)
+        public TestController(IHostingEnvironment env, ICategoryRepository categoryRep, BusinessService serv)
         {
             _serv = serv;
             _env = env;
@@ -60,10 +60,11 @@ namespace BackendPlayground.Controllers
         }
         //[HttpGet("test/product/{name}")]
         //public IActionResult
-        
+
         [HttpGet]
         public IActionResult CategoryTest()
-        {var repo = new ProductRatingRepository("Server=DEVSQL_STAZ\\DEV_STAZ;Database=group2;Trusted_Connection=True;");
+        {
+            var repo = new ProductRatingRepository("Server=DEVSQL_STAZ\\DEV_STAZ;Database=group2;Trusted_Connection=True;");
             var rand = new Random();
             List<int> idList = new List<int>();
             for (int i = 0; i < 500; i++)
@@ -72,16 +73,31 @@ namespace BackendPlayground.Controllers
             }
             var test = repo.GetRatings().Where(r => idList.Contains(r.ProductId));
             return View();
-            
-            
+
+
         }
         [HttpGet("/Test/ProductTest/")]
         public IActionResult ProductTest()
         {
-           QueryParametersWrapper filter = new QueryParametersWrapper() {SortingType=SortType.Asc,SortingParameter=SortingParameter.Name,PageSize=50,CategoryId=1,PageNum=1 };
+            QueryParametersWrapper filter = new QueryParametersWrapper() { SortingType = SortType.Asc, SortingParameter = SortingParameter.Name, PageSize = 50, CategoryId = 1, PageNum = 1 };
             var res = _serv.GetPage(filter).data;
             return View();
 
+        }
+        [HttpPost]
+        public IActionResult AjaxTest([FromBody]AjaxTest test)
+        {
+            var variable = _serv.GetProduct(test.ProductId);
+            var settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            HttpContext.Response.Cookies.Append("Heh", "heheh");
+            return Json(variable, settings);
+        }
+        [HttpGet]
+        public IActionResult CookieTest()
+        {
+            
+            return View();
         }
 
 

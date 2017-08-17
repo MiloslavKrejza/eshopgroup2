@@ -1,43 +1,72 @@
-﻿
+﻿@using Eshop2.Models.OrderViewModels
+@using Trainee.Business.DAL.Entities
+@model CartViewModel
 @{
     ViewData["Title"] = "Košík";
 }
 
-<h2 class="bottom-padding">Košík</h2>
-<div class="row cart-item bottom-padding">
-    <div class="col-md-2"><img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="bookcover" /></div>
-    <div class="col-md-4">
-        <p><strong>Harry Potter</strong></p>
-        <p>Joanne K. Rowling</p>
+@{
+    decimal totalPrice = 0;
+    foreach (CartItem c in Model.Cart)
+    {
+
+        totalPrice += c.Product.Price*c.Amount;
+
+    }
+}
+
+<h2>@ViewData["Title"]</h2>
+@{
+    foreach (CartItem c in Model.Cart)
+    {
+        <div class="row cart-item bottom-padding">
+            <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
+                <div class="col-md-2">
+                    <img src="~/images/product_images/@c.Product.PicAddress" alt="bookcover" />
+                </div>
+                <div class="col-md-4">
+                    <p><strong>@c.Product.Name</strong></p>
+                    <p>
+                        @{
+                            var a = c.Product.Book.AuthorsBooks;
+                            for (int i = 0; i < a.Count; i++)
+                            {
+
+                                @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
+
+                                @if (i != a.Count - 1)
+                                {@Html.Raw(", ")}
+                            }
+                        }
+                    </p>
+                </div>
+            </a>
+            <div class="col-md-2">
+                <p>@c.Product.State.Name</p>
+            </div>
+            <div class="col-md-1">
+                <input type="number" class="product-count" value="@c.Amount" min="1" />
+            </div>
+            <div class="col-md-2">
+                @String.Format("{0:c}", c.Product.Price)
+            </div>
+            <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
         </div>
-    <div class="col-md-3">
-        <p>skladem - u vás do 3 dnů</p>
-    </div>
-    <div class="col-md-1">
-        399,- 
-    </div>
-    <div class="col-md-2"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span></div>
+                        }
+}
+<div class="row text-right bottom-padding">
+    <button class="btn btn-primary change-count">Přepočítat košík</button>
 </div>
 
-<div class="row cart-item bottom-padding">
-    <div class="col-md-2"><img src="https://ewedit.files.wordpress.com/2016/09/hpsorcstone.jpg?w=405" alt="bookcover" /></div>
-    <div class="col-md-4">
-        <p><strong>Harry Potter</strong></p>
-        <p>Joanne K. Rowling</p>
-    </div>
-    <div class="col-md-3">
-        <p>skladem - u vás do 3 dnů</p>
-    </div>
-    <div class="col-md-1">
-        399,-
-    </div>
-    <div class="col-md-2"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span></div>
+<hr class="bottom-padding" />
+
+<div class="row bottom-padding text-right total-price">
+        <p>
+            Celková cena: @String.Format("{0:c}", totalPrice)
+        </p>
 </div>
 
-<hr class="bottom-padding"/>
-
-<div class="row text-indent">
-    <div class="total-price text-right bottom-padding"><p>Celková cena: 798,-</p></div>
-        <button class="btn"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</button>
-        <button asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></button>
+<div class="row">
+    <a class="btn btn-default" asp-area="" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
+    <a asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
 </div>
