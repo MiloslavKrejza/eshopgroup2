@@ -13,6 +13,7 @@ using Eshop2.Abstraction;
 using Trainee.Business.DAL.Entities;
 using Trainee.Core.Business;
 using Alza.Core.Module.Http;
+using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -209,6 +210,15 @@ namespace Eshop2.Controllers
         public IActionResult OrderLogin()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult AddToCart([FromBody]AddToCartModel model)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            var result = _businessService.AddToCart("???", null, model.ProductId, model.Amount);
+            return Json(result,settings);
+
         }
     }
 }

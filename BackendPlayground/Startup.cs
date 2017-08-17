@@ -65,6 +65,7 @@ namespace BackendPlayground
             services.AddTransient<ICartItemRepository, CartItemRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderStateRepository, OrderStateRepository>();
+            services.AddTransient<IOrderItemRepository, OrderItemRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IShippingRepository, ShippingRepository>();
             services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>(sp => { return new CategoryRelationshipRepository(Configuration.GetConnectionString("Trainee.Business")); });

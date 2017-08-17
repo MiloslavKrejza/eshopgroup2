@@ -58,7 +58,7 @@ namespace Eshop2.Models.OrderViewModels
         
         public List<Payment> Payments { get; set; }
         public List<Shipping> Shippings { get; set; }
-        public List<CartItem> OrderItems { get; set; }
+        public List<CartItem> Items { get; set; }
 
         public List<Country> Countries { get; set; }
 

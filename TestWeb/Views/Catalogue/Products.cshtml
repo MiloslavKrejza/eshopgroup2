@@ -194,8 +194,8 @@
                     <p class="italics">@p.Format.Name</p>
                     <p>@String.Format("{0:C}", p.Price)</p>
                 </a>
-                <span class="hidden product-id">@p.Id</span>
-                <input type="text" class="hidden product-count" value="1" />
+                <input type="hidden" value="@p.Id" name="product-id" />
+                <input type="hidden" name="product-count" class="hidden" value="1" />
                 <button class="btn-addtocart btn btn-primary">Do košíku</button>
 
             </div>
@@ -212,12 +212,12 @@
 
 </div>
 <div class="text-center">
-        <ul class="pagination paging">
-            @for (int i = 0; i < Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize); i++)
-                {
-                <li><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="@i">@(i + 1)</a></li>
-            }
-        </ul>
-    </div>
+    <ul class="pagination paging">
+        @for (int i = 0; i < Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize); i++)
+        {
+            <li><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="@i">@(i + 1)</a></li>
+        }
+    </ul>
+</div>
 
 
