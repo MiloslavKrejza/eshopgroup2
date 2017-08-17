@@ -44,11 +44,11 @@ $(".btn-addtocart").click(function () {
             if (json.isOK) {
                 button.addClass('btn-success');
                 button.removeClass('btn-primary');
-                button.val('Přidáno');
+                button.text('Přidáno');
                 setTimeout(function () {
                     button.removeClass("btn-success");
                     button.addClass("btn-primary");
-                    button.val("Do košíku");
+                    button.text("Do košíku");
                 }, 1500)
 
 
