@@ -468,6 +468,10 @@ input:-ms-input-placeholder {
   font-weight: bold; }
 
 /* Order */
+.order {
+  width: 80%;
+  margin: 0 auto; }
+
 /*Reviews*/
 .ratings {
   position: relative;

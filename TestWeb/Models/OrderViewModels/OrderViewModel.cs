@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Trainee.Business.DAL.Entities;
+using Trainee.Core.DAL.Entities;
 
 namespace Eshop2.Models.OrderViewModels
 {
@@ -54,13 +55,12 @@ namespace Eshop2.Models.OrderViewModels
         public int PaymentId { get; set; }
         public int ShippingId { get; set; }
 
+        
+        public List<Payment> Payments { get; set; }
+        public List<Shipping> Shippings { get; set; }
+        public List<CartItem> OrderItems { get; set; }
 
-        public OrderState OrderState { get; set; }
-        public Payment Payment { get; set; }
-        public Shipping Shipping { get; set; }
-        public List<OrderItem> OrderItems { get; set; }
-
-       // public List<Country> Countries { get; set; }
+        public List<Country> Countries { get; set; }
 
     }
 }

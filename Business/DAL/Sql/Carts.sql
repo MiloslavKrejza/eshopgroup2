@@ -4,9 +4,10 @@ GO
 
 CREATE TABLE [dbo].[Carts](
 	[UserId][int] NULL,
-	[VisitorId][int] NOT NULL,
+	[VisitorId][varchar](36) NOT NULL,
 	[ProductId][int] NOT NULL,
-	[Amount][int] NOT NULL
+	[Amount][int] NOT NULL,
+	[LastTimeUpdated][DateTime] DEFAULT(GETDATE()) NOT NULL
 )
 GO
 
@@ -23,4 +24,8 @@ GO
 ALTER TABLE [dbo].[Carts]
 ADD CONSTRAINT [FK_Carts_Products]
 	FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]
+GO
+
+CREATE INDEX [VisitorId_index]
+	ON [dbo].[Carts] ([VisitorId])
 GO

@@ -8,7 +8,7 @@ namespace Eshop2.Models.OrderViewModels
 {
     public class CartViewModel
     {
-        List<CartItem> Cart { get; set; }
+        public List<CartItem> Cart { get; set; }
 
     }
 }

@@ -211,16 +211,13 @@
     }
 
 </div>
-<div class="col-centered">
-    <ul class="pagination text-center paging">
-        @for (int i = 0; i < Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize); i++)
-            {
-            <li><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="@i">@(i + 1)</a></li>
-        }
-    </ul>
-</div>
-
-
-
+<div class="text-center">
+        <ul class="pagination paging">
+            @for (int i = 0; i < Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize); i++)
+                {
+                <li><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="@i">@(i + 1)</a></li>
+            }
+        </ul>
+    </div>
 
 
