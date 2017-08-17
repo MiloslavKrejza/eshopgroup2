@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eshop2.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -55,12 +56,14 @@ namespace Eshop2.Models.OrderViewModels
         public int PaymentId { get; set; }
         public int ShippingId { get; set; }
 
-        
-        public List<Payment> Payments { get; set; }
-        public List<Shipping> Shippings { get; set; }
+        public List<Payment> Payment { get; set; }
+        public List<Shipping> Shipping { get; set; }
         public List<CartItem> Items { get; set; }
-
         public List<Country> Countries { get; set; }
+        
+        
+
+        
 
     }
 }
