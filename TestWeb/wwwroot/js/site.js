@@ -28,4 +28,17 @@ function changeUser() {
 function changeUserBack() {
     document.getElementById("login-link").innerHTML = "Přihlásit";
 }
+$(".btn-addtocart").click(function () {
+    var ProductCount = $(this).parent().children("input[name='product-count']").val();
+    var ProductId = $(this).parent().children("input[name='product-id']").val();
+    var data = { ProductId: ProductId, Amount: ProductCount }
+    $.ajax({
+        url: "/Order/AddToCart",
+        contentType: 'application/json; charset=utf-8',
+        dataType: "json",
+        type: "POST",
+        data: JSON.stringify(data)
+    })
+
+})
 

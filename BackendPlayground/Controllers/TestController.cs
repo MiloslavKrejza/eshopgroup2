@@ -90,12 +90,13 @@ namespace BackendPlayground.Controllers
             var variable = _serv.GetProduct(test.ProductId);
             var settings = new JsonSerializerSettings();
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            HttpContext.Response.Cookies.Append("Heh", "heheh");
             return Json(variable, settings);
         }
         [HttpGet]
         public IActionResult CookieTest()
         {
-            HttpContext.Response.Cookies.Append("test", "lorem ipsum");
+            
             return View();
         }
 
