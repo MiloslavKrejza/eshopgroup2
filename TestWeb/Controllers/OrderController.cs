@@ -51,7 +51,8 @@ namespace Eshop2.Controllers
                 if (_signInManager.IsSignedIn(User))
                 {
                     var user = await _userManager.GetUserAsync(User);
-                    result = _businessService.GetCart(user.Id);
+                    //result = _businessService.GetCart(user.Id);
+                    throw new Exception("Prr");
                 }
                 else
                 {
@@ -88,7 +89,8 @@ namespace Eshop2.Controllers
                 if (_signInManager.IsSignedIn(User))
                 {
                     var user = await _userManager.GetUserAsync(User);
-                    result = _businessService.GetCart(user.Id);
+                    //result = _businessService.GetCart(user.Id);
+                    throw new Exception("prr");
                 }
                 else
                 {
@@ -103,7 +105,7 @@ namespace Eshop2.Controllers
                 if (cart.Count == 0)
                 {
                     TempData["emptyCart"] = true;
-                    RedirectToAction("Cart");
+                    return RedirectToAction("Cart");
                 }
 
                 OrderViewModel model = new OrderViewModel();

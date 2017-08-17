@@ -1,4 +1,6 @@
-﻿
+﻿@using Eshop2.Models.OrderViewModels;
+@model CartViewModel
+
 @{
     ViewData["Title"] = "Košík";
 }
@@ -39,5 +41,5 @@
 <div class="row text-indent">
     <div class="total-price text-right bottom-padding"><p>Celková cena: 798,-</p></div>
         <button class="btn"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</button>
-        <button asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></button>
+        <button asp-area="" asp-controller="Order" asp-action="Redirect" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></button>
 </div>

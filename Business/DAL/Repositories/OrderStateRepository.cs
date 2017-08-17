@@ -9,7 +9,7 @@ using Trainee.Business.Abstraction;
 
 namespace Trainee.Business.DAL.Repositories
 {
-    class OrderStateRepository : IOrderStateRepository
+    public class OrderStateRepository : IOrderStateRepository
     {
         private readonly BusinessDbContext _context;
 

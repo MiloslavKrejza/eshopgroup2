@@ -1,5 +1,5 @@
-﻿
-@model
+﻿@using Eshop2.Models.OrderViewModels;
+@model OrderViewModel
 
 @{
     ViewData["Title"] = "Objednávka";
@@ -68,8 +68,8 @@
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="CountryCode"></label>
-                    <select class="form-control" asp-for="CountryCode">
+                    <label class="text-indent control-label" asp-for="CountryId"></label>
+                    <select class="form-control" asp-for="CountryId">
                         <option selected disabled>Zvolte zemi...</option>
                         @{
                             string[] Country = new string[] { "Czech", "Slovakia", "Germany"};

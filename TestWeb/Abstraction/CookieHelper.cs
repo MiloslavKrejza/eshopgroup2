@@ -25,7 +25,6 @@ namespace Eshop2.Abstraction
             {
                 cookieId = Guid.NewGuid().ToString();
                 CookieOptions opt = new CookieOptions();
-                opt.Expires = new DateTimeOffset(DateTime.Now, new TimeSpan(14, 0, 0, 0));
                 context.Response.Cookies.Append("VisitorId", cookieId, opt);
             }
 

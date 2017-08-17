@@ -8,7 +8,7 @@ using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.DAL.Repositories
 {
-    class ShippingRepository : IShippingRepository
+    public class ShippingRepository : IShippingRepository
     {
         private readonly BusinessDbContext _context;
 

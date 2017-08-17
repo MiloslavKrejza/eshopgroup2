@@ -23,6 +23,8 @@ using Trainee.Business.DAL.Context;
 using Trainee.Business.Abstraction;
 using Trainee.Business.DAL.Repositories;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System;
 
 namespace TestWeb
 {
@@ -50,6 +52,16 @@ namespace TestWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+            // Adds a default in-memory implementation of IDistributedCache.
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.CookieHttpOnly = true;
+            });
+
             // Add functionality to inject IOptions<T>
             services.AddOptions();
 
@@ -79,12 +91,17 @@ namespace TestWeb
             services.AddTransient<BusinessService, BusinessService>();
             services.AddTransient<CatalogueService, CatalogueService>();
 
+            services.AddTransient<ICartItemRepository, CartItemRepository>();
+            services.AddTransient<IOrderItemRepository, OrderItemRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderStateRepository, OrderStateRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
+            services.AddTransient<IShippingRepository, ShippingRepository>();
 
             services.AddDbContext<CountryDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Core.Countries")));
             services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.User.Users")));
             services.AddDbContext<CatalogueDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Catalogue.Cat")));
             services.AddDbContext<BusinessDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Trainee.Business")));
-
 
             /*************** POSSIBILITIES ***************/
             //services.AddTransient ... created every time (pretty much)
@@ -126,7 +143,8 @@ namespace TestWeb
             app.UseAlzaCoreIdentity();
 
 
-
+            app.UseSession();
+            app.UseMvcWithDefaultRoute();
 
 
             //Routing
