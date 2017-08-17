@@ -32,12 +32,15 @@ $(".btn-addtocart").click(function () {
     var ProductCount = $(this).parent().children("input[name='product-count']").val();
     var ProductId = $(this).parent().children("input[name='product-id']").val();
     var data = { ProductId: ProductId, Amount: ProductCount }
+
     var button = $(this)
+
     $.ajax({
         url: "/Order/AddToCart",
         contentType: 'application/json; charset=utf-8',
         dataType: "json",
         type: "POST",
+
         data: JSON.stringify(data),
         success: function (data) {
             var json = JSON.parse(JSON.stringify(data));

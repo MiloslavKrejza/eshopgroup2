@@ -14,7 +14,9 @@ using Trainee.Business.DAL.Entities;
 using Trainee.Core.Business;
 using Alza.Core.Module.Http;
 using Newtonsoft.Json;
+
 using Trainee.Core.DAL.Entities;
+
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -251,6 +253,7 @@ namespace Eshop2.Controllers
             return View();
         }
         [HttpPost]
+
         public async Task<IActionResult> AddToCart([FromBody]AddToCartModel model)
         {
             var settings = new JsonSerializerSettings();
@@ -266,6 +269,7 @@ namespace Eshop2.Controllers
             }
 
             var result = _businessService.AddToCart(cookieId, uid, model.ProductId, model.Amount);
+
             return Json(result,settings);
 
         }

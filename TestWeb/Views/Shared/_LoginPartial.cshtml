@@ -2,23 +2,6 @@
 @using TestWeb.Models
 @model LoginViewModel
 
-@*inject UserManager<ApplicationUser> UserManager
-
-if (SignInManager.IsSignedIn(User))
-{
-    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
-            </li>
-        </ul>
-    </form>
-}
-else
-{*@
     <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
@@ -35,4 +18,3 @@ else
             <button type="submit" class="btn btn-default">Přihlásit se</button>
         </div>
     </form>
-@*}*@
