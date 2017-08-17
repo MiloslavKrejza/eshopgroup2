@@ -447,9 +447,10 @@ input:-ms-input-placeholder {
 
 /* ORDER */
 /* Cart */
-.cart-item img {
-  max-height: 100px;
-  margin-left: 50px; }
+.cart-item {
+  margin-left: 20px; }
+  .cart-item img {
+    max-height: 100px; }
 
 .order-button {
   position: absolute;
