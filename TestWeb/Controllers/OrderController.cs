@@ -13,6 +13,7 @@ using Eshop2.Abstraction;
 using Trainee.Business.DAL.Entities;
 using Trainee.Core.Business;
 using Alza.Core.Module.Http;
+using Trainee.Core.DAL.Entities;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -51,13 +52,14 @@ namespace Eshop2.Controllers
                 if (_signInManager.IsSignedIn(User))
                 {
                     var user = await _userManager.GetUserAsync(User);
-                    //result = _businessService.GetCart(user.Id);
+                    result = _businessService.GetCart(user.Id);
                     throw new Exception("Prr");
                 }
                 else
                 {
                     string cookieId = cookieHelper.GetVisitorId();
                     result = _businessService.GetCart(cookieId);
+                    
                 }
 
 
@@ -89,7 +91,7 @@ namespace Eshop2.Controllers
                 if (_signInManager.IsSignedIn(User))
                 {
                     var user = await _userManager.GetUserAsync(User);
-                    //result = _businessService.GetCart(user.Id);
+                    result = _businessService.GetCart(user.Id);
                     throw new Exception("prr");
                 }
                 else
@@ -112,6 +114,9 @@ namespace Eshop2.Controllers
 
                 model.Items = cart;
                 model.Countries = _countryService.GetAllCountries().data.ToList();
+                model.Shipping = _businessService.GetShippings().data.ToList();
+                model.Payment = _businessService.GetPayments().data.ToList();
+
 
                 return RedirectToAction("Order", model);
             }
@@ -127,7 +132,15 @@ namespace Eshop2.Controllers
         {
             try
             {
-                return View(model);
+                if (model.Items.Count > 0)
+                {
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+
             }
             catch
             {

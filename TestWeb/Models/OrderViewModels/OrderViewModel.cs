@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eshop2.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -55,12 +56,62 @@ namespace Eshop2.Models.OrderViewModels
         public int PaymentId { get; set; }
         public int ShippingId { get; set; }
 
-        
-        public List<Payment> Payments { get; set; }
-        public List<Shipping> Shippings { get; set; }
-        public List<CartItem> OrderItems { get; set; }
+        private List<Payment> payment;
+        public List<Payment> Payment
+        {
+            get
+            {
+                return payment == null ? new List<Payment>() : payment;
+            }
+            set
+            {
+                payment = value;
+            }
+        }
+        private List<Shipping> shipping;
+        public List<Shipping> Shipping
+        {
+            get
+            {
+                return shipping == null ? new List<Shipping>() : shipping;
+            }
+            set
+            {
+                shipping = value;
+            }
+        }
+        private List<CartItem> items;
 
-        public List<Country> Countries { get; set; }
+        [IsCollectionFilled]
+        public List<CartItem> Items
+        {
+            get
+            {
+                return items == null ? new List<CartItem>() : items;
+            }
+            set
+            {
+                items = value;
+            }
+        }
+        private List<Country> countries;
+
+        
+        public List<Country> Countries
+        {
+            get
+            {
+                return countries == null ? new List<Country>() : countries;
+            }
+            set
+            {
+                countries = value;
+            }
+        }
+        
+        
+
+        
 
     }
 }
