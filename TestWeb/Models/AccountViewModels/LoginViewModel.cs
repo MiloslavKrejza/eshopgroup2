@@ -14,10 +14,12 @@ namespace TestWeb.Models.AccountViewModels
     {
         [Required]
         [EmailAddress]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Heslo")]
         public string Password { get; set; }
 
         [Display(Name = "Zapamatovat přihlášení?")]

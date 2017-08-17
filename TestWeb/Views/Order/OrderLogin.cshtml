@@ -5,22 +5,26 @@
     ViewData["Title"] = "Přihlášení k objednávce";
 }
 
-<h2 class="bottom-padding">Chcete se přihlásit?</h2>
+<h2>Chcete se přihlásit?</h2>
 
-<div class="row partiallogin">
-    <div class="col-md-4 partialloginpart">
+<div class="row orderlogin">
+    <div class="col-md-6 partiallogin">
         @Html.Partial("~/Views/Shared/_LoginPartial.cshtml", new LoginViewModel(), ViewData)
     </div>
-    <div class="col-md-4 partialloginpart">
-        <a>
-            <img src="~/images/vectorpaint.svg" /><p class="text-center"> Nemáte zde účet? Zaregistrujte se.</p>
-        </a>
-    </div>
-    <div class="col-md-4 partialloginpart">
-        <p class="text-center">
-            <a asp-action="Register" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]"><img src="~/images/fast-delivery.svg" /><p class="text-center">Nakoupit bez registrace</p>
-        </a>
-        </p>
+    <div class="col-md-6">
+        <div class="row text-center register-container">
+            <a asp-controller="Account" asp-action="register">
+                <div class="col-md-6"><img src="~/images/register.svg" /></div>
+                <div class="col-md-6"><p>Nemáte účet? Zaregistrujte se</p></div>
+            </a>
+        </div>
+
+        <div class="row text-center register-container">
+            <a asp-controller="Order" asp-action="Order">
+                <div class="col-md-6"><img src="~/images/fast-order.svg" /></div>
+                <div class="col-md-6"><p>Nakoupit bez registrace</p></div>
+            </a>
+        </div>
     </div>
 
 </div>

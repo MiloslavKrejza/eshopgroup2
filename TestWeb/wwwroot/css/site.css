@@ -5,6 +5,9 @@
   color: #444444;
   font-family: 'Montserrat', sans-serif; }
 
+h2 {
+  padding-bottom: 20px; }
+
 body .body-line {
   margin-top: 25px; }
 
@@ -242,10 +245,6 @@ input:-ms-input-placeholder {
 .register-button {
   margin: 20px 0; }
 
-.title-register {
-  padding-left: 50px;
-  padding-bottom: 20px; }
-
 .text-small {
   margin-top: 15px;
   text-align: center; }
@@ -473,25 +472,32 @@ input:-ms-input-placeholder {
   margin: 0 auto; }
 
 /* Order login */
-.partiallogin {
+.orderlogin {
   margin: 0 20px; }
 
-.partialloginpart {
+.partiallogin {
   border: 1px solid #cccccc;
   border-radius: 10px;
   padding: 10px;
   margin: 0 5px;
-  width: 30%; }
-  .partialloginpart label {
-    margin-left: 25px; }
-  .partialloginpart input {
+  width: 45%; }
+  .partiallogin label {
+    margin-left: 35px; }
+  .partiallogin input {
     width: 80%;
     margin: 0 auto; }
-  .partialloginpart img {
-    height: 170px;
-    margin-bottom: 0; }
-  .partialloginpart p {
-    font-size: 16px; }
+
+.register-container {
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0 0 10px; }
+  .register-container img {
+    margin: 0;
+    height: 90px; }
+  .register-container p {
+    font-size: 16px;
+    margin: 20px 0 0; }
 
 /*Reviews*/
 .ratings {
