@@ -524,7 +524,16 @@ input:-ms-input-placeholder {
     padding-left: 5px;
 }
 
-.btn-to-cart {
+.product-count {
+    width: 55px;
+    margin-right: 50px;
+    padding-left: 10px;
+    border: solid 1px #aaaaaa;
+    border-radius: 5px;
+
+}
+
+.btn-addtocart {
     margin-bottom: 10px;
 }
 
@@ -622,9 +631,8 @@ input:-ms-input-placeholder {
         max-height: 100px;
     }
 
-    input {
-        width: 40px;
-        padding: 0 5px;
+    a {
+        color: #444444;
     }
 }
 

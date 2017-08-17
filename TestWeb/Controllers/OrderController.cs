@@ -253,7 +253,6 @@ namespace Eshop2.Controllers
             return View();
         }
         [HttpPost]
-
         public async Task<IActionResult> AddToCart([FromBody]AddToCartModel model)
         {
             var settings = new JsonSerializerSettings();

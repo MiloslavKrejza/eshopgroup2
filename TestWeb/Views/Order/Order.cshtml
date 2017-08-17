@@ -3,11 +3,60 @@
 @using Trainee.Business.DAL.Entities
 @model OrderViewModel
 @{
-    ViewData["Title"] = "Dodací údaje";
+    ViewData["Title"] = "Objednávka";
 }
+
+@*@{
+    decimal totalPrice = 0;
+    foreach (CartItem c in Model.Cart)
+    {
+
+        totalPrice += c.Product.Price * c.Amount;
+
+    }
+}
+*@
+
 
 <h2>@ViewData["Title"]</h2>
 
+<h3>Vybrané knížky</h3>
+@*@{
+    foreach (CartItem c in Model.Cart)
+    {
+        <div class="row cart-item bottom-padding">
+            <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
+                <div class="col-md-4">
+                    <p><strong>@c.Product.Name</strong></p>
+                    <p>
+                        @{
+                            var a = c.Product.Book.AuthorsBooks;
+                            for (int i = 0; i < a.Count; i++)
+                            {
+
+                                @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
+
+                                @if (i != a.Count - 1)
+                                {@Html.Raw(", ")}
+                            }
+                        }
+                    </p>
+                </div>
+            </a>
+            <div class="col-md-2">
+                <p>@c.Product.State.Name</p>
+            </div>
+            <div class="col-md-1">
+                <input type="number" class="product-count" value="@c.Amount" min="1" />
+            </div>
+            <div class="col-md-2">
+                @String.Format("{0:c}", c.Product.Price)
+            </div>
+        </div>
+      }
+}*@
+
+<h3>Dodací údaje</h3>
 <form asp-action="Order" asp-controller="Order">
     <div class="order">
         <div class="row bottom-padding">
@@ -15,7 +64,7 @@
             <div class="row form-row">
                 <div class="col-md-6">
                     <label class="text-indent control-label" asp-for="Name"></label>
-                    <input class="form-control" asp-for="Name" />
+                    <input class="form-control" asp-for="Name" value="@Html.DisplayFor(model => model.Name)" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
@@ -104,6 +153,6 @@
 
     <div class="row">
         <a class="btn btn-default" asp-area="" asp-controller="Order" asp-action="Cart"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</a>
-        <button type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>
+        <button class="btn btn-primary" type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>
     </div>
 </form>

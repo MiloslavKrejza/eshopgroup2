@@ -378,7 +378,14 @@ input:-ms-input-placeholder {
 .details-right {
   padding-left: 5px; }
 
-.btn-to-cart {
+.product-count {
+  width: 55px;
+  margin-right: 50px;
+  padding-left: 10px;
+  border: solid 1px #aaaaaa;
+  border-radius: 5px; }
+
+.btn-addtocart {
   margin-bottom: 10px; }
 
 /* Products catalogue */
@@ -451,9 +458,8 @@ input:-ms-input-placeholder {
   margin-left: 20px; }
   .cart-item img {
     max-height: 100px; }
-  .cart-item input {
-    width: 40px;
-    padding: 0 5px; }
+  .cart-item a {
+    color: #444444; }
 
 .remove {
   color: red;
