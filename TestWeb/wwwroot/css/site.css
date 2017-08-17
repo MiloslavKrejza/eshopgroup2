@@ -451,6 +451,18 @@ input:-ms-input-placeholder {
   margin-left: 20px; }
   .cart-item img {
     max-height: 100px; }
+  .cart-item input {
+    width: 40px;
+    padding: 0 5px; }
+
+.remove {
+  color: red;
+  cursor: pointer; }
+
+.change-count {
+  margin-right: 50px;
+  background-color: #f19f4d;
+  border-color: #f19f4d; }
 
 .order-button {
   position: absolute;
@@ -463,7 +475,7 @@ input:-ms-input-placeholder {
   margin-left: 5px; }
 
 .total-price {
-  margin-right: 50px;
+  padding-right: 50px;
   font-size: 16px;
   font-weight: bold; }
 
@@ -535,3 +547,4 @@ input:-ms-input-placeholder {
 @-moz-document url-prefix() {
   .full-stars {
     color: #ECBE24; } }
+

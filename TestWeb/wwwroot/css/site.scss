@@ -621,6 +621,23 @@ input:-ms-input-placeholder {
     img {
         max-height: 100px;
     }
+
+    input {
+        width: 40px;
+        padding: 0 5px;
+    }
+}
+
+.remove {
+    color: red;
+    cursor: pointer;
+
+}
+
+.change-count {
+    margin-right: 50px;
+    background-color: #f19f4d;
+    border-color: #f19f4d;
 }
 
 .order-button {
@@ -637,7 +654,7 @@ input:-ms-input-placeholder {
 }
 
 .total-price {
-    margin-right: 50px;
+    padding-right: 50px;
     font-size: 16px;
     font-weight: bold;
 }
