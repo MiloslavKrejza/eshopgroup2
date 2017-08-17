@@ -16,7 +16,14 @@ namespace Trainee.Catalogue.DAL.Entities
         }
         public override bool Equals(object obj)
         {
-            return Id == ((Publisher)obj).Id;
+            if (obj.GetType() == GetType())
+            {
+                return Id == ((Publisher)obj).Id;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

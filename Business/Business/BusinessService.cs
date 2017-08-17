@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using Trainee.Business.Abstraction;
@@ -256,15 +257,13 @@ namespace Trainee.Business.Business
         }
         #endregion
         #region Cart and Orders
-        AlzaAdminDTO<List<CartItem>> GetCart(int visitorId)
+        public AlzaAdminDTO<List<CartItem>> GetCart(string visitorId)
         {
             try
             {
-                var cart = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).ToList();
-                var products = _productRepository.GetAllProducts().Where(p => cart.Select(ci => ci.ProductId).Contains(p.Id));
-                var ratings = _productRatingRepository.GetRatings().Where(pr => cart.Select(ci => ci.ProductId).Contains(pr.ProductId));
-                var completeProducts = products.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new { product = p, rating = r }).Select(x => new ProductBO(x.product, x.rating, null));
-                var completeCart = cart.Join(completeProducts, ci => ci.ProductId, p => p.Id, (ci, p) => { ci.Product = p; return ci; }).ToList();
+                Expression<Func<CartItem, bool>> selector = ci => ci.VisitorId == visitorId;
+                List<CartItem> completeCart = GetCartItems(selector);
+
                 return AlzaAdminDTO<List<CartItem>>.Data(completeCart);
             }
             catch (Exception e)
@@ -272,6 +271,31 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
 
+        }
+        public AlzaAdminDTO<List<CartItem>> GetCart(int userId)
+        {
+            try
+            {
+                Expression<Func<CartItem, bool>> selector = ci => ci.UserId == userId;
+                List<CartItem> completeCart = GetCartItems(selector);
+
+                return AlzaAdminDTO<List<CartItem>>.Data(completeCart);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+
+        }
+
+        private List<CartItem> GetCartItems(Expression<Func<CartItem, bool>> selector)
+        {
+            var cart = _cartItemRepository.GetCartItems().Where(selector).ToList();
+            var products = _productRepository.GetAllProducts().Where(p => cart.Select(ci => ci.ProductId).Contains(p.Id));
+            var ratings = _productRatingRepository.GetRatings().Where(pr => cart.Select(ci => ci.ProductId).Contains(pr.ProductId));
+            var completeProducts = products.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => new { product = p, rating = r }).Select(x => new ProductBO(x.product, x.rating, null));
+            var completeCart = cart.Join(completeProducts, ci => ci.ProductId, p => p.Id, (ci, p) => { ci.Product = p; return ci; }).ToList();
+            return completeCart;
         }
 
         AlzaAdminDTO<List<CartItem>> AddToCart(int visitorId, int? userId, int productId, int amount = 1)
@@ -315,6 +339,7 @@ namespace Trainee.Business.Business
             {
                 var cartProductId = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).Select(ci => ci.ProductId);
                 var createdOrder = _orderRepository.AddOrder(order);
+
                 foreach (var productId in cartProductId)
                 {
                     _cartItemRepository.DeleteCartItem(visitorId, productId);
@@ -364,7 +389,7 @@ namespace Trainee.Business.Business
             {
                 return AlzaAdminDTO<List<Payment>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
-        } 
+        }
         #endregion
     }
 }
