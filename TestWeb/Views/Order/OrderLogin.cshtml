@@ -9,44 +9,8 @@
 
 
 
-    <div class="row">
-
-        <div id="login-error" class="text-center">
-            @if (ViewData["EmailUnknown"] != null)
-            {
-                <h4 class="text-danger">Tento e-mail neznáme. Použijte správný e-mail nebo se registrujte prosím.</h4>
-
-            }
-
-            @if (ViewData["WrongPassword"] != null)
-            {
-                <h4 class="text-danger">Bylo vloženo nesprávné heslo. Zkuste se prosím přihlásit znovu.</h4>
-            }
-        </div>
-
-        <section>
-            <div class="col-md-4 col-centered">
-                <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label text-indent"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label text-indent"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-default">Přihlásit se</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </div>
     <p class="text-center">
-        Nemáte zde účet? <a asp-action="Register" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Zaregistrujte se.</a>
+        Nemáte zde účet? <a>Zaregistrujte se.</a>
     </p>
     <p class="text-center">
     <a asp-action="Register" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Nakoupit bez registrace.</a>
