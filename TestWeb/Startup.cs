@@ -135,8 +135,8 @@ namespace TestWeb
                 //default route
                 routes.MapRoute(
                     "Default",
-                    "{controller}/{action}/{id?}",
-                    new { controller = "Home", action = "Index", id = "" }
+                    "{controller}/{action}/{id?}/{page?}",
+                    new { controller = "Home", action = "Index", id = "", page="" }
                 );
 
             });
