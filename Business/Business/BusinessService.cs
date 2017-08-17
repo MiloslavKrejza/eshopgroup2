@@ -342,6 +342,8 @@ namespace Trainee.Business.Business
             try
             {
                 var cartProductId = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).Select(ci => ci.ProductId);
+
+                order.StateId = 1; //default orderState is the first one
                 var createdOrder = _orderRepository.AddOrder(order);
 
                 foreach (var productId in cartProductId)
