@@ -25,14 +25,14 @@ namespace Trainee.Business.DAL.Repositories
             return cartItem;
         }
 
-        public void DeleteCartItem(int visitorId, int productId)
+        public void DeleteCartItem(string visitorId, int productId)
         {
             var item = _context.CartItems.Where(ci => ci.VisitorId == visitorId && ci.ProductId == productId).FirstOrDefault();
             _context.Remove(item);
             _context.SaveChanges();
         }
 
-        public CartItem GetCartItem(int visitorId, int productId)
+        public CartItem GetCartItem(string visitorId, int productId)
         {
             return _context.CartItems
                 .Where(ci => ci.VisitorId == visitorId && ci.ProductId == productId)

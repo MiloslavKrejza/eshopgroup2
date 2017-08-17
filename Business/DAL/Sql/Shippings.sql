@@ -4,7 +4,8 @@ GO
 
 CREATE TABLE [dbo].[Shippings](
 	[Id][int] IDENTITY(1,1) NOT NULL,
-	[Name][nvarchar](max) NOT NULL
+	[Name][nvarchar](max) NOT NULL,
+	[Price][money] NOT NULL
 )
 GO
 
@@ -12,3 +13,4 @@ ALTER TABLE [dbo].[Shippings]
 ADD CONSTRAINT [PK_Shippings]
 	PRIMARY KEY CLUSTERED([Id])
 GO
+
