@@ -68,7 +68,7 @@
                         <div class="col-lg-6">
                             <label class="text-indent" asp-for="Country">Stát</label>
                             <select class="form-control" asp-for="CountryCode">
-                            <!-- In case of remaking layout dont change this cycle-->
+                            <!-- In case of remaking layout dont change this foreach loop-->
                                 @{
                                     foreach (Country c in Model.Countries)
                                     {
