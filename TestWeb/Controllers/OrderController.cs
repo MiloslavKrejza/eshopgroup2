@@ -204,5 +204,11 @@ namespace Eshop2.Controllers
         {
             return View();
         }
+
+        // GET: /Order/OrderLogin/
+        public IActionResult OrderLogin()
+        {
+            return View();
+        }
     }
 }

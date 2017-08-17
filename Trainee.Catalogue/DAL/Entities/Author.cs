@@ -22,7 +22,13 @@ namespace Trainee.Catalogue.DAL.Entities
         }
         public override bool Equals(object obj)
         {
-            return AuthorId == ((Author)obj).AuthorId;
+            if (obj.GetType() == GetType())
+            {
+
+                return AuthorId == ((Author)obj).AuthorId;
+
+            }
+            else return false;
         }
 
     }

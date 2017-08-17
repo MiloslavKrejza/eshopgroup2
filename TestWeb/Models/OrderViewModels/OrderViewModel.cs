@@ -56,12 +56,11 @@ namespace Eshop2.Models.OrderViewModels
         public int ShippingId { get; set; }
 
         
-        public Payment Payment { get; set; }
-        public Shipping Shipping { get; set; }
-        public List<CartItem> Items { get; set; }
+        public List<Payment> Payments { get; set; }
+        public List<Shipping> Shippings { get; set; }
+        public List<CartItem> OrderItems { get; set; }
 
         public List<Country> Countries { get; set; }
-        
 
     }
 }
