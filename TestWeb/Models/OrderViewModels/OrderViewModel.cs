@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eshop2.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -52,18 +53,17 @@ namespace Eshop2.Models.OrderViewModels
         [Required(ErrorMessage = "Prosím vyberte zemi.")]
         public int CountryId { get; set; }
 
-        public List<Country> Countries { get; set; }
-
         public int PaymentId { get; set; }
         public int ShippingId { get; set; }
 
-
-        public OrderState OrderState { get; set; }
         public List<Payment> Payment { get; set; }
         public List<Shipping> Shipping { get; set; }
-        public List<OrderItem> OrderItems { get; set; }
+        public List<CartItem> Items { get; set; }
+        public List<Country> Countries { get; set; }
+        
+        
 
-       // public List<Country> Countries { get; set; }
+        
 
     }
 }

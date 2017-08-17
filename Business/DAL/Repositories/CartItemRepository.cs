@@ -25,14 +25,14 @@ namespace Trainee.Business.DAL.Repositories
             return cartItem;
         }
 
-        public void DeleteCartItem(int visitorId, int productId)
+        public void DeleteCartItem(string visitorId, int productId)
         {
             var item = _context.CartItems.Where(ci => ci.VisitorId == visitorId && ci.ProductId == productId).FirstOrDefault();
             _context.Remove(item);
             _context.SaveChanges();
         }
 
-        public CartItem GetCartItem(int visitorId, int productId)
+        public CartItem GetCartItem(string visitorId, int productId)
         {
             return _context.CartItems
                 .Where(ci => ci.VisitorId == visitorId && ci.ProductId == productId)
@@ -47,7 +47,7 @@ namespace Trainee.Business.DAL.Repositories
         public CartItem UpdateCartItem(CartItem cartItem)
         {
             var oldItem = _context.CartItems
-                .FirstOrDefault(ci => ci.VisitorId == cartItem.VisitorId && ci.UserId == cartItem.UserId);
+                .FirstOrDefault(ci => ci.VisitorId == cartItem.VisitorId && ci.ProductId == cartItem.ProductId);
             _context.Entry(oldItem).CurrentValues.SetValues(cartItem);
             _context.SaveChanges();
             return cartItem;

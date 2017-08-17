@@ -20,6 +20,7 @@ using Trainee.Core.DAL.Entities;
 using System.Collections.Generic;
 using System.IO;
 using Eshop2.Abstraction;
+using Microsoft.AspNetCore.Http;
 
 namespace TestWeb.Controllers
 {
@@ -34,6 +35,7 @@ namespace TestWeb.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;     //sign in functionality
         private readonly CountryService _countryService;    //provides countries
         private readonly UserService _profileService;       //provides additional non-ASP.NET user profile data
+        private readonly IHttpContextAccessor _accessor;
 
         //on more states, enums (or admin add)
         private const int COMPLETE = 1;
@@ -46,7 +48,8 @@ namespace TestWeb.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             CountryService countryService,
-            UserService userService)
+            UserService userService,
+            IHttpContextAccessor accessor)
         {
             _env = env;
             _logger = logger;
@@ -54,6 +57,7 @@ namespace TestWeb.Controllers
             _signInManager = signInManager;
             _countryService = countryService;
             _profileService = userService;
+            _accessor = accessor;
         }
 
         //
@@ -107,6 +111,11 @@ namespace TestWeb.Controllers
                     var result = await _signInManager.PasswordSignInAsync(emailSplit[0] + emailSplit[1], model.Password, model.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
+                        var user = await _userManager.GetUserAsync(User);
+
+                        //ToDo update cart
+                        CookieHelper helper = new CookieHelper(_accessor);
+                        helper.SetVisitorId(user.Id.ToString());
 
                         return RedirectToLocal(returnUrl);
                     }
@@ -554,8 +563,11 @@ namespace TestWeb.Controllers
             try
             {
                 await _signInManager.SignOutAsync();
+
+                CookieHelper helper = new CookieHelper(_accessor);
+                helper.DeleteVisitorId();
+
                 return RedirectToLocal(returnUrl);
-                //return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             catch (Exception e)
             {
