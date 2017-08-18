@@ -16,11 +16,11 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-<span id="cart-wrapper">
-    @{
-        foreach (CartItem c in Model.Cart)
-        {
-            <div class="row cart-item bottom-padding">
+@{
+    foreach (CartItem c in Model.Cart)
+    {
+        <div class="row cart-item bottom-padding">
+            <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
                 <div class="col-md-2">
                     <img src="~/images/product_images/@c.Product.PicAddress" alt="bookcover" />
                 </div>
@@ -40,25 +40,21 @@
                         }
                     </p>
                 </div>
-                <div class="col-md-1">
-                    <p>@c.Product.State.Name</p>
-                </div>
-                <div class="col-md-2">
-                    <span class=" glyphicon-minus-sign  glyphicon change-amount-minus"></span>
-                    <input type="text" class="product-count" value="@c.Amount" min="1" />
-                    <span class="glyphicon glyphicon-plus-sign change-amount-plus"></span>
-                    <input type="hidden" class="product-count-original" value="@c.Amount" />
-                </div>
-                <div class="col-md-2">
-                    <span class="hidden product-id-hidden">@c.Product.Id</span>
-                    <span class="hidden product-price-hidden">@c.Product.Price</span>
-                    @String.Format("{0:c}", c.Product.Price)
-                </div>
-                <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
+            </a>
+            <div class="col-md-1">
+                <p>@c.Product.State.Name</p>
             </div>
+            <div class="col-md-2 text-center">
+                <span class="glyphicon glyphicon-plus" id="increment-value"> </span><input type="number" class="product-count" value="@c.Amount" pattern="[0-9]*" min="1" /><span class="glyphicon glyphicon-minus" id="decrement-value"></span>
+            </div>
+
+            <div class="col-md-2">
+                @String.Format("{0:c}", c.Product.Price)
+            </div>
+            <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
+        </div>
                             }
-    }
-</span>
+}
 <div class="row text-right bottom-padding">
     <button class="btn btn-primary change-count">Přepočítat košík</button>
 </div>
@@ -67,7 +63,7 @@
 
 <div class="row bottom-padding text-right total-price">
     <p>
-        Celková cena:<span id="total-price-string"> @String.Format("{0:c}", totalPrice)</span>
+        Celková cena: @String.Format("{0:c}", totalPrice)
     </p>
 </div>
 

@@ -50,10 +50,11 @@ namespace Eshop2.Models.OrderViewModels
         public List<Shipping> Shipping { get; set; }
         public List<CartItem> Items { get; set; }
         public List<Country> Countries { get; set; }
-        
+        public List<CartItem> Cart { get; set; }
 
 
-        
+
+
 
     }
 }

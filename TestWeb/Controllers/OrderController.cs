@@ -15,6 +15,8 @@ using Trainee.Core.Business;
 using Alza.Core.Module.Http;
 using Newtonsoft.Json;
 using Trainee.Core.DAL.Entities;
+using Trainee.User.DAL.Entities;
+using Trainee.User.Business;
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -28,6 +30,7 @@ namespace Eshop2.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _accessor;
         private readonly CountryService _countryService;
+        private readonly UserService _userService;
 
         public OrderController(BusinessService businessService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IHttpContextAccessor accessor,
             CountryService countryService)
@@ -92,10 +95,14 @@ namespace Eshop2.Controllers
                 CookieHelper cookieHelper = new CookieHelper(_accessor);
 
                 AlzaAdminDTO<List<CartItem>> result;
+
+                UserProfile userProfile = null;
+                ApplicationUser user = null;
                 if (_signInManager.IsSignedIn(User))
                 {
-                    var user = await _userManager.GetUserAsync(User);
+                    user = await _userManager.GetUserAsync(User);
                     result = _businessService.GetCart(user.Id);
+                    userProfile = _userService.GetUserProfile(user.Id).data;
                 }
                 else
                 {
@@ -119,6 +126,18 @@ namespace Eshop2.Controllers
 
                 if (model.Items.Count > 0)
                 {
+                    if(userProfile != null)
+                    {
+                        model.CountryId = userProfile.CountryId;
+                        model.Email = user.Email;
+                        model.City = userProfile.City;
+                        model.Name = userProfile.Name;
+                        model.Phone = userProfile.PhoneNumber;
+                        model.PostalCode = userProfile.PostalCode;
+                        model.Street = userProfile.Address;
+                        model.Surname = userProfile.Surname;
+                    }
+
                     model.Countries = _countryService.GetAllCountries().data.ToList();
                     model.Shipping = _businessService.GetShippings().data.ToList();
                     model.Payment = _businessService.GetPayments().data.ToList();
@@ -136,63 +155,63 @@ namespace Eshop2.Controllers
             }
         }
 
-        //[HttpPost("/Order/Order/")]
-        //public async Task<IActionResult> Order(OrderViewModel model)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            CookieHelper cookieHelper = new CookieHelper(_accessor);
-        //            string cookieId = cookieHelper.GetVisitorId();
+        [HttpPost("/Order/Order/")]
+        public async Task<IActionResult> Order(OrderViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    CookieHelper cookieHelper = new CookieHelper(_accessor);
+                    string cookieId = cookieHelper.GetVisitorId();
 
-        //            Order order = new Order()
-        //            {
-        //                Address = model.Street,
-        //                City = model.City,
-        //                Name = model.Name,
-        //                Surname = model.Surname,
-        //                PaymentId = model.PaymentId,
-        //                ShippingId = model.ShippingId,
-        //                PostalCode = model.PostalCode,
-        //                PhoneNumber = model.Phone,
-        //                CountryId = model.CountryId
-        //            };
-        //            if (_signInManager.IsSignedIn(User))
-        //            {
-        //                var result = await _userManager.GetUserAsync(User);
-        //                order.UserId = result.Id;
-        //            }
+                    Order order = new Order()
+                    {
+                        Address = model.Street,
+                        City = model.City,
+                        Name = model.Name,
+                        Surname = model.Surname,
+                        PaymentId = model.PaymentId,
+                        ShippingId = model.ShippingId,
+                        PostalCode = model.PostalCode,
+                        PhoneNumber = model.Phone,
+                        CountryId = model.CountryId
+                    };
+                    if (_signInManager.IsSignedIn(User))
+                    {
+                        var result = await _userManager.GetUserAsync(User);
+                        order.UserId = result.Id;
+                    }
 
-        //            //ToDo delete the correct cart
-        //            var addedOrder = _businessService.AddOrder(order, cookieId).data;
-        //            int orderId = addedOrder.Id;
+                    //ToDo delete the correct cart
+                    var addedOrder = _businessService.AddOrder(order, cookieId).data;
+                    int orderId = addedOrder.Id;
 
-        //            foreach (var item in model.Items)
-        //            {
-        //                OrderItem orderItem = new OrderItem()
-        //                {
-        //                    OrderId = orderId,
-        //                    Amount = item.Amount,
-        //                    Price = item.Product.Price,
-        //                    ProductId = item.ProductId
-        //                };
-        //                _businessService.AddOrderItem(orderItem);
-        //            }
+                    foreach (var item in model.Items)
+                    {
+                        OrderItem orderItem = new OrderItem()
+                        {
+                            OrderId = orderId,
+                            Amount = item.Amount,
+                            Price = item.Product.Price,
+                            ProductId = item.ProductId
+                        };
+                        _businessService.AddOrderItem(orderItem);
+                    }
 
-        //            return RedirectToAction("OKPage");
-        //        }
-        //        else
-        //        {
-        //            throw new Exception("Data missing");
-        //        }
+                    return RedirectToAction("OKPage");
+                }
+                else
+                {
+                    throw new Exception("Data missing");
+                }
 
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return RedirectToAction("Error", "Home");
-        //    }
-        //}
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
 
         // GET: /Order/Summary/
         public IActionResult Summary()
