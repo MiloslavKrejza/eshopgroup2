@@ -46,8 +46,7 @@ namespace Eshop2.Abstraction
 
         public void DeleteVisitorId()
         {
-            string id = GetVisitorId();
-            _accessor.HttpContext.Response.Cookies.Delete(id);
+            _accessor.HttpContext.Response.Cookies.Delete("VisitorId");
         }
     }
 }
