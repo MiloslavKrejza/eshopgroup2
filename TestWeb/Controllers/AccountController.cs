@@ -111,7 +111,7 @@ namespace TestWeb.Controllers
                     var result = await _signInManager.PasswordSignInAsync(emailSplit[0] + emailSplit[1], model.Password, model.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
-                        var user = await _userManager.GetUserAsync(User);
+                        var user = await _userManager.FindByEmailAsync(model.Email);
 
                         //ToDo update cart
                         CookieHelper helper = new CookieHelper(_accessor);

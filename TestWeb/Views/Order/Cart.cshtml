@@ -5,60 +5,66 @@
     ViewData["Title"] = "Košík";
 }
 
+@{
+    decimal totalPrice = 0;
+    foreach (CartItem c in Model.Cart)
+    {
+
+        totalPrice += c.Product.Price;
+
+    }
+}
+
 <h2>@ViewData["Title"]</h2>
-    @{
-        foreach (CartItem c in Model.Cart)
-        {
-            <div class="row cart-item bottom-padding">
-                <div class="col-md-2"><img src="images/product_images/@c.Product.PicAddress" alt="bookcover" /></div>
-                <div class="col-md-4">
-                    <p><strong>@c.Product.Name</strong></p>
-                    <p>@{
+@{
+    foreach (CartItem c in Model.Cart)
+    {
+        <div class="row cart-item bottom-padding">
+            <div class="col-md-2">
+                <img src="~/images/product_images/@c.Product.PicAddress" alt="bookcover" />
+            </div>
+            <div class="col-md-4">
+                <p><strong>@c.Product.Name</strong></p>
+                <p>
+                    @{
                         var a = c.Product.Book.AuthorsBooks;
                         for (int i = 0; i < a.Count; i++)
                         {
-                            if (i == 0)
-                            {
-                                @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
 
-                            }
-                            else if (i == 1)
-                            {
-                                @Html.Raw(", ")@a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
-                            }
-                            else
-                            {
-                                @Html.Raw(",...")
-                                break;
+                            @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
 
-                            }
+                            @if (i != a.Count - 1)
+                            {@Html.Raw(", ")}
                         }
                     }
-                    }</p>
-                </div>
-                <div class="col-md-3">
-                    <p>@c.Product.State</p>
-                </div>
-                <div class="col-md-1">
-                    @c.Product.Price
-                </div>
-                <div class="col-md-2"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span></div>
+                </p>
             </div>
-        }
-    }
+            <div class="col-md-2">
+                <p>@c.Product.State.Name</p>
+            </div>
+            <div class="col-md-1">
+                <input type="number" class="product-count" value="1" />
+            </div>
+            <div class="col-md-2">
+                @String.Format("{0:c}", c.Product.Price)
+            </div>
+            <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
+        </div>
+                        }
+}
+<div class="row text-right bottom-padding">
+    <button class="btn btn-primary change-count">Přepočítat košík</button>
+</div>
 
-<hr class="bottom-padding"/>
+<hr class="bottom-padding" />
 
-<div class="row text-indent">
-    <div class="total-price text-right bottom-padding">
-        <p>Celková cena: @{
-        decimal totalPrice = 0;
-        foreach (CartItem c in Model.Cart)
-        {
-            totalPrice += c.Product.Price;
-        }
-    }</p>
-    </div>
-        <a class="btn btn-default" asp-area="" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
-        <a asp-area="" asp-controller="Order" asp-action="Redirect" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+<div class="row bottom-padding text-right total-price">
+        <p>
+            Celková cena: @String.Format("{0:c}", totalPrice)
+        </p>
+</div>
+
+<div class="row">
+    <a class="btn btn-default" asp-area="" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
+    <a asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
 </div>
