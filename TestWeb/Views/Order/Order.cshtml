@@ -56,6 +56,8 @@
       }
 }*@
 
+<p>Jméno: @Html.DisplayFor(model => model.Name)</p>
+
 <h3>Dodací údaje</h3>
 <form asp-action="Order" asp-controller="Order">
     <div class="order">
@@ -152,7 +154,11 @@
     </div>
 
     <div class="row">
-        <a class="btn btn-default" asp-area="" asp-controller="Order" asp-action="Cart"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</a>
-        <button class="btn btn-primary" type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>
+        <div class="col-md-6">
+            <a class="btn btn-default" asp-area="" asp-controller="Order" asp-action="Cart"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</a>
+        </div>
+        <div class="col-md-6 text-right">
+            <button class="btn btn-primary" type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>
+        </div>
     </div>
 </form>
