@@ -16,6 +16,8 @@ using Alza.Core.Module.Http;
 using Newtonsoft.Json;
 
 using Trainee.Core.DAL.Entities;
+using Trainee.User.DAL.Entities;
+using Trainee.User.Business;
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -29,15 +31,17 @@ namespace Eshop2.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _accessor;
         private readonly CountryService _countryService;
+        private readonly UserService _userService;
 
         public OrderController(BusinessService businessService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IHttpContextAccessor accessor,
-            CountryService countryService)
+            CountryService countryService, UserService userService)
         {
             _businessService = businessService;
             _signInManager = signInManager;
             _userManager = userManager;
             _accessor = accessor;
             _countryService = countryService;
+            _userService = userService;
         }
 
         // GET: /Order/Cart/
@@ -82,47 +86,7 @@ namespace Eshop2.Controllers
             }
 
         }
-
-        public async Task<IActionResult> Redirect()
-        {
-            try
-            {
-                CookieHelper cookieHelper = new CookieHelper(_accessor);
-
-                AlzaAdminDTO<List<CartItem>> result;
-                if (_signInManager.IsSignedIn(User))
-                {
-                    var user = await _userManager.GetUserAsync(User);
-                    result = _businessService.GetCart(user.Id);
-                }
-                else
-                {
-                    string cookieId = cookieHelper.GetVisitorId();
-                    result = _businessService.GetCart(cookieId);
-                }
-                if (!result.isOK)
-                    throw new Exception("Could not find the cart");
-
-                var cart = result.data;
-
-                if (cart.Count == 0)
-                {
-                    TempData["emptyCart"] = true;
-                    return RedirectToAction("Cart");
-                }
-
-                OrderViewModel model = new OrderViewModel();
-
-                model.Items = cart;
-
-
-                return RedirectToAction("Order");
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Error", "Home");
-            }
-        }
+        
 
         // GET: /Order/Order/
         [HttpGet]
@@ -133,10 +97,14 @@ namespace Eshop2.Controllers
                 CookieHelper cookieHelper = new CookieHelper(_accessor);
 
                 AlzaAdminDTO<List<CartItem>> result;
+
+                UserProfile userProfile = null;
+                ApplicationUser user = null;
                 if (_signInManager.IsSignedIn(User))
                 {
-                    var user = await _userManager.GetUserAsync(User);
+                    user = await _userManager.GetUserAsync(User);
                     result = _businessService.GetCart(user.Id);
+                    userProfile = _userService.GetUserProfile(user.Id).data;
                 }
                 else
                 {
@@ -160,6 +128,18 @@ namespace Eshop2.Controllers
 
                 if (model.Items.Count > 0)
                 {
+                    if(userProfile != null)
+                    {
+                        model.CountryId = userProfile.CountryId;
+                        model.Email = user.Email;
+                        model.City = userProfile.City;
+                        model.Name = userProfile.Name;
+                        model.Phone = userProfile.PhoneNumber;
+                        model.PostalCode = userProfile.PostalCode;
+                        model.Street = userProfile.Address;
+                        model.Surname = userProfile.Surname;
+                    }
+
                     model.Countries = _countryService.GetAllCountries().data.ToList();
                     model.Shipping = _businessService.GetShippings().data.ToList();
                     model.Payment = _businessService.GetPayments().data.ToList();
@@ -178,7 +158,7 @@ namespace Eshop2.Controllers
         }
 
         [HttpPost("/Order/Order/")]
-        public async Task<IActionResult> SendOrder(OrderViewModel model)
+        public async Task<IActionResult> Order(OrderViewModel model)
         {
             try
             {
@@ -253,7 +233,6 @@ namespace Eshop2.Controllers
             return View();
         }
         [HttpPost]
-
         public async Task<IActionResult> AddToCart([FromBody]AddToCartModel model)
         {
             var settings = new JsonSerializerSettings();

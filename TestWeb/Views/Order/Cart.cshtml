@@ -5,60 +5,69 @@
     ViewData["Title"] = "Košík";
 }
 
+@{
+    decimal totalPrice = 0;
+    foreach (CartItem c in Model.Cart)
+    {
+
+        totalPrice += c.Product.Price * c.Amount;
+
+    }
+}
+
 <h2>@ViewData["Title"]</h2>
-    @{
-        foreach (CartItem c in Model.Cart)
-        {
-            <div class="row cart-item bottom-padding">
-                <div class="col-md-2"><img src="images/product_images/@c.Product.PicAddress" alt="bookcover" /></div>
+@{
+    foreach (CartItem c in Model.Cart)
+    {
+        <div class="row cart-item bottom-padding">
+            <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
+                <div class="col-md-2">
+                    <img src="~/images/product_images/@c.Product.PicAddress" alt="bookcover" />
+                </div>
                 <div class="col-md-4">
                     <p><strong>@c.Product.Name</strong></p>
-                    <p>@{
-                        var a = c.Product.Book.AuthorsBooks;
-                        for (int i = 0; i < a.Count; i++)
-                        {
-                            if (i == 0)
+                    <p>
+                        @{
+                            var a = c.Product.Book.AuthorsBooks;
+                            for (int i = 0; i < a.Count; i++)
                             {
+
                                 @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
 
-                            }
-                            else if (i == 1)
-                            {
-                                @Html.Raw(", ")@a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
-                            }
-                            else
-                            {
-                                @Html.Raw(",...")
-                                break;
-
+                                @if (i != a.Count - 1)
+                                {@Html.Raw(", ")}
                             }
                         }
-                    }
-                    }</p>
+                    </p>
                 </div>
-                <div class="col-md-3">
-                    <p>@c.Product.State</p>
-                </div>
-                <div class="col-md-1">
-                    @c.Product.Price
-                </div>
-                <div class="col-md-2"><span class="glyphicon glyphicon-remove"></span><span class="sr-only">Smazat</span></div>
+            </a>
+            <div class="col-md-1">
+                <p>@c.Product.State.Name</p>
             </div>
-        }
-    }
+            <div class="col-md-2">
+                <span class="glyphicon glyphicon-plus" id="increment-value"> </span><input type="number" class="product-count" value="@c.Amount" pattern="[0-9]*" min="1" /><span class="glyphicon glyphicon-minus" id="decrement-value"></span>
+            </div>
 
-<hr class="bottom-padding"/>
+            <div class="col-md-2">
+                @String.Format("{0:c}", c.Product.Price)
+            </div>
+            <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
+        </div>
+                            }
+}
+<hr class="bottom-padding" />
 
-<div class="row text-indent">
-    <div class="total-price text-right bottom-padding">
-        <p>Celková cena: @{
-        decimal totalPrice = 0;
-        foreach (CartItem c in Model.Cart)
-        {
-            totalPrice += c.Product.Price;
-        }
-    }</p>
+<div class="row bottom-padding text-right total-price">
+    <p>
+        Celková cena: @String.Format("{0:c}", totalPrice)
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
     </div>
-        <a class="btn btn-default" asp-area="" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
-        <a asp-area="" asp-controller="Order" asp-action="Redirect" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+    <div class="col-md-6 bottom-padding">
+        <a class="btn btn-primary order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+    </div>
 </div>

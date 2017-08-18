@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Trainee.Business.Business;
+using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
 using Trainee.Catalogue.Business;
@@ -54,9 +55,9 @@ namespace Eshop2.Controllers
                 ViewData["productId"] = id;
 
                 BookViewModel model = _bookLoader.LoadBookModel(id.Value);
-                if(model == null)
-                  return RedirectToAction("Error", "Home");
-                
+                if (model == null)
+                    return RedirectToAction("Error", "Home");
+
 
                 //to be sure //Or handle it in view
                 model.Reviews = model.Reviews == null ? new List<Review>() : model.Reviews;
@@ -82,12 +83,12 @@ namespace Eshop2.Controllers
                 {
                     return RedirectToAction("Error", "Home");
                 }
-                
+
                 if (_businessService.GetProduct(id.Value) == null)
                     return RedirectToAction("Error", "Home");
 
                 model.ProductId = id.Value;
-                
+
 
 
                 var user = await _userManager.GetUserAsync(User);
@@ -124,7 +125,7 @@ namespace Eshop2.Controllers
 
 
         // GET: /Catalogue/Category
-        [HttpGet("/Catalogue/Products/{id?}/{pageNum?}")]
+        [HttpGet("/Catalogue/Products/{id?}")]
         public IActionResult Products(int? id, int? pageNum, ProductsViewModel model)
         {
             try
@@ -139,25 +140,25 @@ namespace Eshop2.Controllers
                     int catId = id.Value;
 
                     model.currentCategory = _catalogueService.GetCategory(catId).data;
-                    
+
 
                     if (model.currentCategory == null)
                     {
                         return RedirectToAction("Error", "Home");
                     }
 
-                    if(pageNum == null)
+                    if (model.PageNum == null)
                     {
-                        pageNum = 1;
+                        model.PageNum = pageNum == null ? 1 : pageNum;
                     }
-                    model.PageNum = pageNum.Value;
+                    
 
                     QueryParametersWrapper parameters = new QueryParametersWrapper
                     {
-                        PageNum = pageNum.Value,
+                        PageNum = model.PageNum.Value,
                         CategoryId = catId, //check this
 
-
+                        //todo maxpricefilter
                         MaxPrice = model.MaxPrice,
                         MinPrice = model.MinPrice,
                         PageSize = model.PageSize,
@@ -167,10 +168,10 @@ namespace Eshop2.Controllers
 
                     };
 
-                    parameters.Formats = model.FormatsFilter == null ? null : new List<int>(){model.FormatsFilter.Value};
+                    parameters.Formats = model.FormatsFilter == null ? null : new List<int>() { model.FormatsFilter.Value };
                     parameters.Languages = model.LanguagesFilter == null ? null : new List<int>() { model.LanguagesFilter.Value };
-                    parameters.Authors = model.AuthorsFilter == null ? null : new List<int>(){model.AuthorsFilter.Value};
-                    parameters.Publishers = model.PublishersFilter == null ? null: new List<int>() { model.PublishersFilter.Value };
+                    parameters.Authors = model.AuthorsFilter == null ? null : new List<int>() { model.AuthorsFilter.Value };
+                    parameters.Publishers = model.PublishersFilter == null ? null : new List<int>() { model.PublishersFilter.Value };
 
 
 
@@ -195,8 +196,6 @@ namespace Eshop2.Controllers
                     model.Publishers = result.Publishers;
                     model.ResultCount = result.ResultCount;
                     
-
-
                     return View(model);
                 }
                 else
