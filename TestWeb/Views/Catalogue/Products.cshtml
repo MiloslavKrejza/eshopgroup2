@@ -76,8 +76,10 @@
 <h2>@ViewData["Title"]</h2>
 
 
-<form class="bottom-padding">
+<form id="filtering-form" class="bottom-padding">
 	<div class="row filters">
+
+        <input id="filter-page-num" type="hidden" asp-for="PageNum" value="1" />
 		<div class="col-md-2">
 			<label asp-for="AuthorsFilter">Autor</label>
 			<select class="form-control selectpicker" asp-for="AuthorsFilter" data-live-search="true">
@@ -136,7 +138,7 @@
 			<select class="form-control" asp-for="SortingType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
 		</div>
 		<div class="col-md-2">
-			<button type="submit" class="filter-btn btn btn-primary">Filtrovat</button>
+			<button id="button-filter" type="submit" class="filter-btn btn btn-primary">Filtrovat</button>
 		</div>
 		<div class="col-md-2">
 			<a class="filter-btn btn btn-default" asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
@@ -229,13 +231,13 @@
 		}
 		else
 		{
-			startPage = Model.PageNum - 2;
+			startPage = Model.PageNum.Value - 2;
 		}
 
 		<ul class="pagination">
 			@if (Model.PageNum > 0)
 			{
-				<li class="@(Model.PageNum == 1 ? "active" : "") "><a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="1">První</a></li>
+				<li class="@(Model.PageNum == 1 ? "active" : "") "><span class="paging-span" page-num="1">První</span></li>
 
 
 			}
@@ -243,7 +245,7 @@
 			@for (int i = 0; i < 5; i++)
 			{
 				<li class="@(startPage + i == Model.PageNum ? "active" : "")">
-					<a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="@(startPage + i)">@(startPage + i)</a>
+					<span class="paging-span" page-num="@(startPage + i)">@(startPage + i)</span>
 				</li>
 			}
 
@@ -253,7 +255,7 @@
 
 
 				<li class=@(LastPage == Model.PageNum ? "active" : "" )>
-				<a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.currentCategory.Id" asp-route-pageNum="@(Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize))">Poslední</a>
+				<span class="paging-span" page-num="@(Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize))">Poslední</span>
 			
 				</li>			
 			}

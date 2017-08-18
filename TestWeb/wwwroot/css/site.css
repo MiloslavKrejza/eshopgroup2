@@ -389,6 +389,9 @@ input:-ms-input-placeholder {
   margin-bottom: 10px; }
 
 /* Products catalogue */
+.paging-span:hover {
+  cursor: pointer; }
+
 .slider_tooltip {
   position: absolute;
   top: -8px;

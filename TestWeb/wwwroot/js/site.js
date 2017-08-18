@@ -25,6 +25,12 @@ function changeUser() {
     document.getElementById("login-link").innerHTML = "Účet";
 }
 
+$(".paging-span").click(function () {
+    $("#filter-page-num").val($(this).attr("page-num"));
+    $("#filtering-form").submit();
+})
+
+
 function changeUserBack() {
     document.getElementById("login-link").innerHTML = "Přihlásit";
 }

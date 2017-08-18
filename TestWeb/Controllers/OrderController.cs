@@ -34,13 +34,14 @@ namespace Eshop2.Controllers
         private readonly UserService _userService;
 
         public OrderController(BusinessService businessService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IHttpContextAccessor accessor,
-            CountryService countryService)
+            CountryService countryService, UserService userService)
         {
             _businessService = businessService;
             _signInManager = signInManager;
             _userManager = userManager;
             _accessor = accessor;
             _countryService = countryService;
+            _userService = userService;
         }
 
         // GET: /Order/Cart/
