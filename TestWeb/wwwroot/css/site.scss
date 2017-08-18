@@ -508,9 +508,11 @@ input:-ms-input-placeholder {
 }
 
 .details-table {
+    margin: 5px;
+
     td {
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 6px;
+    padding-bottom: 6px;
     }
 }
 
@@ -518,10 +520,6 @@ input:-ms-input-placeholder {
     .details-table {
         margin-bottom: 10px;
     }
-}
-
-.details-right {
-    padding-left: 5px;
 }
 
 .product-count {
@@ -534,6 +532,10 @@ input:-ms-input-placeholder {
 }
 
 .btn-addtocart {
+    margin-bottom: 10px;
+}
+
+.review-btn {
     margin-bottom: 10px;
 }
 
