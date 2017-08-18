@@ -44,7 +44,7 @@
             <div class="col-md-1">
                 <p>@c.Product.State.Name</p>
             </div>
-            <div class="col-md-2 text-center">
+            <div class="col-md-2">
                 <span class="glyphicon glyphicon-plus" id="increment-value"> </span><input type="number" class="product-count" value="@c.Amount" pattern="[0-9]*" min="1" /><span class="glyphicon glyphicon-minus" id="decrement-value"></span>
             </div>
 
@@ -55,10 +55,6 @@
         </div>
                             }
 }
-<div class="row text-right bottom-padding">
-    <button class="btn btn-primary change-count">Přepočítat košík</button>
-</div>
-
 <hr class="bottom-padding" />
 
 <div class="row bottom-padding text-right total-price">
@@ -68,6 +64,10 @@
 </div>
 
 <div class="row">
-    <a class="btn btn-default" asp-area="" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
-    <a asp-area="" asp-controller="Order" asp-action="Order" class="btn btn-primary order-button">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+    <div class="col-md-6">
+        <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
+    </div>
+    <div class="col-md-6 bottom-padding">
+        <a class="btn btn-primary order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+    </div>
 </div>

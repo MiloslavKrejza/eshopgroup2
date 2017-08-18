@@ -625,6 +625,12 @@ input[type=number]::-webkit-outer-spin-button {
         right: 50px;
     }
 
+@media screen and (max-width: 1200px) {
+    .order-button {
+        margin-top: 10px;
+        clear: right;
+    }
+}
     .triangle-left {
         margin-right: 5px;
     }

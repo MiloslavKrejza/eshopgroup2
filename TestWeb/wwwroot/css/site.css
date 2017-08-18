@@ -481,6 +481,11 @@ input:-ms-input-placeholder {
   position: absolute;
   right: 50px; }
 
+@media screen and (max-width: 1200px) {
+  .order-button {
+    margin-top: 10px;
+    clear: right; } }
+
 .triangle-left {
   margin-right: 5px; }
 
