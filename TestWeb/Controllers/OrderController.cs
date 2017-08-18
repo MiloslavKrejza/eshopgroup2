@@ -14,7 +14,6 @@ using Trainee.Business.DAL.Entities;
 using Trainee.Core.Business;
 using Alza.Core.Module.Http;
 using Newtonsoft.Json;
-
 using Trainee.Core.DAL.Entities;
 
 
@@ -137,63 +136,63 @@ namespace Eshop2.Controllers
             }
         }
 
-        [HttpPost("/Order/Order/")]
-        public async Task<IActionResult> Order(OrderViewModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    CookieHelper cookieHelper = new CookieHelper(_accessor);
-                    string cookieId = cookieHelper.GetVisitorId();
+        //[HttpPost("/Order/Order/")]
+        //public async Task<IActionResult> Order(OrderViewModel model)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            CookieHelper cookieHelper = new CookieHelper(_accessor);
+        //            string cookieId = cookieHelper.GetVisitorId();
 
-                    Order order = new Order()
-                    {
-                        Address = model.Street,
-                        City = model.City,
-                        Name = model.Name,
-                        Surname = model.Surname,
-                        PaymentId = model.PaymentId,
-                        ShippingId = model.ShippingId,
-                        PostalCode = model.PostalCode,
-                        PhoneNumber = model.Phone,
-                        CountryId = model.CountryId
-                    };
-                    if (_signInManager.IsSignedIn(User))
-                    {
-                        var result = await _userManager.GetUserAsync(User);
-                        order.UserId = result.Id;
-                    }
+        //            Order order = new Order()
+        //            {
+        //                Address = model.Street,
+        //                City = model.City,
+        //                Name = model.Name,
+        //                Surname = model.Surname,
+        //                PaymentId = model.PaymentId,
+        //                ShippingId = model.ShippingId,
+        //                PostalCode = model.PostalCode,
+        //                PhoneNumber = model.Phone,
+        //                CountryId = model.CountryId
+        //            };
+        //            if (_signInManager.IsSignedIn(User))
+        //            {
+        //                var result = await _userManager.GetUserAsync(User);
+        //                order.UserId = result.Id;
+        //            }
 
-                    //ToDo delete the correct cart
-                    var addedOrder = _businessService.AddOrder(order, cookieId).data;
-                    int orderId = addedOrder.Id;
+        //            //ToDo delete the correct cart
+        //            var addedOrder = _businessService.AddOrder(order, cookieId).data;
+        //            int orderId = addedOrder.Id;
 
-                    foreach (var item in model.Items)
-                    {
-                        OrderItem orderItem = new OrderItem()
-                        {
-                            OrderId = orderId,
-                            Amount = item.Amount,
-                            Price = item.Product.Price,
-                            ProductId = item.ProductId
-                        };
-                        _businessService.AddOrderItem(orderItem);
-                    }
+        //            foreach (var item in model.Items)
+        //            {
+        //                OrderItem orderItem = new OrderItem()
+        //                {
+        //                    OrderId = orderId,
+        //                    Amount = item.Amount,
+        //                    Price = item.Product.Price,
+        //                    ProductId = item.ProductId
+        //                };
+        //                _businessService.AddOrderItem(orderItem);
+        //            }
 
-                    return RedirectToAction("OKPage");
-                }
-                else
-                {
-                    throw new Exception("Data missing");
-                }
+        //            return RedirectToAction("OKPage");
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("Data missing");
+        //        }
 
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Error", "Home");
-            }
-        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return RedirectToAction("Error", "Home");
+        //    }
+        //}
 
         // GET: /Order/Summary/
         public IActionResult Summary()
@@ -214,7 +213,7 @@ namespace Eshop2.Controllers
         }
         [HttpPost]
 
-        public async Task<IActionResult> AddToCart([FromBody]AddToCartModel model)
+        public async Task<IActionResult> AddToCart([FromBody]CartItemModel model)
         {
             var settings = new JsonSerializerSettings();
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -231,6 +230,40 @@ namespace Eshop2.Controllers
             var result = _businessService.AddToCart(cookieId, uid, model.ProductId, model.Amount);
 
             return Json(result,settings);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart([FromBody]RemoveFromCartModel item)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            CookieHelper helper = new CookieHelper(_accessor);
+            string cookieId = helper.GetVisitorId();
+            int? uid = null;
+            if (_signInManager.IsSignedIn(User))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                uid = user.Id;
+            }
+            throw new NotImplementedException();
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateCart([FromBody]CartItemModel item)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            CookieHelper helper = new CookieHelper(_accessor);
+            string cookieId = helper.GetVisitorId();
+            int? uid = null;
+            if (_signInManager.IsSignedIn(User))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                uid = user.Id;
+            }
+            throw new NotImplementedException();
 
         }
     }
