@@ -48,11 +48,12 @@ namespace Trainee.Catalogue.DAL.Repositories
             {
                 var command = new SqlCommand(queryString, conn);
                 conn.Open();
+                
                 using (var reader = command.ExecuteReader())
                 {
-                    ProductBase currentProduct = null;
+                    
                     int previousProductId = 0;
-
+                    ProductBase currentProduct = null;
                     //read all products
                     while (reader.Read())
                     {
@@ -126,7 +127,7 @@ namespace Trainee.Catalogue.DAL.Repositories
                                 StateId = stateId
                             };
                         }
-                        //else add a new authorbook, author
+                        //add a new authorbook, author
                         int? countryId = reader["AuthorCountryId"] != DBNull.Value ? (int?)reader["AuthorCountryId"] : null;
                         Country country = countryId != null ? new Country() { Name = (string)reader["AuthorCountryName"], Id = (int)countryId, CountryCode = (string)reader["AuthorCountryCode"] } : null;
                         int authorId = (int)reader["AuthorId"];

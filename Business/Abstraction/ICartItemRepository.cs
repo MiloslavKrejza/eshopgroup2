@@ -39,5 +39,11 @@ namespace Trainee.Business.Abstraction
         /// <param name="visitorId">Visitor identifier</param>
         /// <param name="productId">Product identifier</param>
         void DeleteCartItem(string visitorId, int productId);
+        /// <summary>
+        /// Deletes a Cart with specified CartId
+        /// </summary>
+        /// <param name="userId">User identifier</param>
+        /// <param name="productId">Product identifier</param>
+        void DeteteCartItem(int userId, int prodcutId);
     }
 }

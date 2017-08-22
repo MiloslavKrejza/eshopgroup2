@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace Eshop2.Models.OrderViewModels
 {
-    public class AddToCartModel
-    {   public int ProductId { get; set; }
-        public int Amount { get; set; }
-
+    public class RemoveFromCartModel
+    {
+        public int Id { get; set; }
     }
 }

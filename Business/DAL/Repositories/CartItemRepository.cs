@@ -32,6 +32,11 @@ namespace Trainee.Business.DAL.Repositories
             _context.SaveChanges();
         }
 
+        public void DeteteCartItem(int userId, int prodcutId)
+        {
+            throw new NotImplementedException();
+        }
+
         public CartItem GetCartItem(string visitorId, int productId)
         {
             return _context.CartItems

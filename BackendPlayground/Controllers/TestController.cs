@@ -14,6 +14,7 @@ using Trainee.Business.Business;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.Business.Enums;
 using Newtonsoft.Json;
+using Trainee.Business.Abstraction;
 
 namespace BackendPlayground.Controllers
 {
@@ -79,8 +80,9 @@ namespace BackendPlayground.Controllers
         [HttpGet("/Test/ProductTest/")]
         public IActionResult ProductTest()
         {
+            var repos = new FilteringRepository("Server=DEVSQL_STAZ\\DEV_STAZ;Database=group2;Trusted_Connection=True;");
             QueryParametersWrapper filter = new QueryParametersWrapper() { SortingType = SortType.Asc, SortingParameter = SortingParameter.Name, PageSize = 50, CategoryId = 1, PageNum = 1 };
-            var res = _serv.GetPage(filter).data;
+            var res = repos.FilterProducts(filter);
             return View();
 
         }
