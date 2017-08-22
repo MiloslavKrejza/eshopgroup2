@@ -31,10 +31,11 @@ namespace Trainee.Business.Business
         private readonly IShippingRepository _shippingRepository;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IOrderItemRepository _orderItemRepository;
+        private readonly IFilteringRepository _filteringRepository;
 
         public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
-                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, ICartItemRepository cartRep, IOrderRepository orderRep, 
-                IShippingRepository shipRep, IPaymentRepository payRep, IOrderItemRepository orderItemRep)
+                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, ICartItemRepository cartRep, IOrderRepository orderRep,
+                IShippingRepository shipRep, IPaymentRepository payRep, IOrderItemRepository orderItemRep, IFilteringRepository filterRep)
         {
             _categoryRelationshipRepository = catRRep;
             _productRatingRepository = prodRRep;
@@ -47,10 +48,23 @@ namespace Trainee.Business.Business
             _paymentRepository = payRep;
             _shippingRepository = shipRep;
             _orderItemRepository = orderItemRep;
+            _filteringRepository = filterRep;
+
         }
         #region Products
 
 
+        public AlzaAdminDTO<QueryResultWrapper> GetPageADO(QueryParametersWrapper parameters)
+        {
+
+            return AlzaAdminDTO<QueryResultWrapper>.Data(_filteringRepository.FilterProducts(parameters));
+
+            /*catch (Exception e)
+            {
+                throw;
+                return AlzaAdminDTO<QueryResultWrapper>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }*/
+        }
         /// <summary>
         /// Gets a page of product with applied filtering
         /// </summary>
@@ -325,6 +339,7 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
+
         public AlzaAdminDTO<List<CartItem>> DeleteFromCart(string visitorId, int productId)
         {
             try
@@ -341,7 +356,8 @@ namespace Trainee.Business.Business
         {
             try
             {
-                var cartProductId = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).Select(ci => ci.ProductId);
+                //todo check tolist
+                var cartProductId = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).Select(ci => ci.ProductId).ToList();
 
                 order.StateId = 1; //default orderState is the first one
                 var createdOrder = _orderRepository.AddOrder(order);
@@ -357,6 +373,7 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<Order>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
+
         public AlzaAdminDTO<Order> GetOrder(int orderId)
         {
             try
@@ -375,7 +392,7 @@ namespace Trainee.Business.Business
 
         public AlzaAdminDTO<OrderItem> AddOrderItem(OrderItem item)
         {
-            
+
             try
             {
                 var orderItem = _orderItemRepository.AddOrderItem(item);
@@ -409,6 +426,82 @@ namespace Trainee.Business.Business
             catch (Exception e)
             {
                 return AlzaAdminDTO<List<Payment>>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+        public AlzaAdminDTO<List<CartItem>> TransformCart(string visitorId, int userId, bool delete)
+        {
+            try
+            {
+
+                if (delete)
+                {
+
+                    var oldCartItems = _cartItemRepository.GetCartItems().Where(ci => ci.UserId == userId).ToList();
+                    foreach (var item in oldCartItems)
+                    {
+                        _cartItemRepository.DeleteCartItem(item.VisitorId, item.ProductId);
+                    }
+                }
+                var currentCart = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).ToList();
+                foreach (var item in currentCart)
+                {
+                    CartItem existingItem = null;
+                    if (!delete)
+                    {
+                        existingItem = _cartItemRepository.GetCartItems().FirstOrDefault(ci => (ci.UserId == userId) && (ci.ProductId == item.ProductId));
+                    }
+                    if (existingItem != null)
+                    {
+                        existingItem.Amount += item.Amount;
+                        _cartItemRepository.UpdateCartItem(existingItem);
+                    }
+                    else
+                    {
+                        item.VisitorId = userId.ToString();
+                        item.UserId = userId;
+                        _cartItemRepository.AddCartItem(item);
+
+                    }
+                    _cartItemRepository.DeleteCartItem(visitorId, item.ProductId);
+
+                }
+                var result = _cartItemRepository.GetCartItems().Where(ci => ci.UserId == userId).ToList();
+                return AlzaAdminDTO<List<CartItem>>.Data(result);
+            }
+            catch (Exception e)
+            {
+
+                return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+        public AlzaAdminDTO<List<CartItem>> UpdateCartItem(string visitorId, int productId, int amount)
+        {
+            try
+            {
+                var item = _cartItemRepository.GetCartItem(visitorId, productId);
+                item.Amount = amount;
+                _cartItemRepository.UpdateCartItem(item);
+                var result = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).ToList();
+                return AlzaAdminDTO<List<CartItem>>.Data(result);
+            }
+            catch (Exception e)
+            {
+
+                return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+        public AlzaAdminDTO<List<CartItem>> RemoveCartItem(string visitorId, int productId)
+        {
+            try
+            {
+                _cartItemRepository.DeleteCartItem(visitorId, productId);
+                var result = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).ToList();
+                return AlzaAdminDTO<List<CartItem>>.Data(result);
+            }
+            catch (Exception e)
+            {
+
+                return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
         #endregion

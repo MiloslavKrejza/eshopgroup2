@@ -6,10 +6,13 @@
 @inject CatalogueService CatalogueService;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IHttpContextAccessor ContextAccessor
 
 @{
-
+    //return url
     ViewData["returnUrl"] = Context.Request.Path;
+
+    //categories
     Category currentCategory;
     if (Model is ProductsViewModel)
     {
@@ -25,7 +28,17 @@
     int parentId = currentCategory.Parent == null ? 1 : currentCategory.ParentId.Value;
 
     string parentName = currentCategory.Parent == null ? "Všechny knížky" : currentCategory.Parent.Name;
+
+    //transforming anonymous cart
+    string oldVisitorId = ContextAccessor.HttpContext.Request.Cookies["OldVisitorId"];
+
 }
+
+
+
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -52,7 +65,7 @@
     </environment>
 
     @Html.Raw(JavaScriptSnippet.FullScript)
-    
+
 </head>
 <body>
 
@@ -73,16 +86,16 @@
                 </button>
 
                 @{
-		
+
                     if (SignInManager.IsSignedIn(User))
                     {
                         <script src="~/js/site.js"></script>
-                            <script>changeUser();</script>
+                        <script>changeUser();</script>
                     }
                     else
                     {
                         <script src="~/js/site.js"></script>
-                            <script>changeUserBack();</script>
+                        <script>changeUserBack();</script>
                     }
 
                 }
@@ -109,9 +122,9 @@
                 <div class="list-group-item menu-item main-background">
                     <strong><a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@parentId"><!--<p><img src="~/images/(c.ico).svg" /></p>-->@parentName</a></strong>
                 </div>
-               
 
-                @{ 
+
+                @{
 
                     foreach (Category c in currentCategory.Children)
                     {
@@ -120,7 +133,7 @@
                         </div>
 
                     }
-                }                
+                }
 
             </div>
 
@@ -162,8 +175,12 @@
                 crossorigin="anonymous"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+        <script src="~/lib/lodash/lodash.js"></script>
+        <script src="~/lib/jquery-throttle-debounce/jquery.ba-throttle-debounce.js"></script>
         <script src="~/js/site.js"></script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootpag/1.0.7/jquery.bootpag.min.js"></script>
+
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -182,21 +199,32 @@
         <script src="https://code.jquery.com/ui/1.7.2/jquery-ui.min.js"
                 integrity="sha256-4h4SHCCUAKFl7xWF9JeZp9tnU8lmM5bt6G3kNK6E4ek="
                 crossorigin="anonymous"></script>
-
+        <script src="~/lib/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)
-<!--
-    <script>
-        $(function () {
-            $("#priceFilter").slider(
-                {
-                    range: true,
-                });
+    <!--
+        <script>
+            $(function () {
+                $("#priceFilter").slider(
+                    {
+                        range: true,
+                    });
+            });
+        </script>
+    -->
+  
+    @if (oldVisitorId != null)
+    {
+        <div id="cart-dialog" title="Chcete si ponechat košík?">Chcete si ponechat následující věci v košíku?</div>
+    }
+    @*<script>
+        $("#dialog").dialog({ autoOpen: true });
+        $("#opener").click(function () {
+            $("#dialog").dialog("open");
         });
-    </script>
--->
-    
+    </script>*@
+
 </body>
 </html>
