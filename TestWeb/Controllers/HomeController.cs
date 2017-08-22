@@ -13,7 +13,7 @@ namespace TestWeb.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Products", "Catalogue", new { id = 1, pageNum = 1 });
+            return View();
         }
 
         public IActionResult About()
