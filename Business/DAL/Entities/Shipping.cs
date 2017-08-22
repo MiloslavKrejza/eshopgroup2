@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Trainee.Business.DAL.Entities
@@ -8,6 +9,8 @@ namespace Trainee.Business.DAL.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
     }
 }

@@ -43,7 +43,11 @@ namespace Eshop2.Models.OrderViewModels
         [Required(ErrorMessage = "Prosím vyberte zemi.")]
         public int CountryId { get; set; }
 
+
+        [Required(ErrorMessage = "Vyberte prosím způsob platby.")]
         public int PaymentId { get; set; }
+
+        [Required(ErrorMessage = "Vyberte prosím způsob dopravy.")]
         public int ShippingId { get; set; }
 
         public List<Payment> Payment { get; set; }

@@ -325,18 +325,7 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
-        /*  public AlzaAdminDTO<List<CartItem>> DeleteFromCart(string visitorId, int productId)
-          {
-              try
-              {
-                  _cartItemRepository.DeleteCartItem(visitorId, productId);
-                  return GetCart(visitorId);
-              }
-              catch (Exception e)
-              {
-                  return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
-              }
-          }
+
           public AlzaAdminDTO<Order> AddOrder(Order order, string visitorId)
           {
               try
@@ -350,26 +339,41 @@ namespace Trainee.Business.Business
                   return AlzaAdminDTO<Order>.Error(e.Message + Environment.NewLine + e.StackTrace);
               }
           }
-          private void DeleteCart(string visitorId)
-          {
-              var cartProductId = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).Select(ci => ci.ProductId);
 
+        public AlzaAdminDTO<List<CartItem>> DeleteFromCart(string visitorId, int productId)
+        {
+            try
+            {
+                _cartItemRepository.DeleteCartItem(visitorId, productId);
+                return GetCart(visitorId);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+        public AlzaAdminDTO<Order> AddOrder(Order order, string visitorId)
+        {
+            try
+            {
+                //todo check tolist
+                var cartProductId = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).Select(ci => ci.ProductId).ToList();
 
-              foreach (var productId in cartProductId)
-              {
-                  _cartItemRepository.DeleteCartItem(visitorId, productId);
-              }
-          }
-          private void DeleteCart(int userId)
-          {
-              var cartProductId = _cartItemRepository.GetCartItems().Where(ci => ci.UserId == userId).Select(ci => ci.ProductId);
+                order.StateId = 1; //default orderState is the first one
+                var createdOrder = _orderRepository.AddOrder(order);
 
+                foreach (var productId in cartProductId)
+                {
+                    _cartItemRepository.DeleteCartItem(visitorId, productId);
+                }
+                return AlzaAdminDTO<Order>.Data(createdOrder);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<Order>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
 
-              foreach (var productId in cartProductId)
-              {
-                  _cartItemRepository.DeleteCartItem(userId, productId);
-              }
-          }*/
         public AlzaAdminDTO<Order> GetOrder(int orderId)
         {
             try

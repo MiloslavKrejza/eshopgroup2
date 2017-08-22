@@ -78,6 +78,7 @@ input[type=number]::-webkit-outer-spin-button {
     }
 }
 
+
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -104,6 +105,7 @@ input[type=number]::-webkit-outer-spin-button {
 .logo {
     width: 100%;
 }
+
 
 @media screen and (max-width: 995px) {
     .logo {
@@ -527,6 +529,11 @@ input:-ms-input-placeholder {
     margin-bottom: 10px;
 }
 /* Products catalogue */
+
+.paging-span:hover {
+    cursor: pointer;
+}
+
 .slider_tooltip {
     position: absolute;
     top: -8px;
@@ -634,6 +641,13 @@ input:-ms-input-placeholder {
     right: 50px;
 }
 
+@media screen and (max-width: 1200px) {
+    .order-button {
+        margin-top: 10px;
+        clear: right;
+    }
+}
+
 .triangle-left {
     margin-right: 5px;
 }
@@ -651,6 +665,10 @@ input:-ms-input-placeholder {
 .order {
     width: 80%;
     margin: 0 auto;
+}
+
+.order-radio {
+    padding-left: 30px;
 }
 /* Order login */
 .orderlogin {
@@ -683,11 +701,7 @@ input:-ms-input-placeholder {
     img {
         margin: 0;
         height: 90px;
-    }
 
-    p {
-        font-size: 16px;
-        margin: 20px 0 0;
     }
 }
 /*Reviews*/
@@ -714,9 +728,11 @@ input:-ms-input-placeholder {
 }
 
 .full-stars:before {
+
     content: "\2605\2605\2605\2605\2605";
     font-size: 14pt;
 }
+
 
 .empty-stars:before {
     -webkit-text-stroke: 1px #848484;

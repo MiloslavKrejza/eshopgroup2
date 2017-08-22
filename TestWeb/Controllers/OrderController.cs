@@ -33,13 +33,14 @@ namespace Eshop2.Controllers
         private readonly UserService _userService;
 
         public OrderController(BusinessService businessService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IHttpContextAccessor accessor,
-            CountryService countryService)
+            CountryService countryService, UserService userService)
         {
             _businessService = businessService;
             _signInManager = signInManager;
             _userManager = userManager;
             _accessor = accessor;
             _countryService = countryService;
+            _userService = userService;
         }
 
         // GET: /Order/Cart/
@@ -70,7 +71,17 @@ namespace Eshop2.Controllers
                 if (!result.isOK)
                     throw new Exception("Could not find the cart");
 
-                var cart = result.isEmpty ? new List<CartItem>() : result.data;
+                List<CartItem> cart;
+                if(result.isEmpty)
+                {
+                    cart = new List<CartItem>();
+                    ViewData["emptyCart"] = true;
+                }
+                else
+                {
+                    cart = result.data;
+                }
+               
 
 
                 CartViewModel model = new CartViewModel() { Cart = cart };
@@ -78,7 +89,7 @@ namespace Eshop2.Controllers
                 return View(model);
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -116,7 +127,7 @@ namespace Eshop2.Controllers
 
                 if (cart.Count == 0)
                 {
-                    TempData["emptyCart"] = true;
+                    TempData["emptyOrder"] = true;
                     return RedirectToAction("Cart");
                 }
 
@@ -177,29 +188,40 @@ namespace Eshop2.Controllers
                         PhoneNumber = model.Phone,
                         CountryId = model.CountryId
                     };
+
+
                     if (_signInManager.IsSignedIn(User))
                     {
                         var result = await _userManager.GetUserAsync(User);
                         order.UserId = result.Id;
                     }
 
-                    //ToDo delete the correct cart
-                    //var addedOrder = _businessService.AddOrder(order, cookieId).data;
-                    //int orderId = addedOrder.Id;
 
-                    //foreach (var item in model.Items)
-                    //{
-                    //    OrderItem orderItem = new OrderItem()
-                    //    {
-                    //        OrderId = orderId,
-                    //        Amount = item.Amount,
-                    //        Price = item.Product.Price,
-                    //        ProductId = item.ProductId
-                    //    };
-                    //    _businessService.AddOrderItem(orderItem);
-                    //}
-                    throw new NotImplementedException();
+                    var items = _businessService.GetCart(cookieId).data;
 
+                    if (items.Count == 0)
+                    {
+                        TempData["emptyOrder"] = true;
+                        return RedirectToAction("Cart");
+                    }
+
+
+                    var addedOrder = _businessService.AddOrder(order, cookieId).data;
+                    int orderId = addedOrder.Id;
+                    
+                    foreach (var item in items)
+                    {
+                        OrderItem orderItem = new OrderItem()
+                        {
+                            OrderId = orderId,
+                            Amount = item.Amount,
+                            Price = item.Product.Price,
+                            ProductId = item.ProductId
+                        };
+                        _businessService.AddOrderItem(orderItem);
+                    }
+
+                    TempData["OrderId"] = orderId;
                     return RedirectToAction("OKPage");
                 }
                 else
@@ -208,7 +230,7 @@ namespace Eshop2.Controllers
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -223,6 +245,10 @@ namespace Eshop2.Controllers
         // GET: /Order/OKPage/
         public IActionResult OKPage()
         {
+            ViewData["OrderId"] = TempData["OrderId"];
+            if (ViewData["OrderId"] == null)
+                return RedirectToAction("Error", "Home");
+
             return View();
         }
 
