@@ -6,6 +6,54 @@ $primary-color: #2F3293;
 $secondary-color: #EE1D25;
 $border-color: #dddddd;
 
+/* BUTTON COLOR REWRITE*/
+
+.btn-prim {
+    color: #FFFFFF;
+    background-color: #2F3293;
+    border-color: #2F3293;
+}
+
+.btn-prim:hover,
+.btn-prim:focus,
+.btn-prim:active,
+.btn-prim.active,
+.open .dropdown-toggle.btn-prim {
+    color: #FFFFFF;
+    background-color: #2F3293;
+    border-color: #2F3293;
+}
+
+.btn-prim:active,
+.btn-prim.active,
+.open .dropdown-toggle.btn-prim {
+    background-image: none;
+}
+
+.btn-prim.disabled,
+.btn-prim[disabled],
+fieldset[disabled] .btn-prim,
+.btn-prim.disabled:hover,
+.btn-prim[disabled]:hover,
+fieldset[disabled] .btn-prim:hover,
+.btn-prim.disabled:focus,
+.btn-prim[disabled]:focus,
+fieldset[disabled] .btn-prim:focus,
+.btn-prim.disabled:active,
+.btn-prim[disabled]:active,
+fieldset[disabled] .btn-prim:active,
+.btn-prim.disabled.active,
+.btn-prim[disabled].active,
+fieldset[disabled] .btn-prim.active {
+    background-color: #2F3293;
+    border-color: #2F3293;
+}
+
+.btn-prim .badge {
+    color: #2F3293;
+    background-color: #FFFFFF;
+}
+
 /**********/
 
 body {
@@ -305,6 +353,7 @@ input:-ms-input-placeholder {
 .footer {
     padding: 20px 50px;
     background-color: $primary-color;
+    color: $background-color;
 }
 
 .footer a {
