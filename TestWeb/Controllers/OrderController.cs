@@ -80,7 +80,7 @@ namespace Eshop2.Controllers
                 return View(model);
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -179,17 +179,28 @@ namespace Eshop2.Controllers
                         PhoneNumber = model.Phone,
                         CountryId = model.CountryId
                     };
+
+
                     if (_signInManager.IsSignedIn(User))
                     {
                         var result = await _userManager.GetUserAsync(User);
                         order.UserId = result.Id;
                     }
 
+
+                    var items = _businessService.GetCart(cookieId).data;
+
+                    if (items.Count == 0)
+                    {
+                        TempData["emptyCart"] = true;
+                        return RedirectToAction("Cart");
+                    }
+
                     //ToDo delete the correct cart
                     var addedOrder = _businessService.AddOrder(order, cookieId).data;
                     int orderId = addedOrder.Id;
-
-                    foreach (var item in model.Items)
+                    
+                    foreach (var item in items)
                     {
                         OrderItem orderItem = new OrderItem()
                         {
@@ -201,6 +212,7 @@ namespace Eshop2.Controllers
                         _businessService.AddOrderItem(orderItem);
                     }
 
+                    TempData["orderId"] = orderId;
                     return RedirectToAction("OKPage");
                 }
                 else
@@ -209,7 +221,7 @@ namespace Eshop2.Controllers
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -224,6 +236,7 @@ namespace Eshop2.Controllers
         // GET: /Order/OKPage/
         public IActionResult OKPage()
         {
+
             return View();
         }
 

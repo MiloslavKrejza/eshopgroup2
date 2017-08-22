@@ -43,13 +43,14 @@ namespace Eshop2.Models.OrderViewModels
         [Required(ErrorMessage = "Prosím vyberte zemi.")]
         public int CountryId { get; set; }
 
-        public int PaymentId { get; set; }
-        public int ShippingId { get; set; }
 
         [Required(ErrorMessage = "Vyberte prosím způsob platby.")]
-        public List<Payment> Payment { get; set; }
+        public int PaymentId { get; set; }
 
         [Required(ErrorMessage = "Vyberte prosím způsob dopravy.")]
+        public int ShippingId { get; set; }
+
+        public List<Payment> Payment { get; set; }
         public List<Shipping> Shipping { get; set; }
         public List<CartItem> Items { get; set; }
         public List<Country> Countries { get; set; }
