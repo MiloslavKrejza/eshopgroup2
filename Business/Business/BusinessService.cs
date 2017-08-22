@@ -31,10 +31,11 @@ namespace Trainee.Business.Business
         private readonly IShippingRepository _shippingRepository;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IOrderItemRepository _orderItemRepository;
+        private readonly IFilteringRepository _filteringRepository;
 
         public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
                 IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, ICartItemRepository cartRep, IOrderRepository orderRep,
-                IShippingRepository shipRep, IPaymentRepository payRep, IOrderItemRepository orderItemRep)
+                IShippingRepository shipRep, IPaymentRepository payRep, IOrderItemRepository orderItemRep, IFilteringRepository filterRep)
         {
             _categoryRelationshipRepository = catRRep;
             _productRatingRepository = prodRRep;
@@ -47,10 +48,23 @@ namespace Trainee.Business.Business
             _paymentRepository = payRep;
             _shippingRepository = shipRep;
             _orderItemRepository = orderItemRep;
+            _filteringRepository = filterRep;
+
         }
         #region Products
 
 
+        public AlzaAdminDTO<QueryResultWrapper> GetPageADO(QueryParametersWrapper parameters)
+        {
+
+            return AlzaAdminDTO<QueryResultWrapper>.Data(_filteringRepository.FilterProducts(parameters));
+
+            /*catch (Exception e)
+            {
+                throw;
+                return AlzaAdminDTO<QueryResultWrapper>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }*/
+        }
         /// <summary>
         /// Gets a page of product with applied filtering
         /// </summary>
@@ -325,8 +339,6 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
-
-         
 
         public AlzaAdminDTO<List<CartItem>> DeleteFromCart(string visitorId, int productId)
         {
