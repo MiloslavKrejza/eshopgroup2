@@ -41,5 +41,9 @@ namespace Trainee.Business.DAL.Entities
             Category = product.Category;
             Book = product.Book;
         }
+
+        public ProductBO()
+        {
+        }
     }
 }

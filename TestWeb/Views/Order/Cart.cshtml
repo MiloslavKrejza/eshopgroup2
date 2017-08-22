@@ -16,45 +16,54 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-@{
-    foreach (CartItem c in Model.Cart)
-    {
-        <div class="row cart-item bottom-padding">
-            <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
+<div id="cart-wrapper">
+    @{
+        foreach (CartItem c in Model.Cart)
+        {
+            <div class="row cart-item bottom-padding">
+                <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
+                    <div class="col-md-2">
+                        <img src="~/images/product_images/@c.Product.PicAddress" alt="bookcover" />
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>@c.Product.Name</strong></p>
+                        <input type="hidden" class="product-id-hidden" value="@c.ProductId" />
+                        <p>
+                            @{
+                                var a = c.Product.Book.AuthorsBooks;
+                                for (int i = 0; i < a.Count; i++)
+                                {
+
+                                    @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
+
+                                    @if (i != a.Count - 1)
+                                    {@Html.Raw(", ")}
+                                }
+                            }
+                        </p>
+                    </div>
+                </a>
+                <div class="col-md-1">
+                    <p>@c.Product.State.Name</p>
+                </div>
+                <div class="col-md-2 text-center unselectable">
+                    <span class="glyphicon glyphicon-minus product-count-decrease"></span>
+                    <input type="number" class="product-count" value="@c.Amount" min="1" />
+                    <span class="glyphicon glyphicon-plus product-count-increase"></span>
+                    <input type="hidden" class="product-count-original" value="@c.Amount" />
+                    <input type="hidden" class="product-count-prevalidation" value="@c.Amount" />
+
+                </div>
+
                 <div class="col-md-2">
-                    <img src="~/images/product_images/@c.Product.PicAddress" alt="bookcover" />
+                    <input type="hidden" class="product-price-hidden" value="@c.Product.Price" />
+                    @String.Format("{0:c}", c.Product.Price)
                 </div>
-                <div class="col-md-4">
-                    <p><strong>@c.Product.Name</strong></p>
-                    <p>
-                        @{
-                            var a = c.Product.Book.AuthorsBooks;
-                            for (int i = 0; i < a.Count; i++)
-                            {
-
-                                @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
-
-                                @if (i != a.Count - 1)
-                                {@Html.Raw(", ")}
-                            }
-                        }
-                    </p>
-                </div>
-            </a>
-            <div class="col-md-1">
-                <p>@c.Product.State.Name</p>
+                <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
             </div>
-            <div class="col-md-2 text-center">
-                <span class="glyphicon glyphicon-plus" id="increment-value"> </span><input type="number" class="product-count" value="@c.Amount" pattern="[0-9]*" min="1" /><span class="glyphicon glyphicon-minus" id="decrement-value"></span>
-            </div>
-
-            <div class="col-md-2">
-                @String.Format("{0:c}", c.Product.Price)
-            </div>
-            <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
-        </div>
-                            }
-}
+                                }
+    }
+</div>
 <div class="row text-right bottom-padding">
     <button class="btn btn-primary change-count">Přepočítat košík</button>
 </div>
@@ -63,7 +72,7 @@
 
 <div class="row bottom-padding text-right total-price">
     <p>
-        Celková cena: @String.Format("{0:c}", totalPrice)
+        Celková cena:<span id="total-price-string"> @String.Format("{0:c}", totalPrice)</span>
     </p>
 </div>
 

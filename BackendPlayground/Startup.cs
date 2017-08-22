@@ -92,6 +92,7 @@ namespace BackendPlayground
 
             if (env.IsDevelopment())
             {
+                app.UseMiddleware<StackifyMiddleware.RequestTracerMiddleware>();
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }

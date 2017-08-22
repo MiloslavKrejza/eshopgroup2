@@ -63,7 +63,7 @@ namespace Eshop2.Controllers
                 {
                     string cookieId = cookieHelper.GetVisitorId();
                     result = _businessService.GetCart(cookieId);
-                    
+
                 }
 
 
@@ -84,7 +84,7 @@ namespace Eshop2.Controllers
             }
 
         }
-        
+
 
         // GET: /Order/Order/
         [HttpGet]
@@ -126,7 +126,7 @@ namespace Eshop2.Controllers
 
                 if (model.Items.Count > 0)
                 {
-                    if(userProfile != null)
+                    if (userProfile != null)
                     {
                         model.CountryId = userProfile.CountryId;
                         model.Email = user.Email;
@@ -184,20 +184,21 @@ namespace Eshop2.Controllers
                     }
 
                     //ToDo delete the correct cart
-                    var addedOrder = _businessService.AddOrder(order, cookieId).data;
-                    int orderId = addedOrder.Id;
+                    //var addedOrder = _businessService.AddOrder(order, cookieId).data;
+                    //int orderId = addedOrder.Id;
 
-                    foreach (var item in model.Items)
-                    {
-                        OrderItem orderItem = new OrderItem()
-                        {
-                            OrderId = orderId,
-                            Amount = item.Amount,
-                            Price = item.Product.Price,
-                            ProductId = item.ProductId
-                        };
-                        _businessService.AddOrderItem(orderItem);
-                    }
+                    //foreach (var item in model.Items)
+                    //{
+                    //    OrderItem orderItem = new OrderItem()
+                    //    {
+                    //        OrderId = orderId,
+                    //        Amount = item.Amount,
+                    //        Price = item.Product.Price,
+                    //        ProductId = item.ProductId
+                    //    };
+                    //    _businessService.AddOrderItem(orderItem);
+                    //}
+                    throw new NotImplementedException();
 
                     return RedirectToAction("OKPage");
                 }
@@ -248,7 +249,7 @@ namespace Eshop2.Controllers
 
             var result = _businessService.AddToCart(cookieId, uid, model.ProductId, model.Amount);
 
-            return Json(result,settings);
+            return Json(result, settings);
 
         }
         [HttpPost]
@@ -265,8 +266,8 @@ namespace Eshop2.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 uid = user.Id;
             }
-            throw new NotImplementedException();
-
+            var result = _businessService.RemoveCartItem(cookieId, item.Id);
+            return Json(result, settings);
         }
         [HttpPost]
         public async Task<IActionResult> UpdateCart([FromBody]CartItemModel item)
@@ -282,7 +283,8 @@ namespace Eshop2.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 uid = user.Id;
             }
-            throw new NotImplementedException();
+            var result = _businessService.UpdateCartItem(cookieId, item.ProductId, item.Amount);
+            return Json(result, settings);
 
         }
     }
