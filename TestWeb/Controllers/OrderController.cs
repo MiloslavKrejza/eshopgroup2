@@ -14,7 +14,6 @@ using Trainee.Business.DAL.Entities;
 using Trainee.Core.Business;
 using Alza.Core.Module.Http;
 using Newtonsoft.Json;
-
 using Trainee.Core.DAL.Entities;
 using Trainee.User.DAL.Entities;
 using Trainee.User.Business;
@@ -65,14 +64,24 @@ namespace Eshop2.Controllers
                 {
                     string cookieId = cookieHelper.GetVisitorId();
                     result = _businessService.GetCart(cookieId);
-                    
+
                 }
 
 
                 if (!result.isOK)
                     throw new Exception("Could not find the cart");
 
-                var cart = result.isEmpty ? new List<CartItem>() : result.data;
+                List<CartItem> cart;
+                if(result.isEmpty)
+                {
+                    cart = new List<CartItem>();
+                    ViewData["emptyCart"] = true;
+                }
+                else
+                {
+                    cart = result.data;
+                }
+               
 
 
                 CartViewModel model = new CartViewModel() { Cart = cart };
@@ -86,7 +95,7 @@ namespace Eshop2.Controllers
             }
 
         }
-        
+
 
         // GET: /Order/Order/
         [HttpGet]
@@ -118,7 +127,7 @@ namespace Eshop2.Controllers
 
                 if (cart.Count == 0)
                 {
-                    TempData["emptyCart"] = true;
+                    TempData["emptyOrder"] = true;
                     return RedirectToAction("Cart");
                 }
 
@@ -128,7 +137,7 @@ namespace Eshop2.Controllers
 
                 if (model.Items.Count > 0)
                 {
-                    if(userProfile != null)
+                    if (userProfile != null)
                     {
                         model.CountryId = userProfile.CountryId;
                         model.Email = user.Email;
@@ -192,11 +201,11 @@ namespace Eshop2.Controllers
 
                     if (items.Count == 0)
                     {
-                        TempData["emptyCart"] = true;
+                        TempData["emptyOrder"] = true;
                         return RedirectToAction("Cart");
                     }
 
-                    //ToDo delete the correct cart
+
                     var addedOrder = _businessService.AddOrder(order, cookieId).data;
                     int orderId = addedOrder.Id;
                     
@@ -249,7 +258,8 @@ namespace Eshop2.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddToCart([FromBody]AddToCartModel model)
+
+        public async Task<IActionResult> AddToCart([FromBody]CartItemModel model)
         {
             var settings = new JsonSerializerSettings();
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -265,7 +275,42 @@ namespace Eshop2.Controllers
 
             var result = _businessService.AddToCart(cookieId, uid, model.ProductId, model.Amount);
 
-            return Json(result,settings);
+            return Json(result, settings);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart([FromBody]RemoveFromCartModel item)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            CookieHelper helper = new CookieHelper(_accessor);
+            string cookieId = helper.GetVisitorId();
+            int? uid = null;
+            if (_signInManager.IsSignedIn(User))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                uid = user.Id;
+            }
+            var result = _businessService.RemoveCartItem(cookieId, item.Id);
+            return Json(result, settings);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateCart([FromBody]CartItemModel item)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            CookieHelper helper = new CookieHelper(_accessor);
+            string cookieId = helper.GetVisitorId();
+            int? uid = null;
+            if (_signInManager.IsSignedIn(User))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                uid = user.Id;
+            }
+            var result = _businessService.UpdateCartItem(cookieId, item.ProductId, item.Amount);
+            return Json(result, settings);
 
         }
     }
