@@ -540,9 +540,6 @@ input:-ms-input-placeholder {
   .register-container img {
     margin: 0;
     height: 90px; }
-  .register-container p {
-    font-size: 16px;
-    margin: 20px 0 0; }
 
 /*Reviews*/
 .ratings {

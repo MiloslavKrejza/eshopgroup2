@@ -6,6 +6,7 @@
 @inject CatalogueService CatalogueService;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IHttpContextAccessor ContextAccessor
 
 @{
 
@@ -26,6 +27,15 @@
 
     string parentName = currentCategory.Parent == null ? "Všechny knížky" : currentCategory.Parent.Name;
 }
+
+
+
+
+@if(ContextAccessor.HttpContext.Request.Cookies["OldVisitorId"] != null)
+{
+    
+}
+
 
 <!DOCTYPE html>
 <html>
@@ -201,6 +211,14 @@
             });
         </script>
     -->
+   @* <button id="opener">open the dialog</button>
+    <div id="dialog" title="Dialog Title">I'm a dialog</div>
+    <script>
+        $("#dialog").dialog({ autoOpen: true });
+        $("#opener").click(function () {
+            $("#dialog").dialog("open");
+        });
+    </script>*@
 
 </body>
 </html>
