@@ -65,23 +65,23 @@
                 </div>
                 <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
             </div>
-                                }
+         }
 
-                                <hr class="bottom-padding" />
+         <hr class="bottom-padding" />
 
-                                <div class="row bottom-padding text-right total-price">
-                                    <p>
-                                        Celková cena: @String.Format("{0:c}", totalPrice)
-                                    </p>
-                                </div>
+         <div class="row bottom-padding text-right total-price">
+             <p>
+                 Celková cena: @String.Format("{0:c}", totalPrice)
+             </p>
+         </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
-                                    </div>
-                                    <div class="col-md-6 bottom-padding">
-                                        <a class="btn btn-primary order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
-                                    </div>
-                                </div>
-   }
+         <div class="row">
+              <div class="col-md-6">
+                  <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
+              </div>
+              <div class="col-md-6 bottom-padding">
+                  <a class="btn btn-primary order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+             </div>
+         </div>
+      }
 }
