@@ -83,7 +83,7 @@ function transformCart(deleteOld){
         url: '/Order/MergeCarts',
         dataType: 'json',
         contentType: dataType,
-        data: data,
+        data: JSON.stringify(data),
         success: function (data) {
             var json = JSON.parse(JSON.stringify(data));
             if (json.isOK) {

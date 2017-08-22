@@ -32,7 +32,7 @@
     <div id="cart-wrapper">
 
 
-        foreach (CartItem c in Model.Cart)
+        @foreach (CartItem c in Model.Cart)
         {
             <div class="row cart-item bottom-padding">
                 <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
@@ -80,8 +80,8 @@
                 <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
             </div>
 
-}
-
+        }
+        </div>
          <hr class="bottom-padding" />
 
 

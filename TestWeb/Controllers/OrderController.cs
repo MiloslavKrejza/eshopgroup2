@@ -332,6 +332,9 @@ namespace Eshop2.Controllers
             string oldVisitorId = helper.GetOldVisitorId();
 
             var result = _businessService.TransformCart(oldVisitorId, user.Id, model.DeleteOld);
+
+            helper.DeleteOldVisitorId();
+
             return Json(result, settings);
         }
     }
