@@ -341,7 +341,8 @@ namespace Trainee.Business.Business
         {
             try
             {
-                var cartProductId = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).Select(ci => ci.ProductId);
+                //todo check tolist
+                var cartProductId = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).Select(ci => ci.ProductId).ToList();
 
                 order.StateId = 1; //default orderState is the first one
                 var createdOrder = _orderRepository.AddOrder(order);
