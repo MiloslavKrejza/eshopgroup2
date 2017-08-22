@@ -1,4 +1,8 @@
 ﻿// Write your Javascript code.
+$(".remove").click(function () {
+    $(this).parent(".cart-item").delete();
+
+});
 
 $("#buttonX").click(function () {
     //console.log($(this).parent())
