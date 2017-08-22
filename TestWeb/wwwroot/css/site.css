@@ -508,6 +508,14 @@ input:-ms-input-placeholder {
   font-size: 16px;
   font-weight: bold; }
 
+.product-count-decrease {
+  cursor: pointer;
+  padding: 5px; }
+
+.product-count-increase {
+  cursor: pointer;
+  padding: 5px; }
+
 .empty-cart {
   font-size: 16px; }
   .empty-cart h4 {
