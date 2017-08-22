@@ -29,76 +29,75 @@
     }
     else
     {
-    <div id="cart-wrapper">
+        <div id="cart-wrapper">
+            @foreach (CartItem c in Model.Cart)
+            {
+                <div class="row cart-item bottom-padding">
+                    <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
+                        <div class="col-md-2">
+                            <img src="~/images/product_images/@c.Product.PicAddress" alt="bookcover" />
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>@c.Product.Name</strong></p>
 
+                            <input type="hidden" class="product-id-hidden" value="@c.ProductId" />
 
-        foreach (CartItem c in Model.Cart)
-        {
-            <div class="row cart-item bottom-padding">
-                <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
-                    <div class="col-md-2">
-                        <img src="~/images/product_images/@c.Product.PicAddress" alt="bookcover" />
-                    </div>
-                    <div class="col-md-4">
-                        <p><strong>@c.Product.Name</strong></p>
+                            <p>
+                                @{
+                                    var a = c.Product.Book.AuthorsBooks;
+                                    for (int i = 0; i < a.Count; i++)
+                                    {
 
-                        <input type="hidden" class="product-id-hidden" value="@c.ProductId" />
+                                        @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
 
-                        <p>
-                            @{
-                                var a = c.Product.Book.AuthorsBooks;
-                                for (int i = 0; i < a.Count; i++)
-                                {
-
-                                    @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
-
-                                    @if (i != a.Count - 1)
-                                    {@Html.Raw(", ")}
+                                        @if (i != a.Count - 1)
+                                        {@Html.Raw(", ")}
+                                    }
                                 }
-                            }
-                        </p>
+                            </p>
+                        </div>
+                    </a>
+                    <div class="col-md-1">
+                        <p>@c.Product.State.Name</p>
+
                     </div>
-                </a>
-                <div class="col-md-1">
-                    <p>@c.Product.State.Name</p>
+                    <div class="col-md-2 text-center unselectable">
+                        <span class="glyphicon glyphicon-minus product-count-decrease"></span>
+                        <input type="number" class="product-count" value="@c.Amount" min="1" />
+                        <span class="glyphicon glyphicon-plus product-count-increase"></span>
+                        <input type="hidden" class="product-count-original" value="@c.Amount" />
+                        <input type="hidden" class="product-count-prevalidation" value="@c.Amount" />
 
+                    </div>
+
+                    <div class="col-md-2">
+                        <input type="hidden" class="product-price-hidden" value="@c.Product.Price" />
+
+                        @String.Format("{0:c}", c.Product.Price)
+                    </div>
+                    <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
                 </div>
-                <div class="col-md-2 text-center unselectable">
-                    <span class="glyphicon glyphicon-minus product-count-decrease"></span>
-                    <input type="number" class="product-count" value="@c.Amount" min="1" />
-                    <span class="glyphicon glyphicon-plus product-count-increase"></span>
-                    <input type="hidden" class="product-count-original" value="@c.Amount" />
-                    <input type="hidden" class="product-count-prevalidation" value="@c.Amount" />
 
-                </div>
+                                    }
+            </div>
+            }
+            <hr class="bottom-padding" />
 
-                <div class="col-md-2">
-                    <input type="hidden" class="product-price-hidden" value="@c.Product.Price" />
 
-                    @String.Format("{0:c}", c.Product.Price)
-                </div>
-                <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
+            <div class="row bottom-padding text-right total-price">
+                <p>
+                    Celková cena:<span id="total-price-string"> @String.Format("{0:c}", totalPrice)</span>
+                </p>
             </div>
 
-}
 
-         <hr class="bottom-padding" />
-
-
-<div class="row bottom-padding text-right total-price">
-    <p>
-        Celková cena:<span id="total-price-string"> @String.Format("{0:c}", totalPrice)</span>
-    </p>
-</div>
-
-
-         <div class="row">
-              <div class="col-md-6">
-                  <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
-              </div>
-              <div class="col-md-6 bottom-padding">
-                  <a class="btn btn-primary order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
-             </div>
-         </div>
-      }
-}
+            <div class="row">
+                <div class="col-md-6">
+                    <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
+                </div>
+                <div class="col-md-6 bottom-padding">
+                    <a class="btn btn-primary order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+                </div>
+            </div>
+            }
+            

@@ -110,7 +110,10 @@ namespace Trainee.Business.DAL.Repositories
                         decimal price = (decimal)reader["Price"];
                         minPrice = minPrice < price ? minPrice : price;
                         maxPrice = maxPrice > price ? maxPrice : price;
-
+                    }
+                    if (book!=null)
+                    {
+                        books.Add(book.BookId, book);
                     }
                 }
 
@@ -216,7 +219,11 @@ namespace Trainee.Business.DAL.Repositories
                             AverageRating = avgRating
                         };
                     }
-                    resultProducts.Add(currentProduct);
+
+                    if (currentProduct!=null)
+                    {
+                        resultProducts.Add(currentProduct); 
+                    }
                     conn.Close();
                 }
                 

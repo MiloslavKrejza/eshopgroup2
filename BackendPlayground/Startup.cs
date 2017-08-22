@@ -55,6 +55,7 @@ namespace BackendPlayground
             services.AddTransient<UserService, UserService>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
 
+            services.AddTransient<IFilteringRepository, FilteringRepository>(sp => { return new FilteringRepository(Configuration.GetConnectionString("Trainee.Business")); });
             services.AddTransient<IProductRatingRepository, ProductRatingRepository>(sp => { return new ProductRatingRepository(Configuration.GetConnectionString("Trainee.Business")); });
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IBookRepository, BookRepository>();
