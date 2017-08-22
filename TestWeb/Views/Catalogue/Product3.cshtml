@@ -136,7 +136,7 @@
             <select class="form-control" asp-for="SortingType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
         </div>
         <div class="col-md-2">
-            <button type="submit" class="filter-btn btn btn-primary">Filtrovat</button>
+            <button type="submit" class="filter-btn btn btn-prim">Filtrovat</button>
         </div>
         <div class="col-md-2">
             <a class="filter-btn btn btn-default" asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
@@ -194,7 +194,7 @@
 					<p class="italics">@p.Format.Name</p>
                     <p>@String.Format("{0:C}", p.Price)</p>
                 </a>
-                <button class="btn btn-primary">Do košíku</button>
+                <button class="btn btn-prim">Do košíku</button>
 
             </div>
 
