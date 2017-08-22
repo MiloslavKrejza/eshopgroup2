@@ -314,5 +314,30 @@ namespace Eshop2.Controllers
             return Json(result, settings);
 
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> MergeCarts([FromBody] MergeCartModel model)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            var user = await _userManager.GetUserAsync(User);
+            
+            //check this
+            if (user == null)
+                return RedirectToAction("Error", "Home");
+
+            //todo just get it from cookies and delete it
+
+            CookieHelper helper = new CookieHelper(_accessor);
+            string oldVisitorId = helper.GetOldVisitorId();
+
+            var result = _businessService.TransformCart(oldVisitorId, user.Id, model.DeleteOld);
+
+            helper.DeleteOldVisitorId();
+
+            return Json(result, settings);
+        }
     }
 }

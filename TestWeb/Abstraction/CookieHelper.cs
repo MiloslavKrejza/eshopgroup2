@@ -49,6 +49,11 @@ namespace Eshop2.Abstraction
             _accessor.HttpContext.Response.Cookies.Delete("VisitorId");
         }
 
+        public string GetOldVisitorId()
+        {
+            return _accessor.HttpContext.Request.Cookies["OldVisitorId"];
+        }
+
         public void SetOldVisitorId(string oldVisitorId)
         {
             _accessor.HttpContext.Response.Cookies.Append("OldVisitorId", oldVisitorId);

@@ -35,6 +35,64 @@ $(".paging-span").click(function () {
 function changeUserBack() {
     document.getElementById("login-link").innerHTML = "Přihlásit";
 }
+
+
+$(function () {
+    $("#cart-dialog").dialog({
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        autoOpen: true,
+        buttons:
+        [
+            {
+                text: "Ponechat",
+                click: function () {
+                    transformCart(false);
+                    $("#cart-dialog").dialog("close");
+                }
+            },
+            {
+                text: "Smazat",
+                click: function () {
+                    transformCart(true);
+                }
+            }
+        ]
+
+
+    });
+})
+
+
+function transformCart(deleteOld){
+
+    var dataType = 'application/json; charset=utf-8';
+    var data = {
+        DeleteOld: deleteOld
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/Order/MergeCarts',
+        dataType: 'json',
+        contentType: dataType,
+        data: JSON.stringify(data),
+        success: function (data) {
+            var json = JSON.parse(JSON.stringify(data));
+            if (json.isOK) {
+                console.log('Yay');
+                $("#cart-dialog").dialog("close");
+                location.reload();
+            }
+        },
+        error: function () {
+            console.log("What the flag?");
+        }
+    });
+}
+
 ﻿$(".btn-addtocart").on('click', _.debounce(function () {
 
     var ProductCount = $(this).parent().children("input[name='product-count']").val();
@@ -175,34 +233,4 @@ $(".product-count").on('input change', function () {
     }
 
 });
-// Login Toogle
-function toggleLogin() {
-    var x = document.getElementById('login');
-    if (x.style.display === 'none') {
-        x.style.display = 'block';
-    } else {
-        x.style.display = 'none';
-    }
-}
 
-// Hide and show effect for edit page
-
-function showStuff(id, text, btn) {
-    //
-    document.getElementById(id).style.display = 'block';
-    // hide the login forms
-    document.getElementById(text).style.display = 'none';
-    // hide the button for login
-    btn.style.display = 'none';
-}
-
-// Effect for text on layout
-
-
-function changeUser() {
-    document.getElementById("login-link").innerHTML = "Účet";
-}
-
-function changeUserBack() {
-    document.getElementById("login-link").innerHTML = "Přihlásit";
-}

@@ -436,13 +436,13 @@ namespace Trainee.Business.Business
                 if (delete)
                 {
 
-                    var oldCartItems = _cartItemRepository.GetCartItems().Where(ci => ci.UserId == userId);
+                    var oldCartItems = _cartItemRepository.GetCartItems().Where(ci => ci.UserId == userId).ToList();
                     foreach (var item in oldCartItems)
                     {
                         _cartItemRepository.DeleteCartItem(item.VisitorId, item.ProductId);
                     }
                 }
-                var currentCart = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId);
+                var currentCart = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).ToList();
                 foreach (var item in currentCart)
                 {
                     CartItem existingItem = null;
