@@ -72,7 +72,17 @@ namespace Eshop2.Controllers
                 if (!result.isOK)
                     throw new Exception("Could not find the cart");
 
-                var cart = result.isEmpty ? new List<CartItem>() : result.data;
+                List<CartItem> cart;
+                if(result.isEmpty)
+                {
+                    cart = new List<CartItem>();
+                    ViewData["emptyCart"] = true;
+                }
+                else
+                {
+                    cart = result.data;
+                }
+               
 
 
                 CartViewModel model = new CartViewModel() { Cart = cart };
@@ -118,7 +128,7 @@ namespace Eshop2.Controllers
 
                 if (cart.Count == 0)
                 {
-                    TempData["emptyCart"] = true;
+                    TempData["emptyOrder"] = true;
                     return RedirectToAction("Cart");
                 }
 
@@ -192,7 +202,7 @@ namespace Eshop2.Controllers
 
                     if (items.Count == 0)
                     {
-                        TempData["emptyCart"] = true;
+                        TempData["emptyOrder"] = true;
                         return RedirectToAction("Cart");
                     }
 
