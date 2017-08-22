@@ -6,28 +6,27 @@
     ViewData["Title"] = "Objednávka";
 }
 
-@*@{
-        decimal totalPrice = 0;
-        foreach (CartItem c in Model.Cart)
-        {
-
-            totalPrice += c.Product.Price * c.Amount;
-
-        }
-    }
-*@
 
 
 <h2>@ViewData["Title"]</h2>
 
 <h3 class="bottom-padding">Vybrané knížky</h3>
 
-@*  foreach (CartItem c in Model.Cart)
-           {
-           <div class="row cart-item bottom-padding">
-            <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
+    <div class="row cart-item">
+        <div class="col-md-4"><strong>Název knihy</strong></div>
+        <div class="col-md-4"><strong>Autor</strong></div>
+        <div class="col-md-1"><strong>Počet</strong></div>
+        <div class="col-md-3"><strong>Celková cena</strong></div>
+    </div>
+
+
+    @{foreach (CartItem c in Model.Items)
+        {
+            <div class="row cart-item">
                 <div class="col-md-4">
-                    <p><strong>@c.Product.Name</strong></p>
+                    <p>@c.Product.Name</p>
+                </div>
+                <div class="col-md-4">
                     <p>
                         @{
                             var a = c.Product.Book.AuthorsBooks;
@@ -42,126 +41,139 @@
                         }
                     </p>
                 </div>
-            </a>
-            <div class="col-md-2">
-                <p>@c.Product.State.Name</p>
+                <div class="col-md-1">
+                    @c.Amount
+                </div>
+                <div class="col-md-3">
+                    @{
+                        decimal booksPrice = 0;
+                        {
+
+                            booksPrice += c.Product.Price * c.Amount;
+
+                        }
+                    }
+
+                    @String.Format("{0:c}", booksPrice)
+                </div>
             </div>
-            <div class="col-md-1">
-                <input type="number" class="product-count" value="@c.Amount" min="1" />
-            </div>
-            <div class="col-md-2">
-                @String.Format("{0:c}", c.Product.Price)
-            </div>
-        </div>
+                            }
     }
-    }*@
 
 <h3>Dodací údaje</h3>
-<form asp-action="Order" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-    <div class="order">
-        <div class="row bottom-padding">
+<div class="form-group">
+    <form asp-action="Order" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <div class="order">
+            <div class="row bottom-padding">
+                <div asp-validation-summary="All" class="text-danger"></div>
 
-            <div class="row form-row">
-                <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="Name"></label>
-                    <input class="form-control" asp-for="Name" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                <div class="row form-row">
+                    <div class="col-md-6">
+                        <label class="text-indent control-label" asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-indent control-label" asp-for="Surname"></label>
+                        <input class="form-control" asp-for="Surname" />
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="Surname"></label>
-                    <input class="form-control" asp-for="Surname" />
-                    <span asp-validation-for="Surname" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row form-row">
-                <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="Email"></label>
-                    <input class="form-control" asp-for="Email" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="Phone"></label>
-                    <input class="form-control" asp-for="Phone" />
-                    <span asp-validation-for="Phone" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="row form-row">
-                <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="Street"></label>
-                    <input class="form-control" asp-for="Street" />
-                    <span asp-validation-for="Street" class="text-danger"></span>
-                </div>
-                <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="PostalCode"></label>
-                    <input class="form-control" asp-for="PostalCode" />
-                    <span asp-validation-for="PostalCode" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row form-row">
-                <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="City"></label>
-                    <input class="form-control" asp-for="City" />
-                    <span asp-validation-for="City" class="text-danger"></span>
+                <div class="row form-row">
+                    <div class="col-md-6">
+                        <label class="text-indent control-label" asp-for="Email"></label>
+                        <input class="form-control" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-indent control-label" asp-for="Phone"></label>
+                        <input class="form-control" asp-for="Phone" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
                 </div>
 
-                <div class="col-md-6">
-                    <label class="text-indent control-label" asp-for="CountryId"></label>
-                    <select class="form-control" asp-for="CountryId">
-                        <option selected disabled>Zvolte zemi...</option>
-                        @{
+                <div class="row form-row">
+                    <div class="col-md-6">
+                        <label class="text-indent control-label" asp-for="Street"></label>
+                        <input class="form-control" asp-for="Street" />
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-indent control-label" asp-for="PostalCode"></label>
+                        <input class="form-control" asp-for="PostalCode" />
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-md-6">
+                        <label class="text-indent control-label" asp-for="City"></label>
+                        <input class="form-control" asp-for="City" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-indent control-label" asp-for="CountryId"></label>
+                        <select class="form-control" asp-for="CountryId">
+                            <option selected disabled>Zvolte zemi...</option>
+                            @{
 
 
-                            foreach (Country c in Model.Countries)
-                            {
-
+                                foreach (Country c in Model.Countries)
                                 {
-                                    <option value="@c.Id">@c.Name</option>
+
+                                    {
+                                        <option value="@c.Id">@c.Name</option>
+                                    }
                                 }
                             }
-                        }
 
-                    </select>
+                        </select>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
 
-        <div class="row bottom-padding">
-            <div class="col-md-6">
-                <strong class="text-indent">Doprava</strong><i class="red-star">*</i><br />
+            <div class="row bottom-padding">
+                <div class="col-md-6">
+                    <strong class="text-indent">Doprava</strong><br />
 
-                @{
-                    foreach (Shipping s in Model.Shipping)
-                    {
-                        <div class="radio order-radio">
-                            <input type="radio" value="@s.Id" asp-for="ShippingId" /> @s.Name @Html.Raw(" | ") @String.Format("{0:c}", s.Price)<br />
-                        </div>
+                    @{
+                        foreach (Shipping s in Model.Shipping)
+                        {
+                            <div class="radio order-radio">
+                                <input type="radio" value="@s.Id" asp-for="ShippingId" /> @s.Name @Html.Raw(" | ") @String.Format("{0:c}", s.Price)<br />
+                            </div>
+                        }
                     }
-                }
-            </div>
-            <div class="col-md-6">
-                <strong class="text-indent">Platba</strong><i class="red-star">*</i><br />
+                </div>
+                <div class="col-md-6">
+                    <strong class="text-indent">Platba</strong><br />
 
-                @{
-                    foreach (Payment p in Model.Payment)
-                    {
-                        <div class="radio order-radio">
-                            <input type="radio" value="@p.Id" asp-for="PaymentId" /> @p.Name <br />
-                        </div>
+                    @{
+                        foreach (Payment p in Model.Payment)
+                        {
+                            <div class="radio order-radio">
+                                <input type="radio" value="@p.Id" asp-for="PaymentId" /> @p.Name <br />
+                            </div>
+                        }
                     }
-                }
 
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <a class="btn btn-default" asp-controller="Order" asp-action="Cart"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</a>
+
+        <div class="row">
+            <div class="col-md-6">
+                <a class="btn btn-default" asp-controller="Order" asp-action="Cart"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</a>
+            </div>
+            <div class="col-md-6 text-right">
+                <button class="btn btn-primary" type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>
+            </div>
         </div>
-        <div class="col-md-6 text-right">
-            <button class="btn btn-primary" type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
