@@ -505,6 +505,9 @@ input:-ms-input-placeholder {
   width: 80%;
   margin: 0 auto; }
 
+.order-radio {
+  padding-left: 30px; }
+
 /* Order login */
 .orderlogin {
   margin: 0 20px; }
@@ -568,4 +571,3 @@ input:-ms-input-placeholder {
 @-moz-document url-prefix() {
   .full-stars {
     color: #ECBE24; } }
-
