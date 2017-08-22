@@ -9,8 +9,10 @@
 @inject IHttpContextAccessor ContextAccessor
 
 @{
-
+    //return url
     ViewData["returnUrl"] = Context.Request.Path;
+
+    //categories
     Category currentCategory;
     if (Model is ProductsViewModel)
     {
@@ -26,15 +28,16 @@
     int parentId = currentCategory.Parent == null ? 1 : currentCategory.ParentId.Value;
 
     string parentName = currentCategory.Parent == null ? "Všechny knížky" : currentCategory.Parent.Name;
+
+    //transforming anonymous cart
+    string oldVisitorId = ContextAccessor.HttpContext.Request.Cookies["OldVisitorId"];
+
 }
 
 
 
 
-@if(ContextAccessor.HttpContext.Request.Cookies["OldVisitorId"] != null)
-{
-    
-}
+
 
 
 <!DOCTYPE html>
@@ -211,9 +214,12 @@
             });
         </script>
     -->
-   @* <button id="opener">open the dialog</button>
-    <div id="dialog" title="Dialog Title">I'm a dialog</div>
-    <script>
+  
+    @if (oldVisitorId != null)
+    {
+        <div id="cart-dialog" title="Chcete si ponechat košík?">Chcete si ponechat následující věci v košíku?</div>
+    }
+    @*<script>
         $("#dialog").dialog({ autoOpen: true });
         $("#opener").click(function () {
             $("#dialog").dialog("open");
