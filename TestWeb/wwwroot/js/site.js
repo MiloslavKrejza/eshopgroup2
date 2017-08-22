@@ -65,11 +65,6 @@ $(function () {
     });
 })
 
-$("#cart-dialog").dialog({
-    beforeClose: function (event, ui) {
-
-    }
-});
 
 function transformCart(deleteOld){
 
@@ -89,9 +84,11 @@ function transformCart(deleteOld){
             if (json.isOK) {
                 console.log('Yay');
                 $("#cart-dialog").dialog("close");
+                location.reload();
             }
         },
         error: function () {
+            console.log("What the flag?");
         }
     });
 }
