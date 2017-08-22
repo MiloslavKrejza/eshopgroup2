@@ -326,19 +326,7 @@ namespace Trainee.Business.Business
             }
         }
 
-          public AlzaAdminDTO<Order> AddOrder(Order order, string visitorId)
-          {
-              try
-              {
-                  var createdOrder = _orderRepository.AddOrder(order);
-
-                  return AlzaAdminDTO<Order>.Data(createdOrder);
-              }
-              catch (Exception e)
-              {
-                  return AlzaAdminDTO<Order>.Error(e.Message + Environment.NewLine + e.StackTrace);
-              }
-          }
+          
 
         public AlzaAdminDTO<List<CartItem>> DeleteFromCart(string visitorId, int productId)
         {
