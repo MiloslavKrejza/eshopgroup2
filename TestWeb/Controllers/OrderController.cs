@@ -212,7 +212,7 @@ namespace Eshop2.Controllers
                         _businessService.AddOrderItem(orderItem);
                     }
 
-                    TempData["orderId"] = orderId;
+                    TempData["OrderId"] = orderId;
                     return RedirectToAction("OKPage");
                 }
                 else
@@ -236,6 +236,9 @@ namespace Eshop2.Controllers
         // GET: /Order/OKPage/
         public IActionResult OKPage()
         {
+            ViewData["OrderId"] = TempData["OrderId"];
+            if (ViewData["OrderId"] == null)
+                return RedirectToAction("Error", "Home");
 
             return View();
         }
