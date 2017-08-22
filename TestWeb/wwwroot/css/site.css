@@ -404,6 +404,9 @@ input:-ms-input-placeholder {
   margin-bottom: 10px; }
 
 /* Products catalogue */
+.paging-span:hover {
+  cursor: pointer; }
+
 .slider_tooltip {
   position: absolute;
   top: -8px;
@@ -489,6 +492,11 @@ input:-ms-input-placeholder {
   position: absolute;
   right: 50px; }
 
+@media screen and (max-width: 1200px) {
+  .order-button {
+    margin-top: 10px;
+    clear: right; } }
+
 .triangle-left {
   margin-right: 5px; }
 
@@ -504,6 +512,9 @@ input:-ms-input-placeholder {
 .order {
   width: 80%;
   margin: 0 auto; }
+
+.order-radio {
+  padding-left: 30px; }
 
 /* Order login */
 .orderlogin {

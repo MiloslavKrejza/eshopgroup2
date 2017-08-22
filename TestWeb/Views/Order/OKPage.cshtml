@@ -1,10 +1,11 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Eshop2.Models.OrderViewModels
+@using Trainee.Core.DAL.Entities
+@using Trainee.Business.DAL.Entities
+@model OrderViewModel
 @{
     ViewData["Title"] = "Objednávka úspěšná";
 }
 <h2>Objednávka odeslána</h2>
 
 <h3 class="text-indent">Děkujeme!</h3>
-<p class="text-indent">Objednávku s číslem #123456 jsme v pořádku přijali. Můžete se začít těšit na nové knížky.</p>
+<p class="text-indent">Objednávku s číslem @ViewData["OrderId"] jsme v pořádku přijali. Můžete se začít těšit na nové knížky.</p>

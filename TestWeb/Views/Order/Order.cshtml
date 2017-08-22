@@ -7,24 +7,24 @@
 }
 
 @*@{
-    decimal totalPrice = 0;
-    foreach (CartItem c in Model.Cart)
-    {
+        decimal totalPrice = 0;
+        foreach (CartItem c in Model.Cart)
+        {
 
-        totalPrice += c.Product.Price * c.Amount;
+            totalPrice += c.Product.Price * c.Amount;
 
+        }
     }
-}
 *@
 
 
 <h2>@ViewData["Title"]</h2>
 
-<h3>Vybrané knížky</h3>
-@*@{
-    foreach (CartItem c in Model.Cart)
-    {
-        <div class="row cart-item bottom-padding">
+<h3 class="bottom-padding">Vybrané knížky</h3>
+
+@*  foreach (CartItem c in Model.Cart)
+           {
+           <div class="row cart-item bottom-padding">
             <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
                 <div class="col-md-4">
                     <p><strong>@c.Product.Name</strong></p>
@@ -53,13 +53,11 @@
                 @String.Format("{0:c}", c.Product.Price)
             </div>
         </div>
-      }
-}*@
-
-<p>Jméno: @Html.DisplayFor(model => model.Name)</p>
+    }
+    }*@
 
 <h3>Dodací údaje</h3>
-<form asp-action="Order" asp-controller="Order">
+<form asp-action="Order" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
     <div class="order">
         <div class="row bottom-padding">
 
@@ -78,7 +76,7 @@
             <div class="row form-row">
                 <div class="col-md-6">
                     <label class="text-indent control-label" asp-for="Email"></label>
-                    <input class="form-control" asp-for="Email"  />
+                    <input class="form-control" asp-for="Email" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
@@ -106,56 +104,61 @@
                     <input class="form-control" asp-for="City" />
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
-                
-    <div class="col-md-6">
-        <label class="text-indent control-label" asp-for="CountryId"></label>
-        <select class="form-control" asp-for="CountryId">
-            <option selected disabled>Zvolte zemi...</option>
-            @{
+
+                <div class="col-md-6">
+                    <label class="text-indent control-label" asp-for="CountryId"></label>
+                    <select class="form-control" asp-for="CountryId">
+                        <option selected disabled>Zvolte zemi...</option>
+                        @{
 
 
-                foreach (Country c in Model.Countries)
-                {
+                            foreach (Country c in Model.Countries)
+                            {
 
-                    {
-                        <option value="@c.Id">@c.Name</option>
-                    }
-                }
-            }
+                                {
+                                    <option value="@c.Id">@c.Name</option>
+                                }
+                            }
+                        }
 
-        </select>
-    </div>
-               
+                    </select>
+                </div>
+
             </div>
         </div>
 
         <div class="row bottom-padding">
             <div class="col-md-6">
-                <strong class="text-indent">Doprava</strong><br />
+                <strong class="text-indent">Doprava</strong><i class="red-star">*</i><br />
 
-                @{ 
+                @{
                     foreach (Shipping s in Model.Shipping)
                     {
-                        <input type="radio" value="@s.Id" /> @s.Name <br />
+                        <div class="radio order-radio">
+                            <input type="radio" value="@s.Id" asp-for="ShippingId" /> @s.Name @Html.Raw(" | ") @String.Format("{0:c}", s.Price)<br />
+                        </div>
                     }
                 }
             </div>
             <div class="col-md-6">
-                <strong class="text-indent">Platba</strong><br />
+                <strong class="text-indent">Platba</strong><i class="red-star">*</i><br />
 
                 @{
                     foreach (Payment p in Model.Payment)
                     {
-                        <input type="radio" value="@p.Id" /> @p.Name <br />
+                        <div class="radio order-radio">
+                            <input type="radio" value="@p.Id" asp-for="PaymentId" /> @p.Name <br />
+                        </div>
                     }
                 }
+
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
-            <a class="btn btn-default" asp-area="" asp-controller="Order" asp-action="Cart"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</a>
+            <a class="btn btn-default" asp-controller="Order" asp-action="Cart"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</a>
         </div>
         <div class="col-md-6 text-right">
             <button class="btn btn-primary" type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>

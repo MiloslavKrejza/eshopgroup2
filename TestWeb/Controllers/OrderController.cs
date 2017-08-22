@@ -14,6 +14,7 @@ using Trainee.Business.DAL.Entities;
 using Trainee.Core.Business;
 using Alza.Core.Module.Http;
 using Newtonsoft.Json;
+
 using Trainee.Core.DAL.Entities;
 using Trainee.User.DAL.Entities;
 using Trainee.User.Business;
@@ -33,13 +34,14 @@ namespace Eshop2.Controllers
         private readonly UserService _userService;
 
         public OrderController(BusinessService businessService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IHttpContextAccessor accessor,
-            CountryService countryService)
+            CountryService countryService, UserService userService)
         {
             _businessService = businessService;
             _signInManager = signInManager;
             _userManager = userManager;
             _accessor = accessor;
             _countryService = countryService;
+            _userService = userService;
         }
 
         // GET: /Order/Cart/
@@ -63,7 +65,7 @@ namespace Eshop2.Controllers
                 {
                     string cookieId = cookieHelper.GetVisitorId();
                     result = _businessService.GetCart(cookieId);
-
+                    
                 }
 
 
@@ -78,13 +80,13 @@ namespace Eshop2.Controllers
                 return View(model);
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return RedirectToAction("Error", "Home");
             }
 
         }
-
+        
 
         // GET: /Order/Order/
         [HttpGet]
@@ -126,7 +128,7 @@ namespace Eshop2.Controllers
 
                 if (model.Items.Count > 0)
                 {
-                    if (userProfile != null)
+                    if(userProfile != null)
                     {
                         model.CountryId = userProfile.CountryId;
                         model.Email = user.Email;
@@ -177,29 +179,40 @@ namespace Eshop2.Controllers
                         PhoneNumber = model.Phone,
                         CountryId = model.CountryId
                     };
+
+
                     if (_signInManager.IsSignedIn(User))
                     {
                         var result = await _userManager.GetUserAsync(User);
                         order.UserId = result.Id;
                     }
 
+
+                    var items = _businessService.GetCart(cookieId).data;
+
+                    if (items.Count == 0)
+                    {
+                        TempData["emptyCart"] = true;
+                        return RedirectToAction("Cart");
+                    }
+
                     //ToDo delete the correct cart
-                    //var addedOrder = _businessService.AddOrder(order, cookieId).data;
-                    //int orderId = addedOrder.Id;
+                    var addedOrder = _businessService.AddOrder(order, cookieId).data;
+                    int orderId = addedOrder.Id;
+                    
+                    foreach (var item in items)
+                    {
+                        OrderItem orderItem = new OrderItem()
+                        {
+                            OrderId = orderId,
+                            Amount = item.Amount,
+                            Price = item.Product.Price,
+                            ProductId = item.ProductId
+                        };
+                        _businessService.AddOrderItem(orderItem);
+                    }
 
-                    //foreach (var item in model.Items)
-                    //{
-                    //    OrderItem orderItem = new OrderItem()
-                    //    {
-                    //        OrderId = orderId,
-                    //        Amount = item.Amount,
-                    //        Price = item.Product.Price,
-                    //        ProductId = item.ProductId
-                    //    };
-                    //    _businessService.AddOrderItem(orderItem);
-                    //}
-                    throw new NotImplementedException();
-
+                    TempData["OrderId"] = orderId;
                     return RedirectToAction("OKPage");
                 }
                 else
@@ -208,7 +221,7 @@ namespace Eshop2.Controllers
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -223,6 +236,10 @@ namespace Eshop2.Controllers
         // GET: /Order/OKPage/
         public IActionResult OKPage()
         {
+            ViewData["OrderId"] = TempData["OrderId"];
+            if (ViewData["OrderId"] == null)
+                return RedirectToAction("Error", "Home");
+
             return View();
         }
 
@@ -232,8 +249,7 @@ namespace Eshop2.Controllers
             return View();
         }
         [HttpPost]
-
-        public async Task<IActionResult> AddToCart([FromBody]CartItemModel model)
+        public async Task<IActionResult> AddToCart([FromBody]AddToCartModel model)
         {
             var settings = new JsonSerializerSettings();
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -249,42 +265,7 @@ namespace Eshop2.Controllers
 
             var result = _businessService.AddToCart(cookieId, uid, model.ProductId, model.Amount);
 
-            return Json(result, settings);
-
-        }
-        [HttpPost]
-        public async Task<IActionResult> RemoveFromCart([FromBody]RemoveFromCartModel item)
-        {
-            var settings = new JsonSerializerSettings();
-            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
-            CookieHelper helper = new CookieHelper(_accessor);
-            string cookieId = helper.GetVisitorId();
-            int? uid = null;
-            if (_signInManager.IsSignedIn(User))
-            {
-                var user = await _userManager.GetUserAsync(User);
-                uid = user.Id;
-            }
-            var result = _businessService.RemoveCartItem(cookieId, item.Id);
-            return Json(result, settings);
-        }
-        [HttpPost]
-        public async Task<IActionResult> UpdateCart([FromBody]CartItemModel item)
-        {
-            var settings = new JsonSerializerSettings();
-            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
-            CookieHelper helper = new CookieHelper(_accessor);
-            string cookieId = helper.GetVisitorId();
-            int? uid = null;
-            if (_signInManager.IsSignedIn(User))
-            {
-                var user = await _userManager.GetUserAsync(User);
-                uid = user.Id;
-            }
-            var result = _businessService.UpdateCartItem(cookieId, item.ProductId, item.Amount);
-            return Json(result, settings);
+            return Json(result,settings);
 
         }
     }
