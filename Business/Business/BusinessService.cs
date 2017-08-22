@@ -326,8 +326,6 @@ namespace Trainee.Business.Business
             }
         }
 
-          
-
         public AlzaAdminDTO<List<CartItem>> DeleteFromCart(string visitorId, int productId)
         {
             try
