@@ -177,7 +177,7 @@ namespace Eshop2.Controllers
 
 
 
-                    var dto = _businessService.GetPage(parameters);
+                    var dto = _businessService.GetPageADO(parameters);
                     if (!dto.isOK)
                     {
                         return RedirectToAction("Error", "Home");
