@@ -534,6 +534,10 @@ input:-ms-input-placeholder {
     margin-bottom: 10px;
 }
 
+.btn-addtocart:disabled{
+    cursor: default
+}
+
 .dialog-cart {
 
 }

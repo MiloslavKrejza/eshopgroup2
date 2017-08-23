@@ -198,7 +198,14 @@
 				</a>
 				<input type="hidden" value="@p.Id" name="product-id" />
 				<input type="hidden" name="product-count" class="hidden" value="1" />
-				<button class="btn-addtocart btn btn-primary">Do košíku</button>
+                @if (p.State.Name == "Dostupný")
+                {
+                    <button class="btn-addtocart btn btn-primary">Do košíku</button>
+                }
+                else
+                {
+                    <button class="btn-addtocart btn btn-primary" disabled>Do košíku</button>
+                }
 
 			</div>
 
