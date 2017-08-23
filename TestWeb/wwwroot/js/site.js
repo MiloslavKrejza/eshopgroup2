@@ -112,33 +112,33 @@ function transformCart(deleteOld){
             var json = JSON.parse(JSON.stringify(data));
             if (json.isOK) {
                 button.addClass('btn-success');
-                button.removeClass('btn-primary');
+                button.removeClass('btn-prim');
                 button.text('Přidáno');
                 setTimeout(function () {
                     button.removeClass("btn-success");
-                    button.addClass("btn-primary");
+                    button.addClass("btn-prim");
                     button.text("Do košíku");
                 }, 1500)
 
 
             } else {
                 button.addClass("btn-danger");
-                button.removeClass("btn-primary");
+                button.removeClass("btn-prim");
                 button.text("Chyba");
                 setTimeout(function () {
                     button.removeClass("btn-danger");
-                    button.addClass("btn-primary");
+                    button.addClass("btn-prim");
                     button.text("Do košíku");
                 }, 1500)
             }
         },
         error: function () {
             button.addClass("btn-danger");
-            button.removeClass("btn-primary");
+            button.removeClass("btn-prim");
             button.text("Chyba");
             setTimeout(function () {
                 button.removeClass("btn-danger");
-                button.addClass("btn-primary");
+                button.addClass("btn-prim");
                 button.text("Do košíku");
             }, 1500)
         }

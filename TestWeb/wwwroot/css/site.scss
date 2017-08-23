@@ -68,6 +68,11 @@ h2 {
     padding-bottom: 20px;
 }
 
+a {
+    color: $primary-color;
+}
+
+
 body .body-line {
     margin-top: 25px;
 }
@@ -81,6 +86,8 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+
 
 .col-centered {
     float: none;
@@ -832,4 +839,11 @@ input:-ms-input-placeholder {
     .full-stars {
         color: #ECBE24;
     }
+}
+
+/* CONTACTS */
+
+.map {
+    border: solid 1px $border-color;
+    height: 333px;
 }
