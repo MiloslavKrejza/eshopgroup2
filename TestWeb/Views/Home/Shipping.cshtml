@@ -1,4 +1,8 @@
-﻿@{ 
+﻿@using Eshop2.Models.HomeViewModels;
+@using Trainee.Business.DAL.Entities;
+
+@model ShippingViewModel
+@{ 
     ViewData["Title"] = "Doprava a platba";
 }
 
@@ -17,7 +21,7 @@ Podle vaší polohy v galaxii a finančních možností můžete zvolit následu
 <h3>Platba</h3>
 
 <ul>
-    @foreach (Payment p in Model.Pament)
+    @foreach (Payment p in Model.Payment)
     {
         <li>@p.Name</li>
     }
