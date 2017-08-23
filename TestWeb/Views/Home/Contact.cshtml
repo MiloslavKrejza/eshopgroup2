@@ -1,72 +1,27 @@
 ﻿@{
-    ViewData["Title"] = "Registrace";
+    ViewData["Title"] = "Kontakty";
 }
+
+
 <h2 class="title-register">@ViewData["Title"]</h2>
 
 <div class="row">
+    <div class="col-md-6">
+        <p><strong>Fantastic Books s.r.o.</strong></p>
+        <p>Guttenbergova 272/5<br />
+        460 02 Liberec<br />
+        +420 531 648 523<br />
+            <a href="mailto:ahoj@fantasticbooks.cz">ahoj@fantasticbooks.cz</a></p>
 
-    <div class="col-lg-8 form-group col-centered">
-        <form>
-            <div class="row form-row">
-                <div class="col-lg-6">
-                    <label class="text-indent" for="name">Jméno</label>
-                    <input class="form-control" type="text" id="name" />
-                </div>
-                <div class="col-lg-6">
-                    <label class="text-indent" for="sur">Příjmení</label>
-                    <input class="form-control" type="text" id="sur" />
-                </div>
-            </div>
-            <div class="row form-row">
-                <div class="col-lg-12 col-centered">
-                    <label class="text-indent" for="mail">E-mail</label>
-                    <input class="form-control" type="email" id="mail" />
-                </div>
-            </div>
-            <div class="row form-row">
-                <div class="col-lg-6">
-                    <label class="text-indent" for="pass">Heslo</label>
-                    <input class="form-control" type="password" id="pass" />
-                </div>
-                <div class="col-lg-6">
-                    <label class="text-indent" for="passAgain">Heslo znovu</label>
-                    <input class="form-control" type="password" id="passAgain" />
-                </div>
-            </div>
-            <div class="row form-row">
-                <div class="col-lg-6">
-                    <label class="text-indent" for="street">Ulice</label>
-                    <input class="form-control" type="text" id="street" />
-                </div>
-                <div class="col-lg-6">
-                    <label class="text-indent" for="zip">PSČ</label>
-                    <input class="form-control" type="number" id="zip" />
-                </div>
-            </div>
-            <div class="row form-row">
-                <div class="col-lg-6">
-                    <label class="text-indent" for="city">Město</label>
-                    <input class="form-control" type="text" id="city" />
-                </div>
-                <div class="col-lg-6">
-                    <label class="text-indent" for="state">Stát</label>
-                     <!-- In case of remaking layout dont change this cycle-->
-                    <select class="form-control" id="state">
-                        @{ string[] city = new string[] { "Česká republika", "Deutschland", "England", "France", "Slovenská republika" };
-                            for (int i = 0; i < city.Length; i++)
-                            {
-                                <option>@city[i]</option>
-                            }
-                        }
-
-                    </select>
-                </div>
-            </div>
-            <div class="row text-center">
-                <button id="register-button" class="btn btn-prim" type="submit">Registrovat se</button>
-            </div>
-        </form>
+        <p>IČ: 285 64 952<br />
+        DIČ: CZ54882056<br />
+        Zapsáno u Městského soudu v Liberci, vložka B 587/13.
+        </p>
     </div>
 
+    <div class="col-md-6">
+        <div class="map">
+            <iframe src="https://api.mapy.cz/frame?params=%7B%22x%22%3A15.06083208684987%2C%22y%22%3A50.76873265433182%2C%22base%22%3A%2227%22%2C%22layers%22%3A%5B%5D%2C%22zoom%22%3A16%2C%22url%22%3A%22https%3A%2F%2Fmapy.cz%2Fs%2F1YRxk%22%2C%22mark%22%3A%7B%22x%22%3A%2215.06202298765247%22%2C%22y%22%3A%2250.76870720879364%22%2C%22title%22%3A%22Gutenbergova%20272%2F5%2C%20Liberec%22%7D%2C%22overview%22%3Afalse%7D&amp;width=500&amp;height=333&amp;lang=cs" width="100%" height="100%" style="border:none" frameBorder="0"></iframe>
+        </div>
+    </div>
 </div>
-

@@ -30,6 +30,16 @@ namespace TestWeb.Controllers
             return View();
         }
 
+        public IActionResult Conditions()
+        {
+            return View();
+        }
+
+        public IActionResult Shipping()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();

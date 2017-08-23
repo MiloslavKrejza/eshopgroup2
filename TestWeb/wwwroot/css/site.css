@@ -52,6 +52,9 @@ body {
 h2 {
   padding-bottom: 20px; }
 
+a {
+  color: #2F3293; }
+
 body .body-line {
   margin-top: 25px; }
 
@@ -631,3 +634,9 @@ input:-ms-input-placeholder {
 @-moz-document url-prefix() {
   .full-stars {
     color: #ECBE24; } }
+
+/* CONTACTS */
+.map {
+  border: solid 1px #dddddd;
+  height: 333px; }
+
