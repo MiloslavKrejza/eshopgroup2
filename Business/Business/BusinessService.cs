@@ -390,6 +390,19 @@ namespace Trainee.Business.Business
             }
         }
 
+        public AlzaAdminDTO<List<Order>> GetUserOrders(int userId)
+        {
+            try
+            {
+                var orders = _orderRepository.GetOrders().Where(o => o.UserId == userId).ToList();
+                return AlzaAdminDTO<List<Order>>.Data(orders);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<List<Order>>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
         public AlzaAdminDTO<OrderItem> AddOrderItem(OrderItem item)
         {
 

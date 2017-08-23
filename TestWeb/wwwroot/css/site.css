@@ -447,6 +447,9 @@ input:-ms-input-placeholder {
 .btn-addtocart {
   margin-bottom: 10px; }
 
+.btn-addtocart:disabled {
+  cursor: default; }
+
 .review-btn {
   margin-bottom: 10px; }
 

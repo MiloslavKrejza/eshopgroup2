@@ -187,7 +187,8 @@ namespace Eshop2.Controllers
                         ShippingId = model.ShippingId,
                         PostalCode = model.PostalCode,
                         PhoneNumber = model.Phone,
-                        CountryId = model.CountryId
+                        CountryId = model.CountryId,
+                        Date = DateTime.Now
                     };
 
 

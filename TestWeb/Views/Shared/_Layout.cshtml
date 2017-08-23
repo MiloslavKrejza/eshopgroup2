@@ -1,12 +1,14 @@
 ﻿@using Eshop2.Models.CatalogueViewModels;
 @using Trainee.Catalogue.Business;
 @using Trainee.Catalogue.DAL.Entities;
+@using Trainee.Business.Business;
 @inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 
 @inject CatalogueService CatalogueService;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IHttpContextAccessor ContextAccessor
+@inject BusinessService BusinessService
 
 @{
     //return url
@@ -31,6 +33,10 @@
 
     //transforming anonymous cart
     string oldVisitorId = ContextAccessor.HttpContext.Request.Cookies["OldVisitorId"];
+
+    //get user cart
+    var user = await UserManager.GetUserAsync(User);
+    var cart = user != null ? BusinessService.GetCart(user.Id).data : null;
 
 }
 
@@ -214,17 +220,28 @@
             });
         </script>
     -->
-  
+
+
     @if (oldVisitorId != null)
     {
-        <div id="cart-dialog" title="Chcete si ponechat košík?">Chcete si ponechat následující věci v košíku?</div>
+        if (cart?.Count > 0)
+        {
+            <div id="cart-dialog" title="Chcete si ponechat košík?">
+                
+                <p>Chcete si ponechat následující věci v košíku?</p>
+            
+                @foreach (var item in cart)
+                {
+                    <p>@item.Product.Name</p>
+                }
+         
+            </div>
+        }
+        else
+        {
+            <script>transformCart(false)</script>
+        }
     }
-    @*<script>
-        $("#dialog").dialog({ autoOpen: true });
-        $("#opener").click(function () {
-            $("#dialog").dialog("open");
-        });
-    </script>*@
 
 </body>
 </html>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Trainee.Core.DAL.Entities;
 using Trainee.User.DAL.Entities;
@@ -20,6 +21,8 @@ namespace Trainee.Business.DAL.Entities
         public int CountryId { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
+
+        public DateTime? Date { get; set; }
 
         //Referenced properties
         public Country Country { get; set; }
