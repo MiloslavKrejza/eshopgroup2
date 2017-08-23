@@ -32,10 +32,11 @@ namespace Trainee.Business.Business
         private readonly IPaymentRepository _paymentRepository;
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IFilteringRepository _filteringRepository;
+        private readonly IOrderStateRepository _orderStateRepository;
 
         public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
                 IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, ICartItemRepository cartRep, IOrderRepository orderRep,
-                IShippingRepository shipRep, IPaymentRepository payRep, IOrderItemRepository orderItemRep, IFilteringRepository filterRep)
+                IShippingRepository shipRep, IPaymentRepository payRep, IOrderItemRepository orderItemRep, IFilteringRepository filterRep, IOrderStateRepository ordStRep)
         {
             _categoryRelationshipRepository = catRRep;
             _productRatingRepository = prodRRep;
@@ -49,6 +50,7 @@ namespace Trainee.Business.Business
             _shippingRepository = shipRep;
             _orderItemRepository = orderItemRep;
             _filteringRepository = filterRep;
+            _orderStateRepository = ordStRep;
 
         }
         #region Products
@@ -394,13 +396,15 @@ namespace Trainee.Business.Business
         {
             try
             {
-                //might be even more slow-ish
+                //might be even more slow-ish and should be maybe redone in sql (again)
                 
                 /*Stopwatch watch = new Stopwatch();
                 watch.Start();*/
 
                 var orders = _orderRepository.GetOrders().ToList();
                 var orderItems = _orderItemRepository.GetOrderItems().Where(oi => orders.Select(o => o.Id).Contains(oi.OrderId)).ToList();
+                var orderStates = _orderStateRepository.GetOrderStates();
+
 
                 var pids = orderItems.Select(oi => oi.ProductId).ToList();
 
@@ -412,6 +416,7 @@ namespace Trainee.Business.Business
 
                 var itemsProducts = orderItems.Join(prodsWithRating, oi => oi.ProductId, p => p.Id, (oi, p) => { oi.Product = p; return oi; }).ToList();
                 var orderWithItems = orders.Join(itemsProducts, o => o.Id, ip=> ip.OrderId, (o, ip) => { o.OrderItems.Add(ip); return o; }).ToList();
+                orderWithItems = orderWithItems.Join(orderStates, o => o.StateId, os => os.Id, (o, os) => { o.OrderState = os; return o; }).ToList();
 
                 /*watch.Stop();
                 Debug.WriteLine($"GetUserOrders lasted {watch.Elapsed}");*/
