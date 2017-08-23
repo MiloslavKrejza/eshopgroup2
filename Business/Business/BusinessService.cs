@@ -401,12 +401,13 @@ namespace Trainee.Business.Business
                 /*Stopwatch watch = new Stopwatch();
                 watch.Start();*/
 
-                var orders = _orderRepository.GetOrders().ToList();
+                var orders = _orderRepository.GetOrders().Where(o => o.UserId == userId).ToList();
                 var orderItems = _orderItemRepository.GetOrderItems().Where(oi => orders.Select(o => o.Id).Contains(oi.OrderId)).ToList();
                 var orderStates = _orderStateRepository.GetOrderStates();
 
 
                 var pids = orderItems.Select(oi => oi.ProductId).ToList();
+
 
 
                 var products = _productRepository.GetAllProducts().Where(p => pids.Contains(p.Id)).ToList();
@@ -415,12 +416,12 @@ namespace Trainee.Business.Business
                 var prodsWithRating = products.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => { return new ProductBO(p, r, null); });
 
                 var itemsProducts = orderItems.Join(prodsWithRating, oi => oi.ProductId, p => p.Id, (oi, p) => { oi.Product = p; return oi; }).ToList();
-                var orderWithItems = orders.Join(itemsProducts, o => o.Id, ip=> ip.OrderId, (o, ip) => { o.OrderItems.Add(ip); return o; }).ToList();
-                orderWithItems = orderWithItems.Join(orderStates, o => o.StateId, os => os.Id, (o, os) => { o.OrderState = os; return o; }).ToList();
+                //var orderWithItems = orders.Join(itemsProducts, o => o.Id, ip=> ip.OrderId, (o, ip) => { o.OrderItems.Add(ip); return o; }).ToList();
+                orders = orders.Join(orderStates, o => o.StateId, os => os.Id, (o, os) => { o.OrderState = os; return o; }).ToList();
 
                 /*watch.Stop();
                 Debug.WriteLine($"GetUserOrders lasted {watch.Elapsed}");*/
-                return AlzaAdminDTO<List<Order>>.Data(orderWithItems);
+                return AlzaAdminDTO<List<Order>>.Data(orders);
             }
             catch (Exception e)
             {
