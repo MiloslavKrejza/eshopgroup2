@@ -111,7 +111,7 @@
 		<p>@Html.DisplayFor(model => model.Price) Kč</p>
         <input type="hidden" name="product-id" value="@Model.ProductId" />
         <input type="number" name="product-count" value="1" min="1" class="product-count" />
-		@if (Model.State == "Dostupný")
+		@if (Model.State == "Dostupná")
         {
             <button class="btn-addtocart btn btn-prim">Do košíku</button>
         }
