@@ -15,8 +15,9 @@ CREATE TABLE [dbo].[Orders](
 	[PhoneNumber][nvarchar](max) NOT NULL,
 	[City][nvarchar](max) NOT NULL,
 	[Postalcode][nvarchar](max) NOT NULL,
-	[Address][nvarchar](max) NOT NULL
+	[Address][nvarchar](max) NOT NULL,
 
+	[Date][datetime] DEFAULT(GETDATE()) NOT NULL 
 )
 GO
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Trainee.Business.DAL.Entities;
 using Trainee.Core.DAL.Entities;
 
 namespace TestWeb.Models.AccountViewModels
@@ -43,7 +44,7 @@ namespace TestWeb.Models.AccountViewModels
         //proc to vsechno ma validace, kdyz to je jen na ukazani?
         public string ProfilePicAddress { get; set; }
 
-
+        public List<Order> Orders { get; set; }
 
     }
 }
