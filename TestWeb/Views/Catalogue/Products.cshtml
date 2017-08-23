@@ -138,7 +138,7 @@
 			<select class="form-control" asp-for="SortingType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
 		</div>
 		<div class="col-md-2">
-			<button id="button-filter" type="submit" class="filter-btn btn btn-primary">Filtrovat</button>
+			<button id="button-filter" type="submit" class="filter-btn btn btn-prim">Filtrovat</button>
 		</div>
 		<div class="col-md-2">
 			<a class="filter-btn btn btn-default" asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
@@ -200,11 +200,11 @@
 				<input type="hidden" name="product-count" class="hidden" value="1" />
                 @if (p.State.Name == "Dostupný")
                 {
-                    <button class="btn-addtocart btn btn-primary">Do košíku</button>
+                    <button class="btn-addtocart btn btn-prim">Do košíku</button>
                 }
                 else
                 {
-                    <button class="btn-addtocart btn btn-primary" disabled>Do košíku</button>
+                    <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
                 }
 
 			</div>

@@ -113,11 +113,11 @@
         <input type="number" name="product-count" value="1" min="1" class="product-count" />
 		@if (Model.State == "Dostupný")
         {
-            <button class="btn-addtocart btn btn-primary">Do košíku</button>
+            <button class="btn-addtocart btn btn-prim">Do košíku</button>
         }
         else
         {
-            <button class="btn-addtocart btn btn-primary" disabled>Do košíku</button>
+            <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
         }
 
 
@@ -235,7 +235,7 @@ else
 							<label asp-for="ReviewText">Napište vlastní recenzi:</label>	
 							<textarea  class="form-control" rows="4" cols="500" asp-for="ReviewText" style="max-width: 100%; " required></textarea>
 							<br />
-							<button class="btn btn-primary review-btn" type="submit">Odeslat recenzi</button>
+							<button class="btn btn-prim review-btn" type="submit">Odeslat recenzi</button>
 						</form>
 
 
