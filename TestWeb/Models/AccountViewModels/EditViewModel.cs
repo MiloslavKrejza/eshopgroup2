@@ -6,7 +6,6 @@ using Trainee.Core.DAL.Entities;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using TestWeb.ViewModels.Validations;
-using Eshop2.Models.Validations;
 
 namespace TestWeb.Models.AccountViewModels
 {
