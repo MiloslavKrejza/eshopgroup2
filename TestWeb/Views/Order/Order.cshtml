@@ -11,12 +11,12 @@
 <h2>@ViewData["Title"]</h2>
 
 <h3 class="bottom-padding">Vybrané knížky</h3>
-
-    <div class="row cart-item">
-        <div class="col-md-4"><strong>Název knihy</strong></div>
-        <div class="col-md-4"><strong>Autor</strong></div>
-        <div class="col-md-1"><strong>Počet</strong></div>
-        <div class="col-md-3"><strong>Celková cena</strong></div>
+<div class="order-items">
+    <div class="row order-items-heading">
+        <div class="col-md-4">Název knihy</div>
+        <div class="col-md-4">Autor</div>
+        <div class="col-md-1">Počet</div>
+        <div class="col-md-3">Celková cena</div>
     </div>
 
 
@@ -57,8 +57,11 @@
                     @String.Format("{0:c}", booksPrice)
                 </div>
             </div>
-                            }
+                        }
     }
+</div>
+
+
 
 <h3>Dodací údaje</h3>
 <div class="form-group">

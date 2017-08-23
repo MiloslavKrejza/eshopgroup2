@@ -505,6 +505,7 @@ input:-ms-input-placeholder {
     padding: 8px 55px;
     border-radius: 5px;
 }
+
 /*CATALOGUE*/
 /*Book profile*/
 .rating {
@@ -757,6 +758,17 @@ input:-ms-input-placeholder {
 .order {
     width: 80%;
     margin: 0 auto;
+}
+
+.order-items {
+    border: solid 1px $border-color;
+    border-radius: 10px;
+    padding: 10px 0 5px 0;
+}
+.order-items-heading {
+    margin-bottom: 10px;
+    font-weight: bold;
+    margin-left: 20px;
 }
 
 .order-radio {
