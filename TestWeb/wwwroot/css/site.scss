@@ -514,6 +514,13 @@ input:-ms-input-placeholder {
     }
 }
 
+.rating-textarea {
+    width: 300px;
+    margin-left: 50px;
+    margin-bottom: 30px;
+}
+
+
 .user rating {
     img {
         width: 50px;
@@ -591,12 +598,11 @@ input:-ms-input-placeholder {
     margin-bottom: 10px;
 }
 
-.btn-addtocart:disabled{
+.btn-addtocart:disabled {
     cursor: default
 }
 
 .dialog-cart {
-
 }
 
 .review-btn {
@@ -651,30 +657,21 @@ input:-ms-input-placeholder {
 }
 /*  Rating system */
 #rating {
-    text-align: center;
-    perspective: 250px;
-    position: relative;
-    width: 100%;
-    color: red;
+    margin: 10px 0;
 
     span {
         cursor: pointer;
-        font-size: 50px;
-        padding: 0 10px;
+        font-size: 20px;
+        padding: 0 2px;
         color: #A7A7A7;
-        opacity: .5;
+        opacity: .8;
         transition: all 150ms;
         display: inline-block;
-        -ms-transform: rotateX(45deg);
-        -webkit-transform: rotateX(45deg);
-        transform: rotateX(45deg);
-        transform-origin: center bottom;
     }
 
     span.hover {
-        color: #f19f4d;
+        color: #ffa700;
         opacity: 1;
-        transform: rotateX(0deg);
         text-shadow: 0 0 30px #ffc;
     }
 }
@@ -731,7 +728,7 @@ input:-ms-input-placeholder {
 }
 
 .product-count-decrease {
-    cursor:pointer;
+    cursor: pointer;
     padding: 5px;
 }
 
@@ -765,6 +762,7 @@ input:-ms-input-placeholder {
     border-radius: 10px;
     padding: 10px 0 5px 0;
 }
+
 .order-items-heading {
     margin-bottom: 10px;
     font-weight: bold;
@@ -805,7 +803,6 @@ input:-ms-input-placeholder {
     img {
         margin: 0;
         height: 90px;
-
     }
 }
 /*Reviews*/
@@ -832,7 +829,6 @@ input:-ms-input-placeholder {
 }
 
 .full-stars:before {
-
     content: "\2605\2605\2605\2605\2605";
     font-size: 14pt;
 }

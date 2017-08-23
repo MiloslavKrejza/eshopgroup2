@@ -5,17 +5,17 @@
 @model BookViewModel
 
 @{
-	ViewData["Title"] = "Harry Potter";
+    ViewData["Title"] =  Model.Name;
 
-	var result = await UserManager.GetUserAsync(User);
+    var result = await UserManager.GetUserAsync(User);
 
-	//pokud je userID aktualní uživatelé NULL -> nastaví se hodnota na -1  -> což je něco jiného než userID jiných uživatelů viz následující if else statement 
-	int uId = result == null ? -1 : result.Id;
+    //pokud je userID aktualní uživatelé NULL -> nastaví se hodnota na -1  -> což je něco jiného než userID jiných uživatelů viz následující if else statement
+    int uId = result == null ? -1 : result.Id;
 
-	var reviewPresent = Model.Reviews.Where(r => r.UserId == uId).Where(r => r.ProductId == (int)ViewData["productId"]).FirstOrDefault();
+    var reviewPresent = Model.Reviews.Where(r => r.UserId == uId).Where(r => r.ProductId == (int)ViewData["productId"]).FirstOrDefault();
 
-	var reviewCounter = 0;
-    
+    var reviewCounter = 0;
+
 
 
 
@@ -24,55 +24,58 @@
 
 
 <style type="text/css">
-
-	.ratings {
-    position: relative;
-    vertical-align: middle;
-    display: inline-block;
-    color: #b1b1b1;
-    overflow: hidden;
-}
-.full-stars {
-    position: absolute;
-    left: 0;
-    top: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    color: #fde16d;
-}
-.empty-stars:before, .full-stars:before {
-    content:"\2605\2605\2605\2605\2605";
-    font-size: 14pt;
-}
-.empty-stars:before {
-    -webkit-text-stroke: 1px #848484;
-}
-.full-stars:before {
-    -webkit-text-stroke: 1px orange;
-}
-/* Webkit-text-stroke is not supported on firefox or IE */
-
-/* Firefox */
- @@-moz-document url-prefix() {
-    .full-stars {
-        color: #ECBE24;
+    .ratings {
+        position: relative;
+        vertical-align: middle;
+        display: inline-block;
+        color: #b1b1b1;
+        overflow: hidden;
     }
-}
+
+    .full-stars {
+        position: absolute;
+        left: 0;
+        top: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        color: #fde16d;
+    }
+
+        .empty-stars:before, .full-stars:before {
+            content: "\2605\2605\2605\2605\2605";
+            font-size: 14pt;
+        }
+
+    .empty-stars:before {
+        -webkit-text-stroke: 1px #848484;
+    }
+
+    .full-stars:before {
+        -webkit-text-stroke: 1px orange;
+    }
+    /* Webkit-text-stroke is not supported on firefox or IE */
+
+    /* Firefox */
+    @@-moz-document url-prefix() {
+        .full-stars {
+            color: #ECBE24;
+        }
+    }
 </style>
 
 <div class="row">
-	<ul class="breadcrumb main-background">
-		<li class="main-cathegory"><a href="#">Fantasy</a></li>
-		<li><a href="#">@Html.DisplayFor(model => model.Category.Name)</a></li>
-	</ul>
+    <ul class="breadcrumb main-background">
+        <li class="main-cathegory"><a href="#">Fantasy</a></li>
+        <li><a href="#">@Html.DisplayFor(model => model.Category.Name)</a></li>
+    </ul>
 </div>
 <hr />
 <div class="row">
-	<h2>@Html.DisplayFor(model => model.Name)</h2>
-	<div class="col-lg-8">
-		<p class="bold">
-            
-			@{
+    <h2>@Html.DisplayFor(model => model.Name)</h2>
+    <div class="col-lg-8">
+        <p class="bold">
+
+            @{
                 var ab = Model.Authors;
 
                 for (int j = 0; j < ab.Count; j++)
@@ -84,7 +87,7 @@
                     </span>
                 }
             }
-		</p>
+        </p>
         <div class="ratings">
             <div class="empty-stars"></div>
             @{string averageRatingString = (Model.AverageRating * 20).ToString().Replace(',', '.'); }
@@ -92,26 +95,24 @@
             @*<span id="takeTheValue" style="display:none;">@Model.StarPercent</span>*@
 
         </div>
-		<p class="italics">@Html.DisplayFor(model => model.ProductFormat)</p>
-		<p>@Html.DisplayFor(model => model.Annotation)</p>
-		<p>@Html.DisplayFor(model => model.ProductText)</p>
+        <p class="italics">@Html.DisplayFor(model => model.ProductFormat)</p>
+        <p>@Html.DisplayFor(model => model.Annotation)</p>
+        <p>@Html.DisplayFor(model => model.ProductText)</p>
 
-		@if (Model.State == "Available")
-		{
-			<p class="text-success">
-				@Html.DisplayFor(model => model.State)
-			</p>
-		}
-		else
-		{
-			<p class="text-warning">
-				@Html.DisplayFor(model => model.State)
-			</p>
-		}
-		<p>@Html.DisplayFor(model => model.Price) Kč</p>
+        @if (Model.State == "Dostupná")
+        {
+            <p class="text-success">
+                @Html.DisplayFor(model => model.State)
+            </p>}
+        else
+        {
+            <p class="text-warning">
+                @Html.DisplayFor(model => model.State)
+            </p>}
+        <p>@Html.DisplayFor(model => model.Price) Kč</p>
         <input type="hidden" name="product-id" value="@Model.ProductId" />
         <input type="number" name="product-count" value="1" min="1" class="product-count" />
-		@if (Model.State == "Dostupný")
+        @if (Model.State == "Dostupná")
         {
             <button class="btn-addtocart btn btn-prim">Do košíku</button>
         }
@@ -121,157 +122,152 @@
         }
 
 
-	</div>
-  
-		
-		@*<div itemscope itemtype="http://schema.org/Product" style="display:none;" >
-			<img itemprop="image" src="~/images/product_images/@Model.PicAddress" alt="@Html.DisplayFor(model => model.Name)" />
-			<span itemprop="name">@Html.DisplayFor(model => model.Name)</span>
-			<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-				<span itemprop="ratingValue">@Html.DisplayFor(model => model.AverageRating)</span>
-				out of <span itemprop="bestRating">5</span>
-				based on <span itemprop="ratingCount"></span> user ratings.
-			</div>
-		</div>*@
-	<div class="col-lg-4">
-		<div class="row">
+    </div>
 
-			@*Route to image files directed from database*@
-			<img class="book-img" src="~/images/product_images/@Model.PicAddress" alt="@Model.Name" />
-		</div>
-	</div>
+
+    @*<div itemscope itemtype="http://schema.org/Product" style="display:none;" >
+            <img itemprop="image" src="~/images/product_images/@Model.PicAddress" alt="@Html.DisplayFor(model => model.Name)" />
+            <span itemprop="name">@Html.DisplayFor(model => model.Name)</span>
+            <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                <span itemprop="ratingValue">@Html.DisplayFor(model => model.AverageRating)</span>
+                out of <span itemprop="bestRating">5</span>
+                based on <span itemprop="ratingCount"></span> user ratings.
+            </div>
+        </div>*@
+    <div class="col-lg-4">
+        <div class="row">
+
+            @*Route to image files directed from database*@
+            <img class="book-img" src="~/images/product_images/@Model.PicAddress" alt="@Model.Name" />
+        </div>
+    </div>
 </div>
 <hr />
 <div class="row">
-	<div class="col-md-6">
-		<table class="details-table">
-			<tr>
-				<td class="col-md-6">Jazyk:</td>
-				<td class="col-md-6">@Html.DisplayFor(model => model.Language)</td>
-			</tr>
-			<tr>
-				<td class="col-md-6">Počet stran:</td>
-				<td class="col-md-6">@Html.DisplayFor(model => model.PageCount)</td>
-			</tr>
-			<tr>
-				<td class="col-md-6">Rok vydání:</td>
-				<td class="col-md-6">@Html.DisplayFor(model => model.Year)</td>
-			</tr>
-		</table>
-	</div>
-	<div class="col-md-6">
-		<table class="details-table">
-			<tr>
-				<td class="col-md-6">Vydavatel:</td>
-				<td class="col-md-6">@Html.DisplayFor(model => model.Publisher)</td>
-			</tr>
-			<tr>
-				<td class="col-md-6">ISBN:</td>
-				<td class="col-md-6">@Html.DisplayFor(model => model.ISBN)</td>
-			</tr>
-			<tr>
-				<td class="col-md-6">EAN:</td>
-				<td class="col-md-6">@Html.DisplayFor(model => model.EAN)</td>
-			</tr>
-		</table>
-	</div>
+    <div class="col-md-6">
+        <table class="details-table">
+            <tr>
+                <td class="col-md-6">Jazyk:</td>
+                <td class="col-md-6">@Html.DisplayFor(model => model.Language)</td>
+            </tr>
+            <tr>
+                <td class="col-md-6">Počet stran:</td>
+                <td class="col-md-6">@Html.DisplayFor(model => model.PageCount)</td>
+            </tr>
+            <tr>
+                <td class="col-md-6">Rok vydání:</td>
+                <td class="col-md-6">@Html.DisplayFor(model => model.Year)</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table class="details-table">
+            <tr>
+                <td class="col-md-6">Vydavatel:</td>
+                <td class="col-md-6">@Html.DisplayFor(model => model.Publisher)</td>
+            </tr>
+            <tr>
+                <td class="col-md-6">ISBN:</td>
+                <td class="col-md-6">@Html.DisplayFor(model => model.ISBN)</td>
+            </tr>
+            <tr>
+                <td class="col-md-6">EAN:</td>
+                <td class="col-md-6">@Html.DisplayFor(model => model.EAN)</td>
+            </tr>
+        </table>
+    </div>
 </div>
 <hr />
 
 
-	
-    @*
-		<h3>Hodnocení</h3> 
+
+@*
+        <h3>Hodnocení</h3>
     <img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" alt="rating" />
     <div class="user-rating">
         <img src="~/images/user-2-32.png" alt="user icon" /><span class="bold">Petr B.</span><img src="http://www.dtsg.com/sites/default/themes/garden/images/five-stars.png" /><br />
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam egestas wisi a erat. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Nam sed tellus id magna elementum tincidunt. Pellentesque pretium lectus id turpis. Mauris metus. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
     </div>
 
-	<hr />
+    <hr />
 
-		*@
-				<!--	Is user logged in? -->
-				
+*@
+<!--	Is user logged in? -->
+
+<h3>Hodnocení</h3>
+
 @if (reviewPresent != null)
 {
-	decimal stars = reviewPresent.Rating * 20;
+    decimal stars = reviewPresent.Rating * 20;
 
 
 	<!--	Representation of present user desctiption-->
 
-	<div class="user-rating">
-		<div class="ratings">
-			<div class="empty-stars"></div>
-			<div class="full-stars" style="width:@stars.ToString()%;"></div>
-		</div>
-		<span class="bold">@reviewPresent.User.Name</span>
-		<br />
-		<p>@reviewPresent.Text</p>
-	</div>
+    <div class="user-rating">
+        <div class="ratings">
+            <div class="empty-stars"></div>
+            <div class="full-stars" style="width:@stars.ToString()%;"></div>
+        </div>
+        <span class="bold">@reviewPresent.User.Name</span>
+        <br />
+        <p>@reviewPresent.Text</p>
+    </div>
 
-	
+
 }
 else
 {
 	<!-- User loves to hate the product if the page doesn't contain commentary -->
-	<div class="row rating">
-        <h3>Hodnocení</h3>
-		<div class="col-sm-12">
+    
+        <div class="row rating">
+            <p class="text-indent">Napište vlastní recenzi:</p>
+            <form asp-area="" asp-controller="Catalogue" asp-action="Book" method="post" id="sendRatingData">
+                <div class="col-md-6">
+                    <input class="form-control" asp-for="NewRating" id="valueHodnota" min="1" max="5" />
+                    <textarea class="form-control rating-textarea" rows="4" asp-for="ReviewText" required></textarea>
+                </div>
 
-			<div id="rating">
-				<span>★</span>
-				<span>★</span>
-				<span>★</span>
-				<span>★</span>
-				<span>★</span>
-			</div>		
-				<div class="col-sm-12">
-					<div class="text-center">
-
-						<form asp-area="" asp-controller="Catalogue" asp-action="Book" method="post" id="sendRatingData" class="navbar-right" style="max-width: 100%;" >
-
-							<input class="form-control" asp-for="NewRating" id="valueHodnota" min="1" max="5" />
-							<label asp-for="ReviewText">Napište vlastní recenzi:</label>	
-							<textarea  class="form-control" rows="4" cols="500" asp-for="ReviewText" style="max-width: 100%; " required></textarea>
-							<br />
-							<button class="btn btn-prim review-btn" type="submit">Odeslat recenzi</button>
-						</form>
-
-
-					</div>
-				</div>
-			</div>
-	</div>
-	<hr />
+                <div class="col-md-6">
+                    <div id="rating">
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                    </div>
+                    <button class="btn btn-prim review-btn" type="submit">Odeslat recenzi</button>
+                </div>
+            </form>
+        </div>
+        <hr class="bottom-padding"/>
 }
 
 <!--	You have chosen to show others cool reviews -->
 
 @foreach (var review in Model.Reviews)
 {
-	reviewCounter++;
+    reviewCounter++;
 
-	if (review.UserId != uId)
-	{
-		int procent = (int)Math.Truncate(review.Rating / 5.0 * 100) ;
-		
-
-		<div class="user-rating">
-			<div class="ratings">
-				<div class="empty-stars"></div>
-				<div class="full-stars" style="width:@procent%;"></div>
-			</div>
-			<span class="bold">@review.User.Name</span>
-			<br />
-			<p>@review.Text</p>
-		</div>
-
-	}	
+    if (review.UserId != uId)
+    {
+        int procent = (int)Math.Truncate(review.Rating / 5.0 * 100);
 
 
+        <div class="user-rating">
+            <div class="ratings">
+                <div class="empty-stars"></div>
+                <div class="full-stars" style="width:@procent%;"></div>
+            </div>
+            <span class="bold">@review.User.Name</span>
+            <br />
+            <p>@review.Text</p>
+        </div>
 
-	}
+    }
+
+
+
+}
 
 
 
@@ -280,57 +276,56 @@ else
 
 
 
-	var elementos = document.getElementById("valueHodnota");
-	elementos.style.display = "none";
+    var elementos = document.getElementById("valueHodnota");
+    elementos.style.display = "none";
 
-	//Initialize
-	function StarRating() {
-				this.init();
-			};
+    //Initialize
+    function StarRating() {
+        this.init();
+    };
 
 
-	StarRating.prototype.init = function() {
-	 this.stars = document.querySelectorAll('#rating span');
-	  for (var i = 0; i < this.stars.length; i++) {
-			this.stars[i].setAttribute('data-count', i);
-			this.stars[i].addEventListener('mouseenter', this.enterStarListener.bind(this));
-	  }
-	  document.querySelector('#rating').addEventListener('mouseleave', this.leaveStarListener.bind(this));
-	};
-	//This method is fired when a user hovers over a single star
+    StarRating.prototype.init = function () {
+        this.stars = document.querySelectorAll('#rating span');
+        for (var i = 0; i < this.stars.length; i++) {
+            this.stars[i].setAttribute('data-count', i);
+            this.stars[i].addEventListener('mouseenter', this.enterStarListener.bind(this));
+        }
+        document.querySelector('#rating').addEventListener('mouseleave', this.leaveStarListener.bind(this));
+    };
+    //This method is fired when a user hovers over a single star
 
-	StarRating.prototype.enterStarListener = function(e) {
-	  this.fillStarsUpToElement(e.target);
-	};
-		//This method is fired when the user leaves the #rating element, effectively removing all hover states.
-		//Fill the star ratings up to a specific position.
-	StarRating.prototype.fillStarsUpToElement = function(el) {
-	   var soucet = 0;
-	  // Remove all hover states:
-	  for (var i = 0; i < this.stars.length; i++) {
-		if (el == null || this.stars[i].getAttribute('data-count') > el.getAttribute('data-count')) {
-		  this.stars[i].classList.remove('hover');
-		} else {
-		  this.stars[i].classList.add('hover');
-		  soucet++;
-		  console.log(soucet);
+    StarRating.prototype.enterStarListener = function (e) {
+        this.fillStarsUpToElement(e.target);
+    };
+    //This method is fired when the user leaves the #rating element, effectively removing all hover states.
+    //Fill the star ratings up to a specific position.
+    StarRating.prototype.fillStarsUpToElement = function (el) {
+        var soucet = 0;
+        // Remove all hover states:
+        for (var i = 0; i < this.stars.length; i++) {
+            if (el == null || this.stars[i].getAttribute('data-count') > el.getAttribute('data-count')) {
+                this.stars[i].classList.remove('hover');
+            } else {
+                this.stars[i].classList.add('hover');
+                soucet++;
+                console.log(soucet);
 
-   //   var element = document.getElementById("summaryByMiloslavKrejza");
-	  //element.innerHTML = soucet;
+                //   var element = document.getElementById("summaryByMiloslavKrejza");
+                //element.innerHTML = soucet;
 
-	  
 
-		  elementos.setAttribute("value", soucet);
-			
-		  
 
-		}
-	  }
-	};
+                elementos.setAttribute("value", soucet);
 
-// Run:
-new StarRating();
+
+
+            }
+        }
+    };
+
+    // Run:
+    new StarRating();
 
 
 </script>
-

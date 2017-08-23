@@ -395,6 +395,11 @@ input:-ms-input-placeholder {
 .rating img {
   width: 150px; }
 
+.rating-textarea {
+  width: 300px;
+  margin-left: 50px;
+  margin-bottom: 30px; }
+
 .user rating img {
   width: 50px; }
 
@@ -492,27 +497,18 @@ input:-ms-input-placeholder {
 
 /*  Rating system */
 #rating {
-  text-align: center;
-  perspective: 250px;
-  position: relative;
-  width: 100%;
-  color: red; }
+  margin: 10px 0; }
   #rating span {
     cursor: pointer;
-    font-size: 50px;
-    padding: 0 10px;
+    font-size: 20px;
+    padding: 0 2px;
     color: #A7A7A7;
-    opacity: .5;
+    opacity: .8;
     transition: all 150ms;
-    display: inline-block;
-    -ms-transform: rotateX(45deg);
-    -webkit-transform: rotateX(45deg);
-    transform: rotateX(45deg);
-    transform-origin: center bottom; }
+    display: inline-block; }
   #rating span.hover {
-    color: #f19f4d;
+    color: #ffa700;
     opacity: 1;
-    transform: rotateX(0deg);
     text-shadow: 0 0 30px #ffc; }
 
 #summaryByMiloslavKrejza {
@@ -652,3 +648,4 @@ input:-ms-input-placeholder {
 .map {
   border: solid 1px #dddddd;
   height: 333px; }
+
