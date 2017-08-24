@@ -1,5 +1,6 @@
 ﻿@using Eshop2.Models.OrderViewModels
 @using Trainee.Business.DAL.Entities
+@inject SignInManager<ApplicationUser> SignInManager;
 @model CartViewModel
 @{
     ViewData["Title"] = "Košík";
@@ -101,7 +102,14 @@
                 <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
             </div>
             <div class="col-md-6 bottom-padding">
-                <a class="btn btn-prim order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="btn btn-prim order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+                }
+                else
+                {
+                    <a class="btn btn-prim order-button" asp-controller="Order" asp-action="OrderLogin">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+                }
             </div>
         </div>
                                     }

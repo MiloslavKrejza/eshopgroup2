@@ -50,7 +50,7 @@ namespace Eshop2.Controllers
                 //user tried to order, but the cart is empty
                 ViewData["emptyOrder"] = TempData["emptyOrder"];
 
-
+                //getting the visitor id
                 CookieHelper cookieHelper = new CookieHelper(_accessor);
 
                 AlzaAdminDTO<List<CartItem>> result;
@@ -70,6 +70,7 @@ namespace Eshop2.Controllers
                 if (!result.isOK)
                     throw new Exception("Could not find the cart");
 
+                //handling an empty cart
                 List<CartItem> cart;
                 if(result.isEmpty)
                 {
@@ -104,10 +105,12 @@ namespace Eshop2.Controllers
         {
             try
             {
+                //first getting the cart items
                 CookieHelper cookieHelper = new CookieHelper(_accessor);
 
                 AlzaAdminDTO<List<CartItem>> result;
 
+                //anonymous shopping?
                 UserProfile userProfile = null;
                 ApplicationUser user = null;
                 if (_signInManager.IsSignedIn(User))
@@ -136,8 +139,10 @@ namespace Eshop2.Controllers
 
                 model.Items = cart;
 
+                //cannot order with an empty cart
                 if (model.Items.Count > 0)
                 {
+                    //the user data is auto-filled in
                     if (userProfile != null)
                     {
                         model.CountryId = userProfile.CountryId;
@@ -150,6 +155,7 @@ namespace Eshop2.Controllers
                         model.Surname = userProfile.Surname;
                     }
 
+                    //listing all possible choices for fields
                     model.Countries = _countryService.GetAllCountries().data.ToList();
                     model.Shipping = _businessService.GetShippings().data.ToList();
                     model.Payment = _businessService.GetPayments().data.ToList();
@@ -174,6 +180,7 @@ namespace Eshop2.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    //sending the order
                     CookieHelper cookieHelper = new CookieHelper(_accessor);
                     string cookieId = cookieHelper.GetVisitorId();
 
@@ -201,13 +208,14 @@ namespace Eshop2.Controllers
 
                     var items = _businessService.GetCart(cookieId).data;
 
+                    //cannot send empty order
                     if (items.Count == 0)
                     {
                         TempData["emptyOrder"] = true;
                         return RedirectToAction("Cart");
                     }
 
-
+                    //adding order to the database
                     var addedOrder = _businessService.AddOrder(order, cookieId).data;
                     int orderId = addedOrder.Id;
                     
@@ -223,6 +231,7 @@ namespace Eshop2.Controllers
                         _businessService.AddOrderItem(orderItem);
                     }
 
+                    //order id to be displayed in the view
                     TempData["OrderId"] = orderId;
                     return RedirectToAction("OKPage");
                 }
@@ -247,6 +256,7 @@ namespace Eshop2.Controllers
         // GET: /Order/OKPage/
         public IActionResult OKPage()
         {
+            //page confirming the order had been sent
             ViewData["OrderId"] = TempData["OrderId"];
             if (ViewData["OrderId"] == null)
                 return RedirectToAction("Error", "Home");
@@ -259,8 +269,8 @@ namespace Eshop2.Controllers
         {
             return View();
         }
-        [HttpPost]
 
+        [HttpPost]
         public async Task<IActionResult> AddToCart([FromBody]CartItemModel model)
         {
             var settings = new JsonSerializerSettings();
@@ -297,6 +307,13 @@ namespace Eshop2.Controllers
             var result = _businessService.RemoveCartItem(cookieId, item.Id);
             return Json(result, settings);
         }
+
+        [HttpGet]
+        public IActionResult Redirect()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> UpdateCart([FromBody]CartItemModel item)
         {
@@ -325,17 +342,17 @@ namespace Eshop2.Controllers
 
             var user = await _userManager.GetUserAsync(User);
             
-            //check this
+            //cannot transfer cart if there is no user
             if (user == null)
                 return RedirectToAction("Error", "Home");
 
-            //todo just get it from cookies and delete it
-
+            //getting the visitor id of the anonymous cart
             CookieHelper helper = new CookieHelper(_accessor);
             string oldVisitorId = helper.GetOldVisitorId();
 
             var result = _businessService.TransformCart(oldVisitorId, user.Id, model.DeleteOld);
 
+            //the old cart has been transfered and deleted, deleting the old visitor id
             helper.DeleteOldVisitorId();
 
             return Json(result, settings);

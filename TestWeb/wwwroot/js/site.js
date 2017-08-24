@@ -36,7 +36,7 @@ function changeUserBack() {
     document.getElementById("login-link").innerHTML = "Přihlásit";
 }
 
-
+//dialog for keeping/discarding cart items from previous log in
 $(function () {
     $("#cart-dialog").dialog({
         resizable: false,
@@ -65,7 +65,7 @@ $(function () {
     });
 })
 
-
+//calls a function for transfering the anonymous cart to user cart
 function transformCart(deleteOld){
 
     var dataType = 'application/json; charset=utf-8';
