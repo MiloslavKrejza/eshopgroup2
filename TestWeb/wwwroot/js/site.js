@@ -66,7 +66,7 @@ $(function () {
 })
 
 //calls a function for transfering the anonymous cart to user cart
-function transformCart(deleteOld){
+function transformCart(deleteOld) {
 
     var dataType = 'application/json; charset=utf-8';
     var data = {
@@ -92,6 +92,19 @@ function transformCart(deleteOld){
         }
     });
 }
+
+$(function () {
+    $(".redirection").click(function () {
+        location.href = this.href; // if we trigger the anchor click event, it does not simulate a physical click on the link
+    });
+
+    $(window).load(function () {
+        if ($("#cart-dialog").length == 0)
+        {
+            $(".redirection").delay(2000).trigger("click");
+        }
+    });
+});
 
 ﻿$(".btn-addtocart").on('click', _.debounce(function () {
 

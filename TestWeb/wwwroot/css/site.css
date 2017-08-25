@@ -565,6 +565,7 @@ input:-ms-input-placeholder {
     max-height: 400px;
     border-radius: 10px; }
 
+/* Redirection*/
 /* Order */
 .order {
   width: 80%;
@@ -648,4 +649,3 @@ input:-ms-input-placeholder {
 .map {
   border: solid 1px #dddddd;
   height: 333px; }
-
