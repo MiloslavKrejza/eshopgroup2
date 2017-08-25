@@ -9,6 +9,7 @@ function toggleLogin() {
     }
 }
 
+
 // Hide and show effect for edit page
 
 function showStuff(id, text, btn) {
@@ -68,6 +69,36 @@ $(function () {
     });
 })
 
+
+$(function () {
+
+    /* 
+     *
+      There were problems with ids, as the partial view and the login view closing buttons were essentially the same – so the id is dynamically set using view data in login.
+      If id "Prr" exists, it means the partial view is rendered in /Account/Login and therefor there are two buttons
+      (we show only one of them, and the partial view is being rendered after the "parent" view).
+      On the other hand, if only "Pr" exists, it is the only button and should be shown.
+    *
+    */
+    if (document.getElementById("Prr")) {
+        $("#Prr").show();
+    }
+    else {
+        $("#Pr").show();
+    }
+
+    /*
+    if ($("#login-page-container").parent().parent().attr('id') === "layout")
+    {
+        $('#layout').children().children('.close-tab').hide();
+        alert();
+    }
+    else
+    {
+        $('#login').children().children('.close-tab').show();
+    }*/
+})
+
 //calls a function for transfering the anonymous cart to user cart
 function transformCart(deleteOld) {
 
@@ -102,12 +133,13 @@ $(function () {
     });
 
     $(window).load(function () {
-        if ($("#cart-dialog").length == 0)
-        {
+        if ($("#cart-dialog").length === 0) {
             $(".redirection").delay(2000).trigger("click");
         }
     });
 });
+
+
 
 ﻿$(".btn-addtocart").on('click', _.debounce(function () {
 

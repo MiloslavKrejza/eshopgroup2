@@ -12,9 +12,22 @@
 @{
     ViewData["Title"] = "Log in";
 
+    //the closing button needs to have a unique id, as we want to show it in a partial view, but not on the /Account/Login view. If we open /Account/Login, we want the button "Pr",
+    //which is rendered on the Login view page (before the partial view), to be hidden, whereas the button "Prr" in the partial view needs to be shown
+    //see site.js for script
+
+    if (ViewData["LoginShite"] == null)
+    {
+        //this is the first button rendered and will be named "Pr"
+        ViewData["LoginShite"] = "P";
+    }
+
+    //in case this is the second Login page rendered (a partial view), another button named "Prr" will be present
+    ViewData["LoginShite"] = ViewData["LoginShite"] + "r";
+
     var asdfa = new List<string>();
 
-
+    string currUrl = Context.Request.Path.Value;
 
 }
 
@@ -42,8 +55,9 @@
     else
     {
 
+        <button class="btn close-tab" id="@ViewData["LoginShite"]" onclick="toggleLogin()" style="display: none"><p class="text-right">X</p></button>
+        
 
-    <button class="btn close-tab" onclick="toggleLogin()"><p class="text-right">X</p></button>
         <div id="login-error" class="text-center">
             @if (ViewData["EmailUnknown"] != null)
                 {
@@ -59,7 +73,7 @@
 
             <section>
                 
-                <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-route-fromLogin="@ViewData["FromLogin"]" method="post" class="form-horizontal">
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Email" class="control-label text-indent"></label>
