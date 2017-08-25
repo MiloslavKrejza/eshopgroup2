@@ -140,13 +140,13 @@ namespace Trainee.Business.DAL.Repositories
                     orderParameter = "Price";
                     break;
                 case Business.Enums.SortingParameter.Rating:
-                    orderParameter = "AvgRating";
+                    orderParameter = "AverageRating";
                     break;
                 case Business.Enums.SortingParameter.Name:
                     orderParameter = "ProductName";
                     break;
                 default:
-                    orderParameter = "AvgRating";
+                    orderParameter = "AverageRating";
                     break;
             }
             string orderType;
