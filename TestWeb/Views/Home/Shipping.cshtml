@@ -14,7 +14,7 @@ Podle vaší polohy v galaxii a finančních možností můžete zvolit následu
 <ul>
     @foreach (Shipping s in Model.Shipping)
     {
-        <li>@s.Name - @s.Price</li>
+        <li>@s.Name - @String.Format("{0:c}", s.Price)</li>
     }
 </ul>
 

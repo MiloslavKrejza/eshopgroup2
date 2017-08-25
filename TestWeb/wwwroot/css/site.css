@@ -172,12 +172,14 @@ input:-ms-input-placeholder {
   padding: 10px !important;
   font-size: 120%; }
 
-#basket-user {
+.basket-user {
   padding: 15px 0 0 0;
   font-size: 15px; }
+  .basket-user img {
+    width: 50px; }
 
 @media screen and (max-width: 767px) {
-  #basket-user {
+  .basket-user {
     margin: 0 auto;
     position: relative; } }
 
@@ -195,6 +197,8 @@ input:-ms-input-placeholder {
       outline: none; }
     .basket-user-btn button :visited {
       outline: none; }
+    .basket-user-btn button img {
+      width: 50px; }
 
 /*Login container*/
 .login-container {
@@ -385,7 +389,7 @@ input:-ms-input-placeholder {
 
 #cancel-button a {
   color: white;
-  background-color: #EE1D25;
+  background-color: #e54a5a;
   text-align: center;
   padding: 8px 55px;
   border-radius: 5px; }
@@ -665,4 +669,31 @@ input:-ms-input-placeholder {
 .map {
   border: solid 1px #dddddd;
   height: 333px; }
+
+/* DIALOG - LEAVE ITEMS IN CART?*/
+.ui-dialog {
+  border: solid 1px #dddddd !important;
+  border-radius: 10px !important;
+  padding: 5px !important; }
+
+.keep-button {
+  background-color: #2F3293 !important;
+  border: solid 1px white !important;
+  border-radius: 5px !important;
+  color: white !important; }
+
+.erase-button {
+  background-color: #e54a5a !important;
+  border: solid 1px white !important;
+  border-radius: 5px !important;
+  color: white !important; }
+
+.ui-dialog-titlebar {
+  background-color: #2F3293 !important;
+  border: solid 1px white !important;
+  border-radius: 5px !important;
+  color: white !important; }
+
+.no-close .ui-dialog-titlebar-close {
+  display: none; }
 

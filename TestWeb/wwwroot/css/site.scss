@@ -3,7 +3,7 @@
 $background-color: #ffffff;
 $text-color: #4379C5;
 $primary-color: #2F3293;
-$secondary-color: #EE1D25;
+$secondary-color: #e54a5a;
 $border-color: #dddddd;
 
 /* BUTTON COLOR REWRITE*/
@@ -222,13 +222,17 @@ input:-ms-input-placeholder {
     font-size: 120%;
 }
 
-#basket-user {
+.basket-user {
     padding: 15px 0 0 0;
     font-size: 15px;
+
+    img {
+        width: 50px;
+    }
 }
 
 @media screen and (max-width: 767px) {
-    #basket-user {
+    .basket-user {
         margin: 0 auto;
         position: relative;
     }
@@ -255,8 +259,14 @@ input:-ms-input-placeholder {
         :visited {
             outline: none;
         }
+
+        img {
+            width: 50px;
+        }
     }
 }
+
+
 /*Login container*/
 .login-container {
     position: absolute;
@@ -877,4 +887,36 @@ input:-ms-input-placeholder {
 .map {
     border: solid 1px $border-color;
     height: 333px;
+}
+
+/* DIALOG - LEAVE ITEMS IN CART?*/
+.ui-dialog {
+    border: solid 1px $border-color !important;
+    border-radius: 10px !important;
+    padding: 5px !important;
+}
+
+.keep-button {
+    background-color: $primary-color !important;
+    border: solid 1px white !important;
+    border-radius: 5px !important;
+    color: white !important;
+}
+
+.erase-button {
+    background-color: $secondary-color !important;
+    border: solid 1px white !important;
+    border-radius: 5px !important;
+    color: white !important;
+}
+
+.ui-dialog-titlebar {
+    background-color: $primary-color !important;
+    border: solid 1px white !important;
+    border-radius: 5px !important;
+    color: white !important;
+}
+
+.no-close .ui-dialog-titlebar-close {
+    display: none;
 }
