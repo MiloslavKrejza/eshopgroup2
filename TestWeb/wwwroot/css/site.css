@@ -390,6 +390,23 @@ input:-ms-input-placeholder {
   padding: 8px 55px;
   border-radius: 5px; }
 
+/* User details - All orders*/
+.order-list-heading {
+  font-size: 17px;
+  font-weight: bold;
+  padding: 10px 0; }
+
+.list-orders {
+  padding: 10px;
+  font-weight: bold; }
+  .list-orders button {
+    border: solid 1px #dddddd;
+    border-radius: 5px;
+    background-color: #ffffff; }
+
+.list-products {
+  padding: 10px 20px; }
+
 /*CATALOGUE*/
 /*Book profile*/
 .rating img {

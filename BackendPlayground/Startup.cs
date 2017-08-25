@@ -55,8 +55,8 @@ namespace BackendPlayground
             services.AddTransient<UserService, UserService>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
 
-            services.AddTransient<IFilteringRepository, FilteringRepository>(sp => { return new FilteringRepository(Configuration.GetConnectionString("Trainee.Business")); });
-            services.AddTransient<IProductRatingRepository, ProductRatingRepository>(sp => { return new ProductRatingRepository(Configuration.GetConnectionString("Trainee.Business")); });
+            services.AddTransient<IFilteringRepository, FilteringRepository>(sp => new FilteringRepository(Configuration.GetConnectionString("Trainee.Business")));
+            services.AddTransient<IProductRatingRepository, ProductRatingRepository>(sp => new ProductRatingRepository(Configuration.GetConnectionString("Trainee.Business")));
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
@@ -69,8 +69,8 @@ namespace BackendPlayground
             services.AddTransient<IOrderItemRepository, OrderItemRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IShippingRepository, ShippingRepository>();
-            services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>(sp => { return new CategoryRelationshipRepository(Configuration.GetConnectionString("Trainee.Business")); });
-            services.AddTransient<IProductRepository, ProductRepository>(sp => { return new ProductRepository(services.BuildServiceProvider().GetService<CatalogueDbContext>(), Configuration.GetConnectionString("Trainee.Catalogue.Cat")); });
+            services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>(sp => new CategoryRelationshipRepository(Configuration.GetConnectionString("Trainee.Business")));
+            services.AddTransient<IProductRepository, ProductRepository>(sp => new ProductRepository(services.BuildServiceProvider().GetService<CatalogueDbContext>(), Configuration.GetConnectionString("Trainee.Catalogue.Cat")));
             services.AddTransient<IReviewRepository, ReviewRepository>();
 
             services.AddTransient<BusinessService, BusinessService>();

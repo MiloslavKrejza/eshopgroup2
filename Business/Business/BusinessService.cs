@@ -487,7 +487,7 @@ namespace Trainee.Business.Business
                     CartItem existingItem = null;
                     if (!delete)
                     {
-                        existingItem = _cartItemRepository.GetCartItems().FirstOrDefault(ci => (ci.UserId == userId) && (ci.ProductId == item.ProductId));
+                        existingItem = _cartItemRepository.GetCartItems().FirstOrDefault(ci => ci.UserId == userId && ci.ProductId == item.ProductId);
                     }
                     if (existingItem != null)
                     {

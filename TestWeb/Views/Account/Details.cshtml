@@ -2,6 +2,7 @@
 @using Trainee.Core.DAL.Entities
 @using TestWeb.Models.AccountViewModels
 @using Trainee.Business.DAL.Entities
+@using Trainee.Catalogue.DAL.Entities
 
 @{
     ViewData["Title"] = "Profil uživatele";
@@ -9,7 +10,8 @@
 
 
 
-<div class="container">
+
+<div class="container bottom-padding">
     <h2 class="text-indent">@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
 
     <div class="row row-centered profile">
@@ -57,31 +59,81 @@
 </div>
 <hr />
 
-<div class="all-orders">
-    <h3>Moje objednávky</h3>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <tr>
-                <th width="22%">Datum objednávky</th>
-                <th width="22%">Číslo objednávky</th>
-                <th width="22%">Stav objednávky</th>
-                <th width="22%">Celková cena</th>
-                <th width="12%"></th>
-            </tr>
-            @foreach (Order o in Model.Orders)
-            {
-                <tr>
-                    <td>@o.Date</td>
-                    <td>@o.Id</td>
-                    <td>@o.OrderState.Name</td>
-                    <td></td>
-                    <td><span class="glyphicon glyphicon-menu-down"></span></td>
-                </tr>
-            }
 
-        </table>
-    </div>
+<h3>Moje objednávky</h3>
+
+<div class="row order-list-heading">
+    <div class="col-md-3">Datum</div>
+    <div class="col-md-3">Číslo</div>
+    <div class="col-md-2">Stav</div>
+    <div class="col-md-2">Celková cena</div>
+    <div class="col-md-2">Produkty</div>
 </div>
+
+
+@{            /* List all orders, hide the details */
+    var o = Model.Orders;
+    for (int i = 0; i < o.Count; i++)
+    {
+        <div class="row list-orders">
+            <div class="col-md-3 text-indent">@o[i].Date</div>
+            <div class="col-md-3">#@o[i].Id</div>
+            <div class="col-md-2">@o[i].OrderState.Name</div>
+            <div class="col-md-2">
+                @{
+                    decimal totalPrice = 0;
+                    foreach (OrderItem ord in o[i].OrderItems)
+                    {
+                        totalPrice += ord.Price * ord.Amount;
+                    }
+                }
+                @String.Format("{0:c}", totalPrice)
+            </div>
+            <div class="col-md-2"><button type="button" data-toggle="collapse" data-target="#order-details-@i"><span class="glyphicon glyphicon-menu-down"></span></button></div>
+        </div>
+
+                    /* List all books in order, toggle on button click */
+
+
+                    <div class="row collapse" id="order-details-@i">
+                        <div class="col-md-12">
+                            @{ var oi = o[i].OrderItems;
+                                for (int j = 0; j < oi.Count; j++)
+                                {
+                                    <div class="row list-products">
+                                        <div class="col-md-4">@oi[j].Product.Name</div>
+                                        <div class="col-md-4">
+                                            @{
+                                                var aut = oi[j].Product.Book.AuthorsBooks;
+                                                for (int k = 0; k < aut.Count; k++)
+                                                {
+                                                    @aut[k].Author.Surname
+                                                    if (k != aut.Count - 1)
+                                                    {
+                                                        @Html.Raw(", ")
+                                                    }
+                                                }
+                                            }
+                                        </div>
+                                        <div class="col-md-2 text-center">@oi[j].Amount</div>
+                                        <div class="col-md-2">
+                                            @{
+                                                decimal totalProductPrice = 0;
+                                                totalProductPrice = oi[j].Amount * oi[j].Price;
+                                            }
+                                            @String.Format("{0:c}", totalProductPrice)
+                                        </div>
+                                    </div>
+                                                }
+                            }
+                        </div>
+                    </div>
+                    <hr />
+
+                                                }
+}
+
+
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

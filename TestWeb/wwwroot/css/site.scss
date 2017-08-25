@@ -506,6 +506,29 @@ input:-ms-input-placeholder {
     border-radius: 5px;
 }
 
+/* User details - All orders*/
+
+.order-list-heading {
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.list-orders {
+    padding: 10px;
+    font-weight: bold;
+
+    button {
+        border: solid 1px $border-color;
+        border-radius: 5px;
+        background-color: $background-color;
+    }
+}
+
+.list-products {
+    padding: 10px 20px;
+}
+
 /*CATALOGUE*/
 /*Book profile*/
 .rating {
