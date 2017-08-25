@@ -76,7 +76,7 @@
     for (int i = 0; i < o.Count; i++)
     {
         <div class="row list-orders">
-            <div class="col-md-3 text-indent">@o[i].Date</div>
+            <div class="col-md-3 text-indent">@String.Format("{0: d. M. yyyy}", o[i].Date)</div>
             <div class="col-md-3">#@o[i].Id</div>
             <div class="col-md-2">@o[i].OrderState.Name</div>
             <div class="col-md-2">
