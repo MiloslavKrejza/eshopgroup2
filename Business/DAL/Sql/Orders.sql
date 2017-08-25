@@ -3,7 +3,7 @@
 GO
 
 CREATE TABLE [dbo].[Orders](
-	[Id][int] Identity(1,1) NOT NULL,
+	[Id][int] Identity(100000,1) NOT NULL,
 	[UserId][int] NULL,
 	[StateId][int] NOT NULL,
 	[PaymentId][int] NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE [dbo].[Orders](
 	[Postalcode][nvarchar](max) NOT NULL,
 	[Address][nvarchar](max) NOT NULL,
 
-	[Date][datetime] DEFAULT(GETDATE()) NOT NULL 
+	[Date][datetime] DEFAULT(GETDATE()) NOT NULL
 )
 GO
 
@@ -50,4 +50,3 @@ ALTER TABLE [dbo].[Orders]
 ADD CONSTRAINT [FK_Orders_Countries]
 	FOREIGN KEY([CountryId]) REFERENCES [dbo].[Countries]
 GO
-
