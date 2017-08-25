@@ -94,7 +94,7 @@ namespace TestWeb.Controllers
         [Route("/Account/Login")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null, bool fromLogin = false)
         {
             try
             {
@@ -142,13 +142,20 @@ namespace TestWeb.Controllers
                         if (isExist == null)    //failure due to unknown email
                         {
                             ViewData["EmailUnknown"] = true;
+                            TempData["EmailUnknown"] = true;
                         }
                         else        //failure due to wrong password
                         {
                             ViewData["WrongPassword"] = true;
+                            TempData["WrongPassword"] = true;
                         }
+                        if (fromLogin)
+                        {
+                            ViewData["FromLogin"] = true;
 
-                        return View(model);
+                            return View();
+                        }
+                        return RedirectToLocal(returnUrl);
 
                     }
                 }

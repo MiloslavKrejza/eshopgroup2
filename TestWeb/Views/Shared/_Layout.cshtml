@@ -39,6 +39,16 @@
     var user = await UserManager.GetUserAsync(User);
     var cart = user != null ? BusinessService.GetCart(user.Id).data : null;
 
+
+    if (TempData["EmailUnknown"] != null)
+    {
+        ViewData["EmailUnknown"] = true;
+    }
+    if (TempData["WrongPassword"] != null)
+    {
+        ViewData["WrongPassword"] = true;
+    }
+
 }
 
 
@@ -118,6 +128,14 @@
             <div class="col-md-4 login-container">
                 <div class="container" id="login" style="display:none" ;>
                     @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel(), ViewData)
+
+                    @if (ViewData["EmailUnknown"] != null || ViewData["WrongPassword"] != null)
+                    {
+                        if (Context.Request.Path.Value.IndexOf("Login", StringComparison.CurrentCultureIgnoreCase) < 0)
+                        {
+                            <script>toggleLogin()</script>
+                        }
+                    }
                 </div>
             </div>
         </div>

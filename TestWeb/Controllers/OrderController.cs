@@ -267,6 +267,10 @@ namespace Eshop2.Controllers
         // GET: /Order/OrderLogin/
         public IActionResult OrderLogin()
         {
+            if(_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Redirect");
+            }
             return View();
         }
 
