@@ -20,14 +20,17 @@
 
 @{if (ViewData["emptyCart"] != null)
     {
-        <p class="text-center">Ještě tu není žádná knížka.</p>
-        <h4 class="text-center"><a asp-controller="Home" asp-action="index">Vyražte nakupovat!</a></h4>
-        <div class="row">
-            <div class="col-md-6"><img src="~/images/coolbooks.jpg" alt="cool books" /></div>
-            <div class="col-md-6"><img src="~/images/needbook.png" alt="need a book?" /></div>
+        <div class="row empty-cart">
+            <p class="text-center">Ještě tu není žádná knížka.</p>
+            <h4 class="text-center"><a asp-controller="Home" asp-action="index">Vyražte nakupovat!</a></h4>
+
+            <div class="col-md-6 text-center"><img src="~/images/coolbooks.jpg" alt="cool books" /></div>
+            <div class="col-md-6 text-center"><img src="~/images/needbook.png" alt="need a book?" /></div>
         </div>
     }
+
     else
+
     {
         <div id="cart-wrapper">
             @foreach (CartItem c in Model.Cart)

@@ -115,6 +115,9 @@ namespace TestWeb.Controllers
 
                         //ToDo update cart
                         CookieHelper helper = new CookieHelper(_accessor);
+
+                        if(!helper.IsVisitorIdNull)
+                            helper.SetOldVisitorId(helper.GetVisitorId());
                         helper.SetVisitorId(user.Id.ToString());
 
                         return RedirectToLocal(returnUrl);

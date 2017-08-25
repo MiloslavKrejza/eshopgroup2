@@ -20,22 +20,26 @@ namespace Eshop2.Models.OrderViewModels
         [Display(Name = "Jméno")]
         [Required(ErrorMessage = "Prosím vyplňte své jméno.")]
         public string Name { get; set; }
-
+        
         [Display(Name = "Příjmení")]
         [Required(ErrorMessage = "Prosím vyplňte své příjmení.")]
         public string Surname { get; set; }
 
+        [Required(ErrorMessage = "Prosím vyplňte telefon.")]
         [Display(Name = "Telefon")]
         [Phone(ErrorMessage = "Prosím vyplňte telefonní číslo.")]
         public string Phone { get; set; }
 
+        [Required(ErrorMessage = "Prosím vyplňte ulici.")]
         [Display(Name = "Ulice")]
         public string Street { get; set; }
 
+        [Required(ErrorMessage = "Prosím vyplňte PSČ.")]
         [Display(Name = "PSČ")]
         [MaxLength(50, ErrorMessage = "Prosím vyplňte PSČ.")]
         public string PostalCode { get; set; }
 
+        [Required(ErrorMessage = "Prosím vyplňte město.")]
         [Display(Name = "Město")]
         public string City { get; set; }
 
@@ -54,7 +58,6 @@ namespace Eshop2.Models.OrderViewModels
         public List<Shipping> Shipping { get; set; }
         public List<CartItem> Items { get; set; }
         public List<Country> Countries { get; set; }
-        public List<CartItem> Cart { get; set; }
 
 
 

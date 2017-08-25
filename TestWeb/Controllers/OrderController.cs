@@ -19,7 +19,6 @@ using Trainee.User.DAL.Entities;
 using Trainee.User.Business;
 
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Eshop2.Controllers
 {
@@ -49,7 +48,7 @@ namespace Eshop2.Controllers
             try
             {
                 //user tried to order, but the cart is empty
-                ViewData["emptyCart"] = TempData["emptyCart"];
+                ViewData["emptyOrder"] = TempData["emptyOrder"];
 
 
                 CookieHelper cookieHelper = new CookieHelper(_accessor);
@@ -75,14 +74,16 @@ namespace Eshop2.Controllers
                 if(result.isEmpty)
                 {
                     cart = new List<CartItem>();
-                    ViewData["emptyCart"] = true;
                 }
                 else
                 {
                     cart = result.data;
                 }
                
-
+                if(cart.Count == 0)
+                {
+                    ViewData["emptyCart"] = true;
+                }
 
                 CartViewModel model = new CartViewModel() { Cart = cart };
 

@@ -31,7 +31,7 @@ namespace Eshop2.Abstraction
             return cookieId;
         }
 
-        public bool IsVisitorIsNull
+        public bool IsVisitorIdNull
         {
             get
             {
@@ -47,6 +47,16 @@ namespace Eshop2.Abstraction
         public void DeleteVisitorId()
         {
             _accessor.HttpContext.Response.Cookies.Delete("VisitorId");
+        }
+
+        public void SetOldVisitorId(string oldVisitorId)
+        {
+            _accessor.HttpContext.Response.Cookies.Append("OldVisitorId", oldVisitorId);
+        }
+
+        public void DeleteOldVisitorId()
+        {
+            _accessor.HttpContext.Response.Cookies.Delete("OldVisitorId");
         }
     }
 }
