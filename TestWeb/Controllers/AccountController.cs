@@ -280,7 +280,7 @@ namespace TestWeb.Controllers
                                 PhoneNumber = model.Phone,
                                 PostalCode = model.PostalCode,
                                 ProfileStateId = profileState,
-                                ProfilePicAddress = "default.jpg"
+                                ProfilePicAddress = "default.png"
                             };
 
 

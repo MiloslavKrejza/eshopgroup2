@@ -217,47 +217,65 @@
 	<a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="" asp-route-pageNum=""></a>
 	<!-- pager -->
 	@if (Model.PageNum >= 1)
-	{
-		var LastPage = (int)Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize);
-		int startPage;
+    {
+        var LastPage = (int)Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize);
+        if (LastPage > 7)
+        {
+            int startPage;
 
-		if (Model.PageNum <= 4)
-		{
-			startPage = 2;
-		}
-		else if (LastPage - Model.PageNum <=3)
-		{
-			startPage = LastPage - 5;
-		}
-		else
-		{
-			startPage = Model.PageNum.Value - 2;
-		}
+            if (Model.PageNum <= 4)
+            {
+                startPage = 2;
+            }
+            else if (LastPage - Model.PageNum <= 3)
+            {
+                startPage = LastPage - 5;
+            }
+            else
+            {
+                startPage = Model.PageNum.Value - 2;
+            }
 
-		<ul class="pagination">
-			@if (Model.PageNum > 0)
-			{
-				<li class="@(Model.PageNum == 1 ? "active" : "") "><span class="paging-span" page-num="1">První</span></li>
+            <ul class="pagination">
+                @if (Model.PageNum > 0)
+                {
+                    <li class="@(Model.PageNum == 1 ? "active" : "") "><span class="paging-span" page-num="1">První</span></li>}
 
-			}
+                @for (int i = 0; i < 5; i++)
+                {
+                    <li class="@(startPage + i == Model.PageNum ? "active" : "")">
+                        <span class="paging-span" page-num="@(startPage + i)">@(startPage + i)</span>
+                    </li>}
 
-			@for (int i = 0; i < 5; i++)
-			{
-				<li class="@(startPage + i == Model.PageNum ? "active" : "")">
-					<span class="paging-span" page-num="@(startPage + i)">@(startPage + i)</span>
-				</li>
-			}
-
-			@if (Model.PageNum <= LastPage)
-			{
-
+                @if (Model.PageNum <= LastPage)
+                {
 
 
-				<li class=@(LastPage == Model.PageNum ? "active" : "" )>
-				<span class="paging-span" page-num="@(Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize))">Poslední</span>
-			
-				</li>			
-			}
-		</ul>
-	 }
+
+                    <li class=@(LastPage == Model.PageNum ? "active" : "" )>
+                        <span class="paging-span" page-num="@(Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize))">Poslední</span>
+
+                    </li>}
+            </ul>
+        }
+        else
+        {
+             <ul class="pagination">
+                 <li class="@(Model.PageNum == 1 ? "active" : "") "><span class="paging-span" page-num="1">První</span></li>
+               @for (int i = 2; i < LastPage; i++)
+               {
+                <li class="@(i == Model.PageNum ? "active" : "")">
+                    <span class="paging-span" page-num="@(i)">@(+i)</span>
+                </li>
+               }
+               @if (LastPage > 1)
+               {
+                <li class="@(LastPage == Model.PageNum ? "active" : "")">
+                    <span class="paging-span" page-num="@(LastPage)">Poslední</span>
+                </li>
+               }
+             </ul>
+        }
+
+    }
 </div>
