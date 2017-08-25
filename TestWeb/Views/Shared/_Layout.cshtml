@@ -92,13 +92,13 @@
             <div class="col-md-2">
                 <a asp-area="" asp-controller="Home" asp-action="Index"><img class="logo img-responsive" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
             </div>
-            <div id="basket-user" class="col-md-2 col-md-offset-8">
+            <div class="basket-user col-md-2 col-md-offset-8">
                 <a asp-area="" asp-controller="Order" asp-action="cart" class="btn basket-user-btn main-background">
-                    <img src="~/images/cart-34-48.ico" alt="cart" /><br />
+                    <img src="~/images/cart.svg" alt="cart" /><br />
                     <p>Košík</p>
                 </a>
                 <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
-                    <img src="~/images/user-2-48.png" alt="cart" /><br />
+                    <img src="~/images/user.svg" alt="cart" /><br />
                     <p id="login-link">Přihlásit</p>
                 </button>
 
@@ -154,7 +154,7 @@
                     foreach (Category c in currentCategory.Children)
                     {
                         <div class="list-group-item menu-item main-background">
-                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><!--<img src="~/images/(c.ico).svg" />-->@c.Name</p></a>
+                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><img src="~/images/@(c.Name).svg" /> @c.Name</p></a>
                         </div>
 
                     }
@@ -247,14 +247,14 @@
         {
             //do not remove element id without asking! Is used in Redirect.cshtml view
             <div id="cart-dialog" title="Chcete si ponechat košík?">
-                
+
                 <p>Chcete si ponechat následující věci v košíku?</p>
-            
-                @foreach (var item in cart)
-                {
-                    <p>@item.Product.Name</p>
-                }
-         
+                <ul>
+                    @foreach (var item in cart)
+                    {
+                        <li>@item.Product.Name</li>
+                    }
+                </ul>
             </div>
         }
         else

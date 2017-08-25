@@ -45,10 +45,12 @@ $(function () {
         width: 400,
         modal: true,
         autoOpen: true,
+        dialogClass: "no-close",
         buttons:
         [
             {
                 text: "Ponechat",
+                "class": "keep-button",
                 click: function () {
                     transformCart(false);
                     $("#cart-dialog").dialog("close");
@@ -56,6 +58,7 @@ $(function () {
             },
             {
                 text: "Smazat",
+                "class": "erase-button",
                 click: function () {
                     transformCart(true);
                 }
