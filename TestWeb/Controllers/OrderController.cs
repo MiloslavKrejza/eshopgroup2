@@ -255,7 +255,7 @@ namespace Eshop2.Controllers
             //page confirming the order had been sent
             ViewData["OrderId"] = TempData["OrderId"];
             if (ViewData["OrderId"] == null)
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Index", "Home");
 
             return View();
         }
