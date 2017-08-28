@@ -483,6 +483,10 @@ input:-ms-input-placeholder {
 .paging-span:hover {
   cursor: pointer; }
 
+#priceFilter {
+  width: 90%;
+  margin-top: 12px; }
+
 .slider_tooltip {
   position: absolute;
   top: -8px;
@@ -494,7 +498,7 @@ input:-ms-input-placeholder {
   outline: none; }
 
 .filters select {
-  margin-bottom: 5px; }
+  margin-bottom: 10px; }
 
 .filter-btn {
   position: relative;

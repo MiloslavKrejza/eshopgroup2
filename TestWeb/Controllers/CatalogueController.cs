@@ -159,8 +159,8 @@ namespace Eshop2.Controllers
                         CategoryId = catId, //check this
 
                         //todo maxpricefilter
-                        MaxPrice = model.MaxPrice,
-                        MinPrice = model.MinPrice,
+                        MaxPrice = model.MaxPriceFilter,
+                        MinPrice = model.MinPriceFilter,
                         PageSize = model.PageSize,
                         SortingParameter = model.SortingParameter,
                         SortingType = model.SortingType,
