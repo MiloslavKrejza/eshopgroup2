@@ -32,10 +32,11 @@ namespace Trainee.Business.Business
         private readonly IPaymentRepository _paymentRepository;
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IFilteringRepository _filteringRepository;
+        private readonly IOrderStateRepository _orderStateRepository;
 
         public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
                 IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, ICartItemRepository cartRep, IOrderRepository orderRep,
-                IShippingRepository shipRep, IPaymentRepository payRep, IOrderItemRepository orderItemRep, IFilteringRepository filterRep)
+                IShippingRepository shipRep, IPaymentRepository payRep, IOrderItemRepository orderItemRep, IFilteringRepository filterRep, IOrderStateRepository ordStRep)
         {
             _categoryRelationshipRepository = catRRep;
             _productRatingRepository = prodRRep;
@@ -49,6 +50,7 @@ namespace Trainee.Business.Business
             _shippingRepository = shipRep;
             _orderItemRepository = orderItemRep;
             _filteringRepository = filterRep;
+            _orderStateRepository = ordStRep;
 
         }
         #region Products
@@ -390,6 +392,43 @@ namespace Trainee.Business.Business
             }
         }
 
+        public AlzaAdminDTO<List<Order>> GetUserOrders(int userId)
+        {
+            try
+            {
+                //might be even more slow-ish and should be maybe redone in sql (again)
+                
+                /*Stopwatch watch = new Stopwatch();
+                watch.Start();*/
+
+                var orders = _orderRepository.GetOrders().Where(o => o.UserId == userId).ToList();
+                var orderItems = _orderItemRepository.GetOrderItems().Where(oi => orders.Select(o => o.Id).Contains(oi.OrderId)).ToList();
+                var orderStates = _orderStateRepository.GetOrderStates();
+
+
+                var pids = orderItems.Select(oi => oi.ProductId).ToList();
+
+
+
+                var products = _productRepository.GetAllProducts().Where(p => pids.Contains(p.Id)).ToList();
+                var ratings = _productRatingRepository.GetRatings().Where(r => products.Select(p => p.Id).Contains(r.ProductId));
+
+                var prodsWithRating = products.Join(ratings, p => p.Id, r => r.ProductId, (p, r) => { return new ProductBO(p, r, null); });
+
+                var itemsProducts = orderItems.Join(prodsWithRating, oi => oi.ProductId, p => p.Id, (oi, p) => { oi.Product = p; return oi; }).ToList();
+                //var orderWithItems = orders.Join(itemsProducts, o => o.Id, ip=> ip.OrderId, (o, ip) => { o.OrderItems.Add(ip); return o; }).ToList();
+                orders = orders.Join(orderStates, o => o.StateId, os => os.Id, (o, os) => { o.OrderState = os; return o; }).ToList();
+
+                /*watch.Stop();
+                Debug.WriteLine($"GetUserOrders lasted {watch.Elapsed}");*/
+                return AlzaAdminDTO<List<Order>>.Data(orders);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<List<Order>>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
         public AlzaAdminDTO<OrderItem> AddOrderItem(OrderItem item)
         {
 
@@ -436,19 +475,19 @@ namespace Trainee.Business.Business
                 if (delete)
                 {
 
-                    var oldCartItems = _cartItemRepository.GetCartItems().Where(ci => ci.UserId == userId);
+                    var oldCartItems = _cartItemRepository.GetCartItems().Where(ci => ci.UserId == userId).ToList();
                     foreach (var item in oldCartItems)
                     {
                         _cartItemRepository.DeleteCartItem(item.VisitorId, item.ProductId);
                     }
                 }
-                var currentCart = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId);
+                var currentCart = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).ToList();
                 foreach (var item in currentCart)
                 {
                     CartItem existingItem = null;
                     if (!delete)
                     {
-                        existingItem = _cartItemRepository.GetCartItems().FirstOrDefault(ci => (ci.UserId == userId) && (ci.ProductId == item.ProductId));
+                        existingItem = _cartItemRepository.GetCartItems().FirstOrDefault(ci => ci.UserId == userId && ci.ProductId == item.ProductId);
                     }
                     if (existingItem != null)
                     {

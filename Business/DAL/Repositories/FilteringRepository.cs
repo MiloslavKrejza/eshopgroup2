@@ -13,11 +13,16 @@ namespace Trainee.Business.DAL.Repositories
 {
     public class FilteringRepository : IFilteringRepository
     {
-        string _connectionString;
+        readonly string _connectionString;
         public FilteringRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
+        /// <summary>
+        /// Using provided QueryParametersWrapper filters products and gets all related infromation
+        /// </summary>
+        /// <param name="parameters">Wrapper that contains all parameters for filtering and ordering</param>
+        /// <returns>Filtered products and related information</returns>
         public QueryResultWrapper FilterProducts(QueryParametersWrapper parameters)
         {
             Dictionary<int, Author> authors = new Dictionary<int, Author>();
@@ -27,9 +32,11 @@ namespace Trainee.Business.DAL.Repositories
             Dictionary<int, ProductState> productStates = new Dictionary<int, ProductState>();
             Dictionary<int, Category> categories = new Dictionary<int, Category>();
             Dictionary<int, Publisher> publishers = new Dictionary<int, Publisher>();
-            Dictionary<int, Country> countries = new Dictionary<int, Country>() { { 0, null } };
+            // {O,null} is a country that is assigned to authors without set country, it is removed before conversion to List
+            Dictionary<int, Country> countries = new Dictionary<int, Country>{ { 0, null } };
             decimal maxPrice = 0;
             decimal minPrice = decimal.MaxValue;
+            //Preparing query that will select all products from selected category and its child categories ignoring all filters
             string queryStringAll = $"SELECT * FROM dbo.ProductFilter({parameters.CategoryId},NULL,NULL,NULL,NULL,NULL,NULL) ORDER BY ProductId ASC";
             using (var conn = new SqlConnection(_connectionString))
             {
@@ -39,8 +46,10 @@ namespace Trainee.Business.DAL.Repositories
                 {
                     int previousProductId = 0;
                     Book book = null;
+                    //Adding all entities that filtered pruducts might consist of into their dictionaries
                     while (reader.Read())
                     {
+                       
                         int id = (int)reader["ProductId"];
                         if (book != null && previousProductId != id)
                         {
@@ -100,7 +109,7 @@ namespace Trainee.Business.DAL.Repositories
                         int languageId = (int)reader["LanguageId"];
                         if (!languages.ContainsKey(languageId))
                         {
-                            languages.Add(languageId, new Language() { Id = languageId, Name = (string)reader["LanguageName"]});
+                            languages.Add(languageId, new Language() { Id = languageId, Name = (string)reader["LanguageName"] });
                         }
                         int publisherId = (int)reader["PublisherId"];
                         if (!publishers.ContainsKey(publisherId))
@@ -111,15 +120,17 @@ namespace Trainee.Business.DAL.Repositories
                         minPrice = minPrice < price ? minPrice : price;
                         maxPrice = maxPrice > price ? maxPrice : price;
                     }
-                    if (book!=null)
-                    {
+                    if (book != null)
+                    {   //Adding last book into the dictionary
                         books.Add(book.BookId, book);
                     }
                 }
 
             }
             List<ProductBO> resultProducts = new List<ProductBO>();
+            
             string orderParameter;
+            //Choosing ordering type
             switch (parameters.SortingParameter)
             {
                 case Business.Enums.SortingParameter.Date:
@@ -129,13 +140,13 @@ namespace Trainee.Business.DAL.Repositories
                     orderParameter = "Price";
                     break;
                 case Business.Enums.SortingParameter.Rating:
-                    orderParameter = "AvgRating";
+                    orderParameter = "AverageRating";
                     break;
                 case Business.Enums.SortingParameter.Name:
                     orderParameter = "ProductName";
                     break;
                 default:
-                    orderParameter = "AvgRating";
+                    orderParameter = "AverageRating";
                     break;
             }
             string orderType;
@@ -151,17 +162,18 @@ namespace Trainee.Business.DAL.Repositories
                     orderType = "DESC";
                     break;
             }
+            //Preparing query for filter
             string queryString = $"SELECT * FROM [dbo].[ProductFilterLite] (@category, @languages,  @formats, @publishers , @authors  , @minPrice, @maxPrice) ORDER BY {orderParameter} {orderType};";
             using (var conn = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, conn);
                 command.Parameters.AddWithValue("@category", parameters.CategoryId);
-                command.Parameters.AddWithValue("@languages", ((parameters.Languages != null) ? (object)string.Join(",", parameters.Languages) : DBNull.Value));
-                command.Parameters.AddWithValue("@formats", ((parameters.Formats != null) ? (object)string.Join(",", parameters.Formats) : DBNull.Value));
-                command.Parameters.AddWithValue("@publishers", ((parameters.Publishers != null) ? (object)string.Join(",", parameters.Publishers) : DBNull.Value));
-                command.Parameters.AddWithValue("@authors", ((parameters.Authors != null) ? (object)string.Join(",", parameters.Authors) : DBNull.Value));
-                command.Parameters.AddWithValue("@minPrice", ((parameters.MinPrice != null) ? (object)parameters.MinPrice : DBNull.Value));
-                command.Parameters.AddWithValue("@maxPrice", ((parameters.MaxPrice != null) ? (object)parameters.MaxPrice : DBNull.Value));
+                command.Parameters.AddWithValue("@languages", parameters.Languages != null ? (object)string.Join(",", parameters.Languages) : DBNull.Value);
+                command.Parameters.AddWithValue("@formats", parameters.Formats != null ? (object)string.Join(",", parameters.Formats) : DBNull.Value);
+                command.Parameters.AddWithValue("@publishers", parameters.Publishers != null ? (object)string.Join(",", parameters.Publishers) : DBNull.Value);
+                command.Parameters.AddWithValue("@authors", parameters.Authors != null ? (object)string.Join(",", parameters.Authors) : DBNull.Value);
+                command.Parameters.AddWithValue("@minPrice", parameters.MinPrice != null ? (object)parameters.MinPrice : DBNull.Value);
+                command.Parameters.AddWithValue("@maxPrice", parameters.MaxPrice != null ? (object)parameters.MaxPrice : DBNull.Value);
                 conn.Open();
                 using (var reader = command.ExecuteReader())
                 {
@@ -171,12 +183,13 @@ namespace Trainee.Business.DAL.Repositories
                     {
                         //Has to be reviewed if column names change by chance
                         int id = (int)reader["ProductId"];
-                        int bookId = (int)reader["BookId"];
+                        
                         if (currentProduct != null)
                         {
                             resultProducts.Add(currentProduct);
                         }
                         //Getting columns from DB
+                        int bookId = (int)reader["BookId"];
                         string productName = (string)reader["ProductName"];
                         string text = reader["Text"] != DBNull.Value ? (string)reader["Text"] : null;
                         int categoryId = (int)reader["CategoryId"];
@@ -192,6 +205,7 @@ namespace Trainee.Business.DAL.Repositories
                         int? pageCount = reader["PageCount"] != DBNull.Value ? (int?)reader["PageCount"] : null;
                         decimal? avgRating = reader["AverageRating"] != DBNull.Value ? (decimal?)reader["AverageRating"] : null;
                         DateTime dateAdded = (DateTime)reader["DateAdded"];
+                        //creating the product using entities in dictionaries and provided ids
                         currentProduct = new ProductBO()
                         {
                             Id = id,
@@ -220,24 +234,30 @@ namespace Trainee.Business.DAL.Repositories
                         };
                     }
 
-                    if (currentProduct!=null)
+                    if (currentProduct != null)
                     {
-                        resultProducts.Add(currentProduct); 
+                        resultProducts.Add(currentProduct);
                     }
                     conn.Close();
                 }
-                
+
             }
+            //removing dummy country with id 0
             countries.Remove(0);
-            var result = new QueryResultWrapper();
-            result.Authors = new List<Author>(authors.Values);
-            result.Publishers = new List<Publisher>(publishers.Values);
-            result.Languages = new List<Language>(languages.Values);
-            result.Formats = new List<Format>(formats.Values);
-            result.ResultCount = resultProducts.Count;
-            result.MaxPrice = maxPrice;
-            result.MinPrice = minPrice;
-            result.Products = resultProducts.AsQueryable().Skip((parameters.PageNum - 1) * parameters.PageSize).Take(parameters.PageSize).ToList();
+            var result = new QueryResultWrapper
+            {
+                Authors = new List<Author>(authors.Values),
+                Publishers = new List<Publisher>(publishers.Values),
+                Languages = new List<Language>(languages.Values),
+                Formats = new List<Format>(formats.Values),
+                ResultCount = resultProducts.Count,
+                MaxPrice = maxPrice,
+                MinPrice = minPrice,
+                Products = resultProducts.AsQueryable()
+                    .Skip((parameters.PageNum - 1) * parameters.PageSize)
+                    .Take(parameters.PageSize)
+                    .ToList()
+            };
             return result;
 
         }

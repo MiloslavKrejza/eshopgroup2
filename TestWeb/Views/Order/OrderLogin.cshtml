@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Přihlášení k objednávce";
+
+    ViewData["ReturnUrl"] = "/Order/Redirect";
 }
 
 <h2>Chcete se přihlásit?</h2>
@@ -12,8 +14,8 @@
     </div>
     <div class="col-md-6">
         <div class="row text-center register-container">
-            <a asp-controller="Account" asp-action="register">
-                <div class="col-md-6"><img src="~/images/register.svg" /></div>
+            <a asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">
+                <div class="col-md-6"><img src="~/images/add-user.svg" /></div>
                 <div class="col-md-6"><p>Nemáte účet? Zaregistrujte se</p></div>
             </a>
         </div>

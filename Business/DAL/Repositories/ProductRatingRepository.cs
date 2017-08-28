@@ -13,7 +13,7 @@ namespace Trainee.Business.DAL.Repositories
 
     public class ProductRatingRepository : IProductRatingRepository
     {
-        string _connectionString;
+        readonly string _connectionString;
         public ProductRatingRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -36,7 +36,7 @@ namespace Trainee.Business.DAL.Repositories
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     reader.Read();
-                    res = new ProductRating() { ProductId = (int)reader[0], AverageRating = (reader[1]!=DBNull.Value)?(decimal?)reader[1]:null };
+                    res = new ProductRating() { ProductId = (int)reader[0], AverageRating = reader[1]!=DBNull.Value?(decimal?)reader[1]:null };
                 }
             }
             return res;

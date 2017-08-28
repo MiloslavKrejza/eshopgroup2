@@ -6,6 +6,7 @@ using Trainee.Core.DAL.Entities;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using TestWeb.ViewModels.Validations;
+
 namespace TestWeb.Models.AccountViewModels
 {
     /// <summary>
@@ -53,9 +54,10 @@ namespace TestWeb.Models.AccountViewModels
         [StringLength(100, ErrorMessage = "Heslo musí mít alespoň {2} a nejvýše {1} znaků.", MinimumLength = 6)]
         public string NewPassword { get; set; }
 
+        
         [Display(Name = "Potvrdit nové heslo")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Hesla musí být shodná.")]
+        [Compare("NewPassword", ErrorMessage = "Hesla musí být shodná.")]
         public string ConfirmNewPassword { get; set; }
 
         [Display(Name = "Heslo")]

@@ -1,5 +1,6 @@
 ﻿@using Eshop2.Models.OrderViewModels
 @using Trainee.Business.DAL.Entities
+@inject SignInManager<ApplicationUser> SignInManager;
 @model CartViewModel
 @{
     ViewData["Title"] = "Košík";
@@ -22,7 +23,7 @@
     {
         <div class="row empty-cart">
             <p class="text-center">Ještě tu není žádná knížka.</p>
-            <h4 class="text-center"><a asp-controller="Home" asp-action="index">Vyražte nakupovat!</a></h4>
+            <h4 class="text-center"><a asp-controller="Home" asp-action="index">Vyrazte nakupovat!</a></h4>
 
             <div class="col-md-6 text-center"><img src="~/images/coolbooks.jpg" alt="cool books" /></div>
             <div class="col-md-6 text-center"><img src="~/images/needbook.png" alt="need a book?" /></div>
@@ -33,6 +34,8 @@
 
     {
         <div id="cart-wrapper">
+
+
             @foreach (CartItem c in Model.Cart)
             {
                 <div class="row cart-item bottom-padding">
@@ -82,25 +85,32 @@
                 </div>
 
                                     }
+        </div>
+
+        <hr class="bottom-padding" />
+
+
+        <div class="row bottom-padding text-right total-price">
+            <p>
+                Celková cena:<span id="total-price-string"> @String.Format("{0:c}", totalPrice)</span>
+            </p>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
             </div>
-            }
-            <hr class="bottom-padding" />
-
-
-            <div class="row bottom-padding text-right total-price">
-                <p>
-                    Celková cena:<span id="total-price-string"> @String.Format("{0:c}", totalPrice)</span>
-                </p>
+            <div class="col-md-6 bottom-padding">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="btn btn-prim order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+                }
+                else
+                {
+                    <a class="btn btn-prim order-button" asp-controller="Order" asp-action="OrderLogin">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
+                }
             </div>
-
-
-            <div class="row">
-                <div class="col-md-6">
-                    <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
-                </div>
-                <div class="col-md-6 bottom-padding">
-                    <a class="btn btn-primary order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
-                </div>
-            </div>
-            }
-            
+        </div>
+                                    }
+}

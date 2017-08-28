@@ -9,6 +9,7 @@ function toggleLogin() {
     }
 }
 
+
 // Hide and show effect for edit page
 
 function showStuff(id, text, btn) {
@@ -35,6 +36,111 @@ $(".paging-span").click(function () {
 function changeUserBack() {
     document.getElementById("login-link").innerHTML = "Přihlásit";
 }
+
+//dialog for keeping/discarding cart items from previous log in
+$(function () {
+    $("#cart-dialog").dialog({
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        autoOpen: true,
+        dialogClass: "no-close",
+        buttons:
+        [
+            {
+                text: "Ponechat",
+                "class": "keep-button",
+                click: function () {
+                    transformCart(false);
+                    $("#cart-dialog").dialog("close");
+                }
+            },
+            {
+                text: "Smazat",
+                "class": "erase-button",
+                click: function () {
+                    transformCart(true);
+                }
+            }
+        ]
+
+
+    });
+})
+
+
+$(function () {
+
+    /* 
+     *
+      There were problems with ids, as the partial view and the login view closing buttons were essentially the same – so the id is dynamically set using view data in login.
+      If id "Prr" exists, it means the partial view is rendered in /Account/Login and therefor there are two buttons
+      (we show only one of them, and the partial view is being rendered after the "parent" view).
+      On the other hand, if only "Pr" exists, it is the only button and should be shown.
+    *
+    */
+    if (document.getElementById("Prr")) {
+        $("#Prr").show();
+    }
+    else {
+        $("#Pr").show();
+    }
+
+    /*
+    if ($("#login-page-container").parent().parent().attr('id') === "layout")
+    {
+        $('#layout').children().children('.close-tab').hide();
+        alert();
+    }
+    else
+    {
+        $('#login').children().children('.close-tab').show();
+    }*/
+})
+
+//calls a function for transfering the anonymous cart to user cart
+function transformCart(deleteOld) {
+
+    var dataType = 'application/json; charset=utf-8';
+    var data = {
+        DeleteOld: deleteOld
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/Order/MergeCarts',
+        dataType: 'json',
+        contentType: dataType,
+        data: JSON.stringify(data),
+        success: function (data) {
+            var json = JSON.parse(JSON.stringify(data));
+            if (json.isOK) {
+                console.log('Yay');
+                $("#cart-dialog").dialog("close");
+                location.reload();
+            }
+        },
+        error: function () {
+            console.log("What the flag?");
+        }
+    });
+}
+
+$(function () {
+    $(".redirection").click(function () {
+        location.href = this.href; // if we trigger the anchor click event, it does not simulate a physical click on the link
+    });
+
+    $(window).load(function () {
+        if ($("#cart-dialog").length === 0) {
+            $(".redirection").delay(2000).trigger("click");
+        }
+    });
+});
+
+
+
 ﻿$(".btn-addtocart").on('click', _.debounce(function () {
 
     var ProductCount = $(this).parent().children("input[name='product-count']").val();
@@ -54,33 +160,33 @@ function changeUserBack() {
             var json = JSON.parse(JSON.stringify(data));
             if (json.isOK) {
                 button.addClass('btn-success');
-                button.removeClass('btn-primary');
+                button.removeClass('btn-prim');
                 button.text('Přidáno');
                 setTimeout(function () {
                     button.removeClass("btn-success");
-                    button.addClass("btn-primary");
+                    button.addClass("btn-prim");
                     button.text("Do košíku");
                 }, 1500)
 
 
             } else {
                 button.addClass("btn-danger");
-                button.removeClass("btn-primary");
+                button.removeClass("btn-prim");
                 button.text("Chyba");
                 setTimeout(function () {
                     button.removeClass("btn-danger");
-                    button.addClass("btn-primary");
+                    button.addClass("btn-prim");
                     button.text("Do košíku");
                 }, 1500)
             }
         },
         error: function () {
             button.addClass("btn-danger");
-            button.removeClass("btn-primary");
+            button.removeClass("btn-prim");
             button.text("Chyba");
             setTimeout(function () {
                 button.removeClass("btn-danger");
-                button.addClass("btn-primary");
+                button.addClass("btn-prim");
                 button.text("Do košíku");
             }, 1500)
         }
@@ -175,34 +281,4 @@ $(".product-count").on('input change', function () {
     }
 
 });
-// Login Toogle
-function toggleLogin() {
-    var x = document.getElementById('login');
-    if (x.style.display === 'none') {
-        x.style.display = 'block';
-    } else {
-        x.style.display = 'none';
-    }
-}
 
-// Hide and show effect for edit page
-
-function showStuff(id, text, btn) {
-    //
-    document.getElementById(id).style.display = 'block';
-    // hide the login forms
-    document.getElementById(text).style.display = 'none';
-    // hide the button for login
-    btn.style.display = 'none';
-}
-
-// Effect for text on layout
-
-
-function changeUser() {
-    document.getElementById("login-link").innerHTML = "Účet";
-}
-
-function changeUserBack() {
-    document.getElementById("login-link").innerHTML = "Přihlásit";
-}

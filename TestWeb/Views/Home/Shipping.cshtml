@@ -1,0 +1,28 @@
+﻿@using Eshop2.Models.HomeViewModels;
+@using Trainee.Business.DAL.Entities;
+
+@model ShippingViewModel
+@{ 
+    ViewData["Title"] = "Doprava a platba";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>Doprava</h3>
+
+Podle vaší polohy v galaxii a finančních možností můžete zvolit následující způsoby dopravy:
+<ul>
+    @foreach (Shipping s in Model.Shipping)
+    {
+        <li>@s.Name - @String.Format("{0:c}", s.Price)</li>
+    }
+</ul>
+
+<h3>Platba</h3>
+
+<ul>
+    @foreach (Payment p in Model.Payment)
+    {
+        <li>@p.Name</li>
+    }
+</ul>

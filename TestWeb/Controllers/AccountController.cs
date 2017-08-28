@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.IO;
 using Eshop2.Abstraction;
 using Microsoft.AspNetCore.Http;
+using Trainee.Business.Business;
+using Trainee.Business.DAL.Entities;
 
 namespace TestWeb.Controllers
 {
@@ -35,6 +37,7 @@ namespace TestWeb.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;     //sign in functionality
         private readonly CountryService _countryService;    //provides countries
         private readonly UserService _profileService;       //provides additional non-ASP.NET user profile data
+        private readonly BusinessService _businessService;
         private readonly IHttpContextAccessor _accessor;
 
         //on more states, enums (or admin add)
@@ -49,7 +52,8 @@ namespace TestWeb.Controllers
             SignInManager<ApplicationUser> signInManager,
             CountryService countryService,
             UserService userService,
-            IHttpContextAccessor accessor)
+            IHttpContextAccessor accessor,
+            BusinessService businessService)
         {
             _env = env;
             _logger = logger;
@@ -58,6 +62,7 @@ namespace TestWeb.Controllers
             _countryService = countryService;
             _profileService = userService;
             _accessor = accessor;
+            _businessService = businessService;
         }
 
         //
@@ -89,7 +94,7 @@ namespace TestWeb.Controllers
         [Route("/Account/Login")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null, bool fromLogin = false)
         {
             try
             {
@@ -137,13 +142,20 @@ namespace TestWeb.Controllers
                         if (isExist == null)    //failure due to unknown email
                         {
                             ViewData["EmailUnknown"] = true;
+                            TempData["EmailUnknown"] = true;
                         }
                         else        //failure due to wrong password
                         {
                             ViewData["WrongPassword"] = true;
+                            TempData["WrongPassword"] = true;
                         }
+                        if (fromLogin)
+                        {
+                            ViewData["FromLogin"] = true;
 
-                        return View(model);
+                            return View();
+                        }
+                        return RedirectToLocal(returnUrl);
 
                     }
                 }
@@ -528,6 +540,13 @@ namespace TestWeb.Controllers
                     detailsModel.Countries = (List<Country>)resultCountry.data;
                 else
                     throw new Exception("Country database error");
+
+                var resultOrder = _businessService.GetUserOrders(userIdentity.Id);
+
+                if (resultOrder.isOK)
+                    detailsModel.Orders = resultOrder.isEmpty ? new List<Order>() : resultOrder.data;
+                else
+                    throw new Exception("Order database error");
 
                 return View(detailsModel);
 

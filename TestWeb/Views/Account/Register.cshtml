@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="row text-center">
-                <button class="btn btn-primary register-button" type="submit">Registrovat se</button>
+                <button class="btn btn-prim register-button" type="submit">Registrovat se</button>
             </div>
         </form>
     </div>
@@ -94,7 +94,7 @@
 
 @if (ViewData["RegisterCompleted"] != null)
 {
-    <h4 class="text-center text-danger">Vaše registrace proběhla úspěšně. <a asp-area="" asp-controller="Account" asp-action="Login">Můžete se přihlásit.</a></h4>
+    <h4 class="text-center text-danger">Vaše registrace proběhla úspěšně. <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]">Můžete se přihlásit.</a></h4>
 
 }
 

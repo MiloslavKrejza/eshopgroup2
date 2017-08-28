@@ -1,16 +1,20 @@
 ﻿@using Eshop2.Models.CatalogueViewModels;
 @using Trainee.Catalogue.Business;
 @using Trainee.Catalogue.DAL.Entities;
+@using Trainee.Business.Business;
 @inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 
 @inject CatalogueService CatalogueService;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IHttpContextAccessor ContextAccessor
+@inject BusinessService BusinessService
 
 @{
-
+    //return url
     ViewData["returnUrl"] = Context.Request.Path;
+
+    //categories
     Category currentCategory;
     if (Model is ProductsViewModel)
     {
@@ -26,15 +30,31 @@
     int parentId = currentCategory.Parent == null ? 1 : currentCategory.ParentId.Value;
 
     string parentName = currentCategory.Parent == null ? "Všechny knížky" : currentCategory.Parent.Name;
+
+    //transforming anonymous cart
+    string oldVisitorId = ContextAccessor.HttpContext.Request.Cookies["OldVisitorId"];
+    ViewData["OldVisitor"] = oldVisitorId;
+
+    //get user cart
+    var user = await UserManager.GetUserAsync(User);
+    var cart = user != null ? BusinessService.GetCart(user.Id).data : null;
+
+
+    if (TempData["EmailUnknown"] != null)
+    {
+        ViewData["EmailUnknown"] = true;
+    }
+    if (TempData["WrongPassword"] != null)
+    {
+        ViewData["WrongPassword"] = true;
+    }
+
 }
 
 
 
 
-@if(ContextAccessor.HttpContext.Request.Cookies["OldVisitorId"] != null)
-{
-    
-}
+
 
 
 <!DOCTYPE html>
@@ -72,13 +92,13 @@
             <div class="col-md-2">
                 <a asp-area="" asp-controller="Home" asp-action="Index"><img class="logo img-responsive" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
             </div>
-            <div id="basket-user" class="col-md-2 col-md-offset-8">
+            <div class="basket-user col-md-2 col-md-offset-8">
                 <a asp-area="" asp-controller="Order" asp-action="cart" class="btn basket-user-btn main-background">
-                    <img src="~/images/cart-34-48.ico" alt="cart" /><br />
+                    <img src="~/images/cart.svg" alt="cart" /><br />
                     <p>Košík</p>
                 </a>
                 <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
-                    <img src="~/images/user-2-48.png" alt="cart" /><br />
+                    <img src="~/images/user.svg" alt="cart" /><br />
                     <p id="login-link">Přihlásit</p>
                 </button>
 
@@ -108,6 +128,14 @@
             <div class="col-md-4 login-container">
                 <div class="container" id="login" style="display:none" ;>
                     @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel(), ViewData)
+
+                    @if (ViewData["EmailUnknown"] != null || ViewData["WrongPassword"] != null)
+                    {
+                        if (Context.Request.Path.Value.IndexOf("Login", StringComparison.CurrentCultureIgnoreCase) < 0)
+                        {
+                            <script>toggleLogin()</script>
+                        }
+                    }
                 </div>
             </div>
         </div>
@@ -126,7 +154,7 @@
                     foreach (Category c in currentCategory.Children)
                     {
                         <div class="list-group-item menu-item main-background">
-                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><!--<img src="~/images/(c.ico).svg" />-->@c.Name</p></a>
+                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><img src="~/images/@(c.Name).svg" /> @c.Name</p></a>
                         </div>
 
                     }
@@ -146,9 +174,9 @@
         <div class="footer">
             <div class="row">
                 <div class="col-md-6">
-                    <a href=""><p>Doprava a platba</p></a>
-                    <a href=""><p>Obchodní podmínky</p></a>
-                    <a href=""><p>Bezpečné nakupování</p></a>
+                    <a asp-controller="Home" asp-action="Shipping"><p>Doprava a platba</p></a>
+                    <a asp-controller="Home" asp-action="Conditions"><p>Obchodní podmínky</p></a>
+                    <a asp-controller="Home" asp-action="Contact">Kontakty</a>
                 </div>
                 <div class="col-md-6 text-right">
                     <p>
@@ -211,14 +239,29 @@
             });
         </script>
     -->
-   @* <button id="opener">open the dialog</button>
-    <div id="dialog" title="Dialog Title">I'm a dialog</div>
-    <script>
-        $("#dialog").dialog({ autoOpen: true });
-        $("#opener").click(function () {
-            $("#dialog").dialog("open");
-        });
-    </script>*@
+
+
+    @if (oldVisitorId != null)
+    {
+        if (cart?.Count > 0)
+        {
+            //do not remove element id without asking! Is used in Redirect.cshtml view
+            <div id="cart-dialog" title="Chcete si ponechat košík?">
+
+                <p>Chcete si ponechat následující věci v košíku?</p>
+                <ul>
+                    @foreach (var item in cart)
+                    {
+                        <li>@item.Product.Name</li>
+                    }
+                </ul>
+            </div>
+        }
+        else
+        {
+            <script>transformCart(false)</script>
+        }
+    }
 
 </body>
 </html>
