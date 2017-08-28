@@ -82,7 +82,10 @@ namespace BackendPlayground.Controllers
         {
             var repos = new FilteringRepository("Server=DEVSQL_STAZ\\DEV_STAZ;Database=group2;Trusted_Connection=True;");
             QueryParametersWrapper filter = new QueryParametersWrapper() { SortingType = SortType.Asc, SortingParameter = SortingParameter.Name, PageSize = 50, CategoryId = 4, PageNum = 1 };
-            var res = repos.FilterProducts(filter);
+            var res = repos.GetProducts(SortingParameter.Rating, 5,3);
+            repos.GetProducts(SortingParameter.Count, 4, 30,5);
+            repos.GetProducts(SortingParameter.Date, 1,7);
+            repos.GetProducts(SortingParameter.Rating, 3,11);
             return View();
 
         }
@@ -98,7 +101,7 @@ namespace BackendPlayground.Controllers
         [HttpGet]
         public IActionResult CookieTest()
         {
-            
+
             return View();
         }
 
