@@ -483,6 +483,10 @@ input:-ms-input-placeholder {
 .paging-span:hover {
   cursor: pointer; }
 
+#priceFilter {
+  width: 90%;
+  margin-top: 12px; }
+
 .slider_tooltip {
   position: absolute;
   top: -8px;
@@ -494,7 +498,7 @@ input:-ms-input-placeholder {
   outline: none; }
 
 .filters select {
-  margin-bottom: 5px; }
+  margin-bottom: 10px; }
 
 .filter-btn {
   position: relative;
@@ -602,6 +606,12 @@ input:-ms-input-placeholder {
   font-weight: bold;
   margin-left: 20px; }
 
+.order-price {
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 50px;
+  margin-top: 20px; }
+
 .order-radio {
   padding-left: 30px; }
 
@@ -631,12 +641,21 @@ input:-ms-input-placeholder {
     height: 90px; }
 
 /*Reviews*/
+.user-rating {
+  margin: 10px 0; }
+  .user-rating img {
+    height: 50px;
+    float: left;
+    margin-right: 5px; }
+
 .ratings {
   position: relative;
   vertical-align: middle;
   display: inline-block;
   color: #b1b1b1;
-  overflow: hidden; }
+  overflow: hidden;
+  margin: 0;
+  padding: 0; }
 
 .full-stars {
   position: absolute;
@@ -697,3 +716,4 @@ input:-ms-input-placeholder {
 
 .no-close .ui-dialog-titlebar-close {
   display: none; }
+
