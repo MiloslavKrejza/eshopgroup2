@@ -647,6 +647,11 @@ input:-ms-input-placeholder {
     cursor: pointer;
 }
 
+#priceFilter {
+    width: 90%;
+    margin-top: 12px;
+}
+
 .slider_tooltip {
     position: absolute;
     top: -8px;
@@ -660,7 +665,7 @@ input:-ms-input-placeholder {
 
 .filters {
     select {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 }
 

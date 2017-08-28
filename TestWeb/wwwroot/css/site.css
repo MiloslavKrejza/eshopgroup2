@@ -483,6 +483,10 @@ input:-ms-input-placeholder {
 .paging-span:hover {
   cursor: pointer; }
 
+#priceFilter {
+  width: 90%;
+  margin-top: 12px; }
+
 .slider_tooltip {
   position: absolute;
   top: -8px;
@@ -494,7 +498,7 @@ input:-ms-input-placeholder {
   outline: none; }
 
 .filters select {
-  margin-bottom: 5px; }
+  margin-bottom: 10px; }
 
 .filter-btn {
   position: relative;
@@ -586,6 +590,7 @@ input:-ms-input-placeholder {
     max-height: 400px;
     border-radius: 10px; }
 
+/* Redirection*/
 /* Order */
 .order {
   width: 80%;
@@ -696,4 +701,3 @@ input:-ms-input-placeholder {
 
 .no-close .ui-dialog-titlebar-close {
   display: none; }
-

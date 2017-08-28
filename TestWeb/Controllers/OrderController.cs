@@ -129,6 +129,7 @@ namespace Eshop2.Controllers
 
                 var cart = result.data;
 
+                //cannot order with empty cart
                 if (cart.Count == 0)
                 {
                     TempData["emptyOrder"] = true;
@@ -247,11 +248,6 @@ namespace Eshop2.Controllers
             }
         }
 
-        // GET: /Order/Summary/
-        public IActionResult Summary()
-        {
-            return View();
-        }
 
         // GET: /Order/OKPage/
         public IActionResult OKPage()
@@ -267,6 +263,7 @@ namespace Eshop2.Controllers
         // GET: /Order/OrderLogin/
         public IActionResult OrderLogin()
         {
+            //page displayed between cart and order if user is not signed in
             if(_signInManager.IsSignedIn(User))
             {
                 return RedirectToAction("Redirect");
@@ -315,6 +312,7 @@ namespace Eshop2.Controllers
         [HttpGet]
         public IActionResult Redirect()
         {
+            //redirect page leading to order
             return View();
         }
 

@@ -417,7 +417,7 @@ namespace Trainee.Business.Business
 
                 var itemsProducts = orderItems.Join(prodsWithRating, oi => oi.ProductId, p => p.Id, (oi, p) => { oi.Product = p; return oi; }).ToList();
                 //var orderWithItems = orders.Join(itemsProducts, o => o.Id, ip=> ip.OrderId, (o, ip) => { o.OrderItems.Add(ip); return o; }).ToList();
-                orders = orders.Join(orderStates, o => o.StateId, os => os.Id, (o, os) => { o.OrderState = os; return o; }).ToList();
+                orders = orders.Join(orderStates, o => o.StateId, os => os.Id, (o, os) => { o.OrderState = os; return o; }).OrderByDescending(o => o.Date).ToList();
 
                 /*watch.Stop();
                 Debug.WriteLine($"GetUserOrders lasted {watch.Elapsed}");*/

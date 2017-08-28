@@ -32,7 +32,7 @@ namespace Eshop2.Models.CatalogueViewModels
 
         //Filter parameters
         public int? PageNum { get; set; } = 1;
-        public int PageSize { get; set; } = 24; 
+        public int PageSize { get; set; } = 20; 
         public decimal? MinPriceFilter { get; set; }
         public decimal? MaxPriceFilter { get; set; }
         public int? AuthorsFilter { get; set; }
