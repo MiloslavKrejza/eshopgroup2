@@ -800,16 +800,25 @@ input:-ms-input-placeholder {
     margin: 0 auto;
 }
 
+
 .order-items {
     border: solid 1px $border-color;
     border-radius: 10px;
     padding: 10px 0 5px 0;
 }
 
+
 .order-items-heading {
     margin-bottom: 10px;
     font-weight: bold;
     margin-left: 20px;
+}
+
+.order-price {
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 50px;
+    margin-top: 20px;
 }
 
 .order-radio {
@@ -849,12 +858,25 @@ input:-ms-input-placeholder {
     }
 }
 /*Reviews*/
+
+.user-rating {
+    margin: 10px 0;
+
+    img {
+        height: 50px;
+        float: left;
+        margin-right: 5px;
+    }
+}
+
 .ratings {
     position: relative;
     vertical-align: middle;
     display: inline-block;
     color: #b1b1b1;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .full-stars {
