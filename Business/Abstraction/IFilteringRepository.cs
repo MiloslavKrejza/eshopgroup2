@@ -1,4 +1,7 @@
-﻿using Trainee.Business.Business.Wrappers;
+﻿using System.Linq;
+using Trainee.Business.Business.Enums;
+using Trainee.Business.Business.Wrappers;
+using Trainee.Business.DAL.Entities;
 
 namespace Trainee.Business.Abstraction
 {
@@ -11,5 +14,6 @@ namespace Trainee.Business.Abstraction
         /// <param name="parameters">Wrapper that contains all parameters for filtering and ordering</param>
         /// <returns>Filtered products and related information</returns>
         QueryResultWrapper FilterProducts(QueryParametersWrapper parameters);
+        IQueryable<ProductBO> GetProducts(SortingParameter parameter, int count,int categoryId, int? timeOffset=null);
     }
 }
