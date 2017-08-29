@@ -8,7 +8,7 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IHttpContextAccessor ContextAccessor
-@inject BusinessService BusinessService
+@inject OrderService OrderService
 
 @{
     //return url
@@ -37,7 +37,7 @@
 
     //get user cart
     var user = await UserManager.GetUserAsync(User);
-    var cart = user != null ? BusinessService.GetCart(user.Id).data : null;
+    var cart = user != null ? OrderService.GetCart(user.Id).data : null;
 
 
     if (TempData["EmailUnknown"] != null)

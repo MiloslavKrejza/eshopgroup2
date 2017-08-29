@@ -94,6 +94,7 @@ namespace TestWeb
 
             services.AddTransient<BusinessService, BusinessService>();
             services.AddTransient<CatalogueService, CatalogueService>();
+            services.AddTransient<OrderService, OrderService>();
 
             services.AddTransient<ICartItemRepository, CartItemRepository>();
             services.AddTransient<IOrderItemRepository, OrderItemRepository>();
