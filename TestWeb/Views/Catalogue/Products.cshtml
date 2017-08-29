@@ -65,7 +65,7 @@
         <div class="col-md-2">
             <label asp-for="PublishersFilter">Vydavatelství</label>
             <select class="form-control " asp-for="PublishersFilter">
-                <option selected value="@null">Filtrovat...</option>
+                <option selected value="@null">Všechna</option>
                 @{
                     foreach (Publisher p in Model.Publishers)
                     {
@@ -83,7 +83,7 @@
         <div class="col-md-2">
             <label asp-for="LanguagesFilter">Jazyk</label>
             <select class="form-control " asp-for="LanguagesFilter">
-                <option selected value="@null">Filtrovat...</option>
+                <option selected value="@null">Všechny</option>
                 @{
                     foreach (Language l in Model.Languages)
                     {
@@ -95,7 +95,7 @@
         <div class="col-md-2">
             <label asp-for="FormatsFilter">Formát</label>
             <select class="form-control " asp-for="FormatsFilter">
-                <option selected value="@null">Filtrovat...</option>
+                <option selected value="@null">Všechny</option>
                 @{
                     foreach (Format f in Model.Formats)
                     {
@@ -115,18 +115,19 @@
             <label asp-for="SortingType">Řadit...</label>
             <select class="form-control" asp-for="SortingType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <label asp-for="PageSize">Knih na stránce</label>
             <select class="form-control" asp-for="PageSize">
                 <option selected value="20">20</option>
+                <option value="8">8</option>
                 <option value="40">40</option>
                 <option value="100">100</option>
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 text-center">
             <button id="button-filter" type="submit" class="filter-btn btn btn-prim">Filtrovat</button>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 text-center">
             <a class="filter-btn btn btn-default" asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
         </div>
     </div>
@@ -207,6 +208,8 @@
 
                         if ((i + 1) % 4 == 0)
                         {
+                            if ((i + 1) % Model.PageSize == 0) {break;}
+
                             @Html.Raw("</div>")
                             @Html.Raw("<hr class='bottom-padding' />")
                             @Html.Raw("<div class='row'>")
