@@ -6,53 +6,7 @@ $primary-color: #2F3293;
 $secondary-color: #e54a5a;
 $border-color: #dddddd;
 
-/* BUTTON COLOR REWRITE*/
 
-.btn-prim {
-    color: #FFFFFF;
-    background-color: #2F3293;
-    border-color: #2F3293;
-}
-
-.btn-prim:hover,
-.btn-prim:focus,
-.btn-prim:active,
-.btn-prim.active,
-.open .dropdown-toggle.btn-prim {
-    color: #FFFFFF;
-    background-color: #2F3293;
-    border-color: #2F3293;
-}
-
-.btn-prim:active,
-.btn-prim.active,
-.open .dropdown-toggle.btn-prim {
-    background-image: none;
-}
-
-.btn-prim.disabled,
-.btn-prim[disabled],
-fieldset[disabled] .btn-prim,
-.btn-prim.disabled:hover,
-.btn-prim[disabled]:hover,
-fieldset[disabled] .btn-prim:hover,
-.btn-prim.disabled:focus,
-.btn-prim[disabled]:focus,
-fieldset[disabled] .btn-prim:focus,
-.btn-prim.disabled:active,
-.btn-prim[disabled]:active,
-fieldset[disabled] .btn-prim:active,
-.btn-prim.disabled.active,
-.btn-prim[disabled].active,
-fieldset[disabled] .btn-prim.active {
-    background-color: #2F3293;
-    border-color: #2F3293;
-}
-
-.btn-prim .badge {
-    color: #2F3293;
-    background-color: #FFFFFF;
-}
 
 /**********/
 
@@ -87,6 +41,9 @@ img {
     height: auto;
 }
 
+.no-padding {
+    padding: 0;
+}
 
 
 .col-centered {
@@ -640,6 +597,22 @@ input:-ms-input-placeholder {
     margin: 0 5px;
 }
 
+@media screen and (max-width: 1200px) {
+    .product-count {
+        margin: 0;
+    }
+}
+
+.product-count-decrease {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.product-count-increase {
+    cursor: pointer;
+    padding: 5px;
+}
+
 .btn-addtocart {
     margin-bottom: 10px;
 }
@@ -835,7 +808,6 @@ input:-ms-input-placeholder {
 /* ORDER */
 /* Cart */
 .cart-item {
-    margin-left: 20px;
 
     img {
         max-height: 100px;
@@ -846,9 +818,42 @@ input:-ms-input-placeholder {
     }
 }
 
+@media screen and (max-width: 993px) {
+    .responsive-cart {
+        width: 20%;
+        float: left;
+        height: 30px;
+    }
+}
+
+@media screen and (max-width: 677px) {
+    .responsive-cart {
+        width: 45%;
+        float: left;
+    }
+}
+
 .remove {
     color: red;
     cursor: pointer;
+}
+
+@media screen and (max-width: 1200px) {
+.order-buttons-div {
+    a {
+        float: left;
+    }
+}
+
+}
+
+@media screen and (max-width: 390px) {
+    .order-buttons-div {
+        a {
+            float: none;
+            margin-left: 15%;
+        }
+    }
 }
 
 .order-button {
@@ -856,10 +861,12 @@ input:-ms-input-placeholder {
     right: 50px;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 390px) {
     .order-button {
-        margin-top: 10px;
-        clear: right;
+        position: relative;
+        right: auto;
+        margin-top: 20px;
+        margin-left: 15%;
     }
 }
 
@@ -875,16 +882,6 @@ input:-ms-input-placeholder {
     padding-right: 50px;
     font-size: 16px;
     font-weight: bold;
-}
-
-.product-count-decrease {
-    cursor: pointer;
-    padding: 5px;
-}
-
-.product-count-increase {
-    cursor: pointer;
-    padding: 5px;
 }
 
 .empty-cart {
@@ -1064,3 +1061,50 @@ input:-ms-input-placeholder {
     display: none;
 }
 
+/* BUTTON COLOR REWRITE*/
+
+.btn-prim {
+    color: #FFFFFF;
+    background-color: #2F3293;
+    border-color: #2F3293;
+}
+
+.btn-prim:hover,
+.btn-prim:focus,
+.btn-prim:active,
+.btn-prim.active,
+.open .dropdown-toggle.btn-prim {
+    color: #FFFFFF;
+    background-color: #2F3293;
+    border-color: #2F3293;
+}
+
+.btn-prim:active,
+.btn-prim.active,
+.open .dropdown-toggle.btn-prim {
+    background-image: none;
+}
+
+.btn-prim.disabled,
+.btn-prim[disabled],
+fieldset[disabled] .btn-prim,
+.btn-prim.disabled:hover,
+.btn-prim[disabled]:hover,
+fieldset[disabled] .btn-prim:hover,
+.btn-prim.disabled:focus,
+.btn-prim[disabled]:focus,
+fieldset[disabled] .btn-prim:focus,
+.btn-prim.disabled:active,
+.btn-prim[disabled]:active,
+fieldset[disabled] .btn-prim:active,
+.btn-prim.disabled.active,
+.btn-prim[disabled].active,
+fieldset[disabled] .btn-prim.active {
+    background-color: #2F3293;
+    border-color: #2F3293;
+}
+
+.btn-prim .badge {
+    color: #2F3293;
+    background-color: #FFFFFF;
+}
