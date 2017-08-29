@@ -14,11 +14,11 @@ namespace TestWeb.Controllers
     /// </summary>
     public class HomeController : Controller
     {
-        private readonly BusinessService _businessService;
+        private readonly OrderService _orderService;
 
-        public HomeController(BusinessService busSer)
+        public HomeController(OrderService ordServ)
         {
-            _businessService = busSer;
+            _orderService = ordServ;
         }
 
         public IActionResult Index()
@@ -50,12 +50,12 @@ namespace TestWeb.Controllers
 
             ShippingViewModel model = new ShippingViewModel();
 
-            var resultShipping = _businessService.GetShippings();
+            var resultShipping = _orderService.GetShippings();
             if (!resultShipping.isOK)
                 return RedirectToAction("Error");
             model.Shipping = resultShipping.isEmpty ? new List<Shipping>() : resultShipping.data;
 
-            var resultPayment = _businessService.GetPayments();
+            var resultPayment = _orderService.GetPayments();
             if (!resultPayment.isOK)
                 return RedirectToAction("Error");
             model.Payment = resultPayment.isEmpty ? new List<Payment>() : resultPayment.data;
