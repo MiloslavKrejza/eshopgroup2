@@ -262,29 +262,53 @@ namespace Trainee.Business.DAL.Repositories
             return result;
 
         }
-
-        public IQueryable<ProductBO> GetProducts(SortingParameter parameter, int count,int categoryId, int? timeOffset = null)
+        /// <summary>
+        /// Method that gets first n products from database sorted by specified column. 
+        /// </summary>
+        /// <param name="parameter">Column to sort by</param>
+        /// <param name="type">Sorting order (ASC/DESC)</param>
+        /// <param name="count">Number of products to fetch</param>
+        /// <param name="categoryId">Category of fetched products</param>
+        /// <param name="timeOffset">Maximal age (in days) of orders that are included in calculation of the amount of sold products</param>
+        /// <returns>Requested products</returns>
+        public IQueryable<ProductBO> GetProducts(SortingParameter parameter, SortType type, int count, int categoryId, int? timeOffset = null)
         {
-            string order;
+            string sortParameter;
+            string sortType;
             switch (parameter)
             {
                 case SortingParameter.Date:
-                    order = "DateAdded";
+                    sortParameter = "DateAdded";
                     break;
                 case SortingParameter.Price:
-                    order = "Price";
+                    sortParameter = "Price";
                     break;
                 case SortingParameter.Rating:
-                    order = "AverageRating";
+                    sortParameter = "AverageRating";
                     break;
                 case SortingParameter.Count:
-                    order = "Count";
+                    sortParameter = "Count";
+                    break;
+                case SortingParameter.Name:
+                    sortParameter = "ProductName";
                     break;
                 default:
-                    order = "AverageRating";
+                    sortParameter = "AverageRating";
                     break;
             }
-            var queryString = $"SELECT * FROM dbo.Frontpage(@timeOffset,@category) ORDER BY {order} DESC";
+            switch (type)
+            {
+                case SortType.Asc:
+                    sortType = "ASC";
+                    break;
+                case SortType.Desc:
+                    sortType = "DESC";
+                    break;
+                default:
+                    sortType = "DESC";
+                    break;
+            }
+            var queryString = $"SELECT * FROM dbo.Frontpage(@timeOffset,@category) ORDER BY {sortParameter} {sortType}";
             var result = new List<ProductBO>();
             DateTime? date = null;
             if (timeOffset != null)
@@ -295,8 +319,8 @@ namespace Trainee.Business.DAL.Repositories
             using (var conn = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, conn);
-                command.Parameters.AddWithValue("@timeOffset",(object) date ?? DBNull.Value);
-                command.Parameters.AddWithValue("@category",categoryId);
+                command.Parameters.AddWithValue("@timeOffset", (object)date ?? DBNull.Value);
+                command.Parameters.AddWithValue("@category", categoryId);
                 conn.Open();
 
                 using (var reader = command.ExecuteReader())
