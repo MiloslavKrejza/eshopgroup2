@@ -15,12 +15,12 @@ namespace Eshop2.ViewComponents
         {
             _service = service;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(SortingParameter parameter, SortType type, int count, int categoryId, int? timeOffSet = null)
         {
-            var res = _service.GetFrontPage(SortingParameter.Rating, SortType.Desc, 4, 1);
+            var res = _service.GetFrontPage(parameter, type, count, categoryId, timeOffSet);
             var data = res.data;
             return View(data);
-            
+
         }
     }
 }

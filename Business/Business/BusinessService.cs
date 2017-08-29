@@ -28,9 +28,10 @@ namespace Trainee.Business.Business
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUserProfileRepository _userProfileRepository;
         private readonly IFilteringRepository _filteringRepository;
+        private readonly IFrontPageRepository _frontPageRepository;
 
         public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
-                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, IFilteringRepository filterRep)
+                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, IFilteringRepository filterRep, IFrontPageRepository frontRep)
         {
             _categoryRelationshipRepository = catRRep;
             _productRatingRepository = prodRRep;
@@ -39,6 +40,7 @@ namespace Trainee.Business.Business
             _categoryRepository = catRep;
             _userProfileRepository = userRep;
             _filteringRepository = filterRep;
+            _frontPageRepository = frontRep;
 
         }
         #region Products
@@ -277,6 +279,32 @@ namespace Trainee.Business.Business
             _reviewRepository.DeleteReview(userId, productId);
         }
         #endregion
+        #region FrontPage
+        public AlzaAdminDTO<FrontPageItem> GetFrontPageItem(int id)
+        {
+            try
+            {
+                return AlzaAdminDTO<FrontPageItem>.Data(_frontPageRepository.GetFrontPageItem(id));
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<FrontPageItem>.Error(e.Message);
+            }
+        }
 
+        public AlzaAdminDTO<List<FrontPageItem>> GetActivePageItems()
+        {
+            try
+            {
+                var result = _frontPageRepository.GetFrontPageItems().Where(fi => fi.Active == true).ToList();
+                return AlzaAdminDTO<List<FrontPageItem>>.Data(result);
+            }
+            catch(Exception e)
+            {
+                return AlzaAdminDTO<List<FrontPageItem>>.Error(e.Message);
+            }
+        }
+
+        #endregion
     }
 }
