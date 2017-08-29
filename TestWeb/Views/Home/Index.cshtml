@@ -34,28 +34,7 @@
 </div>
 <h2>Nejlepší horory</h2>
 <div class="row">
-    @{
-
-        for (int i = 0; i < 4; i++)
-        {
-
-            <div class="col-lg-3 text-center product">
-                <a asp-area="" asp-controller="catalogue" asp-action="book">
-                    <img class="book-picture" src="~/images/product_images/product_100.jpg" alt="book" />
-                    <p class="bold book-title">Harry Potter</p>
-                    <p class="book-authors">
-                        J.K. Rowling
-                    </p>
-
-                    <p class="italics">hardback</p>
-                    <p>@String.Format("{0:C}", 359)</p>
-                </a>
-                <button class="btn-addtocart btn btn-prim">Do košíku</button>
-
-            </div>
-
-        }
-    }
+    @await Component.InvokeAsync("Frontpage",new { });
 </div>
 <div class="index-commercial">
     <img src="~/images/index-commercial.png" alt="book commercial" />

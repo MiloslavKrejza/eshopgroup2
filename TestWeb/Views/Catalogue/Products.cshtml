@@ -24,7 +24,7 @@
                     range: true,
                     min: @Math.Floor(Model.MinPrice.Value),
                     max: @Math.Ceiling(Model.MaxPrice.Value),
-                    values: [ @Math.Floor(Model.MinPrice.Value), @Math.Ceiling(Model.MaxPrice.Value) ],
+                    values: [ @Math.Floor(Model.MinPriceFilter.Value), @Math.Ceiling(Model.MaxPriceFilter.Value) ],
                     slide: function (e, ui) {
                         tooltip($(this), ui);
                         minPriceInput.val(minPriceSlider.html());
@@ -76,8 +76,8 @@
         <div class="col-md-3">
             <label asp-for="MinPriceFilter">Cena</label>
             <div id="priceFilter"></div>
-            <input type="hidden" name="MinPriceFilter" value="@Math.Truncate(Model.MinPrice.Value)" id="min-price" />
-            <input type="hidden" name="MaxPriceFilter" value="@Math.Ceiling(Model.MaxPrice.Value)" id="max-price" />
+            <input type="hidden" name="MinPriceFilter" value="@Math.Truncate(Model.MinPriceFilter.Value)" id="min-price" />
+            <input type="hidden" name="MaxPriceFilter" value="@Math.Ceiling(Model.MaxPriceFilter.Value)" id="max-price" />
         </div>
 
         <div class="col-md-2">

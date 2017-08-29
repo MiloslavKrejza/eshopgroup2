@@ -151,7 +151,7 @@ namespace Eshop2.Controllers
                     {
                         model.PageNum = pageNum == null ? 1 : pageNum;
                     }
-                    
+
 
                     QueryParametersWrapper parameters = new QueryParametersWrapper
                     {
@@ -195,7 +195,8 @@ namespace Eshop2.Controllers
                     model.Products = result.Products;
                     model.Publishers = result.Publishers;
                     model.ResultCount = result.ResultCount;
-                    
+                    model.MaxPriceFilter = model.MaxPriceFilter ?? model.MaxPrice;
+                    model.MinPriceFilter = model.MinPriceFilter ?? model.MinPrice;
                     return View(model);
                 }
                 else

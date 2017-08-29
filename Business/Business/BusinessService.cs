@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using Trainee.Business.Abstraction;
+using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
 using Trainee.Catalogue.Abstraction;
@@ -45,14 +46,15 @@ namespace Trainee.Business.Business
 
         public AlzaAdminDTO<QueryResultWrapper> GetPageADO(QueryParametersWrapper parameters)
         {
-
-            return AlzaAdminDTO<QueryResultWrapper>.Data(_filteringRepository.FilterProducts(parameters));
-
-            /*catch (Exception e)
+            try
             {
-                throw;
+                return AlzaAdminDTO<QueryResultWrapper>.Data(_filteringRepository.FilterProducts(parameters));
+            }
+            catch (Exception e)
+            {
+
                 return AlzaAdminDTO<QueryResultWrapper>.Error(e.Message + Environment.NewLine + e.StackTrace);
-            }*/
+            }
         }
         /// <summary>
         /// Gets a page of product with applied filtering
@@ -217,6 +219,18 @@ namespace Trainee.Business.Business
             }
 
         }
+        public AlzaAdminDTO<List<ProductBO>> GetFrontPage(SortingParameter parameter, SortType type, int count, int categoryId, int? timeOffset = null)
+        {
+            try
+            {
+                return AlzaAdminDTO<List<ProductBO>>.Data(_filteringRepository.GetProducts(parameter, type, count, categoryId, timeOffset).ToList());
+            }
+            catch (Exception e)
+            {
+
+                return AlzaAdminDTO<List<ProductBO>>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
 
         #endregion
         #region Reviews
@@ -263,6 +277,6 @@ namespace Trainee.Business.Business
             _reviewRepository.DeleteReview(userId, productId);
         }
         #endregion
-       
+
     }
 }
