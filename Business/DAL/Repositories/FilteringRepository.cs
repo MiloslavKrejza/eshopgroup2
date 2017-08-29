@@ -329,7 +329,7 @@ namespace Trainee.Business.DAL.Repositories
                     int previousProductId = 0;
                     ProductBO currentProduct = null;
                     //read all products
-                    while (reader.Read() && productCount <= count)
+                    while (reader.Read() && productCount <= count )
                     {
                         //Has to be reviewed if column names change by chance
                         int id = (int)reader["ProductId"];
@@ -415,7 +415,11 @@ namespace Trainee.Business.DAL.Repositories
                         currentProduct.Book.AuthorsBooks.Add(ab);
 
                     }
-                    result.Add(currentProduct);
+                    if (result.Count < count)
+                    {
+                        result.Add(currentProduct);
+                    }
+
 
 
                 }

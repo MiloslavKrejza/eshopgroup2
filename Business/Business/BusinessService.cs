@@ -46,14 +46,15 @@ namespace Trainee.Business.Business
 
         public AlzaAdminDTO<QueryResultWrapper> GetPageADO(QueryParametersWrapper parameters)
         {
-
-            return AlzaAdminDTO<QueryResultWrapper>.Data(_filteringRepository.FilterProducts(parameters));
-
-            /*catch (Exception e)
+            try
             {
-                throw;
+                return AlzaAdminDTO<QueryResultWrapper>.Data(_filteringRepository.FilterProducts(parameters));
+            }
+            catch (Exception e)
+            {
+
                 return AlzaAdminDTO<QueryResultWrapper>.Error(e.Message + Environment.NewLine + e.StackTrace);
-            }*/
+            }
         }
         /// <summary>
         /// Gets a page of product with applied filtering

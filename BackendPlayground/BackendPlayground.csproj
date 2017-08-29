@@ -30,5 +30,8 @@
     <ProjectReference Include="..\Business\Trainee.Business.csproj" />
     <ProjectReference Include="..\Trainee.Catalogue\Trainee.Catalogue.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Shared\Components\My\" />
+  </ItemGroup>
 
 </Project>
