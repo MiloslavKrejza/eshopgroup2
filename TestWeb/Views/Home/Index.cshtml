@@ -12,7 +12,9 @@
     //TEMP!!
     FrontPageItem item = Model.FrontPageItems.FirstOrDefault(fi => fi.Name.Equals("Nejprodávanější fantasy"));
 }
+<img class="front-image img-responsive" src="~/images/frontpic.png" alt="front picture" />
 <h2>@item.Name</h2>
+
 <div class="row">
     @await Component.InvokeAsync("Frontpage", new { parameter = Enum.Parse(typeof(SortingParameter), item.SortingParameter), type = Enum.Parse(typeof(SortType), item.SortType), count = item.Count, categoryId = item.CategoryId, timeOffSet = item.TimeOffSet})
 </div>
@@ -21,6 +23,7 @@
     item = Model.FrontPageItems.FirstOrDefault(fi => fi.Name.Equals("Nejlepší horory"));
 }
 <h2>@item.Name</h2>
+
 <div class="row">
     @await Component.InvokeAsync("Frontpage", new { parameter = Enum.Parse(typeof(SortingParameter), item.SortingParameter), type = Enum.Parse(typeof(SortType), item.SortType), count = item.Count, categoryId = item.CategoryId, timeOffSet = item.TimeOffSet })
 </div>
@@ -31,6 +34,7 @@
     item = Model.FrontPageItems.FirstOrDefault(fi => fi.Name.Equals("Novinky v komiksech"));
 }
 <h2>@item.Name</h2>
+
 <div class="row">
     @await Component.InvokeAsync("Frontpage", new { parameter = Enum.Parse(typeof(SortingParameter), item.SortingParameter), type = Enum.Parse(typeof(SortType), item.SortType), count = item.Count, categoryId = item.CategoryId, timeOffSet = item.TimeOffSet })
 </div>

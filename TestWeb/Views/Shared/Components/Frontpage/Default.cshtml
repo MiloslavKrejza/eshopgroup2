@@ -1,17 +1,17 @@
 ﻿@using Trainee.Business.DAL.Entities;
 @model List<ProductBO>
-<div class="row">
+<div class="row front-row">
     @{
 
         for (int i = 0; i < Model.Count; i++)
         {
 
             ProductBO p = Model[i];
-            <div class="col-lg-3 text-center product">
+            <div class="text-center front-product">
                 <a asp-area="" asp-controller="catalogue" asp-action="book" asp-route-id="@p.Id">
                     <img class="book-picture" src="~/images/product_images/@p.PicAddress" alt="@p.Name" />
-                    <p class="bold book-title">@p.Name</p>
-                    <p class="book-authors">
+                    <p class="bold front-book-title">@p.Name</p>
+                    <p class="front-book-authors">
 
                         @{
                             @*Write out first two authors*@
@@ -31,53 +31,24 @@
                                 }
                                 else
                                 {
-                                    @Html.Raw(" a další")
+                                    @Html.Raw(",...")
                                     break;
 
                                 }
                             }
                         }
+                    </p>
                         <div class="ratings">
                             <div class="empty-stars"></div>
                             @{string averageRatingString = (p.AverageRating * 20).ToString().Replace(',', '.'); }
                             <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
                         </div>
-                    </p>
-
-                    @{
-                        if (p.State.Name!="Dostupná")
-                        {
-                            <p class="italics text-danger">@p.State.Name</p>
-                        }
-                        else
-                        {
-                            <p class="italics">@p.State.Name</p>
-                        }
-                    }
-
-                    <p>@String.Format("{0:C}", p.Price)</p>
+                    
                 </a>
-                <input type="hidden" value="@p.Id" name="product-id" />
-                <input type="hidden" name="product-count" class="hidden" value="1" />
-                @if (p.State.Name == "Dostupná")
-                {
-                    <button class="btn-addtocart btn btn-prim">Do košíku</button>
-                }
-                else
-                {
-                    <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
-                }
 
             </div>
 
-                        if ((i + 1) % 4 == 0)
-                        {
-                            @Html.Raw("</div>")
-                            @Html.Raw("<hr class='bottom-padding' />")
-                            @Html.Raw("<div class='row'>")
-                            }
-                        }
-
+                                }
     }
 
 </div>

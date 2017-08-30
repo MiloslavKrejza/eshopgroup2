@@ -243,7 +243,7 @@ input:-ms-input-placeholder {
 
 .menu-item a:hover {
   text-decoration: none;
-  font-size: 110%; }
+  font-weight: bold; }
 
 .menu-item img {
   height: 30px;
@@ -267,13 +267,14 @@ input:-ms-input-placeholder {
   text-decoration: none;
   cursor: pointer; }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 994px) {
   .footer {
     text-align: center !important; } }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 994px) {
   .footer .text-right {
-    text-align: center; } }
+    text-align: center;
+    margin-top: 10px; } }
 
 /*ACCOUNT*/
 /*Registration*/
@@ -553,8 +554,10 @@ input:-ms-input-placeholder {
     float: left; } }
 
 .product {
-  border-right: dashed 1px #dddddd;
-  margin-bottom: 20px; }
+  border: dashed 1px #dddddd;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding-top: 5px; }
   .product img {
     padding: 5px; }
   .product a {
@@ -573,11 +576,10 @@ input:-ms-input-placeholder {
 @media screen and (max-width: 570px) {
   .product {
     width: 100%;
-    float: none;
-    border-right: none; } }
+    float: none; } }
 
 .book-title {
-  height: 40px; }
+  height: 60px; }
 
 .book-authors {
   height: 40px; }
@@ -777,6 +779,49 @@ input:-ms-input-placeholder {
 
 .no-close .ui-dialog-titlebar-close {
   display: none; }
+
+/* FRONT  PAGE*/
+.front-product {
+  float: left;
+  width: 16%;
+  padding: 10px;
+  border: solid 1px #dddddd;
+  border-radius: 10px;
+  margin: 0 3px 10px 3px; }
+  .front-product img {
+    padding: 5px; }
+  .front-product a {
+    color: #4379C5 !important;
+    text-decoration: none;
+    cursor: pointer; }
+  .front-product a:hover {
+    color: #4379C5 !important;
+    text-decoration: none; }
+
+@media screen and (max-width: 1200px) {
+  .front-product {
+    width: 33%;
+    float: left; } }
+
+@media screen and (max-width: 570px) {
+  .front-product {
+    width: 100%;
+    float: none;
+    border-right: none; } }
+
+.front-book-title {
+  height: 60px; }
+
+.front-book-authors {
+  height: 60px; }
+
+.front-row {
+  width: 95%;
+  margin: 0 auto; }
+
+.front-image {
+  border-radius: 10px;
+  margin-top: 10px; }
 
 /* BUTTON COLOR REWRITE*/
 .btn-prim {

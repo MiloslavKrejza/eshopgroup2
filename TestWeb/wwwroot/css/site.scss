@@ -317,7 +317,7 @@ input:-ms-input-placeholder {
 
 .menu-item a:hover {
     text-decoration: none;
-    font-size: 110%;
+    font-weight: bold;
 }
 
 .menu-item img {
@@ -345,15 +345,16 @@ input:-ms-input-placeholder {
     cursor: pointer;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 994px) {
     .footer {
         text-align: center !important;
     }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 994px) {
     .footer .text-right {
         text-align: center;
+        margin-top:10px;
     }
 }
 /*ACCOUNT*/
@@ -754,8 +755,10 @@ input:-ms-input-placeholder {
 
 
 .product {
-    border-right: dashed 1px $border-color;
+    border: dashed 1px $border-color;
     margin-bottom: 20px;
+    border-radius: 10px;
+    padding-top: 5px;
 
     img {
         padding: 5px;
@@ -784,12 +787,11 @@ input:-ms-input-placeholder {
     .product {
         width: 100%;
         float: none;
-        border-right: none;
     }
 }
 
 .book-title {
-    height: 40px;
+    height: 60px;
 }
 
 .book-authors {
@@ -1060,6 +1062,65 @@ input:-ms-input-placeholder {
 .no-close .ui-dialog-titlebar-close {
     display: none;
 }
+
+/* FRONT  PAGE*/
+.front-product {
+    float: left;
+    width: 16%;
+    padding: 10px;
+    border: solid 1px $border-color;
+    border-radius: 10px;
+    margin: 0 3px 10px 3px;
+
+    img {
+        padding: 5px;
+    }
+
+    a {
+        color: $text-color !important;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    a:hover {
+        color: $text-color !important;
+        text-decoration: none;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .front-product {
+        width: 33%;
+        float: left;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .front-product {
+        width: 100%;
+        float: none;
+        border-right: none;
+    }
+}
+
+.front-book-title {
+    height: 60px;
+}
+
+.front-book-authors {
+    height: 60px;
+}
+
+.front-row {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.front-image {
+    border-radius:10px;
+    margin-top: 10px;
+}
+
 
 /* BUTTON COLOR REWRITE*/
 
