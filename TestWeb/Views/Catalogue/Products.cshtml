@@ -135,7 +135,10 @@
 
 <hr class="bottom-padding" />
 
-
+@{ if (Model.Products.Count == 0)
+    {
+        <p class="text-center">Nemáme žádné knížky, které splňují všechny zadané parametry. Zkuste je upravit.</p>
+    } else {
 <div class="row">
     @{
 
@@ -284,3 +287,5 @@
 
     }
 </div>
+                        }
+}

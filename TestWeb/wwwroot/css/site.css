@@ -600,13 +600,13 @@ input:-ms-input-placeholder {
   color: #4379C5; }
 
 @media screen and (max-width: 993px) {
-  .cart-item {
+  .responsive-cart {
     width: 20%;
     float: left;
     height: 30px; } }
 
 @media screen and (max-width: 677px) {
-  .cart-item {
+  .responsive-cart {
     width: 45%;
     float: left; } }
 
@@ -669,6 +669,16 @@ input:-ms-input-placeholder {
   font-weight: bold;
   margin-left: 20px; }
 
+@media screen and (max-width: 994px) {
+  .order-items-row {
+    border-bottom: solid 1px #dddddd;
+    margin-right: 0;
+    padding: 10px 0; } }
+
+@media screen and (max-width: 994px) {
+  .order-book-name {
+    font-weight: bold; } }
+
 .order-price {
   font-weight: bold;
   font-size: 14px;
@@ -694,11 +704,18 @@ input:-ms-input-placeholder {
     width: 80%;
     margin: 0 auto; }
 
+@media screen and (max-width: 994px) {
+  .partiallogin {
+    width: 100%;
+    margin: 0 0 10px 0; } }
+
 .register-container {
   border: 1px solid #dddddd;
   border-radius: 10px;
   padding: 10px;
   margin: 0 0 10px; }
+  .register-container p {
+    padding-top: 25px; }
   .register-container img {
     margin: 0;
     height: 90px; }
