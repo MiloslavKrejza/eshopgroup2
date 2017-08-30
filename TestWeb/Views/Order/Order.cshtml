@@ -24,9 +24,9 @@
     @{
         foreach (CartItem c in Model.Items)
         {
-            <div class="row cart-item">
+            <div class="row order-items-row">
                 <div class="col-md-4">
-                    <p>@c.Product.Name</p>
+                    <p class="order-book-name">@c.Product.Name</p>
                 </div>
                 <div class="col-md-4">
                     <p>
@@ -44,7 +44,7 @@
                     </p>
                 </div>
                 <div class="col-md-1">
-                    @c.Amount
+                    @c.Amount ks
                 </div>
                 <div class="col-md-3">
                     @{
