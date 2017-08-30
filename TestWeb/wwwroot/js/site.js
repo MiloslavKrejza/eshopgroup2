@@ -159,6 +159,9 @@ $(function () {
         success: function (data) {
             var json = JSON.parse(JSON.stringify(data));
             if (json.isOK) {
+
+                UpdateCount(json.data.length);
+
                 button.addClass('btn-success');
                 button.removeClass('btn-prim');
                 button.text('Přidáno');
@@ -194,6 +197,15 @@ $(function () {
     })
 
 }, 500));
+
+function UpdateCount(count) {
+    if (count > 0)
+        $("#cartcount").text("Košík (" + count + ")");
+    else
+        $("#cartcount").text("Košík");
+
+}
+
 function Recalculate() {
     var totalPrice = 0;
     var cart = $("#cart-wrapper");
@@ -221,6 +233,12 @@ $(".remove").click(function () {
             if (json.isOK) {
                 parent.remove();
                 Recalculate();
+                if (json.data.length <= 0)
+                    location.reload();
+                else
+                UpdateCount(json.data.length);
+                
+
             }
             else {
                 console.log("Ayyyyy");
@@ -241,6 +259,8 @@ $(".product-count-increase,.product-count-decrease").click(function () {
         value += 1;
     }
     value = value > 0 ? value : 1;
+    
+
     countElement.val(value);
     countElement.trigger('input');
 
@@ -260,6 +280,9 @@ $(".product-count").on("send", _.debounce(function () {
         success: function (data) {
             var json = JSON.parse(JSON.stringify(data));
             if (json.isOK) {
+
+                UpdateCount(json.data.length);
+
                 Recalculate();
                 parent.find(".product-count-original").val(count);
             }

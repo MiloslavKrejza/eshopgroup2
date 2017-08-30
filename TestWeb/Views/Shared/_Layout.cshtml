@@ -97,11 +97,11 @@
                     <img src="~/images/cart.svg" alt="cart" /><br />
                     @if (cart.Count > 0)
                     {
-                        <p>Košík (@cart.Count)</p>
+                        <span id="cartcount">Košík (@cart.Count)</span>
                     }
                     else
                     {
-                        <p>Košík</p>
+                        <span id="cartcount">Košík</span>
                     }
                 </a>
                 <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
