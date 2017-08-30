@@ -151,7 +151,7 @@
         <div class="row" id="main-section">
             <div class="col-md-2 list-group">
 
-                <div class="list-group-item menu-item main-background">
+                <div class="list-group-item menu-item">
                     <strong><a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@parentId"><!--<p><img src="~/images/(c.ico).svg" /></p>-->@parentName</a></strong>
                 </div>
 
@@ -160,7 +160,7 @@
 
                     foreach (Category c in currentCategory.Children)
                     {
-                        <div class="list-group-item menu-item main-background">
+                        <div class="list-group-item menu-item">
                             <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><img src="~/images/@(c.Name).svg" /> @c.Name</p></a>
                         </div>
 

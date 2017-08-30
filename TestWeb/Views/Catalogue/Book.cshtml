@@ -136,13 +136,17 @@
 	<!--	Representation of present user desctiption-->
 
     <div class="user-rating">
-        <div class="ratings">
-            <div class="empty-stars"></div>
-            <div class="full-stars" style="width:@stars.ToString()%;"></div>
+        <div class="col-md-1 text-center">
+            <img src="~/images/profile_pics/@reviewPresent.User.ProfilePicAddress" alt="" />
         </div>
-        <span class="bold">@reviewPresent.User.Name @reviewPresent.User.Surname</span>
-        <img src="~/images/profile_pics/@reviewPresent.User.ProfilePicAddress" alt="" />
-        <p>@reviewPresent.Text</p><br />
+        <div class="col-md-11">
+            <span class="bold">@reviewPresent.User.Name @reviewPresent.User.Surname</span>
+            <div class="ratings">
+                <div class="empty-stars"></div>
+                <div class="full-stars" style="width:@stars.ToString()%;"></div>
+            </div>
+            <p>@reviewPresent.Text</p><br />
+        </div>
     </div>
 
 
@@ -187,7 +191,7 @@ else
 
         <div class="user-rating row">
             <div class="col-md-1 text-center">
-                <img src="~/images/profile_pics/default.png" />
+                <img src="~/images/profile_pics/@Model.PicAddress" />
             </div>
             <div class="col-md-11">
                 <span class="bold">@review.User.Name @review.User.Surname</span>
