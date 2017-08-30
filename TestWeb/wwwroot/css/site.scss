@@ -474,7 +474,7 @@ input:-ms-input-placeholder {
     }
 }
 
-@media screen and (max-width: 570px) {
+@media screen and (max-width: 692px) {
     .responsive-col {
         width: 100%;
         float: none;
@@ -821,7 +821,7 @@ input:-ms-input-placeholder {
 }
 
 @media screen and (max-width: 993px) {
-    .responsive-cart {
+    .cart-item {
         width: 20%;
         float: left;
         height: 30px;
@@ -829,7 +829,7 @@ input:-ms-input-placeholder {
 }
 
 @media screen and (max-width: 677px) {
-    .responsive-cart {
+    .cart-item {
         width: 45%;
         float: left;
     }
@@ -914,7 +914,7 @@ input:-ms-input-placeholder {
 .order-items {
     border: solid 1px $border-color;
     border-radius: 10px;
-    padding: 10px 0 5px 0;
+    padding: 10px 0 5px 15px;
 }
 
 

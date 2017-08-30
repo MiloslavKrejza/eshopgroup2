@@ -364,7 +364,7 @@ input:-ms-input-placeholder {
     width: 50%;
     float: left; } }
 
-@media screen and (max-width: 570px) {
+@media screen and (max-width: 692px) {
   .responsive-col {
     width: 100%;
     float: none; } }
@@ -600,13 +600,13 @@ input:-ms-input-placeholder {
   color: #4379C5; }
 
 @media screen and (max-width: 993px) {
-  .responsive-cart {
+  .cart-item {
     width: 20%;
     float: left;
     height: 30px; } }
 
 @media screen and (max-width: 677px) {
-  .responsive-cart {
+  .cart-item {
     width: 45%;
     float: left; } }
 
@@ -662,7 +662,7 @@ input:-ms-input-placeholder {
 .order-items {
   border: solid 1px #dddddd;
   border-radius: 10px;
-  padding: 10px 0 5px 0; }
+  padding: 10px 0 5px 15px; }
 
 .order-items-heading {
   margin-bottom: 10px;
