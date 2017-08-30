@@ -91,9 +91,11 @@ namespace TestWeb
             services.AddTransient<ICategoryRelationshipRepository, CategoryRelationshipRepository>(sp => { return new CategoryRelationshipRepository(Configuration.GetConnectionString("Trainee.Business")); });
             services.AddTransient<IProductRepository, ProductRepository>(sp => { return new ProductRepository(services.BuildServiceProvider().GetService<CatalogueDbContext>(), Configuration.GetConnectionString("Trainee.Catalogue.Cat")); });
             services.AddTransient<IReviewRepository, ReviewRepository>();
+            services.AddTransient<IFrontPageRepository, FrontPageRepository>();
 
             services.AddTransient<BusinessService, BusinessService>();
             services.AddTransient<CatalogueService, CatalogueService>();
+            services.AddTransient<OrderService, OrderService>();
 
             services.AddTransient<ICartItemRepository, CartItemRepository>();
             services.AddTransient<IOrderItemRepository, OrderItemRepository>();

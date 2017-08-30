@@ -25,6 +25,7 @@ namespace Eshop2.Controllers
     public class OrderController : Controller
     {
         private readonly BusinessService _businessService;
+        private readonly OrderService _orderService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _accessor;
@@ -32,7 +33,7 @@ namespace Eshop2.Controllers
         private readonly UserService _userService;
 
         public OrderController(BusinessService businessService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IHttpContextAccessor accessor,
-            CountryService countryService, UserService userService)
+            CountryService countryService, UserService userService, OrderService ordServ)
         {
             _businessService = businessService;
             _signInManager = signInManager;
@@ -40,6 +41,7 @@ namespace Eshop2.Controllers
             _accessor = accessor;
             _countryService = countryService;
             _userService = userService;
+            _orderService = ordServ;
         }
 
         // GET: /Order/Cart/
@@ -57,12 +59,12 @@ namespace Eshop2.Controllers
                 if (_signInManager.IsSignedIn(User))
                 {
                     var user = await _userManager.GetUserAsync(User);
-                    result = _businessService.GetCart(user.Id);
+                    result = _orderService.GetCart(user.Id);
                 }
                 else
                 {
                     string cookieId = cookieHelper.GetVisitorId();
-                    result = _businessService.GetCart(cookieId);
+                    result = _orderService.GetCart(cookieId);
 
                 }
 
@@ -116,13 +118,13 @@ namespace Eshop2.Controllers
                 if (_signInManager.IsSignedIn(User))
                 {
                     user = await _userManager.GetUserAsync(User);
-                    result = _businessService.GetCart(user.Id);
+                    result = _orderService.GetCart(user.Id);
                     userProfile = _userService.GetUserProfile(user.Id).data;
                 }
                 else
                 {
                     string cookieId = cookieHelper.GetVisitorId();
-                    result = _businessService.GetCart(cookieId);
+                    result = _orderService.GetCart(cookieId);
                 }
                 if (!result.isOK)
                     throw new Exception("Could not find the cart");
@@ -158,8 +160,8 @@ namespace Eshop2.Controllers
 
                     //listing all possible choices for fields
                     model.Countries = _countryService.GetAllCountries().data.ToList();
-                    model.Shipping = _businessService.GetShippings().data.ToList();
-                    model.Payment = _businessService.GetPayments().data.ToList();
+                    model.Shipping = _orderService.GetShippings().data.ToList();
+                    model.Payment = _orderService.GetPayments().data.ToList();
                     return View(model);
                 }
                 else
@@ -207,7 +209,7 @@ namespace Eshop2.Controllers
                     }
 
 
-                    var items = _businessService.GetCart(cookieId).data;
+                    var items = _orderService.GetCart(cookieId).data;
 
                     //cannot send empty order
                     if (items.Count == 0)
@@ -217,7 +219,7 @@ namespace Eshop2.Controllers
                     }
 
                     //adding order to the database
-                    var addedOrder = _businessService.AddOrder(order, cookieId).data;
+                    var addedOrder = _orderService.AddOrder(order, cookieId).data;
                     int orderId = addedOrder.Id;
                     
                     foreach (var item in items)
@@ -229,7 +231,7 @@ namespace Eshop2.Controllers
                             Price = item.Product.Price,
                             ProductId = item.ProductId
                         };
-                        _businessService.AddOrderItem(orderItem);
+                        _orderService.AddOrderItem(orderItem);
                     }
 
                     //order id to be displayed in the view
@@ -286,7 +288,7 @@ namespace Eshop2.Controllers
                 uid = user.Id;
             }
 
-            var result = _businessService.AddToCart(cookieId, uid, model.ProductId, model.Amount);
+            var result = _orderService.AddToCart(cookieId, uid, model.ProductId, model.Amount);
 
             return Json(result, settings);
 
@@ -305,7 +307,7 @@ namespace Eshop2.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 uid = user.Id;
             }
-            var result = _businessService.RemoveCartItem(cookieId, item.Id);
+            var result = _orderService.RemoveCartItem(cookieId, item.Id);
             return Json(result, settings);
         }
 
@@ -330,7 +332,7 @@ namespace Eshop2.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 uid = user.Id;
             }
-            var result = _businessService.UpdateCartItem(cookieId, item.ProductId, item.Amount);
+            var result = _orderService.UpdateCartItem(cookieId, item.ProductId, item.Amount);
             return Json(result, settings);
 
         }
@@ -352,7 +354,7 @@ namespace Eshop2.Controllers
             CookieHelper helper = new CookieHelper(_accessor);
             string oldVisitorId = helper.GetOldVisitorId();
 
-            var result = _businessService.TransformCart(oldVisitorId, user.Id, model.DeleteOld);
+            var result = _orderService.TransformCart(oldVisitorId, user.Id, model.DeleteOld);
 
             //the old cart has been transfered and deleted, deleting the old visitor id
             helper.DeleteOldVisitorId();

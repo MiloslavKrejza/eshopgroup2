@@ -37,7 +37,7 @@ namespace TestWeb.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;     //sign in functionality
         private readonly CountryService _countryService;    //provides countries
         private readonly UserService _profileService;       //provides additional non-ASP.NET user profile data
-        private readonly BusinessService _businessService;
+        private readonly OrderService _orderService;
         private readonly IHttpContextAccessor _accessor;
 
         //on more states, enums (or admin add)
@@ -53,7 +53,7 @@ namespace TestWeb.Controllers
             CountryService countryService,
             UserService userService,
             IHttpContextAccessor accessor,
-            BusinessService businessService)
+            OrderService orderServ)
         {
             _env = env;
             _logger = logger;
@@ -62,7 +62,7 @@ namespace TestWeb.Controllers
             _countryService = countryService;
             _profileService = userService;
             _accessor = accessor;
-            _businessService = businessService;
+            _orderService = orderServ;
         }
 
         //
@@ -541,7 +541,7 @@ namespace TestWeb.Controllers
                 else
                     throw new Exception("Country database error");
 
-                var resultOrder = _businessService.GetUserOrders(userIdentity.Id);
+                var resultOrder = _orderService.GetUserOrders(userIdentity.Id);
 
                 if (resultOrder.isOK)
                     detailsModel.Orders = resultOrder.isEmpty ? new List<Order>() : resultOrder.data;

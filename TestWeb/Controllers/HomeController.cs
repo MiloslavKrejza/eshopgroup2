@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Eshop2.Models.HomeViewModels;
 using Trainee.Business.Business;
 using Trainee.Business.DAL.Entities;
+using TestWeb.Models.HomeViewModels;
 
 namespace TestWeb.Controllers
 {
@@ -14,16 +15,22 @@ namespace TestWeb.Controllers
     /// </summary>
     public class HomeController : Controller
     {
+        private readonly OrderService _orderService;
         private readonly BusinessService _businessService;
 
-        public HomeController(BusinessService busSer)
+        public HomeController(OrderService ordServ, BusinessService busServ)
         {
-            _businessService = busSer;
+            _orderService = ordServ;
+            _businessService = busServ;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var result = _businessService.GetActivePageItems();
+            List<FrontPageItem> items;
+            items = result.isOK ? result.data : new List<FrontPageItem>();
+            IndexViewModel model = new IndexViewModel { FrontPageItems = items };
+            return View(model);
         }
 
         public IActionResult About()
@@ -50,12 +57,12 @@ namespace TestWeb.Controllers
 
             ShippingViewModel model = new ShippingViewModel();
 
-            var resultShipping = _businessService.GetShippings();
+            var resultShipping = _orderService.GetShippings();
             if (!resultShipping.isOK)
                 return RedirectToAction("Error");
             model.Shipping = resultShipping.isEmpty ? new List<Shipping>() : resultShipping.data;
 
-            var resultPayment = _businessService.GetPayments();
+            var resultPayment = _orderService.GetPayments();
             if (!resultPayment.isOK)
                 return RedirectToAction("Error");
             model.Payment = resultPayment.isEmpty ? new List<Payment>() : resultPayment.data;

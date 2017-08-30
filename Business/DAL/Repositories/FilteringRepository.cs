@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using Trainee.Business.Abstraction;
+using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
 using Trainee.Catalogue.DAL.Entities;
@@ -33,7 +34,7 @@ namespace Trainee.Business.DAL.Repositories
             Dictionary<int, Category> categories = new Dictionary<int, Category>();
             Dictionary<int, Publisher> publishers = new Dictionary<int, Publisher>();
             // {O,null} is a country that is assigned to authors without set country, it is removed before conversion to List
-            Dictionary<int, Country> countries = new Dictionary<int, Country>{ { 0, null } };
+            Dictionary<int, Country> countries = new Dictionary<int, Country> { { 0, null } };
             decimal maxPrice = 0;
             decimal minPrice = decimal.MaxValue;
             //Preparing query that will select all products from selected category and its child categories ignoring all filters
@@ -49,7 +50,7 @@ namespace Trainee.Business.DAL.Repositories
                     //Adding all entities that filtered pruducts might consist of into their dictionaries
                     while (reader.Read())
                     {
-                       
+
                         int id = (int)reader["ProductId"];
                         if (book != null && previousProductId != id)
                         {
@@ -128,7 +129,7 @@ namespace Trainee.Business.DAL.Repositories
 
             }
             List<ProductBO> resultProducts = new List<ProductBO>();
-            
+
             string orderParameter;
             //Choosing ordering type
             switch (parameters.SortingParameter)
@@ -183,7 +184,7 @@ namespace Trainee.Business.DAL.Repositories
                     {
                         //Has to be reviewed if column names change by chance
                         int id = (int)reader["ProductId"];
-                        
+
                         if (currentProduct != null)
                         {
                             resultProducts.Add(currentProduct);
@@ -259,6 +260,173 @@ namespace Trainee.Business.DAL.Repositories
                     .ToList()
             };
             return result;
+
+        }
+        /// <summary>
+        /// Method that gets first n products from database sorted by specified column. 
+        /// </summary>
+        /// <param name="parameter">Column to sort by</param>
+        /// <param name="type">Sorting order (ASC/DESC)</param>
+        /// <param name="count">Number of products to fetch</param>
+        /// <param name="categoryId">Category of fetched products</param>
+        /// <param name="timeOffset">Maximal age (in days) of orders that are included in calculation of the amount of sold products</param>
+        /// <returns>Requested products</returns>
+        public IQueryable<ProductBO> GetProducts(SortingParameter parameter, SortType type, int count, int categoryId, int? timeOffset = null)
+        {
+            string sortParameter;
+            string sortType;
+            switch (parameter)
+            {
+                case SortingParameter.Date:
+                    sortParameter = "DateAdded";
+                    break;
+                case SortingParameter.Price:
+                    sortParameter = "Price";
+                    break;
+                case SortingParameter.Rating:
+                    sortParameter = "AverageRating";
+                    break;
+                case SortingParameter.Count:
+                    sortParameter = "Count";
+                    break;
+                case SortingParameter.Name:
+                    sortParameter = "ProductName";
+                    break;
+                default:
+                    sortParameter = "AverageRating";
+                    break;
+            }
+            switch (type)
+            {
+                case SortType.Asc:
+                    sortType = "ASC";
+                    break;
+                case SortType.Desc:
+                    sortType = "DESC";
+                    break;
+                default:
+                    sortType = "DESC";
+                    break;
+            }
+            var queryString = $"SELECT * FROM dbo.Frontpage(@timeOffset,@category) ORDER BY {sortParameter} {sortType}";
+            var result = new List<ProductBO>();
+            DateTime? date = null;
+            if (timeOffset != null)
+            {
+                date = DateTime.Now.AddDays(-(double)timeOffset).Date;
+            }
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand(queryString, conn);
+                command.Parameters.AddWithValue("@timeOffset", (object)date ?? DBNull.Value);
+                command.Parameters.AddWithValue("@category", categoryId);
+                conn.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    int productCount = 0;
+                    int previousProductId = 0;
+                    ProductBO currentProduct = null;
+                    //read all products
+                    while (reader.Read() && productCount <= count )
+                    {
+                        //Has to be reviewed if column names change by chance
+                        int id = (int)reader["ProductId"];
+                        int bookId = (int)reader["BookId"];
+
+                        //if they differ, stop adding AuthorsBooks and make a new product
+                        if (id != previousProductId)
+                        {
+                            productCount++;
+                            previousProductId = id;
+                            if (currentProduct != null)
+                            {
+                                result.Add(currentProduct);
+                            }
+                            //Getting columns from DB
+                            string productName = (string)reader["ProductName"];
+                            string text = reader["Text"] != DBNull.Value ? (string)reader["Text"] : null;
+
+                            string bookName = (string)reader["BookName"];
+                            string bookAnnotation = reader["BookAnnotation"] != DBNull.Value ? (string)reader["BookAnnotation"] : null;
+                            int catagoryId = (int)reader["CategoryId"];
+                            string categoryName = (string)reader["CategoryName"];
+                            int publisherId = (int)reader["PublisherId"];
+                            string publisherName = (string)reader["PublisherName"];
+                            int languageId = (int)reader["LanguageId"];
+                            string languageName = (string)reader["LanguageName"];
+                            int stateId = (int)reader["ProductStateId"];
+                            string stateName = (string)reader["ProductStateName"];
+                            int formatId = (int)reader["FormatId"];
+                            string formatName = (string)reader["FormatName"];
+                            string ean = reader["EAN"] != DBNull.Value ? (string)reader["EAN"] : null;
+                            string isbn = reader["ISBN"] != DBNull.Value ? (string)reader["ISBN"] : null;
+                            string picAddress = reader["PicAddress"] != DBNull.Value ? (string)reader["PicAddress"] : null;
+                            decimal price = (decimal)reader["Price"];
+                            int? year = reader["Year"] != DBNull.Value ? (int?)reader["Year"] : null;
+                            int? pageCount = reader["PageCount"] != DBNull.Value ? (int?)reader["PageCount"] : null;
+                            DateTime dateAdded = (DateTime)reader["DateAdded"];
+                            decimal? avgRating = reader["AverageRating"] != DBNull.Value ? (decimal?)reader["AverageRating"] : null;
+
+                            //creating principal entities
+                            Publisher pub = new Publisher() { Id = publisherId, Name = publisherName };
+                            Category cat = new Category() { Name = categoryName, Id = catagoryId };
+                            Language lang = new Language() { Id = languageId, Name = languageName };
+                            Format form = new Format() { Id = formatId, Name = formatName };
+                            ProductState state = new ProductState() { Id = stateId, Name = stateName };
+                            Book book = new Book() { Name = bookName, Annotation = bookAnnotation, BookId = bookId, AuthorsBooks = new List<AuthorBook>() };
+
+                            currentProduct = new ProductBO()
+                            {
+                                Id = id,
+                                Name = productName,
+                                BookId = bookId,
+                                Book = book,
+                                Category = cat,
+                                CategoryId = catagoryId,
+                                DateAdded = dateAdded,
+                                EAN = ean,
+                                ISBN = isbn,
+                                Format = form,
+                                FormatId = formatId,
+                                Language = lang,
+                                LanguageId = languageId,
+                                PageCount = pageCount,
+                                PicAddress = picAddress,
+                                Price = price,
+                                Publisher = pub,
+                                PublisherId = publisherId,
+                                Text = text,
+                                Year = year,
+                                State = state,
+                                StateId = stateId,
+                                AverageRating = avgRating
+                            };
+                        }
+                        //add a new authorbook, author
+                        int? countryId = reader["AuthorCountryId"] != DBNull.Value ? (int?)reader["AuthorCountryId"] : null;
+                        Country country = countryId != null ? new Country() { Name = (string)reader["AuthorCountryName"], Id = (int)countryId, CountryCode = (string)reader["AuthorCountryCode"] } : null;
+                        int authorId = (int)reader["AuthorId"];
+                        string authorName = (string)reader["AuthorName"];
+                        string authorSurname = (string)reader["AuthorSurname"];
+                        Author author = new Author() { Country = country, CountryId = countryId, Name = authorName, Surname = authorSurname, AuthorId = authorId };
+                        AuthorBook ab = new AuthorBook { Author = author, AuthorId = authorId, Book = currentProduct.Book, BookId = bookId };
+                        currentProduct.Book.AuthorsBooks.Add(ab);
+
+                    }
+                    if (result.Count < count)
+                    {
+                        result.Add(currentProduct);
+                    }
+
+
+
+                }
+            }
+
+            return result.AsQueryable();
+
 
         }
     }
