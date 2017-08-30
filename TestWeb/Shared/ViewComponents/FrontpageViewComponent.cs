@@ -18,7 +18,7 @@ namespace Eshop2.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync(FrontPageItem item)
         {
-            SortingParameter param = (SortingParameter)Enum.Parse(typeof(SortingParameter), item.SortingParameter, true);
+            FrontPageParameter param = (FrontPageParameter)Enum.Parse(typeof(FrontPageParameter), item.FrontPageParameter, true);
             SortType type = (SortType)Enum.Parse(typeof(SortType), item.SortType, true);
             
             var res = _service.GetFrontPage(param , type, item.Count, item.CategoryId, item.TimeOffSet);

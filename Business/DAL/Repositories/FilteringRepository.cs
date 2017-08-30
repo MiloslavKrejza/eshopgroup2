@@ -271,25 +271,25 @@ namespace Trainee.Business.DAL.Repositories
         /// <param name="categoryId">Category of fetched products</param>
         /// <param name="timeOffset">Maximal age (in days) of orders that are included in calculation of the amount of sold products</param>
         /// <returns>Requested products</returns>
-        public IQueryable<ProductBO> GetProducts(SortingParameter parameter, SortType type, int count, int categoryId, int? timeOffset = null)
+        public IQueryable<ProductBO> GetProducts(FrontPageParameter parameter, SortType type, int count, int categoryId, int? timeOffset = null)
         {
             string sortParameter;
             string sortType;
             switch (parameter)
             {
-                case SortingParameter.Date:
+                case FrontPageParameter.Date:
                     sortParameter = "DateAdded";
                     break;
-                case SortingParameter.Price:
+                case FrontPageParameter.Price:
                     sortParameter = "Price";
                     break;
-                case SortingParameter.Rating:
+                case FrontPageParameter.Rating:
                     sortParameter = "AverageRating";
                     break;
-                case SortingParameter.Count:
+                case FrontPageParameter.Count:
                     sortParameter = "Count";
                     break;
-                case SortingParameter.Name:
+                case FrontPageParameter.Name:
                     sortParameter = "ProductName";
                     break;
                 default:

@@ -23,6 +23,6 @@ namespace Trainee.Business.Abstraction
         /// <param name="categoryId">Category of fetched products</param>
         /// <param name="timeOffset">Maximal age (in days) of orders that are included in calculation of the amount of sold products</param>
         /// <returns>Requested products</returns>
-        IQueryable<ProductBO> GetProducts(SortingParameter parameter,SortType type, int count,int categoryId, int? timeOffset=null);
+        IQueryable<ProductBO> GetProducts(FrontPageParameter parameter,SortType type, int count,int categoryId, int? timeOffset=null);
     }
 }
