@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Trainee.Business.Business;
 using Trainee.Business.Business.Enums;
+using Trainee.Business.DAL.Entities;
 
 namespace Eshop2.ViewComponents
 {
@@ -15,9 +16,12 @@ namespace Eshop2.ViewComponents
         {
             _service = service;
         }
-        public async Task<IViewComponentResult> InvokeAsync(SortingParameter parameter, SortType type, int count, int categoryId, int? timeOffSet = null)
+        public async Task<IViewComponentResult> InvokeAsync(FrontPageItem item)
         {
-            var res = _service.GetFrontPage(parameter, type, count, categoryId, timeOffSet);
+            SortingParameter param = (SortingParameter)Enum.Parse(typeof(SortingParameter), item.SortingParameter, true);
+            SortType type = (SortType)Enum.Parse(typeof(SortType), item.SortType, true);
+            
+            var res = _service.GetFrontPage(param , type, item.Count, item.CategoryId, item.TimeOffSet);
             var data = res.data;
             return View(data);
 

@@ -26,10 +26,10 @@ namespace TestWeb.Controllers
 
         public IActionResult Index()
         {
-            var result = _businessService.GetActivePageItems();
-            List<FrontPageItem> items;
-            items = result.isOK ? result.data : new List<FrontPageItem>();
-            IndexViewModel model = new IndexViewModel { FrontPageItems = items };
+            var result = _businessService.GetPageSlots();
+            Dictionary<int,FrontPageSlot> items;
+            items = result.isOK ? result.data : new Dictionary<int, FrontPageSlot>();
+            IndexViewModel model = new IndexViewModel { Slots = items };
             return View(model);
         }
 

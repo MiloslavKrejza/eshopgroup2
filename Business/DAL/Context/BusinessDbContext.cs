@@ -21,6 +21,7 @@ namespace Trainee.Business.DAL.Context
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Shipping> Shippings { get; set; }
         public DbSet<FrontPageItem> FrontPageItems { get; set; }
+        public DbSet<FrontPageSlot> FrontPageSlots { get; set; }
 
         public BusinessDbContext(DbContextOptions<BusinessDbContext> options) : base(options)
         {
@@ -74,6 +75,10 @@ namespace Trainee.Business.DAL.Context
 
             builder.Entity<FrontPageItem>().ToTable("FrontPageItems");
             builder.Entity<FrontPageItem>().HasKey(fi => fi.Id);
+
+            builder.Entity<FrontPageSlot>().ToTable("FrontPageSlots");
+            builder.Entity<FrontPageSlot>().HasKey(fs => fs.SlotId);
+            builder.Entity<FrontPageSlot>().Property(fs => fs.SlotId).HasColumnName("Id");
 
             base.OnModelCreating(builder);
         }

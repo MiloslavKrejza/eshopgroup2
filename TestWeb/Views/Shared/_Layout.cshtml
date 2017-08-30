@@ -95,7 +95,14 @@
             <div class="basket-user col-md-2 col-md-offset-8">
                 <a asp-area="" asp-controller="Order" asp-action="cart"  class="btn basket-user-btn main-background">
                     <img src="~/images/cart.svg" alt="cart" /><br />
-                    <p>Košík</p>
+                    @if (cart.Count > 0)
+                    {
+                        <p>Košík (@cart.Count)</p>
+                    }
+                    else
+                    {
+                        <p>Košík</p>
+                    }
                 </a>
                 <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
                     <img src="~/images/user.svg" alt="user" /><br />

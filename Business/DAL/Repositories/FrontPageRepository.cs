@@ -36,6 +36,15 @@ namespace Trainee.Business.DAL.Repositories
             return _context.FrontPageItems.FirstOrDefault(fi => fi.Id == id);
         }
 
+        public IQueryable<FrontPageSlot> GetSlotItems()
+        {
+            var slots = _context.FrontPageSlots.ToList();
+            var ids = slots.Select(s => s.ItemId);
+
+            var items = _context.FrontPageItems.Where(fi => ids.Contains(fi.Id)).AsQueryable();
+            return slots.Join(items, s => s.ItemId, fi => fi.Id, (s, fi) => { s.Item = fi; return s; }).AsQueryable();
+        }
+
         public IQueryable<FrontPageItem> GetFrontPageItems()
         {
             return _context.FrontPageItems.AsQueryable();

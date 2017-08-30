@@ -7,6 +7,6 @@ namespace TestWeb.Models.HomeViewModels
 {
 	public class IndexViewModel
 	{
-        public List<FrontPageItem> FrontPageItems { get; set; }		
+        public Dictionary<int, FrontPageSlot> Slots { get; set; }		
     }
 }

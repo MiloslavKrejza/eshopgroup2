@@ -21,6 +21,12 @@ namespace Trainee.Business.Abstraction
         IQueryable<FrontPageItem> GetFrontPageItems();
 
         /// <summary>
+        /// Gets FrontPageSlots containing current FrontPageItems
+        /// </summary>
+        /// <returns>IQueryable of Page Slots</returns>
+        IQueryable<FrontPageSlot> GetSlotItems();
+
+        /// <summary>
         /// Adds a new FrontPageItem
         /// </summary>
         /// <param name="itemId">New FrontPageItem</param>

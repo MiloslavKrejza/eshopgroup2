@@ -7,30 +7,28 @@
     ViewData["Title"] = "Home Page";
 }
 
-
 @{ 
-    //TEMP!!
-    FrontPageItem item = Model.FrontPageItems.FirstOrDefault(fi => fi.Name.Equals("Nejprodávanější fantasy"));
+    FrontPageItem item = Model.Slots[1].Item;
 }
 <h2>@item.Name</h2>
 <div class="row">
-    @await Component.InvokeAsync("Frontpage", new { parameter = Enum.Parse(typeof(SortingParameter), item.SortingParameter), type = Enum.Parse(typeof(SortType), item.SortType), count = item.Count, categoryId = item.CategoryId, timeOffSet = item.TimeOffSet})
+    @await Component.InvokeAsync("Frontpage", new { item = item})
 </div>
 
 @{
-    item = Model.FrontPageItems.FirstOrDefault(fi => fi.Name.Equals("Nejlepší horory"));
+    item = Model.Slots[2].Item;
 }
 <h2>@item.Name</h2>
 <div class="row">
-    @await Component.InvokeAsync("Frontpage", new { parameter = Enum.Parse(typeof(SortingParameter), item.SortingParameter), type = Enum.Parse(typeof(SortType), item.SortType), count = item.Count, categoryId = item.CategoryId, timeOffSet = item.TimeOffSet })
+    @await Component.InvokeAsync("Frontpage", new { item = item })
 </div>
 <div class="index-commercial">
     <img src="~/images/index-commercial.png" alt="book commercial" />
 </div>
 @{
-    item = Model.FrontPageItems.FirstOrDefault(fi => fi.Name.Equals("Novinky v komiksech"));
+    item = Model.Slots[3].Item;
 }
 <h2>@item.Name</h2>
 <div class="row">
-    @await Component.InvokeAsync("Frontpage", new { parameter = Enum.Parse(typeof(SortingParameter), item.SortingParameter), type = Enum.Parse(typeof(SortType), item.SortType), count = item.Count, categoryId = item.CategoryId, timeOffSet = item.TimeOffSet })
+    @await Component.InvokeAsync("Frontpage",  new { item = item })
 </div>

@@ -305,6 +305,20 @@ namespace Trainee.Business.Business
             }
         }
 
+        public AlzaAdminDTO<Dictionary<int, FrontPageSlot>> GetPageSlots()
+        {
+            try
+            {
+                var result = _frontPageRepository.GetSlotItems().ToDictionary(si => si.SlotId);
+
+                return AlzaAdminDTO<Dictionary<int, FrontPageSlot>>.Data(result);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<Dictionary<int, FrontPageSlot>>.Error(e.Message);
+            }
+        }
+
         #endregion
     }
 }
