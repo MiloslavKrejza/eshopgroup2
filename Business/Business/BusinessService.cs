@@ -221,7 +221,7 @@ namespace Trainee.Business.Business
             }
 
         }
-        public AlzaAdminDTO<List<ProductBO>> GetFrontPage(SortingParameter parameter, SortType type, int count, int categoryId, int? timeOffset = null)
+        public AlzaAdminDTO<List<ProductBO>> GetFrontPage(FrontPageParameter parameter, SortType type, int count, int categoryId, int? timeOffset = null)
         {
             try
             {

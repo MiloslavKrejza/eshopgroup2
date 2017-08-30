@@ -75,10 +75,12 @@ namespace Trainee.Business.DAL.Context
 
             builder.Entity<FrontPageItem>().ToTable("FrontPageItems");
             builder.Entity<FrontPageItem>().HasKey(fi => fi.Id);
+            builder.Entity<FrontPageItem>().Property(fi => fi.FrontPageParameter).HasColumnName("SortingParameter");
 
             builder.Entity<FrontPageSlot>().ToTable("FrontPageSlots");
             builder.Entity<FrontPageSlot>().HasKey(fs => fs.SlotId);
             builder.Entity<FrontPageSlot>().Property(fs => fs.SlotId).HasColumnName("Id");
+
 
             base.OnModelCreating(builder);
         }

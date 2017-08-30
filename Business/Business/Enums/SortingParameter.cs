@@ -14,7 +14,6 @@ namespace Trainee.Business.Business.Enums
         [Display(Name = "Hodnocení")]
         Rating,
         [Display(Name = "Názvu")]
-        Name,
-        Count
+        Name
     }
 }

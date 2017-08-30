@@ -9,7 +9,7 @@ namespace Trainee.Business.DAL.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string SortingParameter { get; set; }
+        public string FrontPageParameter { get; set; }
         public string SortType { get; set; }
         public int Count { get; set; }
         public int CategoryId { get; set; }
