@@ -74,7 +74,7 @@ namespace Eshop2.Controllers
 
                 //handling an empty cart
                 List<CartItem> cart;
-                if(result.isEmpty)
+                if (result.isEmpty)
                 {
                     cart = new List<CartItem>();
                 }
@@ -82,8 +82,8 @@ namespace Eshop2.Controllers
                 {
                     cart = result.data;
                 }
-               
-                if(cart.Count == 0)
+
+                if (cart.Count == 0)
                 {
                     ViewData["emptyCart"] = true;
                 }
@@ -93,7 +93,7 @@ namespace Eshop2.Controllers
                 return View(model);
 
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -176,8 +176,74 @@ namespace Eshop2.Controllers
             }
         }
 
-        [HttpPost("/Order/Order/")]
-        public async Task<IActionResult> Order(OrderViewModel model)
+        [HttpPost]
+        public IActionResult Order(OrderViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Country country = _countryService.GetCountry(model.CountryId).data;
+                    Shipping shipping = _orderService.GetShipping(model.ShippingId).data;
+                    Payment payment = _orderService.GetPayment(model.PaymentId).data;
+
+                    model.Countries = new List<Country>() { country };
+                    model.Shipping = new List<Shipping>() { shipping };
+                    model.Payment = new List<Payment>() { payment };
+
+                    
+
+                    return View("Summary", model);
+                }
+                else
+                {
+                    return View(model);
+                }
+            }
+            catch
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+
+        [HttpPost("Order/BackToOrder")]
+        public IActionResult BackToOrder(OrderViewModel model)
+        {
+            try
+            {
+                CookieHelper cookieHelper = new CookieHelper(_accessor);
+
+                string cookieId = cookieHelper.GetVisitorId();
+                var result = _orderService.GetCart(cookieId);
+                if (!result.isOK)
+                    throw new Exception("Could not find the cart");
+
+                var cart = result.data;
+
+                //cannot order with empty cart
+                if (cart.Count == 0)
+                {
+                    TempData["emptyOrder"] = true;
+                    return RedirectToAction("Cart");
+                }
+
+                model.Items = cart;
+                model.Countries = _countryService.GetAllCountries().data.ToList();
+                model.Shipping = _orderService.GetShippings().data.ToList();
+                model.Payment = _orderService.GetPayments().data.ToList();
+
+                return View("Order", model);
+
+            }
+            catch
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        [HttpPost("/Order/SendOrder")]
+        public async Task<IActionResult> SendOrder(OrderViewModel model)
         {
             try
             {
@@ -221,7 +287,7 @@ namespace Eshop2.Controllers
                     //adding order to the database
                     var addedOrder = _orderService.AddOrder(order, cookieId).data;
                     int orderId = addedOrder.Id;
-                    
+
                     foreach (var item in items)
                     {
                         OrderItem orderItem = new OrderItem()
@@ -266,7 +332,7 @@ namespace Eshop2.Controllers
         public IActionResult OrderLogin()
         {
             //page displayed between cart and order if user is not signed in
-            if(_signInManager.IsSignedIn(User))
+            if (_signInManager.IsSignedIn(User))
             {
                 return RedirectToAction("Redirect");
             }
@@ -345,7 +411,7 @@ namespace Eshop2.Controllers
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             var user = await _userManager.GetUserAsync(User);
-            
+
             //cannot transfer cart if there is no user
             if (user == null)
                 return RedirectToAction("Error", "Home");

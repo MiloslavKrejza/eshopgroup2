@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Order\Summary.cshtml" />
     <Content Remove="wwwroot/css\site - Kopie.min.css" />
     <Content Remove="wwwroot/css\site - Kopie.scss" />
   </ItemGroup>

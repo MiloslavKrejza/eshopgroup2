@@ -1,23 +1,134 @@
-﻿
+﻿@using Eshop2.Models.OrderViewModels
+@using Trainee.Core.DAL.Entities
+@using Trainee.Business.DAL.Entities
+@model OrderViewModel
+
 @{
     ViewData["Title"] = "Shrnutí";
 }
+<h2>@ViewData["Title"]</h2>
+
+
 <h2 class="bottom-padding">Rekapitulace</h2>
-<div class="row bottom-padding">
     <div class="col-md-6">
         <p>Vyzvednutí osobně na prodejně</p>
         <p>Platba kartou ihned</p>
         <p>Celková cena objednávky: 698 Kč</p>
     </div>
-    <div class="col-md-6 summary-item">
-        <div class="col-md-5">
-            <p class="text-indent"><strong>Harry Potter</strong></p>
-        </div>
-        <div class="col-md-5">
-            <p>Joanne K. Rowling</p>
-        </div>
-        <div class="col-md-2">
-            399,-
-        </div>
+
+    <h3>Dodací údaje</h3>
+    <div class="form-group">
+        <form  method="post">
+            <div class="order">
+                <div class="row bottom-padding">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="row form-row">
+                        <div class="col-md-6 responsive-col">
+                            <label class="text-indent control-label" asp-for="Name"></label>
+                            <input class="form-control" asp-for="Name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 responsive-col">
+                            <label class="text-indent control-label" asp-for="Surname"></label>
+                            <input class="form-control" asp-for="Surname" />
+                            <span asp-validation-for="Surname" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-6 responsive-col">
+                            <label class="text-indent control-label" asp-for="Email"></label>
+                            <input class="form-control" asp-for="Email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 responsive-col">
+                            <label class="text-indent control-label" asp-for="Phone"></label>
+                            <input class="form-control" asp-for="Phone" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row form-row">
+                        <div class="col-md-6 responsive-col">
+                            <label class="text-indent control-label" asp-for="Street"></label>
+                            <input class="form-control" asp-for="Street" />
+                            <span asp-validation-for="Street" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 responsive-col">
+                            <label class="text-indent control-label" asp-for="PostalCode"></label>
+                            <input class="form-control" asp-for="PostalCode" />
+                            <span asp-validation-for="PostalCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col-md-6 responsive-col">
+                            <label class="text-indent control-label" asp-for="City"></label>
+                            <input class="form-control" asp-for="City" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 responsive-col">
+                            <label class="text-indent control-label" asp-for="CountryId"></label>
+                            <select class="form-control" asp-for="CountryId">
+                                 @{
+
+
+                                     foreach (Country c in Model.Countries)
+                                     {
+
+                                         {
+                                            <option value="@c.Id">@c.Name</option>
+                                             }
+                                         }
+                                     }
+
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row bottom-padding">
+                    <div class="col-md-6 responsive-col">
+                        <strong class="text-indent">Doprava</strong><br />
+
+                        @{
+                            foreach (Shipping s in Model.Shipping)
+                            {
+                                <div class="radio order-radio">
+                                    <input type="radio" value="@s.Id" asp-for="ShippingId" /> @s.Name @Html.Raw(" | ") @String.Format("{0:c}", s.Price)<br />
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="col-md-6 responsive-col">
+                        <strong class="text-indent">Platba</strong><br />
+
+                        @{
+                            foreach (Payment p in Model.Payment)
+                            {
+                                <div class="radio order-radio">
+                                    <input type="radio" value="@p.Id" asp-for="PaymentId" /> @p.Name <br />
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row order-buttons-div">
+                <div class="col-md-6">
+                    <button asp-action="BackToOrder" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-route-route="false" class="btn btn-prim order-button" type="submit">Změnit<span class="glyphicon glyphicon-send triangle-right"></span></button>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button asp-action="SendOrder" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-route-route="false" class="btn btn-prim order-button" type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>
+                </div>
+            </div>
+        </form>
     </div>
-</div>
+
+    @section Scripts {
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    }

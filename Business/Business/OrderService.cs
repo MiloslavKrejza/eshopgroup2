@@ -190,6 +190,32 @@ namespace Trainee.Business.Business
             }
         }
 
+        public AlzaAdminDTO<Shipping> GetShipping(int id)
+        {
+            try
+            {
+                var shipping = _shippingRepository.GetShipping(id);
+                return AlzaAdminDTO<Shipping>.Data(shipping);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<Shipping>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        public AlzaAdminDTO<Payment> GetPayment(int id)
+        {
+            try
+            {
+                var payment = _paymentRepository.GetPayment(id);
+                return AlzaAdminDTO<Payment>.Data(payment);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<Payment>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
         public AlzaAdminDTO<List<Shipping>> GetShippings()
         {
             try
