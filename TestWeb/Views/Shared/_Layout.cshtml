@@ -38,7 +38,7 @@
     //get user cart
     var user = await UserManager.GetUserAsync(User);
     var cart = user != null ? OrderService.GetCart(user.Id).data : null;
-
+    var cartForCount = cart == null ? OrderService.GetCart(Context.Request.Cookies["VisitorId"]).data : cart;
 
     if (TempData["EmailUnknown"] != null)
     {
@@ -95,9 +95,9 @@
             <div class="basket-user col-md-2 col-md-offset-8">
                 <a asp-area="" asp-controller="Order" asp-action="cart"  class="btn basket-user-btn main-background">
                     <img src="~/images/cart.svg" alt="cart" /><br />
-                    @if (cart?.Count > 0)
+                    @if (cartForCount?.Count > 0)
                     {
-                        <span id="cartcount">Košík (@cart.Count)</span>
+                        <span id="cartcount">Košík (@cartForCount.Count)</span>
                     }
                     else
                     {
