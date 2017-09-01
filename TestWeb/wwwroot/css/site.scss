@@ -684,24 +684,12 @@ input:-ms-input-placeholder {
     cursor: pointer;
 }
 
-#priceFilter {
-    width: 90%;
-    margin-top: 12px;
-    margin-bottom: 21px;
-}
-
-.slider_tooltip {
-    position: absolute;
-    top: -8px;
-    left: -2px;
-    border-radius: 5px;
-    padding: 5px;
-    border: 1px solid $border-color;
-    background-color: $background-color;
-    outline: none;
-}
 
 .filters {
+    div {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
     select {
         margin-bottom: 10px;
     }
@@ -728,6 +716,25 @@ input:-ms-input-placeholder {
     }
 }
 
+.filters {
+    label {
+        font-size: 12px;
+    }
+}
+
+.price-filter-div {
+    input {
+        border: none;
+        width: 33px;
+        margin: 0 1px;
+    }
+}
+
+#priceFilter {
+    padding: 0;
+    margin-top: 10px;
+}
+
 
 
 .filter-btn {
@@ -736,6 +743,7 @@ input:-ms-input-placeholder {
     height: 33px;
     width: 120px;
     margin-bottom: 12px;
+    margin-right: 5px;
 }
 
 @media screen and (max-width: 993px) {
@@ -750,6 +758,43 @@ input:-ms-input-placeholder {
         top: 5px;
         margin: 0 10px;
         float: left;
+    }
+}
+
+.show-filters {
+    float: left;
+}
+
+.show-filters-btn {
+    height: 25px;
+    background-color: $background-color;
+    border: solid 1px $border-color;
+    padding-top: 3px;
+    padding-bottom: 3px;
+     :hover {
+         background-color: $primary-color;
+         color: $background-color;
+     }
+}
+
+
+.sorting {
+
+    div {
+        float:right;
+        margin: 0 10px 10px 0;
+
+        label {
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        select {
+            font-size: 12px;
+            padding: 0;
+            height: 25px;
+            cursor: pointer;
+        }
     }
 }
 
