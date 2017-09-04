@@ -680,41 +680,6 @@ input:-ms-input-placeholder {
     max-height: 400px;
     border-radius: 10px; }
 
-/* Redirection*/
-/* Order */
-.order {
-  width: 80%;
-  margin: 0 auto; }
-
-.order-items {
-  border: solid 1px #dddddd;
-  border-radius: 10px;
-  padding: 10px 0 5px 15px; }
-
-.order-items-heading {
-  margin-bottom: 10px;
-  font-weight: bold;
-  margin-left: 20px; }
-
-@media screen and (max-width: 994px) {
-  .order-items-row {
-    border-bottom: solid 1px #dddddd;
-    margin-right: 0;
-    padding: 10px 0; } }
-
-@media screen and (max-width: 994px) {
-  .order-book-name {
-    font-weight: bold; } }
-
-.order-price {
-  font-weight: bold;
-  font-size: 14px;
-  margin-right: 50px;
-  margin-top: 20px; }
-
-.order-radio {
-  padding-left: 30px; }
-
 /* Order login */
 .orderlogin {
   margin: 0 20px; }
@@ -746,6 +711,54 @@ input:-ms-input-placeholder {
   .register-container img {
     margin: 0;
     height: 90px; }
+
+/* Order */
+.order {
+  width: 80%;
+  margin: 0 auto; }
+
+.order-items {
+  border: solid 1px #dddddd;
+  border-radius: 10px;
+  padding: 10px 0 5px 15px;
+  margin-bottom: 10px; }
+
+.order-items-heading {
+  margin-bottom: 10px;
+  font-weight: bold;
+  margin-left: 20px; }
+
+@media screen and (max-width: 994px) {
+  .order-items-row {
+    border-bottom: solid 1px #dddddd;
+    margin-right: 0;
+    padding: 10px 0; } }
+
+@media screen and (max-width: 994px) {
+  .order-book-name {
+    font-weight: bold; } }
+
+.order-price {
+  font-weight: bold;
+  font-size: 14px;
+  margin-right: 50px;
+  margin-top: 20px; }
+
+.order-radio {
+  padding-left: 30px; }
+
+/* Summary */
+.summary-div {
+  width: 80%;
+  margin: 0 auto; }
+
+.summary-shipping input {
+  visibility: hidden; }
+
+.price {
+  margin-left: 35px;
+  margin-top: 5px;
+  font-weight: bold; }
 
 /*Reviews*/
 .user-rating {
@@ -908,3 +921,4 @@ fieldset[disabled] .btn-prim.active {
 .btn-prim .badge {
   color: #2F3293;
   background-color: #FFFFFF; }
+

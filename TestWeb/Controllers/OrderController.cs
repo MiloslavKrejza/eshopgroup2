@@ -177,12 +177,39 @@ namespace Eshop2.Controllers
         }
 
         [HttpPost]
-        public IActionResult Order(OrderViewModel model)
+        public async Task<IActionResult> Order(OrderViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    CookieHelper helper = new CookieHelper(_accessor);
+
+                    AlzaAdminDTO<List<CartItem>> result;
+                    if (_signInManager.IsSignedIn(User))
+                    {
+                        var user = await _userManager.GetUserAsync(User);
+                        result = _orderService.GetCart(user.Id);
+                    }
+                    else
+                    {
+                        string cookieId = helper.GetVisitorId();
+                        result = _orderService.GetCart(cookieId);
+                    }
+                    if (!result.isOK)
+                        throw new Exception("Could not find the cart");
+
+                    var cart = result.data;
+
+                    //cannot order with empty cart
+                    if (cart.Count == 0)
+                    {
+                        TempData["emptyOrder"] = true;
+                        return RedirectToAction("Cart");
+                    }
+                    model.Items = cart;
+
+
                     Country country = _countryService.GetCountry(model.CountryId).data;
                     Shipping shipping = _orderService.GetShipping(model.ShippingId).data;
                     Payment payment = _orderService.GetPayment(model.PaymentId).data;
@@ -191,7 +218,7 @@ namespace Eshop2.Controllers
                     model.Shipping = new List<Shipping>() { shipping };
                     model.Payment = new List<Payment>() { payment };
 
-                    
+
 
                     return View("Summary", model);
                 }

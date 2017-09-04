@@ -944,57 +944,6 @@ input:-ms-input-placeholder {
     }
 }
 
-/* Redirection*/
-
-.redirection {
-}
-
-/* Order */
-.order {
-    width: 80%;
-    margin: 0 auto;
-}
-
-
-.order-items {
-    border: solid 1px $border-color;
-    border-radius: 10px;
-    padding: 10px 0 5px 15px;
-}
-
-
-.order-items-heading {
-    margin-bottom: 10px;
-    font-weight: bold;
-    margin-left: 20px;
-}
-
-@media screen and (max-width: 994px) {
-    .order-items-row {
-        border-bottom:solid 1px $border-color;
-        margin-right: 0;   
-        padding: 10px 0;
-    }
-}
-
-@media screen and (max-width: 994px) {
-    .order-book-name {
-        font-weight: bold;
-    }
-}
-
-.order-price {
-    font-weight: bold;
-    font-size: 14px;
-    margin-right: 50px;
-    margin-top: 20px;
-}
-
-.order-radio {
-    padding-left: 30px;
-}
-
-
 /* Order login */
 .orderlogin {
     margin: 0 20px;
@@ -1041,6 +990,73 @@ input:-ms-input-placeholder {
     }
 }
 
+/* Order */
+.order {
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+.order-items {
+    border: solid 1px $border-color;
+    border-radius: 10px;
+    padding: 10px 0 5px 15px;
+    margin-bottom: 10px;
+}
+
+
+.order-items-heading {
+    margin-bottom: 10px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 994px) {
+    .order-items-row {
+        border-bottom:solid 1px $border-color;
+        margin-right: 0;   
+        padding: 10px 0;
+    }
+}
+
+@media screen and (max-width: 994px) {
+    .order-book-name {
+        font-weight: bold;
+    }
+}
+
+.order-price {
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 50px;
+    margin-top: 20px;
+}
+
+.order-radio {
+    padding-left: 30px;
+}
+
+
+
+
+/* Summary */
+
+.summary-div {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.summary-shipping {
+    input {
+        visibility:hidden;
+    }
+}
+
+.price {
+    margin-left: 35px;
+    margin-top: 5px;
+    font-weight: bold;
+}
 
 
 /*Reviews*/
