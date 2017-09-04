@@ -474,6 +474,10 @@ input:-ms-input-placeholder {
 .rating img {
   width: 150px; }
 
+.no-rating {
+  font-style: italic;
+  font-size: 12px; }
+
 .rating-textarea {
   width: 300px;
   margin-left: 50px;
@@ -921,4 +925,3 @@ fieldset[disabled] .btn-prim.active {
 .btn-prim .badge {
   color: #2F3293;
   background-color: #FFFFFF; }
-

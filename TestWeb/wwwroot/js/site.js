@@ -33,6 +33,10 @@ $(".paging-span").click(function () {
 })
 
 
+$(".order-by").change(function () {
+    $("#filtering-form").submit();
+})
+
 function changeUserBack() {
     document.getElementById("login-link").innerHTML = "Přihlásit";
 }

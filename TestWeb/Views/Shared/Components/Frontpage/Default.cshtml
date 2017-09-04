@@ -38,12 +38,21 @@
                             }
                         }
                     </p>
+                    @if (p.AverageRating != null)
+                    {
                         <div class="ratings">
                             <div class="empty-stars"></div>
                             @{string averageRatingString = (p.AverageRating * 20).ToString().Replace(',', '.'); }
                             <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
                         </div>
-                    
+                    }
+                    else
+                    {
+                        <p class="no-rating">Bez hodnocení</p>
+
+                    }
+
+
                 </a>
 
             </div>

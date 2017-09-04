@@ -33,32 +33,32 @@
 
 
 
-<div class="row">
-    <div class="col-md-6 show-filters">
-        <button class="show-filters-btn btn btn-sm" type="button" data-toggle="collapse" data-target="#filters">Zobrazit filtrování <span class="caret"></span></button>
-    </div>
-    <div class="col-md-6 sorting">
-        <form class="form-inline">
-            <div>
-                <label asp-for="SortingParameter">Řadit podle...</label>
-                <select class="form-control" asp-for="SortingParameter" asp-items="Html.GetEnumSelectList<SortingParameter>()"></select>
+<form asp-controller="Catalogue" asp-action="Products" method="get" id="filtering-form" class="bottom-padding">
+    <div class="row">
+        <div class="col-md-6 show-filters">
+            <button class="show-filters-btn btn btn-sm" type="button" data-toggle="collapse" data-target="#filters">Zobrazit filtrování <span class="caret"></span></button>
+        </div>
+        <div class="col-md-6 sorting">
+            <div class="form-inline">
+                <div>
+                    <label asp-for="SortingParameter">Řadit podle...</label>
+                    <select class="form-control order-by" asp-for="SortingParameter" asp-items="Html.GetEnumSelectList<SortingParameter>()"></select>
+                </div>
+                <div>
+                    <label asp-for="PageSize">Zobrazit</label>
+                    <select class="form-control order-by" asp-for="PageSize">
+                        <option selected value="20">20</option>
+                        <option value="8">8</option>
+                        <option value="40">40</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
             </div>
-            <div>
-                <label asp-for="PageSize">Zobrazit</label>
-                <select class="form-control" asp-for="PageSize">
-                    <option selected value="20">20</option>
-                    <option value="8">8</option>
-                    <option value="40">40</option>
-                    <option value="100">100</option>
-                </select>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-<hr class="bottom-padding" />
+    <hr class="bottom-padding" />
 
-<div class="collapse" id="filters">
-    <form id="filtering-form" class="bottom-padding">
+    <div class="collapse" id="filters">
 
         <div class="row filters">
 
@@ -76,7 +76,7 @@
             </div>
             <div class="col-md-2">
                 <label asp-for="PublishersFilter">Vydavatelství</label>
-                <select class="form-control " asp-for="PublishersFilter">
+                <select class="form-control" asp-for="PublishersFilter">
                     <option selected value="@null">Všechna</option>
                     @{
                         foreach (Publisher p in Model.Publishers)
@@ -109,8 +109,8 @@
                 <a class="filter-btn btn btn-default" asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</form>
 
 
 @{ if (Model.Products.Count == 0)
@@ -156,11 +156,20 @@
                                         }
                                     }
                                 }
-                                <div class="ratings">
-                                    <div class="empty-stars"></div>
-                                    @{string averageRatingString = (p.AverageRating * 20).ToString().Replace(',', '.'); }
-                                    <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
-                                </div>
+                                @if (p.AverageRating != null)
+                                {
+                                    <div class="ratings">
+                                        <div class="empty-stars"></div>
+                                        @{string averageRatingString = (p.AverageRating * 20).ToString().Replace(',', '.'); }
+                                        <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
+                                    </div>
+
+                                 }
+                                 else
+                                 {
+                                    <p class="no-rating">Bez hodnocení</p>
+                                 }  
+
                             </p>
 
                             @{

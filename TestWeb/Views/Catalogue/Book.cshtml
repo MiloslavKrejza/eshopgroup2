@@ -46,12 +46,22 @@
                 }
             }
         </p>
-        <div class="ratings">
-            <div class="empty-stars"></div>
-            @{string averageRatingString = (Model.AverageRating * 20).ToString().Replace(',', '.'); }
-            <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
 
-        </div>
+        @if (Model.AverageRating != null)
+        {
+            <div class="ratings">
+                <div class="empty-stars"></div>
+                @{
+                    string averageRatingString = (Model.AverageRating * 20).ToString().Replace(',', '.');
+                }
+                <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
+            </div>
+        }
+        else
+        {
+            <p class="no-rating">Bez hodnocení</p>
+        }
+
         <p class="italics">@Html.DisplayFor(model => model.ProductFormat)</p>
         <p>@Html.DisplayFor(model => model.Annotation)</p>
         <p>@Html.DisplayFor(model => model.ProductText)</p>

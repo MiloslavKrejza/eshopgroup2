@@ -79,6 +79,8 @@ img {
     font-style: italic;
 }
 
+
+
 .text-warning {
     color: red;
 }
@@ -636,6 +638,11 @@ input:-ms-input-placeholder {
     }
 }
 
+.no-rating {
+    font-style: italic;
+    font-size: 12px;
+}
+
 .rating-textarea {
     width: 300px;
     margin-left: 50px;
@@ -798,6 +805,9 @@ input:-ms-input-placeholder {
     }
 }
 
+.order-by{
+
+}
 
 .product {
     border: dashed 1px $border-color;
