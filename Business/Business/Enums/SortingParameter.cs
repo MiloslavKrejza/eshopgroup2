@@ -3,7 +3,7 @@
 namespace Trainee.Business.Business.Enums
 {
     /// <summary>
-    /// This class contains sorting parameters for products
+    /// This enum contains sorting parameters for products
     /// </summary>
     public enum SortingParameter
     {
