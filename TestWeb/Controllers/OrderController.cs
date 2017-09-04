@@ -142,38 +142,20 @@ namespace Eshop2.Controllers
 
                 model.Items = cart;
 
-
-
                 //cannot order with an empty cart
                 if (model.Items.Count > 0)
                 {
-                    int? orderId = Int32.Parse(cookieHelper.GetOrderId());
-                    Order userOrder;
-
-                    if (orderId != null)
-                    {
-                        var res = _orderService.GetOrder(orderId.Value);
-                        userOrder = res.data;
-                    }
-                    else
-                    {
-                        userOrder = new Order()
-                        {
-                            CountryId = userProfile.CountryId,
-                            Email = user.Email,
-                            City = userProfile.City,
-                            Name = userProfile.Name,
-                            PhoneNumber = userProfile.PhoneNumber,
-                            PostalCode = userProfile.PostalCode,
-                            Address = userProfile.Address,
-                            Surname = userProfile.Surname
-                        };
-                    }
-
                     //the user data is auto-filled in
                     if (userProfile != null)
                     {
-
+                        model.CountryId = userProfile.CountryId;
+                        model.Email = user.Email;
+                        model.City = userProfile.City;
+                        model.Name = userProfile.Name;
+                        model.Phone = userProfile.PhoneNumber;
+                        model.PostalCode = userProfile.PostalCode;
+                        model.Street = userProfile.Address;
+                        model.Surname = userProfile.Surname;
                     }
 
                     //listing all possible choices for fields
@@ -209,7 +191,7 @@ namespace Eshop2.Controllers
                     model.Shipping = new List<Shipping>() { shipping };
                     model.Payment = new List<Payment>() { payment };
 
-
+                    
 
                     return View("Summary", model);
                 }
