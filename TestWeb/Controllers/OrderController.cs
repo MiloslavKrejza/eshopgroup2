@@ -49,12 +49,13 @@ namespace Eshop2.Controllers
         {
             try
             {
-                //user tried to order, but the cart is empty
+                //user tried to order, but the cart is empty (and he was redirected)
                 ViewData["emptyOrder"] = TempData["emptyOrder"];
 
                 //getting the visitor id
                 CookieHelper cookieHelper = new CookieHelper(_accessor);
 
+                //get anonymous or user cart
                 AlzaAdminDTO<List<CartItem>> result;
                 if (_signInManager.IsSignedIn(User))
                 {
@@ -72,7 +73,7 @@ namespace Eshop2.Controllers
                 if (!result.isOK)
                     throw new Exception("Could not find the cart");
 
-                //handling an empty cart
+                //handling an empty cart so it can be displayed
                 List<CartItem> cart;
                 if (result.isEmpty)
                 {
@@ -112,7 +113,7 @@ namespace Eshop2.Controllers
 
                 AlzaAdminDTO<List<CartItem>> result;
 
-                //anonymous shopping?
+                //is it anonymous shopping?
                 UserProfile userProfile = null;
                 ApplicationUser user = null;
                 if (_signInManager.IsSignedIn(User))
@@ -181,6 +182,7 @@ namespace Eshop2.Controllers
         {
             try
             {
+                //the model will be posted to summary page
                 if (ModelState.IsValid)
                 {
                     Country country = _countryService.GetCountry(model.CountryId).data;
@@ -228,6 +230,7 @@ namespace Eshop2.Controllers
                     return RedirectToAction("Cart");
                 }
 
+                //we need to get back with the same order data
                 model.Items = cart;
                 model.Countries = _countryService.GetAllCountries().data.ToList();
                 model.Shipping = _orderService.GetShippings().data.ToList();
@@ -268,6 +271,7 @@ namespace Eshop2.Controllers
                     };
 
 
+                    //anonymous order?
                     if (_signInManager.IsSignedIn(User))
                     {
                         var result = await _userManager.GetUserAsync(User);
@@ -288,6 +292,7 @@ namespace Eshop2.Controllers
                     var addedOrder = _orderService.AddOrder(order, cookieId).data;
                     int orderId = addedOrder.Id;
 
+                    //adding order items
                     foreach (var item in items)
                     {
                         OrderItem orderItem = new OrderItem()
@@ -322,6 +327,7 @@ namespace Eshop2.Controllers
         {
             //page confirming the order had been sent
             ViewData["OrderId"] = TempData["OrderId"];
+            //the page cannot be accessed from elsewhere
             if (ViewData["OrderId"] == null)
                 return RedirectToAction("Index", "Home");
 
@@ -336,6 +342,13 @@ namespace Eshop2.Controllers
             {
                 return RedirectToAction("Redirect");
             }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Redirect()
+        {
+            //redirect page leading to order
             return View();
         }
 
@@ -377,12 +390,7 @@ namespace Eshop2.Controllers
             return Json(result, settings);
         }
 
-        [HttpGet]
-        public IActionResult Redirect()
-        {
-            //redirect page leading to order
-            return View();
-        }
+      
 
         [HttpPost]
         public async Task<IActionResult> UpdateCart([FromBody]CartItemModel item)
