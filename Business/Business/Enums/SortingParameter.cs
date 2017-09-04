@@ -7,7 +7,7 @@ namespace Trainee.Business.Business.Enums
     /// </summary>
     public enum SortingParameter
     {
-        [Display(Name = "Od nejnovější")]
+        [Display(Name = "Data přidání")]
         Date,
         [Display(Name = "Ceny")]
         Price,
