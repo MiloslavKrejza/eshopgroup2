@@ -9,6 +9,15 @@ function toggleLogin() {
     }
 }
 
+// Show/hide menu on small screens
+
+
+$('.toggle-menu').click(function (e) {
+    $(this).toggleClass('categories');
+    $('.menu-item').toggleClass('categories');
+
+    e.preventDefault();
+});
 
 // Hide and show effect for edit page
 
@@ -240,8 +249,8 @@ $(".remove").click(function () {
                 if (json.data.length <= 0)
                     location.reload();
                 else
-                UpdateCount(json.data.length);
-                
+                    UpdateCount(json.data.length);
+
 
             }
             else {
@@ -263,7 +272,7 @@ $(".product-count-increase,.product-count-decrease").click(function () {
         value += 1;
     }
     value = value > 0 ? value : 1;
-    
+
 
     countElement.val(value);
     countElement.trigger('input');

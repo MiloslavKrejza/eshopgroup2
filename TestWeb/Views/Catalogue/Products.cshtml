@@ -155,57 +155,57 @@
 
                                         }
                                     }
+
+                                    @if (p.AverageRating != null)
+                                    {
+                                        <div class="ratings">
+                                            <div class="empty-stars"></div>
+                                            @{string averageRatingString = (p.AverageRating * 20).ToString().Replace(',', '.'); }
+                                            <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
+                                        </div>
+
+                                                }
+                                                else
+                                                {
+                                                <p class="no-rating">Bez hodnocení</p>
+                                                }
                                 }
-                                @if (p.AverageRating != null)
-                                {
-                                    <div class="ratings">
-                                        <div class="empty-stars"></div>
-                                        @{string averageRatingString = (p.AverageRating * 20).ToString().Replace(',', '.'); }
-                                        <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
-                                    </div>
+                                </p>
 
-                                 }
-                                 else
-                                 {
-                                    <p class="no-rating">Bez hodnocení</p>
-                                 }  
-
-                            </p>
-
-                            @{
-                                if (p.State.Name != "Dostupná")
-                                {
-                                    <p class="italics text-danger">@p.State.Name</p>
-                                }
-                                else
-                                {
-                                    <p class="italics">@p.State.Name</p>
-                                }
-                            }
-
-                            <p>@String.Format("{0:C}", p.Price)</p>
-                        </a>
-                        <input type="hidden" value="@p.Id" name="product-id" />
-                        <input type="hidden" name="product-count" class="hidden" value="1" />
-                        @if (p.State.Name == "Dostupná")
-                        {
-                            <button class="btn-addtocart btn btn-prim">Do košíku</button>
-                        }
-                        else
-                        {
-                            <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
-                        }
-
-                    </div>
-
-                                if ((i + 1) % 4 == 0)
-                                {
-                                    if ((i + 1) % Model.PageSize == 0) { break; }
-
-                                    @Html.Raw("</div>")
-                                    @Html.Raw("<div class='row'>")
+                                @{
+                                    if (p.State.Name != "Dostupná")
+                                    {
+                                        <p class="italics text-danger">@p.State.Name</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="italics">@p.State.Name</p>
                                     }
                                 }
+
+                                <p>@String.Format("{0:C}", p.Price)</p>
+                            </a>
+                            <input type="hidden" value="@p.Id" name="product-id" />
+                            <input type="hidden" name="product-count" class="hidden" value="1" />
+                            @if (p.State.Name == "Dostupná")
+                            {
+                                <button class="btn-addtocart btn btn-prim">Do košíku</button>
+                            }
+                            else
+                            {
+                                <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
+                            }
+
+                        </div>
+
+                                    if ((i + 1) % 4 == 0)
+                                    {
+                                        if ((i + 1) % Model.PageSize == 0) { break; }
+
+                                        @Html.Raw("</div>")
+                                        @Html.Raw("<div class='row'>")
+                                        }
+                                    }
 
             }
 
@@ -276,5 +276,5 @@
 
             }
         </div>
-                                }
+                                    }
 }
