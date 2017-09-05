@@ -83,7 +83,7 @@
                 Ulice a č.p.: @Html.DisplayFor(model => model.Street)<br />
                 Město: @Html.DisplayFor(model => model.City)<br />
                 PSČ: @Html.DisplayFor(model => model.PostalCode)<br />
-                @*   Země: @Html.DisplayFor(model => model.Country.Name)*@
+                Země: @Html.DisplayFor(model => model.Countries[0].Name)
             </p>
         </div>
         <div class="col-md-6 summary-shipping">
@@ -130,7 +130,7 @@
     @{
         foreach (Country c in Model.Countries)
         {
-            <input type="hidden" value="@c.Id">
+            <input type="hidden" value="@c.Id" asp-for="CountryId">
         }
     }
 

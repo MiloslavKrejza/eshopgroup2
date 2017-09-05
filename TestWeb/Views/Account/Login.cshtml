@@ -28,6 +28,10 @@
     var asdfa = new List<string>();
 
     string currUrl = Context.Request.Path.Value;
+    if(currUrl.IndexOf("Login", StringComparison.CurrentCultureIgnoreCase) >= 0)
+    {
+        ViewData["FromLogin"] = true;
+    }
 
 }
 

@@ -1,5 +1,4 @@
-
-﻿// Login Toogle
+﻿// Login Toggle
 function toggleLogin() {
     var x = document.getElementById('login');
     if (x.style.display === 'none') {
@@ -41,14 +40,11 @@ $(".paging-span").click(function () {
     $("#filtering-form").submit();
 })
 
-
+//autosends the filtering after order parameter or pagesize change
 $(".order-by").change(function () {
     $("#filtering-form").submit();
 })
 
-function changeUserBack() {
-    document.getElementById("login-link").innerHTML = "Přihlásit";
-}
 
 //dialog for keeping/discarding cart items from previous log in
 $(function () {
@@ -82,7 +78,7 @@ $(function () {
     });
 })
 
-
+//close button handling (a 'little' bit ugly, would be edited)
 $(function () {
 
     /* 
@@ -99,17 +95,6 @@ $(function () {
     else {
         $("#Pr").show();
     }
-
-    /*
-    if ($("#login-page-container").parent().parent().attr('id') === "layout")
-    {
-        $('#layout').children().children('.close-tab').hide();
-        alert();
-    }
-    else
-    {
-        $('#login').children().children('.close-tab').show();
-    }*/
 })
 
 //calls a function for transfering the anonymous cart to user cart
@@ -140,6 +125,7 @@ function transformCart(deleteOld) {
     });
 }
 
+//handles redirection which occurs after merging an anonymous cart with user cart
 $(function () {
     $(".redirection").click(function () {
         location.href = this.href; // if we trigger the anchor click event, it does not simulate a physical click on the link
@@ -153,7 +139,7 @@ $(function () {
 });
 
 
-
+//triggers the addition of a cart item
 ﻿$(".btn-addtocart").on('click', _.debounce(function () {
 
     var ProductCount = $(this).parent().children("input[name='product-count']").val();
@@ -211,6 +197,7 @@ $(function () {
 
 }, 500));
 
+//Updates the cart item count (as it would be applied only after refreshing the page)
 function UpdateCount(count) {
     if (count > 0)
         $("#cartcount").text("Košík (" + count + ")");
@@ -219,6 +206,7 @@ function UpdateCount(count) {
 
 }
 
+//recalculates the price on the cart page (as the product can be deleted or updated via ajax)
 function Recalculate() {
     var totalPrice = 0;
     var cart = $("#cart-wrapper");
@@ -231,6 +219,8 @@ function Recalculate() {
     var formatter = new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: "CZK", minimumFractionDigits: 2 });
     totalPriceWrapper.text(" " + formatter.format(totalPrice));
 }
+
+//removes an item from the cart
 $(".remove").click(function () {
     var parent = $(this).parents(".cart-item");
     var id = parent.find(".product-id-hidden").val();
@@ -263,6 +253,8 @@ $(".remove").click(function () {
 
     })
 });
+
+//updates the element value of a cart item prior to submitting
 $(".product-count-increase,.product-count-decrease").click(function () {
     var parent = $(this).parents(".cart-item");
     var countElement = parent.find(".product-count");
@@ -278,6 +270,8 @@ $(".product-count-increase,.product-count-decrease").click(function () {
     countElement.trigger('input');
 
 });
+
+//updates the product count
 $(".product-count").on("send", _.debounce(function () {
     var parent = $(this).parents(".cart-item");
     var id = parent.find(".product-id-hidden").val();
@@ -309,6 +303,8 @@ $(".product-count").on("send", _.debounce(function () {
 
     })
 }, 500));
+
+//triggers the change of the cart item amount
 $(".product-count").on('input change', function () {
     var parent = $(this).parents(".cart-item");
     var count = parent.find(".product-count").val();

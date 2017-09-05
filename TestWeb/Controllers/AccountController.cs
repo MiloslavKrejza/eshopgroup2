@@ -98,11 +98,10 @@ namespace TestWeb.Controllers
         {
             try
             {
-                //Tbd if error ever occurs...
 
-               /* if (_signInManager.IsSignedIn(User))
-                    return ErrorActionResult("Uživatel již je přihlášen");
-                */
+                if (_signInManager.IsSignedIn(User))
+                   await _signInManager.SignOutAsync();
+                
 
                 ViewData["ReturnUrl"] = returnUrl;
                 if (ModelState.IsValid)
@@ -175,13 +174,13 @@ namespace TestWeb.Controllers
         [HttpGet]
         [Route("/Account/Register")]
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        public async Task<IActionResult> Register(string returnUrl = null)
         {
             try
             {
                 //Can't be signed in
                 if (_signInManager.IsSignedIn(User))
-                    _signInManager.SignOutAsync();
+                    await _signInManager.SignOutAsync();
 
 
                 ViewData["ReturnUrl"] = returnUrl;
@@ -442,6 +441,7 @@ namespace TestWeb.Controllers
                         updatedProfile.ProfileStateId = profileState;
                         updatedProfile.PhoneNumber = model.Phone;
 
+                        //do not change the profile image if it is not updated
                         if (model.ProfileImage != null)
                         {
                             string profilePicExtension = model.ProfileImage.FileName.Split('.').Last();
@@ -452,14 +452,15 @@ namespace TestWeb.Controllers
                             }
                         }
 
-
+                        //password change
                         if(model.NewPassword != null)
                         {
                             var result = await _userManager.ChangePasswordAsync(userIdentity, model.Password, model.NewPassword);
 
                             if(!result.Succeeded)
                             {
-                                return RedirectToAction("Error", "Home");
+                                ViewData["PasswordChangeErr"] = true;
+                                return View(model);
                             }
                         }
 
@@ -559,7 +560,6 @@ namespace TestWeb.Controllers
         }
 
 
-        //
         // GET: /Account/Forbidden
         [HttpGet]
         [AllowAnonymous]
@@ -586,6 +586,7 @@ namespace TestWeb.Controllers
             {
                 await _signInManager.SignOutAsync();
 
+                //login cart cookie is deleted
                 CookieHelper helper = new CookieHelper(_accessor);
                 helper.DeleteVisitorId();
 

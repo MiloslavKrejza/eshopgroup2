@@ -172,29 +172,29 @@
                                 }
                                 </p>
 
-                                @{
-                                    if (p.State.Name != "Dostupná")
-                                    {
-                                        <p class="italics text-danger">@p.State.Name</p>
-                                    }
-                                    else
-                                    {
-                                        <p class="italics">@p.State.Name</p>
-                                    }
+                            @{
+                                if (p.State.Name != "Skladem")
+                                {
+                                    <p class="italics text-danger">@p.State.Name</p>
                                 }
+                                else
+                                {
+                                    <p class="italics">@p.State.Name</p>
+                                }
+                            }
 
-                                <p>@String.Format("{0:C}", p.Price)</p>
-                            </a>
-                            <input type="hidden" value="@p.Id" name="product-id" />
-                            <input type="hidden" name="product-count" class="hidden" value="1" />
-                            @if (p.State.Name == "Dostupná")
-                            {
-                                <button class="btn-addtocart btn btn-prim">Do košíku</button>
-                            }
-                            else
-                            {
-                                <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
-                            }
+                            <p>@String.Format("{0:C}", p.Price)</p>
+                        </a>
+                        <input type="hidden" value="@p.Id" name="product-id" />
+                        <input type="hidden" name="product-count" class="hidden" value="1" />
+                        @if (p.State.Name == "Skladem")
+                        {
+                            <button class="btn-addtocart btn btn-prim">Do košíku</button>
+                        }
+                        else
+                        {
+                            <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
+                        }
 
                         </div>
 

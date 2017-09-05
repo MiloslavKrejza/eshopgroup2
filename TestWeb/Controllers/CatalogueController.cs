@@ -69,7 +69,7 @@ namespace Eshop2.Controllers
                 return AlzaError.ExceptionActionResult(e);
             }
         }
-        // POST: /Catalogue/Book/BookId
+        // POST: /Catalogue/Book/{id}
         [HttpPost("/Catalogue/Book/{id}")]
         public async Task<IActionResult> Book(int? id, BookViewModel model)
         {
@@ -124,7 +124,7 @@ namespace Eshop2.Controllers
 
 
 
-        // GET: /Catalogue/Category
+        // GET: /Catalogue/Products/{id?}
         [HttpGet("/Catalogue/Products/{id?}")]
         public IActionResult Products(int? id, int? pageNum, ProductsViewModel model)
         {
@@ -132,7 +132,7 @@ namespace Eshop2.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
+                    //Default category is the first one (all items)
                     if (id == null)
                     {
                         id = 1;
@@ -141,33 +141,54 @@ namespace Eshop2.Controllers
 
                     model.currentCategory = _catalogueService.GetCategory(catId).data;
 
-
+                    //Unknown category id
                     if (model.currentCategory == null)
                     {
                         return RedirectToAction("Error", "Home");
                     }
 
+                    //First page is default
                     if (model.PageNum == null)
                     {
                         model.PageNum = pageNum == null ? 1 : pageNum;
                     }
 
-
+                    //creating the wrapper from filtering data
                     QueryParametersWrapper parameters = new QueryParametersWrapper
                     {
                         PageNum = model.PageNum.Value,
-                        CategoryId = catId, //check this
-
-                        //todo maxpricefilter
+                        CategoryId = catId,
                         MaxPrice = model.MaxPriceFilter,
                         MinPrice = model.MinPriceFilter,
                         PageSize = model.PageSize,
                         SortingParameter = model.SortingParameter,
-                        SortingType = model.SortingType,
-
-
                     };
 
+                    //custom filtering
+                    if(model.SortingType == null)
+                    {
+                        switch (model.SortingParameter)
+                        {
+                            case SortingParameter.Date:
+                            case SortingParameter.Rating:
+                                parameters.SortingType = SortType.Desc;
+                                break;
+                            case SortingParameter.Name:
+                            case SortingParameter.Price:
+                                parameters.SortingType = SortType.Asc;
+                                break;
+
+                            default:
+                                parameters.SortingType = SortType.Asc;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        parameters.SortingType = model.SortingType.Value;
+                    }
+
+                    //making sure null is not passed into the service method
                     parameters.Formats = model.FormatsFilter == null ? null : new List<int>() { model.FormatsFilter.Value };
                     parameters.Languages = model.LanguagesFilter == null ? null : new List<int>() { model.LanguagesFilter.Value };
                     parameters.Authors = model.AuthorsFilter == null ? null : new List<int>() { model.AuthorsFilter.Value };

@@ -41,7 +41,7 @@ namespace Eshop2.Models.CatalogueViewModels
         public int? FormatsFilter { get; set; }
         public int? LanguagesFilter { get; set; }
 
-        public SortType SortingType { get; set; } //TODO ask for defaults
+        public SortType? SortingType { get; set; }
         public SortingParameter SortingParameter { get; set; }
     }
 }
