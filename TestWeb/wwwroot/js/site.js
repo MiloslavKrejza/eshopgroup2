@@ -8,7 +8,33 @@ function toggleLogin() {
     }
 }
 
-//sends the filtering form on page change
+// Show/hide menu on small screens
+
+
+$('.toggle-menu').click(function (e) {
+    $(this).toggleClass('categories');
+    $('.menu-item').toggleClass('categories');
+
+    e.preventDefault();
+});
+
+// Hide and show effect for edit page
+
+function showStuff(id, text, btn) {
+    //
+    document.getElementById(id).style.display = 'block';
+    // hide the login forms
+    document.getElementById(text).style.display = 'none';
+    // hide the button for login
+    btn.style.display = 'none';
+}
+
+// Effect for text on layout
+
+function changeUser() {
+    document.getElementById("login-link").innerHTML = "Účet";
+}
+
 $(".paging-span").click(function () {
     $("#filter-page-num").val($(this).attr("page-num"));
     $("#filtering-form").submit();
@@ -213,8 +239,8 @@ $(".remove").click(function () {
                 if (json.data.length <= 0)
                     location.reload();
                 else
-                UpdateCount(json.data.length);
-                
+                    UpdateCount(json.data.length);
+
 
             }
             else {
@@ -238,7 +264,7 @@ $(".product-count-increase,.product-count-decrease").click(function () {
         value += 1;
     }
     value = value > 0 ? value : 1;
-    
+
 
     countElement.val(value);
     countElement.trigger('input');

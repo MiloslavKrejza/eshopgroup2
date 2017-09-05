@@ -137,7 +137,7 @@
             <div class="col-md-2">
 
                 <div class="list-group-item menu-item">
-                    <strong><a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@parentId"><!--<p><img src="~/images/(c.ico).svg" /></p>-->@parentName</a></strong>
+                    <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@parentId"><p class="bold">@parentName</p></a>
                 </div>
 
 
@@ -153,6 +153,7 @@
                 }
 
             </div>
+        <div class="clear"></div>
 
             <!-- OBSAH -->
             <div class="col-md-10" id="layout">

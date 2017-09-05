@@ -53,6 +53,10 @@ img {
 .italics {
   font-style: italic; }
 
+@media screen and (max-width: 992px) {
+  .clear {
+    clear: both; } }
+
 .text-warning {
   color: red; }
 
@@ -97,7 +101,7 @@ input[type=number]::-webkit-outer-spin-button {
 .logo {
   width: 100%; }
 
-@media screen and (max-width: 993px) {
+@media screen and (max-width: 992px) {
   .logo {
     width: 30%;
     margin: 0 auto;
@@ -155,26 +159,7 @@ input:-ms-input-placeholder {
   border: none;
   padding: 4px;
   margin: 5px;
-  color: #4379C5;
-  /*button {
-        outline: none;
-
-        :focus {
-            outline : 0 !important;
-        }
-
-        :active {
-            outline: none;
-        }
-
-        :visited {
-            outline: none;
-        }
-
-        img {
-            width: 50px;
-        }
-    }*/ }
+  color: #4379C5; }
 
 .basket-user-btn:focus {
   background-color: #d8e8ff;
@@ -237,23 +222,52 @@ input:-ms-input-placeholder {
 
 /*Cathegories*/
 .menu-item {
-  height: 50px;
+  height: auto;
   font-size: 15px;
-  padding: 13px 0 10px 10px;
+  padding: 13px 0 3px 10px;
   display: block;
   cursor: pointer;
   color: #4379C5;
   border-left: none;
   border-right: none;
   border-bottom: 1px solid #e8e8e8; }
+  .menu-item a:hover {
+    text-decoration: none;
+    font-weight: bold; }
+  .menu-item img {
+    height: 30px;
+    margin-right: 10px; }
 
-.menu-item a:hover {
-  text-decoration: none;
-  font-weight: bold; }
+.list-group-item:first-child {
+  border-top: none; }
 
-.menu-item img {
-  height: 30px;
-  margin-right: 10px; }
+@media screen and (max-width: 992px) {
+  .menu-item {
+    float: left;
+    width: 24%;
+    border: solid 1px #dddddd;
+    border-radius: 10px;
+    text-align: center;
+    padding: 7px 0 0 0;
+    margin: 3px;
+    height: auto; }
+  .list-group-item:first-child {
+    border-top: solid 1px #dddddd;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px; }
+  .list-group-item:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; } }
+
+@media screen and (max-width: 730px) {
+  .menu-item {
+    width: 32%;
+    height: auto; } }
+
+@media screen and (max-width: 570px) {
+  .menu-item {
+    width: 48%;
+    height: auto; } }
 
 /*Layout*/
 #layout {
@@ -273,11 +287,11 @@ input:-ms-input-placeholder {
   text-decoration: none;
   cursor: pointer; }
 
-@media screen and (max-width: 994px) {
+@media screen and (max-width: 992px) {
   .footer {
     text-align: center !important; } }
 
-@media screen and (max-width: 994px) {
+@media screen and (max-width: 992px) {
   .footer .text-right {
     text-align: center;
     margin-top: 10px; } }
@@ -482,7 +496,8 @@ input:-ms-input-placeholder {
 
 .no-rating {
   font-style: italic;
-  font-size: 12px; }
+  font-size: 12px;
+  height: 25px; }
 
 .rating-textarea {
   width: 300px;
@@ -523,7 +538,7 @@ input:-ms-input-placeholder {
 .filters select {
   margin-bottom: 10px; }
 
-@media screen and (max-width: 993px) {
+@media screen and (max-width: 992px) {
   .filters div {
     width: 33%;
     float: left;
@@ -554,7 +569,7 @@ input:-ms-input-placeholder {
   margin-bottom: 12px;
   margin-right: 5px; }
 
-@media screen and (max-width: 993px) {
+@media screen and (max-width: 992px) {
   .filter-btn {
     top: 5px;
     margin-left: 80%; } }
@@ -706,7 +721,7 @@ input:-ms-input-placeholder {
     width: 80%;
     margin: 0 auto; }
 
-@media screen and (max-width: 994px) {
+@media screen and (max-width: 992px) {
   .partiallogin {
     width: 100%;
     margin: 0 0 10px 0; } }
@@ -722,6 +737,7 @@ input:-ms-input-placeholder {
     margin: 0;
     height: 90px; }
 
+/*Redirection*/
 /* Order */
 .order {
   width: 80%;
@@ -738,13 +754,13 @@ input:-ms-input-placeholder {
   font-weight: bold;
   margin-left: 20px; }
 
-@media screen and (max-width: 994px) {
+@media screen and (max-width: 992px) {
   .order-items-row {
     border-bottom: solid 1px #dddddd;
     margin-right: 0;
     padding: 10px 0; } }
 
-@media screen and (max-width: 994px) {
+@media screen and (max-width: 992px) {
   .order-book-name {
     font-weight: bold; } }
 
@@ -931,3 +947,4 @@ fieldset[disabled] .btn-prim.active {
 .btn-prim .badge {
   color: #2F3293;
   background-color: #FFFFFF; }
+
