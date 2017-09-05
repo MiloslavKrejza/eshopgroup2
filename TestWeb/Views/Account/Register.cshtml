@@ -12,60 +12,60 @@
         <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="row form-row">
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="Name"></label><i class="red-star">*</i>
                     <input class="form-control" asp-for="Name" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="Surname"></label><i class="red-star">*</i>
                     <input class="form-control" asp-for="Surname" />
                     <span asp-validation-for="Surname" class="text-danger"></span>
                 </div>
             </div>
             <div class="row form-row">
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="Email"></label><i class="red-star">*</i>
                     <input class="form-control" asp-for="Email" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="Phone"></label>
                     <input class="form-control" asp-for="Phone" />
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
             </div>
             <div class="row form-row">
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="Password"></label><i class="red-star">*</i>
                     <input class="form-control" asp-for="Password" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="ConfirmPassword"></label><i class="red-star">*</i>
                     <input class="form-control" asp-for="ConfirmPassword" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
             </div>
             <div class="row form-row">
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="Street"></label>
                     <input class="form-control" asp-for="Street" />
                     <span asp-validation-for="Street" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="PostalCode"></label>
                     <input class="form-control" asp-for="PostalCode" />
                     <span asp-validation-for="PostalCode" class="text-danger"></span>
                 </div>
             </div>
             <div class="row form-row">
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="City"></label>
                     <input class="form-control" asp-for="City" />
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <label class="text-indent control-label" asp-for="CountryId"></label>
                     <select class="form-control" asp-for="CountryId">
                         <option selected disabled>Zvolte zemi...</option>
@@ -76,7 +76,15 @@
                             {
 
                                 {
-                                    <option value="@c.Id">@c.Name</option>
+
+                                    @if (c.Id == 1)
+                                    {
+                                        <option class="option-cs" value="@c.Id">@c.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@c.Id">@c.Name</option>
+                                    }
                                 }
                             }
                         }

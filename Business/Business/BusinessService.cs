@@ -1,11 +1,7 @@
 ﻿using Alza.Core.Module.Http;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
 using Trainee.Business.Abstraction;
 using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
@@ -17,7 +13,7 @@ using Trainee.User.Abstraction;
 namespace Trainee.Business.Business
 {
     /// <summary>
-    /// This service provides access to products with reviews and ratings included
+    /// This service provides access to products with reviews and ratings included. It provides business lo
     /// </summary>
     public class BusinessService
     {
@@ -28,9 +24,10 @@ namespace Trainee.Business.Business
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUserProfileRepository _userProfileRepository;
         private readonly IFilteringRepository _filteringRepository;
+        private readonly IFrontPageRepository _frontPageRepository;
 
         public BusinessService(ICategoryRelationshipRepository catRRep, IProductRatingRepository prodRRep,
-                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, IFilteringRepository filterRep)
+                IReviewRepository reviewRep, IProductRepository prodRep, ICategoryRepository catRep, IUserProfileRepository userRep, IFilteringRepository filterRep, IFrontPageRepository frontRep)
         {
             _categoryRelationshipRepository = catRRep;
             _productRatingRepository = prodRRep;
@@ -39,11 +36,16 @@ namespace Trainee.Business.Business
             _categoryRepository = catRep;
             _userProfileRepository = userRep;
             _filteringRepository = filterRep;
+            _frontPageRepository = frontRep;
 
         }
         #region Products
 
-
+        /// <summary>
+        /// This method returns a filtered page of products. The product filtering occurs on the database side.
+        /// </summary>
+        /// <param name="parameters">Filtering parameters</param>
+        /// <returns>A filtered page of products</returns>
         public AlzaAdminDTO<QueryResultWrapper> GetPageADO(QueryParametersWrapper parameters)
         {
             try
@@ -56,8 +58,10 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<QueryResultWrapper>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
+
+        [Obsolete("This method is a slower variant of Trainee.Business.BusinessService.GetPageADO. Consider using the new version.")]
         /// <summary>
-        /// Gets a page of product with applied filtering
+        /// Gets a page of product with applied filtering. The filtering occurs on the server side.
         /// </summary>
         /// <param name="parameters">Filter parameters</param>
         /// <returns>Page of products</returns>
@@ -197,10 +201,13 @@ namespace Trainee.Business.Business
 
             try
             {
+                //gets the base product with no reviews and ratings
                 var baseProduct = _productRepository.GetProduct(id);
 
+                //if the product was not found, it cannot be joined with any ratings
                 if (ReferenceEquals(baseProduct, null))
                     return AlzaAdminDTO<ProductBO>.Data(null);
+
                 //average rating of the product
                 var avRating = _productRatingRepository.GetRating(id);
 
@@ -219,7 +226,17 @@ namespace Trainee.Business.Business
             }
 
         }
-        public AlzaAdminDTO<List<ProductBO>> GetFrontPage(SortingParameter parameter, SortType type, int count, int categoryId, int? timeOffset = null)
+
+        /// <summary>
+        /// This method returns products with applied filtering that can be displayed on the front page.
+        /// </summary>
+        /// <param name="parameter">Specifies the nature of the front page items, orders the products by this parameter.</param>
+        /// <param name="type">Specifies whether the sorting is ascending or descending</param>
+        /// <param name="count">Specifies how many items should be returned</param>
+        /// <param name="categoryId">Specifies the category of the front page products.</param>
+        /// <param name="timeOffset">Limits the age in days of products (by addition time).</param>
+        /// <returns></returns>
+        public AlzaAdminDTO<List<ProductBO>> GetFrontPage(FrontPageParameter parameter, SortType type, int count, int categoryId, int? timeOffset = null)
         {
             try
             {
@@ -234,6 +251,11 @@ namespace Trainee.Business.Business
 
         #endregion
         #region Reviews
+        /// <summary>
+        /// This method enables to add a new review.
+        /// </summary>
+        /// <param name="review">Review to be added</param>
+        /// <returns>DTO of added review</returns>
         public AlzaAdminDTO<Review> AddReview(Review review)
         {
             try
@@ -246,6 +268,12 @@ namespace Trainee.Business.Business
             }
         }
 
+        /// <summary>
+        /// Gets a review of a product by a specific user.
+        /// </summary>
+        /// <param name="userId">Id of the user who submitted the review</param>
+        /// <param name="productId">Id of the reviewed product</param>
+        /// <returns>DTO of the review</returns>
         public AlzaAdminDTO<Review> GetReview(int userId, int productId)
         {
             try
@@ -260,6 +288,11 @@ namespace Trainee.Business.Business
             }
         }
 
+        /// <summary>
+        /// Enables to update an already submitted review.
+        /// </summary>
+        /// <param name="review">Review to update with</param>
+        /// <returns>Updated review</returns>
         public AlzaAdminDTO<Review> UpdateReview(Review review)
         {
             try
@@ -272,11 +305,69 @@ namespace Trainee.Business.Business
             }
         }
 
+        /// <summary>
+        /// Deletes a review
+        /// </summary>
+        /// <param name="userId">Id of the user who submitted the review</param>
+        /// <param name="productId">Reviewed product</param>
         public void DeleteReview(int userId, int productId)
         {
             _reviewRepository.DeleteReview(userId, productId);
         }
         #endregion
+        #region FrontPage
+        /// <summary>
+        /// Gets a front page preset that can be applied to the method GetFrontPage.
+        /// </summary>
+        /// <param name="id">Id of the preset</param>
+        /// <returns>DTO of the preset item</returns>
+        public AlzaAdminDTO<FrontPageItem> GetFrontPageItem(int id)
+        {
+            try
+            {
+                return AlzaAdminDTO<FrontPageItem>.Data(_frontPageRepository.GetFrontPageItem(id));
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<FrontPageItem>.Error(e.Message);
+            }
+        }
 
+        /// <summary>
+        /// Gets all front page presets marked as active.
+        /// </summary>
+        /// <returns>DTO of active Front page items</returns>
+        public AlzaAdminDTO<List<FrontPageItem>> GetActivePageItems()
+        {
+            try
+            {
+                var result = _frontPageRepository.GetFrontPageItems().Where(fi => fi.Active == true).ToList();
+                return AlzaAdminDTO<List<FrontPageItem>>.Data(result);
+            }
+            catch(Exception e)
+            {
+                return AlzaAdminDTO<List<FrontPageItem>>.Error(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Gets a dictionary of indexed front page slots which contain front page items currently assigned to it.
+        /// </summary>
+        /// <returns>DTO of a dictionary containing all FrontPageSlots</returns>
+        public AlzaAdminDTO<Dictionary<int, FrontPageSlot>> GetPageSlots()
+        {
+            try
+            {
+                var result = _frontPageRepository.GetSlotItems().ToDictionary(si => si.SlotId);
+
+                return AlzaAdminDTO<Dictionary<int, FrontPageSlot>>.Data(result);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<Dictionary<int, FrontPageSlot>>.Error(e.Message);
+            }
+        }
+
+        #endregion
     }
 }

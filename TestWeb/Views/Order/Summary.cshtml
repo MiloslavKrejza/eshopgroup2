@@ -1,23 +1,160 @@
-﻿
+﻿@using Eshop2.Models.OrderViewModels
+@using Trainee.Core.DAL.Entities
+@using Trainee.Business.DAL.Entities
+@model OrderViewModel
+
 @{
-    ViewData["Title"] = "Shrnutí";
+    ViewData["Title"] = "Rekapitulace";
+    decimal productsPrice = 0;
+
+
+    foreach (CartItem c in Model.Items)
+    {
+        productsPrice += c.Amount * c.Product.Price;
+    }
+
+    decimal totalPrice = productsPrice;
 }
-<h2 class="bottom-padding">Rekapitulace</h2>
-<div class="row bottom-padding">
-    <div class="col-md-6">
-        <p>Vyzvednutí osobně na prodejně</p>
-        <p>Platba kartou ihned</p>
-        <p>Celková cena objednávky: 698 Kč</p>
+
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="order-items">
+    <div class="row order-items-heading hidden-sm hidden-xs">
+        <div class="col-md-4">Název knihy</div>
+        <div class="col-md-4">Autor</div>
+        <div class="col-md-1">Počet</div>
+        <div class="col-md-3">Celková cena</div>
     </div>
-    <div class="col-md-6 summary-item">
-        <div class="col-md-5">
-            <p class="text-indent"><strong>Harry Potter</strong></p>
-        </div>
-        <div class="col-md-5">
-            <p>Joanne K. Rowling</p>
-        </div>
-        <div class="col-md-2">
-            399,-
-        </div>
-    </div>
+
+
+    @{
+        foreach (CartItem c in Model.Items)
+        {
+            <div class="row order-items-row">
+                <div class="col-md-4">
+                    <p class="order-book-name">@c.Product.Name</p>
+                </div>
+                <div class="col-md-4">
+                    <p>
+                        @{
+                            var a = c.Product.Book.AuthorsBooks;
+                            for (int i = 0; i < a.Count; i++)
+                            {
+
+                                @a[i].Author.Name @Html.Raw(" ") @a[i].Author.Surname
+
+                                @if (i != a.Count - 1)
+                                {@Html.Raw(", ")}
+                            }
+                        }
+                    </p>
+                </div>
+                <div class="col-md-1">
+                    @c.Amount ks
+                </div>
+                <div class="col-md-3">
+                    @{
+                        decimal booksPrice = 0;
+                        {
+
+                            booksPrice += c.Product.Price * c.Amount;
+                            productsPrice += booksPrice;
+
+                        }
+                    }
+
+                    @String.Format("{0:c}", booksPrice)
+                </div>
+            </div>
+                        }
+
+    }
+
 </div>
+
+    <div class="row summary-div bottom-padding">
+        <div class="col-md-6">
+            <p><strong>Dodací údaje</strong></p>
+            <p>
+                Jméno: @Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)<br />
+                E-mail: @Html.DisplayFor(model => model.Email) <br />
+                Telefon: @Html.DisplayFor(model => model.Phone)<br /><br />
+                Ulice a č.p.: @Html.DisplayFor(model => model.Street)<br />
+                Město: @Html.DisplayFor(model => model.City)<br />
+                PSČ: @Html.DisplayFor(model => model.PostalCode)<br />
+                Země: @Html.DisplayFor(model => model.Countries[0].Name)
+            </p>
+        </div>
+        <div class="col-md-6 summary-shipping">
+            <strong class="text-indent">Doprava</strong><br />
+
+            @{
+                foreach (Shipping s in Model.Shipping)
+                {
+                    <div class="radio order-radio">
+                        <input type="radio" value="@s.Id" asp-for="ShippingId" /> @s.Name - @String.Format("{0:c}" ,s.Price)<br />
+                    </div>
+
+                    totalPrice += s.Price;
+                }
+            }
+            <strong class="text-indent">Platba</strong><br />
+
+
+            @{
+                foreach (Payment p in Model.Payment)
+                {
+                    <div class="radio order-radio">
+                        <input type="radio" value="@p.Id" asp-for="PaymentId" /> @p.Name <br />
+                    </div>
+                }
+            }
+
+            <strong class="text-indent">Celková cena </strong>
+            <p class="price">@String.Format("{0:c}", @totalPrice)</p>
+
+        </div>
+    </div>
+
+@*Data to pass on*@
+
+<form method="post">
+    <input type="hidden" asp-for="Name" />
+    <input type="hidden" asp-for="Surname" />
+    <input type="hidden" asp-for="Email" />
+    <input type="hidden" asp-for="Phone" />
+    <input type="hidden" asp-for="Street" />
+    <input type="hidden" asp-for="City" />
+    <input type="hidden" asp-for="PostalCode" />
+    @{
+        foreach (Country c in Model.Countries)
+        {
+            <input type="hidden" value="@c.Id" asp-for="CountryId">
+        }
+    }
+
+    @{
+        foreach (Shipping s in Model.Shipping)
+        {
+            <input type="hidden" value="@s.Id" asp-for="ShippingId" />
+        }
+    }
+
+    @{
+        foreach (Payment p in Model.Payment)
+        {
+            <input type="hidden" value="@p.Id" asp-for="PaymentId" />
+        }
+    }
+
+    <div class="row order-buttons-div">
+        <div class="col-md-6">
+            <button asp-action="BackToOrder" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-route-route="false" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Změnit</button>
+        </div>
+        <div class="col-md-6 text-right">
+            <button asp-action="SendOrder" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-route-route="false" class="btn btn-prim order-button" type="submit">Potvrdit<span class="glyphicon glyphicon-send triangle-right"></span></button>
+        </div>
+    </div>
+
+</form>

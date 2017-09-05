@@ -88,5 +88,35 @@ namespace Eshop2.Abstraction
         {
             _accessor.HttpContext.Response.Cookies.Delete("OldVisitorId");
         }
+
+
+
+        /// <summary>
+        /// Gets the temporary data of the order id
+        /// </summary>
+        /// <returns>Current order id</returns>
+        public string GetOrderId()
+        {
+            return _accessor.HttpContext.Request.Cookies["OrderId"];
+        }
+
+        /// <summary>
+        /// Sets order id
+        /// </summary>
+        /// <param name="orderId">Order id</param>
+        public void SetOrderId(string orderId)
+        {
+            _accessor.HttpContext.Response.Cookies.Append("OrderId", orderId);
+        }
+
+        /// <summary>
+        /// Deletes the temporary order id data
+        /// </summary>
+        public void DeleteOrderId()
+        {
+            _accessor.HttpContext.Response.Cookies.Delete("OrderId");
+        }
+
+
     }
 }

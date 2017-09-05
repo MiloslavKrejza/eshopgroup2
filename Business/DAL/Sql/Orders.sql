@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[Orders](
 
 	[Name][nvarchar](50) NOT NULL,
 	[Surname][nvarchar](50) NOT NULL,
+	[Email][nvarchar](max) NOT NULL,
 	[PhoneNumber][nvarchar](max) NOT NULL,
 	[City][nvarchar](max) NOT NULL,
 	[Postalcode][nvarchar](max) NOT NULL,

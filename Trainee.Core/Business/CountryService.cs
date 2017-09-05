@@ -42,19 +42,6 @@ namespace Trainee.Core.Business
             }
         }
 
-        /*public AlzaAdminDTO<Country> GetCountry(string countryCode)
-        {
-            try
-            {
-                var result = _countryRepos.GetCountryByCode(countryCode);
-                return AlzaAdminDTO<Country> .Data(result);
-            }
-            catch (Exception e)
-            {
-                return AlzaAdminDTO<Country> .Error(e.Message + Environment.NewLine + e.StackTrace);
-            }
-        }*/
-
         /****************************************/
         /*         GET ALL COUNTRIES            */
         /****************************************/

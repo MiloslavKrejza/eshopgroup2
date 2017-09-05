@@ -9,33 +9,18 @@
 {
     <script>
         $(function () {
-            var tooltip = function (sliderObj, ui) {
-                val1 = '<div class="slider_tooltip" id="min-price-slider" >' + sliderObj.slider("values", 0) + '</div>';
-                val2 = '<div class="slider_tooltip" id="max-price-slider" >' + sliderObj.slider("values", 1) + '</div>';
-                sliderObj.children('.ui-slider-handle').first().html(val1);
-                sliderObj.children('.ui-slider-handle').last().html(val2);
-                minPriceInput = $("#min-price");
-                minPriceSlider = $("#min-price-slider");
-                maxPriceInput = $("#max-price");
-                maxPriceSlider = $("#max-price-slider");
-            };
-            $("#priceFilter").slider(
-                {
-                    range: true,
-                    min: @Math.Floor(Model.MinPrice.Value),
-                    max: @Math.Ceiling(Model.MaxPrice.Value),
-                    values: [ @Math.Floor(Model.MinPriceFilter.Value), @Math.Ceiling(Model.MaxPriceFilter.Value) ],
-                    slide: function (e, ui) {
-                        tooltip($(this), ui);
-                        minPriceInput.val(minPriceSlider.html());
-                        maxPriceInput.val(maxPriceSlider.html());
-                    },
-                    create: function (e, ui) {
-                        tooltip($(this), ui);
-                        minPriceInput.val(minPriceSlider.html());
-                        maxPriceInput.val(maxPriceSlider.html());
-                    }
-                });
+            $("#priceFilter").slider({
+                range: true,
+                min: @Math.Floor(Model.MinPrice.Value),
+                max: @Math.Ceiling(Model.MaxPrice.Value),
+                values: [ @Math.Floor(Model.MinPriceFilter.Value), @Math.Ceiling(Model.MaxPriceFilter.Value) ],
+                slide: function (event, ui) {
+                    $("#MinPriceFilter").val(ui.values[0]);
+                    $("#MaxPriceFilter").val(ui.values[1]);
+                }
+            });
+            $("#MinPriceFilter").val($("#priceFilter").slider("values", 0));
+            $("#MaxPriceFilter").val($("#priceFilter").slider("values", 1));
         });
     </script>
 }
@@ -46,239 +31,250 @@
 <h2>@ViewData["Title"]</h2>
 
 
-<form id="filtering-form" class="bottom-padding">
 
-    <div class="row filters">
 
-        <input id="filter-page-num" type="hidden" asp-for="PageNum" value="1" />
-        <div class="col-md-3">
-            <label asp-for="AuthorsFilter">Autor</label>
-            <select class="form-control selectpicker" asp-for="AuthorsFilter" data-live-search="true">
-                <option selected value="@null">Hledat...</option>
-                @{
-                    foreach (Author a in Model.Authors)
-                    {
-                        <option value="@a.AuthorId">@a.Surname, @a.Name</option>}
-                }
-            </select>
+<form asp-controller="Catalogue" asp-action="Products" method="get" id="filtering-form" class="bottom-padding">
+    <div class="row">
+        <div class="col-md-6 show-filters">
+            <button class="show-filters-btn btn btn-sm" type="button" data-toggle="collapse" data-target="#filters">Zobrazit filtrování <span class="caret"></span></button>
         </div>
-        <div class="col-md-2">
-            <label asp-for="PublishersFilter">Vydavatelství</label>
-            <select class="form-control " asp-for="PublishersFilter">
-                <option selected value="@null">Filtrovat...</option>
-                @{
-                    foreach (Publisher p in Model.Publishers)
-                    {
-                        <option value="@p.Id">@p.Name</option>}
-                }
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label asp-for="MinPriceFilter">Cena</label>
-            <div id="priceFilter"></div>
-            <input type="hidden" name="MinPriceFilter" value="@Math.Truncate(Model.MinPriceFilter.Value)" id="min-price" />
-            <input type="hidden" name="MaxPriceFilter" value="@Math.Ceiling(Model.MaxPriceFilter.Value)" id="max-price" />
-        </div>
-
-        <div class="col-md-2">
-            <label asp-for="LanguagesFilter">Jazyk</label>
-            <select class="form-control " asp-for="LanguagesFilter">
-                <option selected value="@null">Filtrovat...</option>
-                @{
-                    foreach (Language l in Model.Languages)
-                    {
-                        <option value="@l.Id">@l.Name</option>}
-                }
-            </select>
-        </div>
-
-        <div class="col-md-2">
-            <label asp-for="FormatsFilter">Formát</label>
-            <select class="form-control " asp-for="FormatsFilter">
-                <option selected value="@null">Filtrovat...</option>
-                @{
-                    foreach (Format f in Model.Formats)
-                    {
-                        <option value="@f.Id">@f.Name</option>}
-                }
-            </select>
+        <div class="col-md-6 sorting">
+            <div class="form-inline">
+                <div>
+                    <label asp-for="SortingParameter">Řadit podle...</label>
+                    <select class="form-control order-by" asp-for="SortingParameter" asp-items="Html.GetEnumSelectList<SortingParameter>()"></select>
+                </div>
+                <div>
+                    <label asp-for="PageSize">Zobrazit</label>
+                    <select class="form-control order-by" asp-for="PageSize">
+                        <option selected value="20">20</option>
+                        <option value="8">8</option>
+                        <option value="40">40</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
+    <hr class="bottom-padding" />
 
-    <div class="row filters">
+    <div class="collapse" id="filters">
 
-        <div class="col-md-3">
-            <label asp-for="SortingParameter">Řadit podle...</label>
-            <select class="form-control" asp-for="SortingParameter" asp-items="Html.GetEnumSelectList<SortingParameter>()"></select>
-        </div>
-        <div class="col-md-2">
-            <label asp-for="SortingType">Řadit...</label>
-            <select class="form-control" asp-for="SortingType" asp-items="Html.GetEnumSelectList<SortType>()"></select>
-        </div>
-        <div class="col-md-2">
-            <label asp-for="PageSize">Knih na stránce</label>
-            <select class="form-control" asp-for="PageSize">
-                <option selected value="20">20</option>
-                <option value="40">40</option>
-                <option value="100">100</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <button id="button-filter" type="submit" class="filter-btn btn btn-prim">Filtrovat</button>
-        </div>
-        <div class="col-md-2">
-            <a class="filter-btn btn btn-default" asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
+        <div class="row filters">
+
+            <input id="filter-page-num" type="hidden" asp-for="PageNum" value="1" />
+            <div class="col-md-2">
+                <label asp-for="AuthorsFilter">Autor</label>
+                <select class="form-control selectpicker" asp-for="AuthorsFilter" data-live-search="true">
+                    <option selected value="@null">Hledat...</option>
+                    @{
+                        foreach (Author a in Model.Authors)
+                        {
+                            <option value="@a.AuthorId">@a.Surname, @a.Name</option>}
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="PublishersFilter">Vydavatelství</label>
+                <select class="form-control" asp-for="PublishersFilter">
+                    <option selected value="@null">Všechna</option>
+                    @{
+                        foreach (Publisher p in Model.Publishers)
+                        {
+                            <option value="@p.Id">@p.Name</option>}
+                    }
+                </select>
+            </div>
+            <div class="col-md-2 price-filter-div">
+                <label asp-for="MinPriceFilter">Cena: <input type="text" id="MinPriceFilter" name="MinPriceFilter" class="text-center" readonly />-<input type="text" id="MaxPriceFilter" name="MaxPriceFilter" class="text-center" readonly /></label><div>
+                    <div id="priceFilter"></div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="FormatsFilter">Formát</label>
+                <select class="form-control " asp-for="FormatsFilter">
+                    <option selected value="@null">Všechny</option>
+                    @{
+                        foreach (Format f in Model.Formats)
+                        {
+                            <option value="@f.Id">@f.Name</option>}
+                    }
+                </select>
+            </div>
+            <div class="col-md-2 text-center">
+                <button id="button-filter" type="submit" class="filter-btn btn btn-prim">Filtrovat</button>
+            </div>
+            <div class="col-md-2 text-center">
+                <a class="filter-btn btn btn-default" asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="2" asp-route-pageNum="1">Vymazat filtry</a>
+            </div>
         </div>
     </div>
 </form>
 
-<hr class="bottom-padding" />
 
+@{ if (Model.Products.Count == 0)
+    {
+        <p class="text-center">Nemáme žádné knížky, které splňují všechny zadané parametry. Zkuste je upravit.</p>
+    }
+    else
+    {
+        <div class="row">
+            @{
 
-<div class="row">
-    @{
+                for (int i = 0; i < Model.Products.Count; i++)
+                {
 
-        for (int i = 0; i < Model.Products.Count; i++)
-        {
+                    ProductBO p = Model.Products[i];
+                    <div class="col-lg-3 text-center product">
+                        <a asp-area="" asp-controller="catalogue" asp-action="book" asp-route-id="@p.Id">
+                            <img class="book-picture" src="~/images/product_images/@p.PicAddress" alt="@p.Name" />
+                            <p class="bold book-title">@p.Name</p>
+                            <p class="book-authors">
 
-            ProductBO p = Model.Products[i];
-            <div class="col-lg-3 text-center product">
-                <a asp-area="" asp-controller="catalogue" asp-action="book" asp-route-id="@p.Id">
-                    <img class="book-picture" src="~/images/product_images/@p.PicAddress" alt="@p.Name" />
-                    <p class="bold book-title">@p.Name</p>
-                    <p class="book-authors">
+                                @{
+                                    @*Write out first two authors*@
+                                var ab = p.Book.AuthorsBooks;
 
-                        @{
-                            @*Write out first two authors*@
-                        var ab = p.Book.AuthorsBooks;
+                                for (int j = 0; j < ab.Count; j++)
 
-                        for (int j = 0; j < ab.Count; j++)
-
-                        {
-                            if (j == 0)
-                            {
-                                @ab[j].Author.Name @Html.Raw(" ") @ab[j].Author.Surname
-
-                                }
-                                else if (j == 1)
                                 {
-                                    @Html.Raw(", ")@ab[j].Author.Name @Html.Raw(" ") @ab[j].Author.Surname
+                                    if (j == 0)
+                                    {
+                                        @ab[j].Author.Name @Html.Raw(" ") @ab[j].Author.Surname
+
+                                        }
+                                        else if (j == 1)
+                                        {
+                                            @Html.Raw(", ")@ab[j].Author.Name @Html.Raw(" ") @ab[j].Author.Surname
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(" a další")
+                                            break;
+
+                                        }
+                                    }
+                                }
+                                @if (p.AverageRating != null)
+                                {
+                                    <div class="ratings">
+                                        <div class="empty-stars"></div>
+                                        @{string averageRatingString = (p.AverageRating * 20).ToString().Replace(',', '.'); }
+                                        <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
+                                    </div>
+
+                                 }
+                                 else
+                                 {
+                                    <p class="no-rating">Bez hodnocení</p>
+                                 }  
+
+                            </p>
+
+                            @{
+                                if (p.State.Name != "Dostupná")
+                                {
+                                    <p class="italics text-danger">@p.State.Name</p>
                                 }
                                 else
                                 {
-                                    @Html.Raw(" a další")
-                                    break;
-
+                                    <p class="italics">@p.State.Name</p>
                                 }
                             }
-                        }
-                        <div class="ratings">
-                            <div class="empty-stars"></div>
-                            @{string averageRatingString = (p.AverageRating * 20).ToString().Replace(',', '.'); }
-                            <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
-                        </div>
-                    </p>
 
-                    @{
-                        if (p.State.Name != "Dostupná")
+                            <p>@String.Format("{0:C}", p.Price)</p>
+                        </a>
+                        <input type="hidden" value="@p.Id" name="product-id" />
+                        <input type="hidden" name="product-count" class="hidden" value="1" />
+                        @if (p.State.Name == "Dostupná")
                         {
-                            <p class="italics text-danger">@p.State.Name</p>
+                            <button class="btn-addtocart btn btn-prim">Do košíku</button>
                         }
                         else
                         {
-                            <p class="italics">@p.State.Name</p>
+                            <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
                         }
+
+                    </div>
+
+                                if ((i + 1) % 4 == 0)
+                                {
+                                    if ((i + 1) % Model.PageSize == 0) { break; }
+
+                                    @Html.Raw("</div>")
+                                    @Html.Raw("<div class='row'>")
+                                    }
+                                }
+
+            }
+
+        </div>
+        <div class="text-center">
+            <a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="" asp-route-pageNum=""></a>
+            <!-- pager -->
+            @if (Model.PageNum >= 1)
+            {
+                var LastPage = (int)Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize);
+                if (LastPage > 7)
+                {
+                    int startPage;
+
+                    if (Model.PageNum <= 4)
+                    {
+                        startPage = 2;
+                    }
+                    else if (LastPage - Model.PageNum <= 3)
+                    {
+                        startPage = LastPage - 5;
+                    }
+                    else
+                    {
+                        startPage = Model.PageNum.Value - 2;
                     }
 
-                    <p>@String.Format("{0:C}", p.Price)</p>
-                </a>
-                <input type="hidden" value="@p.Id" name="product-id" />
-                <input type="hidden" name="product-count" class="hidden" value="1" />
-                @if (p.State.Name == "Dostupná")
-                {
-                    <button class="btn-addtocart btn btn-prim">Do košíku</button>
+                    <ul class="pagination">
+                        @if (Model.PageNum > 0)
+                        {
+                            <li class="@(Model.PageNum == 1 ? "active" : "") "><span class="paging-span" page-num="1">První</span></li>}
+
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <li class="@(startPage + i == Model.PageNum ? "active" : "")">
+                                <span class="paging-span" page-num="@(startPage + i)">@(startPage + i)</span>
+                            </li>}
+
+                        @if (Model.PageNum <= LastPage)
+                        {
+
+
+
+                            <li class=@(LastPage == Model.PageNum ? "active" : "" )>
+                                <span class="paging-span" page-num="@(Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize))">Poslední</span>
+
+                            </li>}
+                    </ul>
                 }
                 else
                 {
-                    <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
-                }
-
-            </div>
-
-                        if ((i + 1) % 4 == 0)
+                    <ul class="pagination">
+                        <li class="@(Model.PageNum == 1 ? "active" : "") "><span class="paging-span" page-num="1">První</span></li>
+                        @for (int i = 2; i < LastPage; i++)
                         {
-                            @Html.Raw("</div>")
-                            @Html.Raw("<hr class='bottom-padding' />")
-                            @Html.Raw("<div class='row'>")
-                            }
+                            <li class="@(i == Model.PageNum ? "active" : "")">
+                                <span class="paging-span" page-num="@(i)">@(+i)</span>
+                            </li>
                         }
-
-    }
-
-</div>
-<div class="text-center">
-    <a asp-area="" asp-controller="Catalogue" asp-action="Products" asp-route-id="" asp-route-pageNum=""></a>
-    <!-- pager -->
-    @if (Model.PageNum >= 1)
-    {
-        var LastPage = (int)Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize);
-        if (LastPage > 7)
-        {
-            int startPage;
-
-            if (Model.PageNum <= 4)
-            {
-                startPage = 2;
-            }
-            else if (LastPage - Model.PageNum <= 3)
-            {
-                startPage = LastPage - 5;
-            }
-            else
-            {
-                startPage = Model.PageNum.Value - 2;
-            }
-
-            <ul class="pagination">
-                @if (Model.PageNum > 0)
-                {
-                    <li class="@(Model.PageNum == 1 ? "active" : "") "><span class="paging-span" page-num="1">První</span></li>}
-
-                @for (int i = 0; i < 5; i++)
-                {
-                    <li class="@(startPage + i == Model.PageNum ? "active" : "")">
-                        <span class="paging-span" page-num="@(startPage + i)">@(startPage + i)</span>
-                    </li>}
-
-                @if (Model.PageNum <= LastPage)
-                {
-
-
-
-                    <li class=@(LastPage == Model.PageNum ? "active" : "" )>
-                        <span class="paging-span" page-num="@(Math.Ceiling((double)Model.ResultCount / (double)Model.PageSize))">Poslední</span>
-
-                    </li>}
-            </ul>
-        }
-        else
-        {
-            <ul class="pagination">
-                <li class="@(Model.PageNum == 1 ? "active" : "") "><span class="paging-span" page-num="1">První</span></li>
-                @for (int i = 2; i < LastPage; i++)
-                {
-                    <li class="@(i == Model.PageNum ? "active" : "")">
-                        <span class="paging-span" page-num="@(i)">@(+i)</span>
-                    </li>
+                        @if (LastPage > 1)
+                        {
+                            <li class="@(LastPage == Model.PageNum ? "active" : "")">
+                                <span class="paging-span" page-num="@(LastPage)">Poslední</span>
+                            </li>
+                        }
+                    </ul>
                 }
-                @if (LastPage > 1)
-                {
-                    <li class="@(LastPage == Model.PageNum ? "active" : "")">
-                        <span class="paging-span" page-num="@(LastPage)">Poslední</span>
-                    </li>
-                }
-            </ul>
-        }
 
-    }
-</div>
+            }
+        </div>
+                                }
+}

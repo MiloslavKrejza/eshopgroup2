@@ -13,7 +13,7 @@
 
 <h3 class="bottom-padding">Vybrané knížky</h3>
 <div class="order-items">
-    <div class="row order-items-heading">
+    <div class="row order-items-heading hidden-sm hidden-xs">
         <div class="col-md-4">Název knihy</div>
         <div class="col-md-4">Autor</div>
         <div class="col-md-1">Počet</div>
@@ -24,9 +24,9 @@
     @{
         foreach (CartItem c in Model.Items)
         {
-            <div class="row cart-item">
+            <div class="row order-items-row">
                 <div class="col-md-4">
-                    <p>@c.Product.Name</p>
+                    <p class="order-book-name">@c.Product.Name</p>
                 </div>
                 <div class="col-md-4">
                     <p>
@@ -44,7 +44,7 @@
                     </p>
                 </div>
                 <div class="col-md-1">
-                    @c.Amount
+                    @c.Amount ks
                 </div>
                 <div class="col-md-3">
                     @{
@@ -77,24 +77,24 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
 
                 <div class="row form-row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 responsive-col">
                         <label class="text-indent control-label" asp-for="Name"></label>
                         <input class="form-control" asp-for="Name" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 responsive-col">
                         <label class="text-indent control-label" asp-for="Surname"></label>
                         <input class="form-control" asp-for="Surname" />
                         <span asp-validation-for="Surname" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row form-row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 responsive-col">
                         <label class="text-indent control-label" asp-for="Email"></label>
                         <input class="form-control" asp-for="Email" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 responsive-col">
                         <label class="text-indent control-label" asp-for="Phone"></label>
                         <input class="form-control" asp-for="Phone" />
                         <span asp-validation-for="Phone" class="text-danger"></span>
@@ -102,36 +102,42 @@
                 </div>
 
                 <div class="row form-row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 responsive-col">
                         <label class="text-indent control-label" asp-for="Street"></label>
                         <input class="form-control" asp-for="Street" />
                         <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 responsive-col">
                         <label class="text-indent control-label" asp-for="PostalCode"></label>
                         <input class="form-control" asp-for="PostalCode" />
                         <span asp-validation-for="PostalCode" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row form-row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 responsive-col">
                         <label class="text-indent control-label" asp-for="City"></label>
                         <input class="form-control" asp-for="City" />
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 responsive-col">
                         <label class="text-indent control-label" asp-for="CountryId"></label>
                         <select class="form-control" asp-for="CountryId">
                             <option selected disabled>Zvolte zemi...</option>
                             @{
-
-
                                 foreach (Country c in Model.Countries)
                                 {
 
                                     {
-                                        <option value="@c.Id">@c.Name</option>
+                                        
+                                        @if (c.Id == 1)
+                                        {
+                                            <option class="option-cs" value="@c.Id">@c.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@c.Id">@c.Name</option>
+                                        }
                                     }
                                 }
                             }
@@ -143,7 +149,7 @@
             </div>
 
             <div class="row bottom-padding">
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <strong class="text-indent">Doprava</strong><br />
 
                     @{
@@ -155,7 +161,7 @@
                         }
                     }
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 responsive-col">
                     <strong class="text-indent">Platba</strong><br />
 
                     @{
@@ -172,12 +178,12 @@
         </div>
 
 
-        <div class="row">
+        <div class="row order-buttons-div">
             <div class="col-md-6">
                 <a class="btn btn-default" asp-controller="Order" asp-action="Cart"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Zpět do košíku</a>
             </div>
             <div class="col-md-6 text-right">
-                <button class="btn btn-prim" type="submit">Objednat<span class="glyphicon glyphicon-send triangle-right"></span></button>
+                <button class="btn btn-prim order-button" type="submit">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></button>
             </div>
         </div>
     </form>

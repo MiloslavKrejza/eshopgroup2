@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Eshop2.Models.HomeViewModels;
 using Trainee.Business.Business;
 using Trainee.Business.DAL.Entities;
+using TestWeb.Models.HomeViewModels;
 
 namespace TestWeb.Controllers
 {
@@ -15,17 +16,25 @@ namespace TestWeb.Controllers
     public class HomeController : Controller
     {
         private readonly OrderService _orderService;
+        private readonly BusinessService _businessService;
 
-        public HomeController(OrderService ordServ)
+        public HomeController(OrderService ordServ, BusinessService busServ)
         {
             _orderService = ordServ;
+            _businessService = busServ;
         }
 
+        //GET: /Home/Index
         public IActionResult Index()
         {
-            return View();
+            var result = _businessService.GetPageSlots();
+            Dictionary<int,FrontPageSlot> items;
+            items = result.isOK ? result.data : new Dictionary<int, FrontPageSlot>();
+            IndexViewModel model = new IndexViewModel { Slots = items };
+            return View(model);
         }
 
+        //GET: /Home/About
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -33,6 +42,7 @@ namespace TestWeb.Controllers
             return View();
         }
 
+        //GET: /Home/Contact
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -40,11 +50,13 @@ namespace TestWeb.Controllers
             return View();
         }
 
+        //GET: /Home/Conditions
         public IActionResult Conditions()
         {
             return View();
         }
 
+        //GET: /Home/Shipping
         public IActionResult Shipping()
         {
 
@@ -63,6 +75,7 @@ namespace TestWeb.Controllers
             return View(model);
         }
 
+        //GET: /Home/Error
         public IActionResult Error()
         {
             return View();

@@ -46,12 +46,22 @@
                 }
             }
         </p>
-        <div class="ratings">
-            <div class="empty-stars"></div>
-            @{string averageRatingString = (Model.AverageRating * 20).ToString().Replace(',', '.'); }
-            <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
 
-        </div>
+        @if (Model.AverageRating != null)
+        {
+            <div class="ratings">
+                <div class="empty-stars"></div>
+                @{
+                    string averageRatingString = (Model.AverageRating * 20).ToString().Replace(',', '.');
+                }
+                <div class="full-stars" id="insertTheValue" style="width:@averageRatingString%"></div>
+            </div>
+        }
+        else
+        {
+            <p class="no-rating">Bez hodnocení</p>
+        }
+
         <p class="italics">@Html.DisplayFor(model => model.ProductFormat)</p>
         <p>@Html.DisplayFor(model => model.Annotation)</p>
         <p>@Html.DisplayFor(model => model.ProductText)</p>
@@ -136,13 +146,17 @@
 	<!--	Representation of present user desctiption-->
 
     <div class="user-rating">
-        <div class="ratings">
-            <div class="empty-stars"></div>
-            <div class="full-stars" style="width:@stars.ToString()%;"></div>
+        <div class="col-md-1 text-center">
+            <img src="~/images/profile_pics/@reviewPresent.User.ProfilePicAddress" alt="" />
         </div>
-        <span class="bold">@reviewPresent.User.Name @reviewPresent.User.Surname</span>
-        <img src="~/images/profile_pics/@reviewPresent.User.ProfilePicAddress" alt="" />
-        <p>@reviewPresent.Text</p><br />
+        <div class="col-md-11">
+            <span class="bold">@reviewPresent.User.Name @reviewPresent.User.Surname</span>
+            <div class="ratings">
+                <div class="empty-stars"></div>
+                <div class="full-stars" style="width:@stars.ToString()%;"></div>
+            </div>
+            <p>@reviewPresent.Text</p><br />
+        </div>
     </div>
 
 
@@ -187,7 +201,7 @@ else
 
         <div class="user-rating row">
             <div class="col-md-1 text-center">
-                <img src="~/images/profile_pics/default.png" />
+                <img src="~/images/profile_pics/@Model.PicAddress" />
             </div>
             <div class="col-md-11">
                 <span class="bold">@review.User.Name @review.User.Surname</span>

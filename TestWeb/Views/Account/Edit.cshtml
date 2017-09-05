@@ -5,23 +5,21 @@
 }
 
 
-<div class="container">
 
     <h2>@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)</h2>
     <div class="row profile">
-        <div class="col-lg-8">
 
             <form asp-controller="Account" asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
-                <div id="change">
+                <div id="change" class="col-md-12">
 
                     <div class="row form-row text-left">
-                        <div class="col-lg-6">
+                        <div class="col-md-6 responsive-col">
                             <label class="text-indent control-label" asp-for="Name"></label>
                             <input class="form-control" asp-for="Name" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-md-6 responsive-col">
                             <label class="text-indent control-label" asp-for="Surname"></label>
                             <input class="form-control" asp-for="Surname" />
                             <span asp-validation-for="Surname" class="text-danger"></span>
@@ -29,26 +27,26 @@
                     </div>
 
                     <div class="row form-row text-left">
-                        <div class="col-lg-6">
+                        <div class="col-md-6 responsive-col">
                             <label class="text-indent control-label" asp-for="Street"></label>
                             <input class="form-control" asp-for="Street" />
                             <span asp-validation-for="Street" class="text-danger"></span>
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-md-6 responsive-col">
                             <label class="text-indent control-label" asp-for="City"></label>
                             <input class="form-control" asp-for="City" />
                             <span asp-validation-for="City" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row form-row text-left">
-                        <div class="col-lg-6">
+                        <div class="col-md-6 responsive-col">
                             <label class="text-indent control-label" asp-for="PostalCode"></label>
                             <input class="form-control" asp-for="PostalCode" />
                             <span asp-validation-for="PostalCode" class="text-danger"></span>
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-md-6 responsive-col">
                             <label class="text-indent" asp-for="CountryId">Stát</label>
                             <select class="form-control" asp-for="CountryId">
 
@@ -59,7 +57,15 @@
                                     {
                                         if (c.Id != Model.Country.Id)
                                         {
-                                            <option value="@c.Id">@c.Name</option>
+
+                                            @if (c.Id == 1)
+                                            {
+                                                <option class="option-cs" value="@c.Id">@c.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@c.Id">@c.Name</option>
+                                            }
                                         }
                                     }
                                 }
@@ -67,13 +73,13 @@
                         </div>
                     </div>
                     <div class="row text-left">
-                        <div class="col-lg-6">
+                        <div class="col-md-6 responsive-col">
                             <label class="text-indent control-label" asp-for="Phone"></label>
                             <input class="form-control" asp-for="Phone" />
                             <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
 
-                        <div class="col-lg-6 bottom-padding">
+                        <div class="col-md-6 bottom-padding responsive-col">
                             <label class="text-indent" asp-for="ProfileImage">Profilový obrázek</label>
                             <input asp-for="ProfileImage" type="file" class="form-control-file">
                             <span asp-validation-for="ProfileImage" class="text-danger"></span>
@@ -82,14 +88,14 @@
                     <hr class="bottom-padding" />
 
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-md-6 responsive-col">
                             Pro změnu údajů zadejte prosím své heslo:
                             <br />
                             <input class="form-control" asp-for="Password" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
 
-                        <div class="col-lg-6" id="cancel-button">
+                        <div class="col-md-6 responsive-col" id="cancel-button">
                             <button type="submit" class="btn btn-prim btn-ulozit">Uložit</button>
                             <br />
                             <a asp-action="Details" asp-controller="Account" asp-route-returnurl="@ViewData["ReturnUrl"]">Zrušit</a>
@@ -98,23 +104,8 @@
                 </div>
             </form>
         </div>
-    </div>
-</div>
 
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
-<!--
-
-<div class="col-lg-10"><hr class="body-line" /></div>
-
-<div class="col-lg-10 cart-items">
-    <h2>Můj košík:</h2>
-</div>
-
-<div class="col-lg-10"><hr class="body-line" /></div>
-
-<div class="col-lg-10 cart">
-    <h2>Mé objednávky:</h2>
-</div>-->

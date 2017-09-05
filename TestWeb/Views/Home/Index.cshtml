@@ -7,61 +7,32 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h2>Nejprodávanější fantasy</h2>
+@{ 
+    FrontPageItem item = Model.Slots[1].Item;
+}
+<img class="front-image img-responsive" src="~/images/frontpic.png" alt="front picture" />
+<h2>@item.Name</h2>
+
 <div class="row">
-    @{
-
-        for (int i = 0; i < 4; i++)
-        {
-
-            <div class="col-lg-3 text-center product">
-                <a asp-area="" asp-controller="catalogue" asp-action="book">
-                    <img class="book-picture" src="~/images/product_images/product_100.jpg" alt="book" />
-                    <p class="bold book-title">Harry Potter</p>
-                    <p class="book-authors">
-                        J.K. Rowling
-                    </p>
-
-                    <p class="italics">hardback</p>
-                    <p>@String.Format("{0:C}", 359)</p>
-                </a>
-                <button class="btn-addtocart btn btn-prim">Do košíku</button>
-
-            </div>
-
-        }
-    }
+    @await Component.InvokeAsync("Frontpage", new { item = item})
 </div>
-<h2>Nejlepší horory</h2>
+
+@{
+    item = Model.Slots[2].Item;
+}
+<h2>@item.Name</h2>
+
 <div class="row">
-    @await Component.InvokeAsync("Frontpage",new { });
+    @await Component.InvokeAsync("Frontpage", new { item = item })
 </div>
 <div class="index-commercial">
     <img src="~/images/index-commercial.png" alt="book commercial" />
 </div>
+@{
+    item = Model.Slots[3].Item;
+}
+<h2>@item.Name</h2>
 
-<h2>Novinky v komiksech</h2>
 <div class="row">
-    @{
-
-        for (int i = 0; i < 4; i++)
-        {
-
-            <div class="col-lg-3 text-center product">
-                <a asp-area="" asp-controller="catalogue" asp-action="book">
-                    <img class="book-picture" src="~/images/product_images/product_100.jpg" alt="book" />
-                    <p class="bold book-title">Harry Potter</p>
-                    <p class="book-authors">
-                        J.K. Rowling
-                    </p>
-
-                    <p class="italics">hardback</p>
-                    <p>@String.Format("{0:C}", 359)</p>
-                </a>
-                <button class="btn-addtocart btn btn-prim">Do košíku</button>
-
-            </div>
-
-        }
-    }
+    @await Component.InvokeAsync("Frontpage",  new { item = item })
 </div>

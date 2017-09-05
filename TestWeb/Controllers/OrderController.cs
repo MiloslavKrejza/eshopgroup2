@@ -49,12 +49,13 @@ namespace Eshop2.Controllers
         {
             try
             {
-                //user tried to order, but the cart is empty
+                //user tried to order, but the cart is empty (and he was redirected)
                 ViewData["emptyOrder"] = TempData["emptyOrder"];
 
                 //getting the visitor id
                 CookieHelper cookieHelper = new CookieHelper(_accessor);
 
+                //get anonymous or user cart
                 AlzaAdminDTO<List<CartItem>> result;
                 if (_signInManager.IsSignedIn(User))
                 {
@@ -72,9 +73,9 @@ namespace Eshop2.Controllers
                 if (!result.isOK)
                     throw new Exception("Could not find the cart");
 
-                //handling an empty cart
+                //handling an empty cart so it can be displayed
                 List<CartItem> cart;
-                if(result.isEmpty)
+                if (result.isEmpty)
                 {
                     cart = new List<CartItem>();
                 }
@@ -82,8 +83,8 @@ namespace Eshop2.Controllers
                 {
                     cart = result.data;
                 }
-               
-                if(cart.Count == 0)
+
+                if (cart.Count == 0)
                 {
                     ViewData["emptyCart"] = true;
                 }
@@ -93,7 +94,7 @@ namespace Eshop2.Controllers
                 return View(model);
 
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -112,7 +113,7 @@ namespace Eshop2.Controllers
 
                 AlzaAdminDTO<List<CartItem>> result;
 
-                //anonymous shopping?
+                //is it anonymous shopping?
                 UserProfile userProfile = null;
                 ApplicationUser user = null;
                 if (_signInManager.IsSignedIn(User))
@@ -176,8 +177,121 @@ namespace Eshop2.Controllers
             }
         }
 
-        [HttpPost("/Order/Order/")]
+        /// <summary>
+        /// This method redirects to the summary page with user order data.
+        /// </summary>
+        /// <param name="model">Order data</param>
+        /// <returns>Summary View</returns>
+        //POST: /Order/Order
+        [HttpPost]
         public async Task<IActionResult> Order(OrderViewModel model)
+        {
+            try
+            {
+                //the model will be posted to summary page
+                if (ModelState.IsValid)
+                {
+                    CookieHelper helper = new CookieHelper(_accessor);
+
+                    AlzaAdminDTO<List<CartItem>> result;
+                    if (_signInManager.IsSignedIn(User))
+                    {
+                        var user = await _userManager.GetUserAsync(User);
+                        result = _orderService.GetCart(user.Id);
+                    }
+                    else
+                    {
+                        string cookieId = helper.GetVisitorId();
+                        result = _orderService.GetCart(cookieId);
+                    }
+                    if (!result.isOK)
+                        throw new Exception("Could not find the cart");
+
+                    var cart = result.data;
+
+                    //cannot order with empty cart
+                    if (cart.Count == 0)
+                    {
+                        TempData["emptyOrder"] = true;
+                        return RedirectToAction("Cart");
+                    }
+                    model.Items = cart;
+
+
+                    Country country = _countryService.GetCountry(model.CountryId).data;
+                    Shipping shipping = _orderService.GetShipping(model.ShippingId).data;
+                    Payment payment = _orderService.GetPayment(model.PaymentId).data;
+
+                    model.Countries = new List<Country>() { country };
+                    model.Shipping = new List<Shipping>() { shipping };
+                    model.Payment = new List<Payment>() { payment };
+
+
+
+                    return View("Summary", model);
+                }
+                else
+                {
+                    return View(model);
+                }
+            }
+            catch
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+
+        /// <summary>
+        /// This method redirects from the summary page back to the order page with the same model.
+        /// </summary>
+        /// <param name="model">Order data of the user</param>
+        /// <returns>Order view</returns>
+        //Post: /Order/BackToOrder
+        [HttpPost("Order/BackToOrder")]
+        public IActionResult BackToOrder(OrderViewModel model)
+        {
+            try
+            {
+                CookieHelper cookieHelper = new CookieHelper(_accessor);
+
+                string cookieId = cookieHelper.GetVisitorId();
+                var result = _orderService.GetCart(cookieId);
+                if (!result.isOK)
+                    throw new Exception("Could not find the cart");
+
+                var cart = result.data;
+
+                //cannot order with empty cart
+                if (cart.Count == 0)
+                {
+                    TempData["emptyOrder"] = true;
+                    return RedirectToAction("Cart");
+                }
+
+                //we need to get back with the same order data
+                model.Items = cart;
+                model.Countries = _countryService.GetAllCountries().data.ToList();
+                model.Shipping = _orderService.GetShippings().data.ToList();
+                model.Payment = _orderService.GetPayments().data.ToList();
+
+                return View("Order", model);
+
+            }
+            catch
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        /// <summary>
+        /// This method submits the order from the summary page
+        /// </summary>
+        /// <param name="model">Order data</param>
+        /// <returns>OK page view</returns>
+        //POST: /Order/SendOrder
+        [HttpPost("/Order/SendOrder")]
+        public async Task<IActionResult> SendOrder(OrderViewModel model)
         {
             try
             {
@@ -193,6 +307,7 @@ namespace Eshop2.Controllers
                         City = model.City,
                         Name = model.Name,
                         Surname = model.Surname,
+                        Email = model.Email,
                         PaymentId = model.PaymentId,
                         ShippingId = model.ShippingId,
                         PostalCode = model.PostalCode,
@@ -202,6 +317,7 @@ namespace Eshop2.Controllers
                     };
 
 
+                    //anonymous order?
                     if (_signInManager.IsSignedIn(User))
                     {
                         var result = await _userManager.GetUserAsync(User);
@@ -221,7 +337,8 @@ namespace Eshop2.Controllers
                     //adding order to the database
                     var addedOrder = _orderService.AddOrder(order, cookieId).data;
                     int orderId = addedOrder.Id;
-                    
+
+                    //adding order items
                     foreach (var item in items)
                     {
                         OrderItem orderItem = new OrderItem()
@@ -256,6 +373,7 @@ namespace Eshop2.Controllers
         {
             //page confirming the order had been sent
             ViewData["OrderId"] = TempData["OrderId"];
+            //the page cannot be accessed from elsewhere
             if (ViewData["OrderId"] == null)
                 return RedirectToAction("Index", "Home");
 
@@ -266,12 +384,23 @@ namespace Eshop2.Controllers
         public IActionResult OrderLogin()
         {
             //page displayed between cart and order if user is not signed in
-            if(_signInManager.IsSignedIn(User))
+            if (_signInManager.IsSignedIn(User))
             {
                 return RedirectToAction("Redirect");
             }
             return View();
         }
+
+        //GET: /Order/Redirect
+        [HttpGet]
+        public IActionResult Redirect()
+        {
+            //redirect page leading to order
+            return View();
+        }
+
+
+        /****** Called via ajax ******/
 
         [HttpPost]
         public async Task<IActionResult> AddToCart([FromBody]CartItemModel model)
@@ -311,12 +440,7 @@ namespace Eshop2.Controllers
             return Json(result, settings);
         }
 
-        [HttpGet]
-        public IActionResult Redirect()
-        {
-            //redirect page leading to order
-            return View();
-        }
+      
 
         [HttpPost]
         public async Task<IActionResult> UpdateCart([FromBody]CartItemModel item)
@@ -345,7 +469,7 @@ namespace Eshop2.Controllers
             settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             var user = await _userManager.GetUserAsync(User);
-            
+
             //cannot transfer cart if there is no user
             if (user == null)
                 return RedirectToAction("Error", "Home");

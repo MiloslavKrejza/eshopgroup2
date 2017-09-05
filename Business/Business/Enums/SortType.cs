@@ -6,7 +6,7 @@ using System.Text;
 namespace Trainee.Business.Business.Enums
 {
     /// <summary>
-    /// This class specifies how to sort the products (ascending or descending)
+    /// This enum specifies how to sort the products (ascending or descending)
     /// </summary>
     public enum SortType
     {

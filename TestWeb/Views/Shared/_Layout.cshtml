@@ -38,7 +38,7 @@
     //get user cart
     var user = await UserManager.GetUserAsync(User);
     var cart = user != null ? OrderService.GetCart(user.Id).data : null;
-
+    var cartForCount = cart == null ? OrderService.GetCart(Context.Request.Cookies["VisitorId"]).data : cart;
 
     if (TempData["EmailUnknown"] != null)
     {
@@ -95,28 +95,26 @@
             <div class="basket-user col-md-2 col-md-offset-8">
                 <a asp-area="" asp-controller="Order" asp-action="cart"  class="btn basket-user-btn main-background">
                     <img src="~/images/cart.svg" alt="cart" /><br />
-                    <p>Košík</p>
-                </a>
-                <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
-                    <img src="~/images/user.svg" alt="user" /><br />
-                    <p id="login-link">Přihlásit</p>
-                </button>
-
-                @{
-
-                    if (SignInManager.IsSignedIn(User))
+                    @if (cartForCount?.Count > 0)
                     {
-                        <script src="~/js/site.js"></script>
-                        <script>changeUser();</script>
+                        <span id="cartcount">Košík (@cartForCount.Count)</span>
                     }
                     else
                     {
-                        <script src="~/js/site.js"></script>
-                        <script>changeUserBack();</script>
+                        <span id="cartcount">Košík</span>
                     }
-
-                }
-
+                </a>
+                <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
+                    <img src="~/images/user.svg" alt="user" /><br />
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <p id="login-link">Účet</p>
+                    }
+                    else
+                    {
+                        <p id="login-link">Přihlásit</p>
+                    }
+                </button>
             </div>
         </div>
 
@@ -142,9 +140,9 @@
 
         <!-- MENU-->
         <div class="row" id="main-section">
-            <div class="col-md-2 list-group">
+            <div class="col-md-2">
 
-                <div class="list-group-item menu-item main-background">
+                <div class="list-group-item menu-item">
                     <strong><a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@parentId"><!--<p><img src="~/images/(c.ico).svg" /></p>-->@parentName</a></strong>
                 </div>
 
@@ -153,7 +151,7 @@
 
                     foreach (Category c in currentCategory.Children)
                     {
-                        <div class="list-group-item menu-item main-background">
+                        <div class="list-group-item menu-item">
                             <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><img src="~/images/@(c.Name).svg" /> @c.Name</p></a>
                         </div>
 

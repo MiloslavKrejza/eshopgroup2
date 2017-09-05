@@ -10,6 +10,9 @@ using Trainee.Catalogue.Abstraction;
 
 namespace Trainee.Business.Business
 {
+    /// <summary>
+    /// This class provides access to user and visitor carts and orders
+    /// </summary>
     public class OrderService
     {
         private readonly IProductRatingRepository _productRatingRepository;
@@ -35,6 +38,12 @@ namespace Trainee.Business.Business
             _orderStateRepository = ordStRep;
 
         }
+
+        /// <summary>
+        /// Returns a cart of a specified visitor
+        /// </summary>
+        /// <param name="visitorId">Id of the visitor</param>
+        /// <returns>DTO of the cart</returns>
         public AlzaAdminDTO<List<CartItem>> GetCart(string visitorId)
         {
             try
@@ -51,6 +60,11 @@ namespace Trainee.Business.Business
 
         }
 
+        /// <summary>
+        /// Gets a cart by user id
+        /// </summary>
+        /// <param name="userId">Id of the user</param>
+        /// <returns>DTO of cart</returns>
         public AlzaAdminDTO<List<CartItem>> GetCart(int userId)
         {
             try
@@ -66,6 +80,11 @@ namespace Trainee.Business.Business
             }
         }
 
+        /// <summary>
+        /// Gets a cart by specifing a condition
+        /// </summary>
+        /// <param name="selector">Cart item condition</param>
+        /// <returns>A cart</returns>
         private List<CartItem> GetCartItems(Expression<Func<CartItem, bool>> selector)
         {
             var cart = _cartItemRepository.GetCartItems().Where(selector).ToList();
@@ -76,6 +95,14 @@ namespace Trainee.Business.Business
             return completeCart;
         }
 
+        /// <summary>
+        /// Adds an item to a cart
+        /// </summary>
+        /// <param name="visitorId">Id of the Visitor</param>
+        /// <param name="userId">Id of the user</param>
+        /// <param name="productId">Product identifier</param>
+        /// <param name="amount">Product amount</param>
+        /// <returns>DTO of the cart</returns>
         public AlzaAdminDTO<List<CartItem>> AddToCart(string visitorId, int? userId, int productId, int amount = 1)
         {
             try
@@ -100,7 +127,12 @@ namespace Trainee.Business.Business
             }
         }
 
-        
+        /// <summary>
+        /// Adds a new order to the database
+        /// </summary>
+        /// <param name="order">Order to be added</param>
+        /// <param name="visitorId">Visitor id of the corresponding cart</param>
+        /// <returns>DTO of the order</returns>
         public AlzaAdminDTO<Order> AddOrder(Order order, string visitorId)
         {
             try
@@ -123,6 +155,11 @@ namespace Trainee.Business.Business
             }
         }
 
+        /// <summary>
+        /// Gets an order by id
+        /// </summary>
+        /// <param name="orderId">Id of the order</param>
+        /// <returns>DTO of the order</returns>
         public AlzaAdminDTO<Order> GetOrder(int orderId)
         {
             try
@@ -139,6 +176,11 @@ namespace Trainee.Business.Business
             }
         }
 
+        /// <summary>
+        /// Gets all orders of a user
+        /// </summary>
+        /// <param name="userId">Id of the user</param>
+        /// <returns>Dto of all user orders</returns>
         public AlzaAdminDTO<List<Order>> GetUserOrders(int userId)
         {
             try
@@ -176,6 +218,11 @@ namespace Trainee.Business.Business
             }
         }
 
+        /// <summary>
+        /// Adds a new order item
+        /// </summary>
+        /// <param name="item">Item to be added</param>
+        /// <returns>DTO of the order item</returns>
         public AlzaAdminDTO<OrderItem> AddOrderItem(OrderItem item)
         {
 
@@ -190,6 +237,46 @@ namespace Trainee.Business.Business
             }
         }
 
+        /// <summary>
+        /// Gets a shipping by id
+        /// </summary>
+        /// <param name="id">Shipping id</param>
+        /// <returns>DTO of the shipping</returns>
+        public AlzaAdminDTO<Shipping> GetShipping(int id)
+        {
+            try
+            {
+                var shipping = _shippingRepository.GetShipping(id);
+                return AlzaAdminDTO<Shipping>.Data(shipping);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<Shipping>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// Gets a payment by id
+        /// </summary>
+        /// <param name="id">Payment id</param>
+        /// <returns>DTO of the payment</returns>
+        public AlzaAdminDTO<Payment> GetPayment(int id)
+        {
+            try
+            {
+                var payment = _paymentRepository.GetPayment(id);
+                return AlzaAdminDTO<Payment>.Data(payment);
+            }
+            catch (Exception e)
+            {
+                return AlzaAdminDTO<Payment>.Error(e.Message + Environment.NewLine + e.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// Gets all shippings
+        /// </summary>
+        /// <returns>Shippings</returns>
         public AlzaAdminDTO<List<Shipping>> GetShippings()
         {
             try
@@ -202,6 +289,11 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<Shipping>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
+
+        /// <summary>
+        /// Gets all payments
+        /// </summary>
+        /// <returns>DTO of payments</returns>
         public AlzaAdminDTO<List<Payment>> GetPayments()
         {
             try
@@ -214,11 +306,19 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<Payment>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
+
+        /// <summary>
+        /// Merges an anonymous cart with an existing user cart. If there are any items in the user cart, it is possible to delete them or leave them intact.
+        /// </summary>
+        /// <param name="visitorId">Id of the visitor who owns the cart.</param>
+        /// <param name="userId">Id of the user who should receive the visitor cart</param>
+        /// <param name="delete">Specifies whether the old user cart items should be deleted or not</param>
+        /// <returns>DTO of the merged cart</returns>
         public AlzaAdminDTO<List<CartItem>> TransformCart(string visitorId, int userId, bool delete)
         {
             try
             {
-
+                //the old items should be deleted
                 if (delete)
                 {
 
@@ -228,16 +328,21 @@ namespace Trainee.Business.Business
                         _cartItemRepository.DeleteCartItem(item.VisitorId, item.ProductId);
                     }
                 }
+
+                //gets the visitor cart
                 var currentCart = _cartItemRepository.GetCartItems().Where(ci => ci.VisitorId == visitorId).ToList();
                 foreach (var item in currentCart)
                 {
                     CartItem existingItem = null;
+
+                    //if we want to keep the items, the amount might need to be updated for the same product
                     if (!delete)
                     {
                         existingItem = _cartItemRepository.GetCartItems().FirstOrDefault(ci => ci.UserId == userId && ci.ProductId == item.ProductId);
                     }
                     if (existingItem != null)
                     {
+                        //adding the amounts
                         existingItem.Amount += item.Amount;
                         _cartItemRepository.UpdateCartItem(existingItem);
                     }
@@ -248,9 +353,13 @@ namespace Trainee.Business.Business
                         _cartItemRepository.AddCartItem(item);
 
                     }
+
+                    //the old cart needs to be deleted afterwards
                     _cartItemRepository.DeleteCartItem(visitorId, item.ProductId);
 
                 }
+
+                //the new cart
                 var result = _cartItemRepository.GetCartItems().Where(ci => ci.UserId == userId).ToList();
                 return AlzaAdminDTO<List<CartItem>>.Data(result);
             }
@@ -260,6 +369,14 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
+
+        /// <summary>
+        /// Updates the amount of a cart item
+        /// </summary>
+        /// <param name="visitorId">Visitor id of the item owner</param>
+        /// <param name="productId">Product id</param>
+        /// <param name="amount">New item amount</param>
+        /// <returns></returns>
         public AlzaAdminDTO<List<CartItem>> UpdateCartItem(string visitorId, int productId, int amount)
         {
             try
@@ -276,6 +393,13 @@ namespace Trainee.Business.Business
                 return AlzaAdminDTO<List<CartItem>>.Error(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
+
+        /// <summary>
+        /// Deletes an item from the cart.
+        /// </summary>
+        /// <param name="visitorId">Id of the item owner</param>
+        /// <param name="productId">Product id</param>
+        /// <returns>DTO of the cart</returns>
         public AlzaAdminDTO<List<CartItem>> RemoveCartItem(string visitorId, int productId)
         {
             try

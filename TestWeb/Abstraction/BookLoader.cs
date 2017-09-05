@@ -8,6 +8,9 @@ using Trainee.Business.DAL.Entities;
 
 namespace Eshop2.Abstraction
 {
+    /// <summary>
+    /// This class is a helper for loading book detail
+    /// </summary>
     public class BookLoader
     {
         private readonly BusinessService _businessService;
@@ -17,6 +20,11 @@ namespace Eshop2.Abstraction
             _businessService = service;
         }
 
+        /// <summary>
+        /// Loads the whole book detail
+        /// </summary>
+        /// <param name="id">Book id</param>
+        /// <returns>BookViewModel with loaded book data</returns>
         public BookViewModel LoadBookModel(int id)
         {
             var dto = _businessService.GetProduct(id);

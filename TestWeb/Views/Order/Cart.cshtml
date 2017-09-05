@@ -40,7 +40,7 @@
             {
                 <div class="row cart-item bottom-padding">
                     <a asp-controller="catalogue" asp-action="book" asp-route-id="@c.ProductId">
-                        <div class="col-md-2">
+                        <div class="col-md-1 no-padding hidden-sm hidden-xs">
                             <img src="~/images/product_images/@c.Product.PicAddress" alt="bookcover" />
                         </div>
                         <div class="col-md-4">
@@ -63,11 +63,11 @@
                             </p>
                         </div>
                     </a>
-                    <div class="col-md-1">
+                    <div class="col-md-2 responsive-cart">
                         <p>@c.Product.State.Name</p>
 
                     </div>
-                    <div class="col-md-2 text-center unselectable">
+                    <div class="col-md-2 responsive-cart unselectable">
                         <span class="glyphicon glyphicon-minus product-count-decrease"></span>
                         <input type="number" class="product-count" value="@c.Amount" min="1" />
                         <span class="glyphicon glyphicon-plus product-count-increase"></span>
@@ -76,12 +76,12 @@
 
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-2 responsive-cart">
                         <input type="hidden" class="product-price-hidden" value="@c.Product.Price" />
 
                         @String.Format("{0:c}", c.Product.Price)
                     </div>
-                    <div class="col-md-1"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
+                    <div class="col-md-1 responsive-cart"><a><span class="glyphicon glyphicon-remove remove"></span><span class="sr-only">Smazat</span></a></div>
                 </div>
 
                                     }
@@ -98,12 +98,13 @@
 
 
         <div class="row">
-            <div class="col-md-6">
-                <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Vybrat další knížky</a>
+            <div class="col-md-6 order-buttons-div">
+                <a class="btn btn-default" asp-controller="catalogue" asp-action="products"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Nakupovat dál</a>
             </div>
             <div class="col-md-6 bottom-padding">
                 @if (SignInManager.IsSignedIn(User))
                 {
+                    
                     <a class="btn btn-prim order-button" asp-controller="Order" asp-action="Order">Objednat<span class="glyphicon glyphicon-menu-right triangle-right"></span></a>
                 }
                 else
