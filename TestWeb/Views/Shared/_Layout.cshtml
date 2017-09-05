@@ -106,24 +106,15 @@
                 </a>
                 <button class="btn basket-user-btn main-background" onclick="toggleLogin();">
                     <img src="~/images/user.svg" alt="user" /><br />
-                    <p id="login-link">Přihlásit</p>
-                </button>
-
-                @{
-
-                    if (SignInManager.IsSignedIn(User))
+                    @if (SignInManager.IsSignedIn(User))
                     {
-                        <script src="~/js/site.js"></script>
-                        <script>changeUser();</script>
+                        <p id="login-link">Účet</p>
                     }
                     else
                     {
-                        <script src="~/js/site.js"></script>
-                        <script>changeUserBack();</script>
+                        <p id="login-link">Přihlásit</p>
                     }
-
-                }
-
+                </button>
             </div>
         </div>
 

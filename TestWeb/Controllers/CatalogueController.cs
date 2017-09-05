@@ -163,10 +163,30 @@ namespace Eshop2.Controllers
                         MinPrice = model.MinPriceFilter,
                         PageSize = model.PageSize,
                         SortingParameter = model.SortingParameter,
-                        SortingType = model.SortingType,
-
-
                     };
+
+                    if(model.SortingType == null)
+                    {
+                        switch (model.SortingParameter)
+                        {
+                            case SortingParameter.Date:
+                            case SortingParameter.Rating:
+                                parameters.SortingType = SortType.Desc;
+                                break;
+                            case SortingParameter.Name:
+                            case SortingParameter.Price:
+                                parameters.SortingType = SortType.Asc;
+                                break;
+
+                            default:
+                                parameters.SortingType = SortType.Asc;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        parameters.SortingType = model.SortingType.Value;
+                    }
 
                     parameters.Formats = model.FormatsFilter == null ? null : new List<int>() { model.FormatsFilter.Value };
                     parameters.Languages = model.LanguagesFilter == null ? null : new List<int>() { model.LanguagesFilter.Value };
