@@ -177,6 +177,12 @@ namespace Eshop2.Controllers
             }
         }
 
+        /// <summary>
+        /// This method redirects to the summary page with user order data.
+        /// </summary>
+        /// <param name="model">Order data</param>
+        /// <returns>Summary View</returns>
+        //POST: /Order/Order
         [HttpPost]
         public async Task<IActionResult> Order(OrderViewModel model)
         {
@@ -236,6 +242,12 @@ namespace Eshop2.Controllers
         }
 
 
+        /// <summary>
+        /// This method redirects from the summary page back to the order page with the same model.
+        /// </summary>
+        /// <param name="model">Order data of the user</param>
+        /// <returns>Order view</returns>
+        //Post: /Order/BackToOrder
         [HttpPost("Order/BackToOrder")]
         public IActionResult BackToOrder(OrderViewModel model)
         {
@@ -272,6 +284,12 @@ namespace Eshop2.Controllers
             }
         }
 
+        /// <summary>
+        /// This method submits the order from the summary page
+        /// </summary>
+        /// <param name="model">Order data</param>
+        /// <returns>OK page view</returns>
+        //POST: /Order/SendOrder
         [HttpPost("/Order/SendOrder")]
         public async Task<IActionResult> SendOrder(OrderViewModel model)
         {
@@ -289,6 +307,7 @@ namespace Eshop2.Controllers
                         City = model.City,
                         Name = model.Name,
                         Surname = model.Surname,
+                        Email = model.Email,
                         PaymentId = model.PaymentId,
                         ShippingId = model.ShippingId,
                         PostalCode = model.PostalCode,
@@ -372,12 +391,16 @@ namespace Eshop2.Controllers
             return View();
         }
 
+        //GET: /Order/Redirect
         [HttpGet]
         public IActionResult Redirect()
         {
             //redirect page leading to order
             return View();
         }
+
+
+        /****** Called via ajax ******/
 
         [HttpPost]
         public async Task<IActionResult> AddToCart([FromBody]CartItemModel model)

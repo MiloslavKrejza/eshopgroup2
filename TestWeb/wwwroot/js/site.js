@@ -1,4 +1,4 @@
-﻿// Login Toogle
+﻿// Login Toggle
 function toggleLogin() {
     var x = document.getElementById('login');
     if (x.style.display === 'none') {
@@ -8,13 +8,13 @@ function toggleLogin() {
     }
 }
 
-
+//sends the filtering form on page change
 $(".paging-span").click(function () {
     $("#filter-page-num").val($(this).attr("page-num"));
     $("#filtering-form").submit();
 })
 
-
+//autosends the filtering after order parameter or pagesize change
 $(".order-by").change(function () {
     $("#filtering-form").submit();
 })

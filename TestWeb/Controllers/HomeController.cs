@@ -24,6 +24,7 @@ namespace TestWeb.Controllers
             _businessService = busServ;
         }
 
+        //GET: /Home/Index
         public IActionResult Index()
         {
             var result = _businessService.GetPageSlots();
@@ -33,6 +34,7 @@ namespace TestWeb.Controllers
             return View(model);
         }
 
+        //GET: /Home/About
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -40,6 +42,7 @@ namespace TestWeb.Controllers
             return View();
         }
 
+        //GET: /Home/Contact
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -47,11 +50,13 @@ namespace TestWeb.Controllers
             return View();
         }
 
+        //GET: /Home/Conditions
         public IActionResult Conditions()
         {
             return View();
         }
 
+        //GET: /Home/Shipping
         public IActionResult Shipping()
         {
 
@@ -70,6 +75,7 @@ namespace TestWeb.Controllers
             return View(model);
         }
 
+        //GET: /Home/Error
         public IActionResult Error()
         {
             return View();
