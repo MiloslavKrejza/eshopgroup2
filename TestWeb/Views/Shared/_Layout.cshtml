@@ -93,7 +93,7 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index"><img class="logo img-responsive" src="~/images/logo.png" alt="Fantastic Books logo" /></a>
             </div>
             <div class="basket-user col-md-2 col-md-offset-8">
-                <a asp-area="" asp-controller="Order" asp-action="cart"  class="btn basket-user-btn main-background">
+                <a asp-area="" asp-controller="Order" asp-action="cart" class="btn basket-user-btn main-background">
                     <img src="~/images/cart.svg" alt="cart" /><br />
                     @if (cartForCount?.Count > 0)
                     {
@@ -127,13 +127,7 @@
                 <div class="container" id="login" style="display:none" ;>
                     @Html.Partial("~/Views/Account/Login.cshtml", new LoginViewModel(), ViewData)
 
-                    @if (ViewData["EmailUnknown"] != null || ViewData["WrongPassword"] != null)
-                    {
-                        if (Context.Request.Path.Value.IndexOf("Login", StringComparison.CurrentCultureIgnoreCase) < 0)
-                        {
-                            <script>toggleLogin()</script>
-                        }
-                    }
+
                 </div>
             </div>
         </div>
@@ -227,17 +221,13 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
-    <!--
-        <script>
-            $(function () {
-                $("#priceFilter").slider(
-                    {
-                        range: true,
-                    });
-            });
-        </script>
-    -->
-
+    @if (ViewData["EmailUnknown"] != null || ViewData["WrongPassword"] != null)
+        {
+            if (Context.Request.Path.Value.IndexOf("Login", StringComparison.CurrentCultureIgnoreCase) < 0)
+            {
+                <script>toggleLogin()</script>
+            }
+        }
 
     @if (oldVisitorId != null)
     {
