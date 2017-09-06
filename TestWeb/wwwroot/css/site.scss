@@ -299,6 +299,7 @@ input:-ms-input-placeholder {
     padding: 0;
 }
 /*Cathegories*/
+
 .menu-item {
     height: auto;
     font-size: 15px;
@@ -351,14 +352,21 @@ input:-ms-input-placeholder {
 
 @media screen and (max-width: 730px) {
     .menu-item {
-    width: 32%;
-    height: auto;
+        width: 32%;
+        height: auto;
     }
 }
 
 @media screen and (max-width: 570px) {
     .menu-item {
         width: 48%;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 377px) {
+    .menu-item {
+        width: 100%;
         height: auto;
     }
 }
@@ -550,22 +558,6 @@ input:-ms-input-placeholder {
 
 /* User details - All orders*/
 
-.order-list-heading {
-    font-size: 17px;
-    font-weight: bold;
-    padding: 10px 0;
-}
-
-@media screen and (max-width: 1200px) {
-    .order-list-heading {
-
-        div {
-            width: 20%;
-            float: left;
-        }
-    }
-}
-
 .list-orders {
     padding: 10px;
     font-weight: bold;
@@ -587,6 +579,16 @@ input:-ms-input-placeholder {
     }
 }
 
+@media screen and (max-width: 460px) {
+    .list-orders {
+        padding: 10px 0;
+        div {
+            width: 50%;
+            text-align: center;
+        }
+    }
+}
+
 
 .list-products {
     padding: 10px 20px;
@@ -598,6 +600,17 @@ input:-ms-input-placeholder {
         div {
             width: 25%;
             float: left;
+        }
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .list-products {
+
+        div {
+            width: 100%;
+            clear:both;
+            text-align:left;
         }
     }
 }
@@ -713,13 +726,6 @@ input:-ms-input-placeholder {
         opacity: 1;
         text-shadow: 0 0 30px #ffc;
     }
-}
-
-
-#summaryByMiloslavKrejza {
-    margin: 0px 0 0 29px;
-    position: relative;
-    font-size: 25px;
 }
 
 
@@ -885,11 +891,23 @@ input:-ms-input-placeholder {
 }
 
 .book-title {
-    height: 60px;
+    height: 40px;
+}
+
+@media screen and (max-width: 570px) {
+    .book-title {
+        height: auto;
+    }
 }
 
 .book-authors {
     height: 40px;
+}
+
+@media screen and (max-width: 570px) {
+    .book-authors {
+        height: auto;
+    }
 }
 
 .book-picture {
@@ -937,6 +955,10 @@ input:-ms-input-placeholder {
 @media screen and (max-width: 1200px) {
     .order-buttons-div {
         a {
+            float: left;
+        }
+
+        button {
             float: left;
         }
     }
@@ -1096,6 +1118,26 @@ input:-ms-input-placeholder {
     margin: 0 auto;
 }
 
+@media screen and (max-width: 997px) {
+    .summary-div {
+
+        .col-md-6 {
+            width: 50%;
+            float:left;
+        }
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .summary-div {
+        width: 100%;
+        div {
+            width: 100%;
+            clear: both;
+        }
+    }
+}
+
 .summary-shipping {
     input {
         visibility: hidden;
@@ -1208,7 +1250,7 @@ input:-ms-input-placeholder {
 /* FRONT  PAGE*/
 .front-product {
     float: left;
-    width: 16%;
+    width: 19%;
     padding: 10px;
     border: solid 1px $border-color;
     border-radius: 10px;
@@ -1232,7 +1274,7 @@ input:-ms-input-placeholder {
 
 @media screen and (max-width: 1200px) {
     .front-product {
-        width: 33%;
+        width: 32%;
         float: left;
     }
 }
@@ -1241,7 +1283,6 @@ input:-ms-input-placeholder {
     .front-product {
         width: 100%;
         float: none;
-        border-right: none;
     }
 }
 
@@ -1249,8 +1290,22 @@ input:-ms-input-placeholder {
     height: 60px;
 }
 
+
+@media screen and (max-width: 570px) {
+    .front-book-title {
+        height: auto;
+    }
+}
+
+
 .front-book-authors {
-    height: 60px;
+    height: 40px;
+}
+
+@media screen and (max-width: 570px) {
+    .front-book-authors {
+        height: auto;
+    }
 }
 
 .front-row {

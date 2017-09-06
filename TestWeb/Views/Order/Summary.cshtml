@@ -87,32 +87,32 @@
             </p>
         </div>
         <div class="col-md-6 summary-shipping">
-            <strong class="text-indent">Doprava</strong><br />
+            <strong>Doprava</strong><br />
 
             @{
                 foreach (Shipping s in Model.Shipping)
                 {
-                    <div class="radio order-radio">
+                    <div class="radio text-indent">
                         <input type="radio" value="@s.Id" asp-for="ShippingId" /> @s.Name - @String.Format("{0:c}" ,s.Price)<br />
                     </div>
 
                     totalPrice += s.Price;
                 }
             }
-            <strong class="text-indent">Platba</strong><br />
+            <strong>Platba</strong><br />
 
 
             @{
                 foreach (Payment p in Model.Payment)
                 {
-                    <div class="radio order-radio">
+                    <div class="radio text-indent">
                         <input type="radio" value="@p.Id" asp-for="PaymentId" /> @p.Name <br />
                     </div>
                 }
             }
 
-            <strong class="text-indent">Celková cena </strong>
-            <p class="price">@String.Format("{0:c}", @totalPrice)</p>
+            <strong>Celková cena </strong>
+            <p class="bold text-indent">@String.Format("{0:c}", @totalPrice)</p>
 
         </div>
     </div>
@@ -148,11 +148,11 @@
         }
     }
 
-    <div class="row order-buttons-div">
-        <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-6 order-buttons-div">
             <button asp-action="BackToOrder" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-route-route="false" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-menu-left triangle-left"></span>Změnit</button>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-6 bottom-padding">
             <button asp-action="SendOrder" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" asp-route-route="false" class="btn btn-prim order-button" type="submit">Potvrdit<span class="glyphicon glyphicon-send triangle-right"></span></button>
         </div>
     </div>

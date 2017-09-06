@@ -130,6 +130,7 @@
                         <a asp-area="" asp-controller="catalogue" asp-action="book" asp-route-id="@p.Id">
                             <img class="book-picture" src="~/images/product_images/@p.PicAddress" alt="@p.Name" />
                             <p class="bold book-title">@p.Name</p>
+                            <p class="italics">@p.Format.Name</p>
                             <p class="book-authors">
 
                                 @{

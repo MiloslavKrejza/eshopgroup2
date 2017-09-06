@@ -17,15 +17,13 @@
     var reviewCounter = 0;
 
 
-
-
 }
 
 
 <div class="row">
     <ul class="breadcrumb main-background">
-        <li class="main-cathegory"><a href="#">Fantasy</a></li>
-        <li><a href="#">@Html.DisplayFor(model => model.Category.Name)</a></li>
+        <li class="main-cathegory"><a asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.Category.ParentId">@Html.DisplayFor(model => model.Category.Parent)</a></li>
+        <li><a asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.Category.Id">@Html.DisplayFor(model => model.Category.Name)</a></li>
     </ul>
 </div>
 <hr />
@@ -201,7 +199,7 @@ else
 
         <div class="user-rating row">
             <div class="col-md-1 text-center">
-                <img src="~/images/profile_pics/@Model.PicAddress" />
+                <img src="~/images/profile_pics/@review.User.ProfilePicAddress" />
             </div>
             <div class="col-md-11">
                 <span class="bold">@review.User.Name @review.User.Surname</span>

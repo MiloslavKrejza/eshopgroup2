@@ -62,14 +62,6 @@
 
 <h3>Moje objednávky</h3>
 
-<div class="row order-list-heading">
-    <div class="col-md-3">Datum</div>
-    <div class="col-md-3">Číslo</div>
-    <div class="col-md-2">Stav</div>
-    <div class="col-md-2">Celková cena</div>
-    <div class="col-md-2">Produkty</div>
-</div>
-
 
 @{            /* List all orders, hide the details */
     var o = Model.Orders;
@@ -115,7 +107,7 @@
                                                 }
                                             }
                                         </div>
-                                        <div class="col-md-2 text-center">@oi[j].Amount</div>
+                                        <div class="col-md-2 text-center">@oi[j].Amount ks</div>
                                         <div class="col-md-2">
                                             @{
                                                 decimal totalProductPrice = 0;
