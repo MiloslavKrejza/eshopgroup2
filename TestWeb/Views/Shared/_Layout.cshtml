@@ -49,6 +49,8 @@
         ViewData["WrongPassword"] = true;
     }
 
+    var allowCookie = ContextAccessor.HttpContext.Request.Cookies["AllowCookies"];
+
 }
 
 
@@ -252,5 +254,14 @@
         }
     }
 
+
+    @if (allowCookie == null)
+    {
+        <div id="cookie-dialog" title="Pr">
+
+            
+        </div>
+
+    }
 </body>
 </html>

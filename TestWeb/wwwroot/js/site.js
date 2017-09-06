@@ -45,6 +45,30 @@ $(".order-by").change(function () {
     $("#filtering-form").submit();
 })
 
+//cookie dialog
+$(function () {
+    $("#cookie-dialog").dialog({
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        autoOpen: true,
+        dialogClass: "no-close",
+        buttons:
+        [
+            {
+                text: "Ponechat",
+                "class": "keep-button",
+                click: function () {
+                    document.cookie = "AllowCookies= true"
+                    $("#cookie-dialog").dialog("close");
+                }
+            }
+        ]
+
+
+    });
+})
 
 //dialog for keeping/discarding cart items from previous log in
 $(function () {
