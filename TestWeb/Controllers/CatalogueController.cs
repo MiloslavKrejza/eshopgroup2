@@ -11,6 +11,7 @@ using Trainee.Business.Business.Enums;
 using Trainee.Business.Business.Wrappers;
 using Trainee.Business.DAL.Entities;
 using Trainee.Catalogue.Business;
+using Trainee.Catalogue.DAL.Entities;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -55,6 +56,11 @@ namespace Eshop2.Controllers
                 ViewData["productId"] = id;
 
                 BookViewModel model = _bookLoader.LoadBookModel(id.Value);
+
+                var cat = _catalogueService.GetCategory(model.Category.ParentId.Value);
+                if (cat.isOK && !cat.isEmpty)
+                    model.Category.Parent = cat.data;
+
                 if (model == null)
                     return RedirectToAction("Error", "Home");
 
