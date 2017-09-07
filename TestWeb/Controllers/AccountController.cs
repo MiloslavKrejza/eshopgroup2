@@ -74,9 +74,10 @@ namespace TestWeb.Controllers
         {
             try
             {
-                //User can't be signed in
+                //user who is logged in will be redirected to details page
                 if (_signInManager.IsSignedIn(User))
-                    _signInManager.SignOutAsync();
+                    return RedirectToAction("Details");
+
 
                 ViewData["ReturnUrl"] = returnUrl;
 
