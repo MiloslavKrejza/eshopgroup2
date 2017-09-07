@@ -55,7 +55,7 @@ namespace TestWeb.Models.AccountViewModels
         public string NewPassword { get; set; }
 
         
-        [Display(Name = "Potvrdit nové heslo")]
+        [Display(Name = "Potvrďte nové heslo")]
         [DataType(DataType.Password)]
         [Compare("NewPassword", ErrorMessage = "Hesla musí být shodná.")]
         public string ConfirmNewPassword { get; set; }

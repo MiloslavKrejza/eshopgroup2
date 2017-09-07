@@ -317,7 +317,7 @@ input:-ms-input-placeholder {
     }
 
     img {
-        height: 30px;
+        max-height: 30px;
         margin-right: 10px;
     }
 }
@@ -695,15 +695,39 @@ input:-ms-input-placeholder {
 }
 
 .rating-textarea {
-    width: 300px;
+    max-width: 300px;
     margin-left: 50px;
     margin-bottom: 30px;
 }
 
+@media screen and (max-width: 994px) {
+    .rating {
+        .col-md-6 {
+            float: left;
+            width: 50%;
+        }
+    }
+}
+
+@media screen and (max-width: 770px) {
+    .rating {
+        .col-md-6 {
+            float: none;
+            width: 100%;
+        }
+    }
+
+    .rating-textarea {
+        max-width: 300px;
+        margin-left: 5px;
+        margin-bottom: 15px;
+    }
+
+}
 
 .user rating {
     img {
-        width: 50px;
+        max-width: 50px;
     }
 }
 
@@ -1059,10 +1083,6 @@ input:-ms-input-placeholder {
         height: 90px;
     }
 }
-
-/*Redirection*/
-
-
 
 /* Order */
 .order {

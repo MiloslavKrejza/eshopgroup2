@@ -22,7 +22,7 @@
 
 <div class="row">
     <ul class="breadcrumb main-background">
-        <li class="main-cathegory"><a asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.Category.ParentId">@Html.DisplayFor(model => model.Category.Parent)</a></li>
+        <li class="main-cathegory"><a asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.Category.ParentId">@Html.DisplayFor(model => model.Category.Parent.Name)</a></li>
         <li><a asp-controller="Catalogue" asp-action="Products" asp-route-id="@Model.Category.Id">@Html.DisplayFor(model => model.Category.Name)</a></li>
     </ul>
 </div>
