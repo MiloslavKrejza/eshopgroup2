@@ -471,9 +471,14 @@ namespace TestWeb.Controllers
                     }
                     else
                     {
+                        var resultCountry = _countryService.GetAllCountries();
+                        if (resultCountry.isOK)
+                            model.Countries = (List<Country>)resultCountry.data;
+
                         //_logger.LogWarning(2, "Nesprávné heslo.");
                         //ModelState.AddModelError("Password", "Nesprávné heslo.");
                         ViewData["WrongPassword"] = true;
+                        return View(model);
                     }
 
                     //display Details of edited profile
