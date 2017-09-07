@@ -148,7 +148,7 @@
                     foreach (Category c in currentCategory.Children)
                     {
                         <div class="list-group-item menu-item">
-                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><img src="~/images/@(c.Name).svg" /> @c.Name</p></a>
+                            <a asp-area="" asp-controller="catalogue" asp-action="products" asp-route-id="@c.Id"><p><img src="~/images/@c.PicAddress" /> @c.Name</p></a>
                         </div>
 
                     }
@@ -258,8 +258,8 @@
 
     @if (allowCookie == null)
     {
-        <div id="cookie-dialog" title="Pr">
-
+        <div id="cookie-dialog" title="Souhlasíte s používáním cookies?">
+            <p>Potvrďtě prosím souhlas s ukládáním sušenek, abyste mohli plnohodnotně používat tuto stránku.</p>
             
         </div>
 

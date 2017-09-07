@@ -57,7 +57,7 @@ $(function () {
         buttons:
         [
             {
-                text: "Ponechat",
+                text: "Souhlasím",
                 "class": "keep-button",
                 click: function () {
                     document.cookie = "AllowCookies= true"
@@ -332,7 +332,7 @@ $(".product-count").on("send", _.debounce(function () {
 $(".product-count").on('input change', function () {
     var parent = $(this).parents(".cart-item");
     var count = parent.find(".product-count").val();
-    if (count != "") {
+    if (count !== "") {
         $(this).trigger("send")
     }
 
