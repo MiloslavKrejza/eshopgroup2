@@ -55,7 +55,7 @@ namespace TestWeb.Models.AccountViewModels
         [Required(ErrorMessage = "Prosím vyberte zemi.")]
         public int CountryId { get; set; }
 
-       
+
         [IsTrue(ErrorMessage = "Prosím potvrďte souhlas s uložením údajů.")]
         public bool PersonalAgreement { get; set; }
 

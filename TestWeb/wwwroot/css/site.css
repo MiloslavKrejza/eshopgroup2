@@ -303,6 +303,9 @@ input:-ms-input-placeholder {
 
 /*ACCOUNT*/
 /*Registration*/
+.checkbox-error {
+  display: none; }
+
 .form-row {
   margin-bottom: 20px; }
 
@@ -1019,4 +1022,3 @@ fieldset[disabled] .btn-prim.active {
 .btn-prim .badge {
   color: #2F3293;
   background-color: #FFFFFF; }
-
