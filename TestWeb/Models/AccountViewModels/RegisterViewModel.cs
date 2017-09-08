@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eshop2.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -53,6 +54,10 @@ namespace TestWeb.Models.AccountViewModels
         [Display(Name = "Stát")]
         [Required(ErrorMessage = "Prosím vyberte zemi.")]
         public int CountryId { get; set; }
+
+       
+        [IsTrue(ErrorMessage = "Prosím potvrďte souhlas s uložením údajů.")]
+        public bool PersonalAgreement { get; set; }
 
         public List<Country> Countries { get; set; }
 

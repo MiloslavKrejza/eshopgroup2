@@ -764,6 +764,15 @@ input:-ms-input-placeholder {
     margin: 0;
     height: 90px; }
 
+/* Redirection */
+.redirect {
+  margin-top: 20px;
+  margin-left: 10px; }
+
+.redirection {
+  font-weight: bold;
+  font-size: 16px; }
+
 /* Order */
 .order {
   width: 80%;
@@ -992,3 +1001,4 @@ fieldset[disabled] .btn-prim.active {
 .btn-prim .badge {
   color: #2F3293;
   background-color: #FFFFFF; }
+
