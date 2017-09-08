@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eshop2.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -52,6 +53,9 @@ namespace Eshop2.Models.OrderViewModels
 
         [Required(ErrorMessage = "Vyberte prosím způsob dopravy.")]
         public int ShippingId { get; set; }
+
+        [IsTrue(ErrorMessage = "Prosím potvrďte souhlas s obchodními podmínkami.")]
+        public bool IsChecked { get; set; }
 
         public List<Payment> Payment { get; set; }
         public List<Shipping> Shipping { get; set; }

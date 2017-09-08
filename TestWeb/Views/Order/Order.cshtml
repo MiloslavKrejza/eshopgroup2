@@ -71,7 +71,7 @@
 
 <h3>Dodací údaje</h3>
 <div class="form-group">
-    <form asp-action="Order" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+    <form asp-action="Order" asp-controller="Order" asp-route-returnurl="@ViewData["ReturnUrl"]" onsubmit="return isChecked()" method="post">
         <div class="order">
             <div class="row bottom-padding">
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -176,7 +176,8 @@
                 </div>
             </div>
             <div class="row text-left bottom-padding">
-                <input type="checkbox" required /> Souhlasím s <a asp-controller="Home" asp-action="Conditions">Obchodními podmínkami.</a>
+                <input type="checkbox" id="naughty-checkbox" asp-for="IsChecked" /> Souhlasím s <a asp-controller="Home" asp-action="Conditions">Obchodními podmínkami.</a>
+                <div class="checkbox-error text-danger"><p>Prosím potvrďte souhlas s obchodními podmínkami.</p></div>
             </div>
         </div>
 
