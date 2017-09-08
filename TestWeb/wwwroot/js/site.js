@@ -70,6 +70,7 @@ $(function () {
     });
 })
 
+
 //dialog for keeping/discarding cart items from previous log in
 $(function () {
     $("#cart-dialog").dialog({
@@ -101,6 +102,7 @@ $(function () {
 
     });
 })
+
 
 //close button handling (a 'little' bit ugly, would be edited)
 $(function () {
