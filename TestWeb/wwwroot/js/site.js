@@ -29,6 +29,19 @@ function showStuff(id, text, btn) {
     btn.style.display = 'none';
 }
 
+function isChecked() {
+    var checkbox = document.getElementById("naughty-checkbox");
+    if ($("#naughty-checkbox").prop('checked')) {
+
+        $(".checkbox-error").hide();
+    }
+    else {
+        $(".checkbox-error").show();
+        return false;
+    }
+
+}
+
 // Effect for text on layout
 
 function changeUser() {

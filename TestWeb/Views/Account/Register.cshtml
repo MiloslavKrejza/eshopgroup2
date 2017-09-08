@@ -9,7 +9,7 @@
 <div class="row">
 
     <div class="col-md-8 form-group col-centered">
-        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" onsubmit="return isChecked()" method="post" class="form-horizontal">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="row form-row">
                 <div class="col-md-6 responsive-col">
@@ -96,8 +96,8 @@
             
 
             <div class="row text-center">
-                <input type="checkbox" asp-for="PersonalAgreement" id="naughty-checkbox" /> Souhlasím s uchováním osobních údajů pro účely zpracování objednávek.<i class="red-star">*</i>
-                
+                <input type="checkbox" id="naughty-checkbox" asp-for="PersonalAgreement" /> Souhlasím s uchováním osobních údajů pro účely zpracování objednávek.<i class="red-star">*</i>
+                <div class="checkbox-error">Sakra!</div>
             </div>
 
             
