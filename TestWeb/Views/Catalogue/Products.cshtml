@@ -35,24 +35,22 @@
 
 <form asp-controller="Catalogue" asp-action="Products" method="get" id="filtering-form" class="bottom-padding">
     <div class="row">
-        <div class="col-md-6 show-filters">
+        <div class="col-md-4 show-filters">
             <button class="show-filters-btn btn btn-sm" type="button" data-toggle="collapse" data-target="#filters">Zobrazit filtrování <span class="caret"></span></button>
         </div>
-        <div class="col-md-6 sorting">
-            <div class="form-inline">
-                <div>
-                    <label asp-for="SortingParameter">Řadit podle...</label>
-                    <select class="form-control order-by" asp-for="SortingParameter" asp-items="Html.GetEnumSelectList<SortingParameter>()"></select>
-                </div>
-                <div>
-                    <label asp-for="PageSize">Zobrazit</label>
-                    <select class="form-control order-by" asp-for="PageSize">
-                        <option selected value="20">20</option>
-                        <option value="8">8</option>
-                        <option value="40">40</option>
-                        <option value="100">100</option>
-                    </select>
-                </div>
+        <div class="col-md-8 sorting form-inline">
+            <div>
+                <label asp-for="SortingParameter">Řadit podle...</label>
+                <select class="form-control order-by" asp-for="SortingParameter" asp-items="Html.GetEnumSelectList<SortingParameter>()"></select>
+            </div>
+            <div>
+                <label asp-for="PageSize">Zobrazit</label>
+                <select class="form-control order-by" asp-for="PageSize">
+                    <option selected value="20">20</option>
+                    <option value="8">8</option>
+                    <option value="40">40</option>
+                    <option value="100">100</option>
+                </select>
             </div>
         </div>
     </div>
@@ -86,9 +84,9 @@
                 </select>
             </div>
             <div class="col-md-2 price-filter-div">
-                <label asp-for="MinPriceFilter">Cena: <input type="text" id="MinPriceFilter" name="MinPriceFilter" class="text-center" readonly />-<input type="text" id="MaxPriceFilter" name="MaxPriceFilter" class="text-center" readonly /></label><div>
+                <p>
+                    <label asp-for="MinPriceFilter">Cena: <input type="text" id="MinPriceFilter" name="MinPriceFilter" class="text-center" readonly />-<input type="text" id="MaxPriceFilter" name="MaxPriceFilter" class="text-center" readonly /></label>
                     <div id="priceFilter"></div>
-                </div>
             </div>
 
             <div class="col-md-2">
@@ -173,29 +171,29 @@
                                 }
                                 </p>
 
-                            @{
-                                if (p.State.Name != "Skladem")
-                                {
-                                    <p class="italics text-danger">@p.State.Name</p>
+                                @{
+                                    if (p.State.Name != "Skladem")
+                                    {
+                                        <p class="italics text-danger">@p.State.Name</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="italics">@p.State.Name</p>
+                                    }
                                 }
-                                else
-                                {
-                                    <p class="italics">@p.State.Name</p>
-                                }
-                            }
 
-                            <p>@String.Format("{0:C}", p.Price)</p>
-                        </a>
-                        <input type="hidden" value="@p.Id" name="product-id" />
-                        <input type="hidden" name="product-count" class="hidden" value="1" />
-                        @if (p.State.Name == "Skladem")
-                        {
-                            <button class="btn-addtocart btn btn-prim">Do košíku</button>
-                        }
-                        else
-                        {
-                            <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
-                        }
+                                <p>@String.Format("{0:C}", p.Price)</p>
+                            </a>
+                            <input type="hidden" value="@p.Id" name="product-id" />
+                            <input type="hidden" name="product-count" class="hidden" value="1" />
+                            @if (p.State.Name == "Skladem")
+                            {
+                                <button class="btn-addtocart btn btn-prim">Do košíku</button>
+                            }
+                            else
+                            {
+                                <button class="btn-addtocart btn btn-prim" disabled>Do košíku</button>
+                            }
 
                         </div>
 

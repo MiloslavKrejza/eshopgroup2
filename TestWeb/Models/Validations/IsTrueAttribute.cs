@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eshop2.Models.Validations
 {
-    public class IsTrueAttribute : ValidationAttribute, IClientValidatable
+    public class IsTrueAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

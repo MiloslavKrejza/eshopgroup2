@@ -582,6 +582,7 @@ input:-ms-input-placeholder {
 @media screen and (max-width: 460px) {
     .list-orders {
         padding: 10px 0;
+
         div {
             width: 50%;
             text-align: center;
@@ -609,8 +610,8 @@ input:-ms-input-placeholder {
 
         div {
             width: 100%;
-            clear:both;
-            text-align:left;
+            clear: both;
+            text-align: left;
         }
     }
 }
@@ -722,7 +723,6 @@ input:-ms-input-placeholder {
         margin-left: 5px;
         margin-bottom: 15px;
     }
-
 }
 
 .user rating {
@@ -771,11 +771,11 @@ input:-ms-input-placeholder {
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 993px) {
     .filters {
 
         div {
-            width: 33%;
+            width: 50%;
             float: left;
             margin: 0 auto;
         }
@@ -811,7 +811,18 @@ input:-ms-input-placeholder {
     margin-top: 10px;
 }
 
+@media screen and (max-width: 994px) {
+    #priceFilter {
+        margin: 0 0 0 10px; 
+        width: 90%;
+    }
+}
 
+@media screen and (max-width: 570px) {
+    #priceFilter {
+        width: 95%;
+    }
+}
 
 .filter-btn {
     position: relative;
@@ -825,7 +836,7 @@ input:-ms-input-placeholder {
 @media screen and (max-width: 992px) {
     .filter-btn {
         top: 5px;
-        margin-left: 80%;
+        margin-left: 10%;
     }
 }
 
@@ -873,6 +884,21 @@ input:-ms-input-placeholder {
             cursor: pointer;
         }
     }
+}
+
+@media screen and (max-width: 460px) {
+    .show-filters {
+        float: none;
+        margin-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .sorting {
+        div {
+        float: none;
+    }
+        }
 }
 
 .order-by {
@@ -1090,8 +1116,8 @@ input:-ms-input-placeholder {
     margin-top: 20px;
     margin-left: 10px;
 }
-.redirection {
 
+.redirection {
     font-weight: bold;
     font-size: 16px;
 }
@@ -1155,7 +1181,7 @@ input:-ms-input-placeholder {
 
         .col-md-6 {
             width: 50%;
-            float:left;
+            float: left;
         }
     }
 }
@@ -1163,6 +1189,7 @@ input:-ms-input-placeholder {
 @media screen and (max-width: 570px) {
     .summary-div {
         width: 100%;
+
         div {
             width: 100%;
             clear: both;

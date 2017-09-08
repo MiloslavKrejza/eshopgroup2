@@ -555,9 +555,9 @@ input:-ms-input-placeholder {
 .filters select {
   margin-bottom: 10px; }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 993px) {
   .filters div {
-    width: 33%;
+    width: 50%;
     float: left;
     margin: 0 auto; } }
 
@@ -578,6 +578,15 @@ input:-ms-input-placeholder {
   padding: 0;
   margin-top: 10px; }
 
+@media screen and (max-width: 994px) {
+  #priceFilter {
+    margin: 0 0 0 10px;
+    width: 90%; } }
+
+@media screen and (max-width: 570px) {
+  #priceFilter {
+    width: 95%; } }
+
 .filter-btn {
   position: relative;
   top: 25px;
@@ -589,7 +598,7 @@ input:-ms-input-placeholder {
 @media screen and (max-width: 992px) {
   .filter-btn {
     top: 5px;
-    margin-left: 80%; } }
+    margin-left: 10%; } }
 
 @media screen and (max-width: 570px) {
   .filter-btn {
@@ -621,6 +630,15 @@ input:-ms-input-placeholder {
     padding: 0;
     height: 25px;
     cursor: pointer; }
+
+@media screen and (max-width: 460px) {
+  .show-filters {
+    float: none;
+    margin-bottom: 5px; } }
+
+@media screen and (max-width: 460px) {
+  .sorting div {
+    float: none; } }
 
 .product {
   border: dashed 1px #dddddd;
